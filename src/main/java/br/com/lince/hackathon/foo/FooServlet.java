@@ -28,11 +28,12 @@ public class FooServlet extends HttpServlet {
 
         switch (requestPath) {
             case "":
+            case "/":
                 loadFullPage(request, response);
                 break;
 
             case "/edit":
-                editFoo(request, response);
+                loadFormEditFoo(request, response);
                 break;
 
             case "/delete":
@@ -49,32 +50,38 @@ public class FooServlet extends HttpServlet {
         final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
         logger.info("responder post [ " + requestPath + " ]");
 
-        if (requestPath.equals("/upsert")) {
-            manageFoo(request, response);
+        if (requestPath.isBlank()) {
+            loadFullPage(request, response);
+        } else if (requestPath.equals("/upsert")) {
+            insertOrUpdateFoo(request, response);
         } else {
             response.getWriter().write("Not found : " + requestPath);
         }
     }
 
+    /*
+     * Trata a requisição para retorna a página de foos carregada com todos os dados
+     */
     private void loadFullPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        logger.info("load full page");
-
-        final var fooRender = new TemplateRenderer<FooViewData>("fooView", response);
+        final var renderer = new TemplateRenderer<FooViewData>("fooView", response);
+        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
 
         JDBIConnection.instance().withExtension(FooRepository.class, dao -> {
+            final var pageSize = 5;
             final var now = LocalDateTime.now();
-            final var foos = dao.selectPage(0, 25);
+            final var count = dao.count();
+            final var foos = dao.selectPage(page, pageSize);
 
-            fooRender.render(new FooViewData(foos, now));
+            renderer.render(new FooViewData(foos, now, page, pageSize, count));
 
             return null;
         });
     }
 
-    private void manageFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        logger.info("manage foo");
-        final var fooRender = new TemplateRenderer<Foo>("fooViewEdit", response);
-
+    /*
+     * Trata a requisição para inserir ou atualizar um foo, e retorna página atualizada
+     */
+    private void insertOrUpdateFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var bar = NumberUtils.toInt(request.getParameter("bar"), 0);
         final var bas = request.getParameter("bas");
         final var boo = request.getParameter("boo");
@@ -91,21 +98,22 @@ public class FooServlet extends HttpServlet {
         });
     }
 
-    private void editFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var fooRender = new TemplateRenderer<Foo>("fooViewEdit", response);
+    /*
+     * Trata a requisição para alimentar o formulário de cadastro ou edição de foos
+     */
+    private void loadFormEditFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<Foo>("fooViewEdit", response);
         final var bar = NumberUtils.toInt(request.getParameter("bar"), 0);
 
-        logger.info("bar: " + request.getParameter("bar"));
-
         JDBIConnection.instance().withExtension(FooRepository.class, dao -> {
-            final var foo = dao.findByBar(bar);
-
-            fooRender.render(foo);
-
+            renderer.render(dao.findByBar(bar));
             return null;
         });
     }
 
+    /*
+     * Trata a requisição de exclusão de foos
+     */
     private void deleteFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var bar = Integer.parseInt(request.getParameter("bar"));
 

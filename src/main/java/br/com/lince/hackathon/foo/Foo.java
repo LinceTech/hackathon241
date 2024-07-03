@@ -83,4 +83,13 @@ public class Foo {
     public int hashCode() {
         return Objects.hash(bar, bas, boo);
     }
+
+    @Override
+    public String toString() {
+        return "Foo{" +
+                "bar=" + bar +
+                ", bas='" + bas + '\'' +
+                ", boo='" + boo + '\'' +
+                '}';
+    }
 }

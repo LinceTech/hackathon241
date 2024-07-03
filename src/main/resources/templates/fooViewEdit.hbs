@@ -1,20 +1,46 @@
 <form id="fooForm">
     <input type="hidden" name="bar" value="{{bar}}">
-    Bas: <input type="text" name="bas" value="{{bas}}"> <br>
-    Boo: <input type="text" name="boo" value="{{boo}}"> <br>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">Bas:</span>
+            <input type="text" name="bas" maxlength="60" size="60" value="{{bas}}">
+            <br>
+        </label>
+    </div>
+
+    <div style="padding-top: 8px;">
+        <label>
+            <span style="width: 50px; display: inline-block; vertical-align: top;">Boo:</span>
+            <textarea style="width: 500px; height: 45px; resize: none;"
+                      id="boo"
+                      name="boo"
+                      maxlength="360">{{boo}}</textarea>
+            <br>
+        </label>
+    </div>
+
+
     <br>
     <button hx-target="#formAndTable"
             hx-select="#formAndTable"
             hx-replace="innerHTML"
-            hx-post="foo/upsert">
+            hx-post="foo/upsert"
+            hx-include="[name='page']"
+            style="display: inline-flex">
+        <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
+        &nbsp;
         {{#bar}}Atualizar{{/bar}}
         {{^bar}}Cadastrar{{/bar}}
     </button>
     {{#bar}}
         <button hx-target="#fooForm"
                 hx-select="#fooForm"
-                hx-replace="innerHTML"
-                hx-get="foo/edit">
+                hx-replace="outerHTML"
+                hx-get="foo/edit"
+                style="display: inline-flex">
+            <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar item">
+            &nbsp;
             Cancelar
         </button>
     {{/bar}}

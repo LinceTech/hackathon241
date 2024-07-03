@@ -14,21 +14,51 @@
 
     <hr>
 
-    <table id="fooItemsTable">
-        <thead>
-        <tr>
-            <th>Foo</th>
-            <th>Bar</th>
-            <th>Bas</th>
-            <th>Ação</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#foos}}
-            {{>fooViewTableItem}}
-        {{/foos}}
-        </tbody>
-    </table>
+    <div id="fooItemsTable">
+        <input type="hidden" name="page" value="{{index}}">
+
+        <div style="display: inline-flex; padding-bottom: 12px;">
+            {{#hasPrevious}}
+                <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
+                     alt="Página anterior"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
+                     hx-target="#fooItemsTable"
+                     hx-select="#fooItemsTable"
+                     hx-swap="innerHTML"
+                     hx-get="foo?page={{previous}}">
+            {{/hasPrevious}}
+
+            <span style="height: 18px; vertical-align: center;">
+                Pagina <b>{{page}}</b> de <b>{{totalPages}}</b>
+            </span>
+
+            {{#next}}
+                <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
+                     alt="Próxima página"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
+                     hx-target="#fooItemsTable"
+                     hx-select="#fooItemsTable"
+                     hx-swap="innerHTML"
+                     hx-get="foo?page={{next}}">
+            {{/next}}
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th style="width: 40px; text-align: right;">Foo</th>
+                <th style="width: 200px; text-align: left;">Bar</th>
+                <th style="width: 300px; text-align: left;">Bas</th>
+                <th style="width: 50px">Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#foos}}
+                {{>fooViewTableItem}}
+            {{/foos}}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 </body>
