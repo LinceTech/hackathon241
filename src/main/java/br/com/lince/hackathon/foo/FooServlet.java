@@ -2,6 +2,7 @@ package br.com.lince.hackathon.foo;
 
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
+import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -42,8 +42,8 @@ public class FooServlet extends HttpServlet {
                 loadFullPage(request, response);
                 break;
 
-            case "/upsert":
-                manageFoo(request, response);
+            case "/edit":
+                editFoo(request, response);
                 break;
 
             case "/delete":
@@ -55,7 +55,21 @@ public class FooServlet extends HttpServlet {
         }
     }
 
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
+        logger.info("responder post [ " + requestPath + " ]");
+
+        if (requestPath.equals("/upsert")) {
+            manageFoo(request, response);
+        } else {
+            response.getWriter().write("Not found : " + requestPath);
+        }
+    }
+
     private void loadFullPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        logger.info("load full page");
+
         final var fooRender = new TemplateRenderer<FooViewData>("fooView", response);
 
         JDBIConnection.instance().withExtension(FooRepository.class, dao -> {
@@ -69,9 +83,10 @@ public class FooServlet extends HttpServlet {
     }
 
     private void manageFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var fooRender = new TemplateRenderer<FooViewData>("fooView", response);
+        logger.info("manage foo");
+        final var fooRender = new TemplateRenderer<Foo>("fooView_edit", response);
 
-        final var bar = Integer.parseInt(request.getParameter("bar"));
+        final var bar = NumberUtils.toInt(request.getParameter("bar"), 0);
         final var bas = request.getParameter("bas");
         final var boo = request.getParameter("boo");
         final var foo = new Foo(bar, bas, boo);
@@ -82,11 +97,29 @@ public class FooServlet extends HttpServlet {
             } else {
                 dao.insert(foo);
             }
+            fooRender.render(null);
+            return null;
+        });
+    }
+
+    private void editFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var fooRender = new TemplateRenderer<Foo>("fooView_edit", response);
+        final var bar = NumberUtils.toInt(request.getParameter("bar"), 0);
+
+        logger.info("bar: " + request.getParameter("bar"));
+
+        JDBIConnection.instance().withExtension(FooRepository.class, dao -> {
+            final var foo = dao.findByBar(bar);
+
+            fooRender.render(foo);
+
             return null;
         });
     }
 
     private void deleteFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        logger.info("delete foo");
+
         final var fooRender = new TemplateRenderer<FooViewData>("fooView", response);
         final var bar = Integer.parseInt(request.getParameter("bar"));
 

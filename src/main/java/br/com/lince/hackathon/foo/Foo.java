@@ -31,17 +31,17 @@ public class Foo {
     /**
      * Atributo bar, sem significado algum
      */
-    public int bar;
+    private int bar;
 
     /**
      * Atributo bar, sem significado algum
      */
-    public String bas;
+    private String bas;
 
     /**
      * Atributo bar, sem significado algum
      */
-    public String boo;
+    private String boo;
 
     public int getBar() {
         return bar;

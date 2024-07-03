@@ -9,6 +9,14 @@ public class FooViewData {
         this.dateTime = dateTime;
     }
 
-    public final List<Foo> foos;
-    public final LocalDateTime dateTime;
+    private final List<Foo> foos;
+    private final LocalDateTime dateTime;
+
+    public List<Foo> getFoos() {
+        return foos;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
 }
