@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'war'
+    id "com.bmuschko.cargo" version "2.9.0"
 }
 
 group 'br.com.lince'
@@ -39,4 +40,34 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+// Configurar plugin utilizado para executar a aplicação utilizando Gradle
+cargo {
+    // User TomCat 9 (ultima versão compatível com Java 11)
+    containerId = 'tomcat9x'
+    port = 9090
+
+    // Configurações da aplicação
+    deployable {
+        // Caminho raiz do programa
+        context = 'hackathon'
+    }
+
+    // Configurações do ambiente de execução
+    local {
+        // Caminho da instalação do TomCat
+        homeDir = file('C:\\jdk\\tomcat\\apache-tomcat-9.0.89')
+
+        // Caminho do arquivo de logs de saida
+        outputFile = file('build\\output.log')
+
+        // Tempo limite para iniciar/interromper
+        startStopTimeout = 60000
+
+        // Configurações do TomCat
+        containerProperties {
+            property 'cargo.tomcat.ajp.port', 9099
+        }
+    }
 }

@@ -11,7 +11,7 @@ import javax.servlet.annotation.*;
 
 @WebServlet("/hello-servlet")
 public class HelloServlet extends HttpServlet {
-    final Logger logger = Logger.getLogger(HelloServlet.class.getName());
+    private final Logger logger = Logger.getLogger(HelloServlet.class.getName());
 
     @Override
     public void init() {
@@ -20,9 +20,11 @@ public class HelloServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        logger.info("Responder requisição [olá mundo]");
+
         final var handlebars = new Handlebars();
         final var template = handlebars.compile("templates/sample");
-        final var params = new HashMap<String, Object>(Map.of("message", "Olá mundo"));
+        final var params = new HashMap<String, Object>(Map.of("message", "Olá mundo..."));
         final var html = template.apply(params);
 
         response.setContentType("text/html");
