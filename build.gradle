@@ -59,6 +59,9 @@ cargo {
         // Caminho da instalação do TomCat
         homeDir = file('C:\\jdk\\tomcat\\apache-tomcat-9.0.89')
 
+        // Definir que a JVM deve usar encoding UTF-8
+        jvmArgs = '-Dfile.encoding=utf-8'
+
         // Caminho do arquivo de logs de saida
         outputFile = file('build\\output.log')
 

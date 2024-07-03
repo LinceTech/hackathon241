@@ -2,20 +2,22 @@ package br.com.lince.hackathon;
 
 import com.github.jknack.handlebars.Handlebars;
 
-import java.io.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
 
-@WebServlet("/hello-servlet")
-public class HelloServlet extends HttpServlet {
-    private final Logger logger = Logger.getLogger(HelloServlet.class.getName());
+@WebServlet("/")
+public class IndexServlet extends HttpServlet {
+    private final Logger logger = Logger.getLogger(IndexServlet.class.getName());
 
     @Override
     public void init() {
-        logger.info("[helloServlet] servlet inicializado");
+        logger.info("[indexServlet] servlet inicializado");
     }
 
     @Override
@@ -23,7 +25,7 @@ public class HelloServlet extends HttpServlet {
         logger.info("Responder requisição [olá mundo]");
 
         final var handlebars = new Handlebars();
-        final var template = handlebars.compile("templates/sample");
+        final var template = handlebars.compile("templates/index");
         final var params = new HashMap<String, Object>(Map.of("message", "Olá mundo..."));
         final var html = template.apply(params);
 
@@ -33,6 +35,6 @@ public class HelloServlet extends HttpServlet {
 
     @Override
     public void destroy() {
-        logger.info("[helloServlet] servlet finalizado");
+        logger.info("[indexServlet] servlet finalizado");
     }
 }

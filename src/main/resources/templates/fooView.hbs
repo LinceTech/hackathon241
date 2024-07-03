@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>Foo View</title>
+</head>
+<body>
+<h1>This is the foo view</h1>
+<br/>
+<table>
+    <thead>
+    <tr>
+        <th>Foo</th>
+        <th>Bar</th>
+        <th>Bas</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#foos}}
+        <tr>
+            <td>{{bar}}</td>
+            <td>{{bas}}</td>
+            <td>{{boo}}</td>
+        </tr>
+    {{/foos}}
+    </tbody>
+</table>
+
+</body>
+</html>
