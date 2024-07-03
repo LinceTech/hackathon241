@@ -27,7 +27,7 @@ public interface FooRepository {
     boolean exists(@Bind("bar") int bar);
 
     @UseFreemarkerEngine
-    @SqlScript("DELETE FROM foo WHERE bar = :bar")
+    @SqlUpdate("DELETE FROM foo WHERE bar = :bar")
     void delete(@Bind("bar") int bar);
 
     @UseFreemarkerEngine

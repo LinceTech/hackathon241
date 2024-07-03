@@ -23,19 +23,8 @@ public class FooServlet extends HttpServlet {
     private final Logger logger = Logger.getLogger(FooServlet.class.getName());
 
     @Override
-    public void init() {
-        logger.info("servlet inicializado");
-    }
-
-    @Override
-    public void destroy() {
-        logger.info("servlet finalizado");
-    }
-
-    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
-        logger.info("responder get [ " + requestPath + " ]");
 
         switch (requestPath) {
             case "":
@@ -84,7 +73,7 @@ public class FooServlet extends HttpServlet {
 
     private void manageFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         logger.info("manage foo");
-        final var fooRender = new TemplateRenderer<Foo>("fooView_edit", response);
+        final var fooRender = new TemplateRenderer<Foo>("fooViewEdit", response);
 
         final var bar = NumberUtils.toInt(request.getParameter("bar"), 0);
         final var bas = request.getParameter("bas");
@@ -97,13 +86,13 @@ public class FooServlet extends HttpServlet {
             } else {
                 dao.insert(foo);
             }
-            fooRender.render(null);
+            loadFullPage(request, response);
             return null;
         });
     }
 
     private void editFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var fooRender = new TemplateRenderer<Foo>("fooView_edit", response);
+        final var fooRender = new TemplateRenderer<Foo>("fooViewEdit", response);
         final var bar = NumberUtils.toInt(request.getParameter("bar"), 0);
 
         logger.info("bar: " + request.getParameter("bar"));
@@ -118,13 +107,11 @@ public class FooServlet extends HttpServlet {
     }
 
     private void deleteFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        logger.info("delete foo");
-
-        final var fooRender = new TemplateRenderer<FooViewData>("fooView", response);
         final var bar = Integer.parseInt(request.getParameter("bar"));
 
         JDBIConnection.instance().withExtension(FooRepository.class, dao -> {
             dao.delete(bar);
+            loadFullPage(request, response);
             return null;
         });
     }

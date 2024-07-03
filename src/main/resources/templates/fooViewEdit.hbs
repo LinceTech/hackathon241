@@ -1,0 +1,21 @@
+<form id="fooForm">
+    <input type="hidden" name="bar" value="{{bar}}">
+    Bas: <input type="text" name="bas" value="{{bas}}"> <br>
+    Boo: <input type="text" name="boo" value="{{boo}}"> <br>
+    <br>
+    <button hx-target="#formAndTable"
+            hx-select="#formAndTable"
+            hx-replace="innerHTML"
+            hx-post="foo/upsert">
+        {{#bar}}Atualizar{{/bar}}
+        {{^bar}}Cadastrar{{/bar}}
+    </button>
+    {{#bar}}
+        <button hx-target="#fooForm"
+                hx-select="#fooForm"
+                hx-replace="innerHTML"
+                hx-get="foo/edit">
+            Cancelar
+        </button>
+    {{/bar}}
+</form>

@@ -9,46 +9,27 @@
 <h1>This is the foo view</h1>
 <hr>
 
-<form id="foo-form">
-    Bas: <input type="text" name="bas"> <br>
-    Boo: <input type="text" name="boo"> <br>
-    <br>
-    <button hx-target="#foo-form"
-            hx-replace="innerHTML"
-            hx-post="foo/upsert">
-        Cadastrar
-    </button>
-</form>
+<div id="formAndTable">
+    {{>fooViewEdit}}
 
-<hr>
+    <hr>
 
-<table>
-    <thead>
-    <tr>
-        <th>Foo</th>
-        <th>Bar</th>
-        <th>Bas</th>
-        <th>Ação</th>
-    </tr>
-    </thead>
-    <tbody>
-    {{#foos}}
+    <table id="fooItemsTable">
+        <thead>
         <tr>
-            <td>{{bar}}</td>
-            <td>{{bas}}</td>
-            <td>{{boo}}</td>
-            <td>
-                <a href="#"
-                   hx-target="#foo-form"
-                   hx-replace="innerHTML"
-                   hx-get="foo/edit?bar={{bar}}">
-                    Editar
-                </a>
-            </td>
+            <th>Foo</th>
+            <th>Bar</th>
+            <th>Bas</th>
+            <th>Ação</th>
         </tr>
-    {{/foos}}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        {{#foos}}
+            {{>fooViewTableItem}}
+        {{/foos}}
+        </tbody>
+    </table>
+</div>
 
 </body>
 </html>

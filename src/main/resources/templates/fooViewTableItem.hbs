@@ -1,0 +1,20 @@
+<tr id="fooItem{{bar}}">
+    <td>{{bar}}</td>
+    <td>{{bas}}</td>
+    <td>{{boo}}</td>
+    <td>
+        <a href="#"
+           hx-target="#fooForm"
+           hx-replace="innerHTML"
+           hx-get="foo/edit?bar={{bar}}">
+        Editar
+        </a>
+        <a href="#"
+           hx-target="#formAndTable"
+           hx-select="#formAndTable"
+           hx-replace="innerHTML"
+           hx-get="foo/delete?bar={{bar}}">
+        Delete
+        </a>
+    </td>
+</tr>
