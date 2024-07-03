@@ -3,13 +3,18 @@ package br.com.lince.hackathon.foo;
 import java.util.Objects;
 
 /**
- * A classe Foo é apenas um exemplo de 'Data class', nomes da classe a atributos não tem significado algum, os dados são
- * públicos e imutáveis (final) pois representam apenas uma estrutura para armazenar dados de forma combinada, sem
- * lógica ou inteligencia.
+ * A classe Foo é apenas um exemplo de 'Data class', nomes da classe a atributos não tem significado algum,
+ * representam apenas uma estrutura para armazenar dados de forma combinada, sem lógica ou inteligencia.
  * <br/>
  * Obs.: Em versões mais recentes do Java, essa classe seria criada como um Record.
  */
 public class Foo {
+    /**
+     * Construtor vazio, necessário para uso com JDBI mapper
+     */
+    public Foo() {
+    }
+
     /**
      * Construir uma instância de Foo.
      *
@@ -26,17 +31,41 @@ public class Foo {
     /**
      * Atributo bar, sem significado algum
      */
-    public final int bar;
+    public int bar;
 
     /**
      * Atributo bar, sem significado algum
      */
-    public final String bas;
+    public String bas;
 
     /**
      * Atributo bar, sem significado algum
      */
-    public final String boo;
+    public String boo;
+
+    public int getBar() {
+        return bar;
+    }
+
+    public void setBar(int bar) {
+        this.bar = bar;
+    }
+
+    public String getBas() {
+        return bas;
+    }
+
+    public void setBas(String bas) {
+        this.bas = bas;
+    }
+
+    public String getBoo() {
+        return boo;
+    }
+
+    public void setBoo(String boo) {
+        this.boo = boo;
+    }
 
     @Override
     public boolean equals(Object o) {

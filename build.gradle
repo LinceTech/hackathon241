@@ -27,9 +27,10 @@ dependencies {
     implementation("com.github.jknack:handlebars:4.3.1")
 
     // Dependências relacionadas ao banco de dados
-    implementation(platform("org.jdbi:jdbi3-bom:3.45.1"))
+    implementation(platform("org.jdbi:jdbi3-bom:3.45.2"))
     implementation("org.jdbi:jdbi3-core")
     implementation("org.jdbi:jdbi3-sqlobject")
+    implementation("org.jdbi:jdbi3-freemarker")
     implementation("com.microsoft.sqlserver:mssql-jdbc:12.6.2.jre11")
 
     // Dependências padrão
