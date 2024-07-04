@@ -4,8 +4,26 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Classe utilizada para agregar todos os dados necessários para alimentar o template fooView.hbs
+ */
 public class FooViewData {
-    public FooViewData(List<Foo> foos, LocalDateTime dateTime, int page, int pageSize, int count) {
+    /**
+     * Construtor utilizado para renderizar a página com a lista de foos.
+     *
+     * @param foos     lista de foos
+     * @param dateTime data e hora
+     * @param page     número da pagina
+     * @param pageSize número de itens da página atual
+     * @param count    número total de foos
+     */
+    public FooViewData(
+            List<Foo> foos,
+            LocalDateTime dateTime,
+            int page,
+            int pageSize,
+            int count
+    ) {
         this.foos = foos;
         this.dateTime = dateTime;
         this.page = page;
@@ -15,7 +33,25 @@ public class FooViewData {
         this.foo = null;
     }
 
-    public FooViewData(HashMap<String, String> errors, Foo foo, List<Foo> foos, LocalDateTime dateTime, int page, int pageSize, int count) {
+    /**
+     * Construtor utilizado para renderizar a página com a lista de foos.
+     *
+     * @param errors   mapa contendo os errors que ocorreram no formulário
+     * @param foo      item a ser alimentado no formulário de cadastro/edição
+     * @param foos     lista de foos
+     * @param dateTime data e hora
+     * @param page     número da pagina
+     * @param pageSize número de itens da página atual
+     * @param count    número total de foos
+     */
+    public FooViewData(
+            HashMap<String, String> errors,
+            Foo foo, List<Foo> foos,
+            LocalDateTime dateTime,
+            int page,
+            int pageSize,
+            int count
+    ) {
         this.foos = foos;
         this.dateTime = dateTime;
         this.page = page;
