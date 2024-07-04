@@ -1,6 +1,9 @@
 package br.com.lince.hackathon.standard;
 
 import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.helper.ConditionalHelpers;
+import com.github.jknack.handlebars.helper.NumberHelper;
+import com.github.jknack.handlebars.helper.StringHelpers;
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
 
 import javax.servlet.http.HttpServletResponse;
@@ -8,6 +11,17 @@ import java.io.IOException;
 
 public class TemplateRenderer<T> {
     private static final Handlebars handlebars = new Handlebars(new ClassPathTemplateLoader("/templates"));
+
+    /*
+     * Configurar o template handlebars para incluir helpers padrão
+     */
+    static {
+        StringHelpers.register(handlebars);
+        NumberHelper.register(handlebars);
+        for (var helper : ConditionalHelpers.values()) {
+            handlebars.registerHelper(helper.name(), helper);
+        }
+    }
 
     public TemplateRenderer(String template, HttpServletResponse response) {
         this.template = template;

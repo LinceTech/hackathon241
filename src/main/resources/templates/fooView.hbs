@@ -6,11 +6,11 @@
 </head>
 <body>
 
-<h1>This is the foo view</h1>
+<h1>Exemplo - Cadastro e consulta - Foo</h1>
 <hr>
 
 <div id="formAndTable">
-    {{>fooViewEdit}}
+    {{>fooViewEdit foo}}
 
     <hr>
 
@@ -18,7 +18,7 @@
         <input type="hidden" name="page" value="{{index}}">
 
         <div style="display: inline-flex; padding-bottom: 12px;">
-            {{#hasPrevious}}
+            {{#if hasPrevious}}
                 <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
                      alt="Página anterior"
                      style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
@@ -26,13 +26,13 @@
                      hx-select="#fooItemsTable"
                      hx-swap="innerHTML"
                      hx-get="foo?page={{previous}}">
-            {{/hasPrevious}}
+            {{/if}}
 
             <span style="height: 18px; vertical-align: center;">
                 Pagina <b>{{page}}</b> de <b>{{totalPages}}</b>
             </span>
 
-            {{#next}}
+            {{#if next}}
                 <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
                      alt="Próxima página"
                      style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
@@ -40,7 +40,7 @@
                      hx-select="#fooItemsTable"
                      hx-swap="innerHTML"
                      hx-get="foo?page={{next}}">
-            {{/next}}
+            {{/if}}
         </div>
 
         <table>

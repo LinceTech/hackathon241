@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 /**
@@ -18,9 +19,14 @@ import java.util.logging.Logger;
 @WebServlet("/foo/*")
 public class FooServlet extends HttpServlet {
     /*
+     * O número de itens na paginação desta tela
+     */
+    private static final int PAGE_SIZE = 5;
+
+    /*
      * Logger padrão do servlet
      */
-    private final Logger logger = Logger.getLogger(FooServlet.class.getName());
+    private static final Logger logger = Logger.getLogger(FooServlet.class.getName());
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -67,12 +73,11 @@ public class FooServlet extends HttpServlet {
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
 
         JDBIConnection.instance().withExtension(FooRepository.class, dao -> {
-            final var pageSize = 5;
             final var now = LocalDateTime.now();
             final var count = dao.count();
-            final var foos = dao.selectPage(page, pageSize);
+            final var foos = dao.selectPage(page, PAGE_SIZE);
 
-            renderer.render(new FooViewData(foos, now, page, pageSize, count));
+            renderer.render(new FooViewData(foos, now, page, PAGE_SIZE, count));
 
             return null;
         });
@@ -82,18 +87,48 @@ public class FooServlet extends HttpServlet {
      * Trata a requisição para inserir ou atualizar um foo, e retorna página atualizada
      */
     private void insertOrUpdateFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<FooViewData>("fooView", response);
+        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
         final var bar = NumberUtils.toInt(request.getParameter("bar"), 0);
         final var bas = request.getParameter("bas");
         final var boo = request.getParameter("boo");
         final var foo = new Foo(bar, bas, boo);
+        final var errors = new HashMap<String, String>();
+
+        if (bas.isBlank()) {
+            errors.put("basError", "Não pode ser vazio");
+        } else if (bas.length() > 60) {
+            errors.put("basError", "Não pode ser maior que 60 caracteres");
+        }
+
+        if (boo.isBlank()) {
+            errors.put("booError", "Não pode ser vazio");
+        }
 
         JDBIConnection.instance().withExtension(FooRepository.class, dao -> {
-            if (dao.exists(bar)) {
-                dao.update(foo);
+            logger.info("errors: " + errors.entrySet());
+
+            // Verificar se ocorreram erros no formulário
+            if (errors.isEmpty()) {
+                if (dao.exists(bar)) {
+                    dao.update(foo);
+                } else {
+                    dao.insert(foo);
+                }
             } else {
-                dao.insert(foo);
+
             }
-            loadFullPage(request, response);
+
+            final var now = LocalDateTime.now();
+            final var count = dao.count();
+            final var foos = dao.selectPage(page, PAGE_SIZE);
+
+            if (errors.isEmpty()) {
+                renderer.render(new FooViewData(foos, now, page, PAGE_SIZE, count));
+            } else {
+                renderer.render(new FooViewData(errors, foo, foos, now, page, PAGE_SIZE, count));
+            }
+
             return null;
         });
     }

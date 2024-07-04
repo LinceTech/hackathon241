@@ -25,6 +25,7 @@ tasks.withType(JavaCompile) {
 dependencies {
     // Dependências para WEB
     implementation("com.github.jknack:handlebars:4.3.1")
+    implementation("com.github.jknack:handlebars-helpers:4.3.1")
 
     // Dependências relacionadas ao banco de dados
     implementation(platform("org.jdbi:jdbi3-bom:3.45.2"))
