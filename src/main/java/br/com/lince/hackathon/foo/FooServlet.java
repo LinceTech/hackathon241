@@ -54,7 +54,6 @@ public class FooServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
-        logger.info("responder post [ " + requestPath + " ]");
 
         if (requestPath.isBlank()) {
             loadFullPage(request, response);
@@ -106,8 +105,6 @@ public class FooServlet extends HttpServlet {
         }
 
         JDBIConnection.instance().withExtension(FooRepository.class, dao -> {
-            logger.info("errors: " + errors.entrySet());
-
             // Verificar se ocorreram erros no formulário
             if (errors.isEmpty()) {
                 if (dao.exists(bar)) {
