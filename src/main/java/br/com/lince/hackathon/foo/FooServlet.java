@@ -69,7 +69,7 @@ public class FooServlet extends HttpServlet {
      * Trata a requisição para retorna a página de foos carregada com todos os dados
      */
     private void loadFullPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<FooViewData>("fooView", response);
+        final var renderer = new TemplateRenderer<FooViewData>("foo/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
 
         JDBIConnection.instance().withExtension(FooRepository.class, dao -> {
@@ -87,7 +87,7 @@ public class FooServlet extends HttpServlet {
      * Trata a requisição para inserir ou atualizar um foo, e retorna página atualizada
      */
     private void insertOrUpdateFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<FooViewData>("fooView", response);
+        final var renderer = new TemplateRenderer<FooViewData>("foo/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
         final var bar = NumberUtils.toInt(request.getParameter("bar"), 0);
         final var bas = request.getParameter("bas");
@@ -137,7 +137,7 @@ public class FooServlet extends HttpServlet {
      * Trata a requisição para alimentar o formulário de cadastro ou edição de foos
      */
     private void loadFormEditFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<Foo>("fooViewEdit", response);
+        final var renderer = new TemplateRenderer<Foo>("foo/form", response);
         final var bar = NumberUtils.toInt(request.getParameter("bar"), 0);
 
         JDBIConnection.instance().withExtension(FooRepository.class, dao -> {

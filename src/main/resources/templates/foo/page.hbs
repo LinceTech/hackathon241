@@ -10,7 +10,7 @@
 <hr>
 
 <div id="formAndTable">
-    {{>fooViewEdit foo}}
+    {{>foo/form foo}}
 
     <hr>
 
@@ -54,7 +54,7 @@
             </thead>
             <tbody>
             {{#foos}}
-                {{>fooViewTableItem}}
+                {{>foo/row}}
             {{/foos}}
             </tbody>
         </table>
