@@ -115,8 +115,6 @@ public class FooServlet extends HttpServlet {
                 } else {
                     dao.insert(foo);
                 }
-            } else {
-
             }
 
             final var now = LocalDateTime.now();
