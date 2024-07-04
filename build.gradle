@@ -36,6 +36,7 @@ dependencies {
 
     // Utilidades para simplificar escrita de código Java
     implementation("org.apache.commons:commons-lang3:3.14.0")
+    implementation("com.google.code.gson:gson:2.11.0")
 
     // Dependências padrão
     compileOnly('javax.servlet:javax.servlet-api:4.0.1')
