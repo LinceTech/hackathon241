@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Clientes</title>
+    <style>
+        .title {
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .fields {
+            display: flex;
+            justify-content: center;
+            margin: 10px;
+        }
+
+        .dados {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            width: 200px; /* largura das labels */
+            margin-right: 10px; /* espaçamento entre label e input */
+        }
+
+        input, textarea {
+            max-width: 120px;
+            margin-bottom: 10px; /* Espaçamento entre inputs */
+        }
+
+        /* Estilos específicos para certos inputs */
+        input.size-small {
+            max-width: 50px; /* Tamanho para o número da casa */
+        }
+
+        input.size-very-small {
+            max-width: 30px; /* Tamanho para o DDD */
+        }
+
+        label {
+            width: 200px;
+            max-width: 200px;
+            text-align: right;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="title">
+        <h1>Cadastro de Clientes</h1>
+    </div>
+</header>
+<main>
+    <div class="fields">
+        <section class="dados">
+            <label>Nome</label>
+            <input type="text">
+        </section>
+        <section>
+            <label>CPF</label>
+            <input type="text">
+        </section>
+    </div>
+
+    <div class="fields">
+        <section class="dados">
+            <label>Data de nascimento</label>
+            <input type="date">
+        </section>
+        <section>
+            <label>Telefone</label>
+            <input type="text" class="size-very-small" maxlength="3" placeholder="DDD">
+            <input type="text" placeholder="Telefone">
+        </section>
+    </div>
+
+    <div class="fields">
+        <section class="dados">
+            <label>Email</label>
+            <input type="email">
+        </section>
+        <section>
+            <label>CEP</label>
+            <input type="text">
+        </section>
+    </div>
+
+    <div class="fields">
+        <section class="dados">
+            <label>Cidade</label>
+            <input type="text">
+        </section>
+        <section>
+            <label>Estado</label>
+            <input type="text">
+        </section>
+    </div>
+
+    <div class="fields">
+        <section class="dados">
+            <label>Rua</label>
+            <input type="text" placeholder="Rua">
+            <input type="text" class="size-small" maxlength="5" placeholder="Nº">
+        </section>
+        <section>
+            <label>Bairro</label>
+            <input type="text">
+        </section>
+    </div>
+
+    <div class="fields">
+        <section class="dados">
+            <label>Complemento</label>
+            <textarea></textarea>
+        </section>
+    </div>
+</main>
+</body>
+</html>
