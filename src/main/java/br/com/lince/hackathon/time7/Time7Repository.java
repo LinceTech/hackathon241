@@ -116,18 +116,18 @@ public interface Time7Repository {
 
     @UseFreemarkerEngine
     @SqlUpdate("UPDATE Cliente SET " +
-                                   "Nome      = :cliente.nome   ," +
-                                   "CPF       = :cliente.cpf    ," +
-                                   "DtNasc    = :cliente.dtNasc ," +
-                                   "Telefo    = :cliente.telefo ," +
-                                   "Email     = :cliente.email  ," +
-                                   "CEP       = :cliente.cep    ," +
-                                   "Cidade    = :cliente.cidade ," +
-                                   "Estado    = :cliente.estado ," +
-                                   "Bairro    = :cliente.bairro ," +
-                                   "Rua       = :cliente.rua    ," +
-                                   "Numero    = :cliente.numero  " +
-                                   "WHERE Id  = :cliente.id      ")
+                                   "Nome         = :cliente.nome         ," +
+                                   "CPF          = :cliente.cpf          ," +
+                                   "DtNascimento = :cliente.dtNascimento ," +
+                                   "Telefone     = :cliente.telefone     ," +
+                                   "Email        = :cliente.email        ," +
+                                   "CEP          = :cliente.cep          ," +
+                                   "Cidade       = :cliente.cidade       ," +
+                                   "Estado       = :cliente.estado       ," +
+                                   "Bairro       = :cliente.bairro       ," +
+                                   "Rua          = :cliente.rua          ," +
+                                   "Numero       = :cliente.numero        " +
+                                   "WHERE Id     = :cliente.id      ")
     void updateCliente(@BindBean("cliente") Cliente cliente);
 
 
@@ -158,7 +158,7 @@ public interface Time7Repository {
 
 
     @UseFreemarkerEngine
-    @SqlUpdate("INSERT INTO Veiculo(Marca, Modelo, Placa, Cor, AnoFabrica, CustoDiaria, Descricao, TipoCombustivel,) " +
+    @SqlUpdate("INSERT INTO Veiculo(Marca, Modelo, Placa, Cor, AnoFabrica, CustoDiaria, Descricao, TipoCombustivel) " +
             "VALUES (:veiculo.marca            , " +
                     ":veiculo.modelo           , " +
                     ":veiculo.placa            , " +
@@ -211,29 +211,30 @@ public interface Time7Repository {
 
 
     @UseFreemarkerEngine
-    @SqlUpdate("INSERT INTO Locacao(Marca, Modelo, Placa, Cor, AnoFabrica, CustoDiaria, Descricao, TipoCombustivel) " +
-               "VALUES (:locacao.marca           , " +
-                       ":locacao.modelo          , " +
-                       ":locacao.placa           , " +
-                       ":locacao.cor             , " +
-                       ":locacao.anoFabrica      , " +
+    @SqlUpdate("INSERT INTO Locacao(Cliente, Gerente, Veiculo, DtInicio, DtFinal, CustoDiaria, ComissaoGerente, ValorTotalm DtPagamento) " +
+               "VALUES (:locacao.cliente         , " +
+                       ":locacao.gerente         , " +
+                       ":locacao.veiculo         , " +
+                       ":locacao.dtInicio        , " +
+                       ":locacao.dtFinal         , " +
                        ":locacao.custoDiaria     , " +
-                       ":locacao.descricao       , " +
-                       ":locacao.tipoCombustivel  )")
+                       ":locacao.comissaoGerente , " +
+                       ":locacao.valorTotal      , " +
+                       ":locacao.dtPagamento      )")
     void insertLocacao(@BindBean("locacao") Locacao locacao);
 
 
     @UseFreemarkerEngine
     @SqlUpdate("UPDATE Locacao SET " +
-                                   "Marca           = :locacao.marca           ," +
-                                   "Modelo          = :locacao.modelo          ," +
-                                   "Placa           = :locacao.placa           ," +
-                                   "Cor             = :locacao.cor             ," +
-                                   "AnoFabrica      = :locacao.anoFabrica      ," +
+                                   "Cliente         = :locacao.cliente         ," +
+                                   "Gerente         = :locacao.gerente         ," +
+                                   "Veiculo         = :locacao.veiculo         ," +
+                                   "DtInicio        = :locacao.dtInicio        ," +
+                                   "DtFinal         = :locacao.dtFinal         ," +
                                    "CustoDiaria     = :locacao.custoDiaria     ," +
-                                   "Descricao       = :locacao.descricao       ," +
-                                   "Descricao       = :locacao.descricao       ," +
-                                   "TipoCombustivel = :locacao.tipoCombustivel  " +
+                                   "ComissaoGerente = :locacao.comissaoGerente ," +
+                                   "ValorTotal      = :locacao.valorTotal      ," +
+                                   "DtPagamento     = :locacao.dtPagamento      " +
                                    "WHERE Id        = :locacao.id               ")
     void updateLocacao(@BindBean("locacao") Locacao locacao);
 }

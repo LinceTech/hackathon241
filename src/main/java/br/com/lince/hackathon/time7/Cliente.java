@@ -48,7 +48,6 @@ public class Cliente {
         this.numero       = numero       ;
     }
 
-
     public int getId() {
         return id;
     }
