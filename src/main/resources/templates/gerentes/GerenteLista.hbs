@@ -1,4 +1,64 @@
 <div class="container text-center" id="cliente_lista">
+    <div class="container text-center">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input
+                    placeholder="Informe o nome:"
+                    type="text"
+                    class="form-control"
+                    id="nome"
+                    name="nome"
+                    value="{{nome}}"
+            >
+        </div>
+        <div class="mb-3">
+            <label for="cpf" class="form-label">Documento</label>
+            <input
+                    placeholder="Informe o documento:"
+                    type="text"
+                    class="form-control"
+                    id="cpf"
+                    name="cpf"
+                    value="{{cpf}}"
+            >
+        </div>
+        <div class="mb-3">
+            <label for="cidade" class="form-label">Cidade</label>
+            <input
+                    placeholder="Informe a cidade:"
+                    type="text"
+                    class="form-control"
+                    id="cidade"
+                    name="cidade"
+                    value="{{cidade}}"
+            >
+        </div>
+        <div class="mb-3">
+            <label for="estado" class="form-label">Estado</label>
+            <input
+                    placeholder="Informe o estado:"
+                    type="text"
+                    class="form-control"
+                    id="estado"
+                    name="estado"
+                    value="{{estado}}"
+            >
+        </div>
+    </div>
+    <div class="container text-center">
+        <button
+                class="btn btn-primary"
+                hx-get="/hackathon/gerentes/edit?id={{id}}"
+                hx-target="#mustache_modal"
+                hx-trigger="click"
+                data-bs-toggle="modal"
+                data-bs-target="#gerenteModal"
+        >
+        Next
+        </button>
+    </div>
+
+
     <table class="table table-bordered">
         <thead class="thead-dark">
         <tr>

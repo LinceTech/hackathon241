@@ -121,13 +121,13 @@ public class GerentesServlet extends HttpServlet {
         JDBIConnection.instance().withExtension(GerentesRepository.class, dao -> {
             var gerente = new Gerentes();
 
-            if (gerenteID != 0) {
+            if(gerenteID != 0){
                 gerente = dao.pegaGerentesPeloID(gerenteID);
             }
 
             renderer.render(gerente);
 
-            return null;
+           return null;
         });
     }
 
