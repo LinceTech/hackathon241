@@ -71,7 +71,7 @@ public interface GerenteRepository {
      */
     @UseFreemarkerEngine
     @SqlUpdate("INSERT INTO gerente VALUES (:gerente.nr_cpf, :gerente.nm_gerente, :gerente.nr_telefone, :gerente.ds_email, :gerente.nm_cidade, :gerente.nm_estado, :gerente.pc_comissao, :gerente.dt_contratacao, :gerente.dt_nascimento)")
-    void insert(@BindBean("Gerente") Gerente gerente);
+    void insert(@BindBean("gerente") Gerente gerente);
 
     /**
      * Atualiza um Gerente na base de dados, conforme o valor de {bar} desse Gerente
@@ -79,6 +79,6 @@ public interface GerenteRepository {
      * @param gerente Gerente a ser cadastrado
      */
     @UseFreemarkerEngine
-    @SqlUpdate("UPDATE gerente SET nm_gerente = :gerente.nm_gerente WHERE nr_cpf = :gerente.nr_cpf")
-    void update(@BindBean("Gerente") Gerente gerente);
+    @SqlUpdate("UPDATE gerente SET nm_gerente = :gerente.nm_gerente, nr_telefone = :gerente.nr_telefone, nm_cidade = :gerente.nm_cidade, nm_estado = :gerente.nm_estado, pc_comissao = :gerente.pc_comissao  WHERE nr_cpf = :gerente.nr_cpf")
+    void update(@BindBean("gerente") Gerente gerente);
 }

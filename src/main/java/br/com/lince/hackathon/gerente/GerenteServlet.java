@@ -2,6 +2,7 @@ package br.com.lince.hackathon.gerente;
 
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
+import br.com.lince.hackathon.utils.Validacao;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -91,7 +92,7 @@ public class GerenteServlet extends HttpServlet {
         final var ds_email = request.getParameter("ds_email");
         final var nm_cidade = request.getParameter("nm_cidade");
         final var nm_estado = request.getParameter("nm_estado");
-        final var nr_telefone = NumberUtils.toInt(request.getParameter("nr_telefone"), 0);
+        final var nr_telefone = NumberUtils.toLong(request.getParameter("nr_telefone"), 0);
         final var dt_contratacao = LocalDate.parse(request.getParameter("dt_contratacao"), DateTimeFormatter.ISO_DATE);
         final var dt_nascimento = LocalDate.parse(request.getParameter("dt_nascimento"), DateTimeFormatter.ISO_DATE);
         final var pc_comissao = NumberUtils.toDouble(request.getParameter("pc_comissao"), 0.0);
@@ -99,16 +100,13 @@ public class GerenteServlet extends HttpServlet {
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
         final var errors = new HashMap<String, String>();
 
-        if (!isCpf(nr_cpf)) {
+        if (!Validacao.isCpf(nr_cpf)) {
             errors.put("cpfError", "CPF inválido!");
         }
 
         //Email é validado a partir do field email do HTML
 
-        var ldNow = LocalDate.now();
-        var chrono = ChronoUnit.YEARS.between(dt_nascimento, ldNow );
-        isMaior18(dt_nascimento);
-        if (chrono < 18L) {
+        if (!Validacao.isMaior18(dt_nascimento)) {
             errors.put("dt_nascimentoError", "A idade não pode ser inferior a 18 anos!");
         }
 
@@ -123,9 +121,12 @@ public class GerenteServlet extends HttpServlet {
         JDBIConnection.instance().withExtension(GerenteRepository.class, dao -> {
             // Verificar se ocorreram erros no formulário
             if (errors.isEmpty()) {
+                System.out.println("Linha 124");
                 if (dao.exists(gerente.getNr_cpf())) {
+                    System.out.println("Linha 126");
                     dao.update(gerente);
                 } else {
+                    System.out.println("Linha 129");
                     dao.insert(gerente);
                 }
             }
