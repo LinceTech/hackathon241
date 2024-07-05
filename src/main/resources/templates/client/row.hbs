@@ -10,4 +10,22 @@
     <td>{{neighborhood}}</td>
     <td>{{street}}</td>
     <td>{{number}}</td>
+    <td style="width: 50px">
+        <img src="https://img.icons8.com/?size=18&id=71201&format=png&color=000000"
+             alt="Editar item"
+             style="cursor: pointer"
+             hx-target="#clientForm"
+             hx-replace="innerHTML"
+             hx-get="client/upsert?id={{id}}">
+
+        <img src="https://img.icons8.com/?size=18&id=67884&format=png&color=000000"
+             alt="Apagar item"
+             style="cursor: pointer"
+             hx-target="#clientItemsTable"
+             hx-select="#clientItemsTable"
+             hx-replace="innerHTML"
+             hx-get="client/delete?id={{id}}"
+        hx-include="[name='page']">
+    </td>
+
 </tr>
