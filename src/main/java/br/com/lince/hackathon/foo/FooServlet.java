@@ -68,8 +68,8 @@ public class FooServlet extends HttpServlet {
      * Trata a requisição para retorna a página de foos carregada com todos os dados
      */
     private void loadFullPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<FooViewData>("foo/page", response);
-        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
+        final var renderer = new TemplateRenderer<FooViewData>("foo/page.hbs", response);
+        final var page = NumberUtils.toInt(request.getParameter("page.hbs"), 0);
 
         JDBIConnection.instance().withExtension(FooRepository.class, dao -> {
             final var now = LocalDateTime.now();
@@ -86,8 +86,8 @@ public class FooServlet extends HttpServlet {
      * Trata a requisição para inserir ou atualizar um foo, e retorna página atualizada
      */
     private void insertOrUpdateFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<FooViewData>("foo/page", response);
-        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
+        final var renderer = new TemplateRenderer<FooViewData>("foo/page.hbs", response);
+        final var page = NumberUtils.toInt(request.getParameter("page.hbs"), 0);
         final var bar = NumberUtils.toInt(request.getParameter("bar"), 0);
         final var bas = request.getParameter("bas");
         final var boo = request.getParameter("boo");
