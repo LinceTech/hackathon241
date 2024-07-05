@@ -1,0 +1,162 @@
+<form id="gerenteForm">
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;">Nome:</span>
+            <span>
+                <input type="text" name="nome" maxlength="60" size="60" value="{{nome}}">
+                {{#with errors}}
+                    {{#if nomeError}}
+                        <span class="error">
+                            Nome: {{nomeError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;">CPF:</span>
+            <span>
+                <input type="text" id="cpf" name="cpf" maxlength="14" size="14" value="{{cpf}}">
+                {{#with errors}}
+                    {{#if cpfError}}
+                        <span class="error">
+                            cpf: {{cpfError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;">Telefone:</span>
+            <span>
+                <input type="text" name="telefone" maxlength="13" size="13" value="{{telefone}}">
+                {{#with errors}}
+                    {{#if telefoneError}}
+                        <span class="error">
+                            Telefone: {{telefoneError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;">E-mail:</span>
+            <span>
+                <input type="text" name="email" maxlength="30" size="30" value="{{email}}">
+                {{#with errors}}
+                    {{#if emailError}}
+                        <span class="error">
+                            Email: {{emailError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;">Cidade:</span>
+            <span>
+                <input type="text" name="cidade" maxlength="60" size="60" value="{{cidade}}">
+                {{#with errors}}
+                    {{#if cidadeError}}
+                        <span class="error">
+                            Cidade: {{cidadeError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;">Estado:</span>
+            <span>
+                <input type="text" name="estado" maxlength="60" size="60" value="{{estado}}">
+                {{#with errors}}
+                    {{#if estadoError}}
+                        <span class="error">
+                            Estado: {{estadoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;">Percentual Comissão:</span>
+            <span>
+                <input type="text" name="percentualComissao" maxlength="5" size="5" value="{{percentualComissao}}">
+                {{#with errors}}
+                    {{#if percentualComissaoError}}
+                        <span class="error">
+                            Percentual Comissão: {{percentualComissaoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;">Data Contratação:</span>
+            <span>
+                <input  type="text" name="dataContratacao" maxlength="8" size="8" value="{{dataContratacao}}">
+                {{#with errors}}
+                    {{#if dataContratacaoError}}
+                        <span class="error">
+                            Data Contratação: {{dataContratacaoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+
+
+    <br>
+    <button hx-target="#formAndTable"
+            hx-select="#formAndTable"
+            hx-swap="outerHTML"
+            hx-post="gerente/upsert"
+            hx-include="[name='page']"
+            style="display: inline-flex">
+        <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
+        &nbsp;
+        {{#if cpf}}
+            Atualizar
+        {{^}}
+            Cadastrar
+        {{/if}}
+    </button>
+    {{#if cpf}}
+        <button hx-target="#gerenteForm"
+                hx-select="#gerenteForm"
+                hx-swap="outerHTML"
+                hx-get="gerente/edit"
+                style="display: inline-flex">
+            <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar item">
+            &nbsp;
+            Cancelar
+        </button>
+    {{/if}}
+</form>
