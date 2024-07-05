@@ -1,0 +1,32 @@
+{{>head}}
+<div class="d-flex flex-column justify-content-center w-100">
+    <div class="w-100 m-5 border rounded d-flex flex-column justify-content-center">
+        <div class="d-flex justify-content-center position-relative">
+            <div class="h4 text-center">Gerentes</div>
+        </div>
+        <div class="p-2">
+            <button
+                    class="btn btn-primary"
+                    hx-get="/hackathon/gerentes/new"
+                    hx-target="#mustache_modal"
+                    hx-trigger="click"
+                    data-bs-toggle="modal"
+                    data-bs-target="#gerenteModal"
+            >
+                Cadastrar Gerente
+            </button>
+        </div>
+    </div>
+    {{>gerentes/GerenteLista}}
+    <div
+            class="modal fade"
+            id="gerenteModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+    >
+        <div class="modal-dialog modal-dialog-centered" id="mustache_modal">
+        </div>
+    </div>
+</div>
+{{>footer}}

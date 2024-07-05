@@ -2,6 +2,7 @@ package br.com.lince.hackathon.gerentes;
 
 import org.jdbi.v3.freemarker.UseFreemarkerEngine;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
@@ -10,29 +11,29 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import java.util.List;
 
 public interface GerentesRepository {
-    //@RegisterBeanMapper(Gerentes.class)
-    //@SqlQuery(
-    //        "SELECT * FROM Gerentes C (NOLOCK)" +
-    //                "ORDER BY C.nome ASC OFFSET (${pagina} * ${qtRegistros}) ROWS FETCH NEXT ${qtRegistros} ROWS ONLY"
-    //)
-    //@UseFreemarkerEngine
-    //List<Gerentes> consultaPaginacao(@Define("pagina") int pagina, @Define("qtRegistros") int qtRegistros);
+    @RegisterBeanMapper(Gerentes.class)
+    @SqlQuery(
+            "SELECT * FROM GERENTES C (NOLOCK)" +
+                    " ORDER BY C.nome ASC OFFSET (${pagina} * ${qtRegistros}) ROWS FETCH NEXT ${qtRegistros} ROWS ONLY"
+    )
+    @UseFreemarkerEngine
+    List<Gerentes> consultaPaginacao(@Define("pagina") int pagina, @Define("qtRegistros") int qtRegistros);
 
 
     @SqlUpdate(
             "INSERT INTO Gerentes VALUES (" +
-                    ":nome," +
-                    ":cpf," +
-                    ":ddd," +
-                    ":telefone," +
-                    ":email," +
-                    ":cidade," +
-                    ":estado," +
-                    ":percentual_comissao," +
-                    ":data_contratacao" +
+                    ":gerentes.nome," +
+                    ":gerentes.cpf," +
+                    ":gerentes.ddd," +
+                    ":gerentes.telefone," +
+                    ":gerentes.email," +
+                    ":gerentes.cidade," +
+                    ":gerentes.estado," +
+                    ":gerentes.percentualComissao," +
+                    ":gerentes.dataContratacao" +
                     ")"
     )
-    void insereGerente(@BindBean Gerentes Gerentes);
+    void insereGerente(@BindBean("gerentes") Gerentes gerentes);
 
     @SqlUpdate(
             "UPDATE Gerentes SET " +
@@ -56,6 +57,6 @@ public interface GerentesRepository {
     @SqlUpdate("DELETE FROM GERENTES WHERE id=:id")
     void deleteGerente(Long id);
 
-    //@SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM LOCACAO WHERE id_Gerente = :bar AND devolvido = 0), 1, 0)")
-    //boolean verificaAlocacaoGerente(int id);
+    @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM GERENTES WHERE id=:id), 1, 0)")
+    boolean existeGerente(@Bind("id") Long id);
 }

@@ -1,0 +1,51 @@
+<div class="container text-center" id="cliente_lista">
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Telefone</th>
+            <th>Email</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Percentual comissão</th>
+            <th>Data contratação</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each gerentes}}
+            <tr>
+                <td>{{nome}}</td>
+                <td>{{cpf}}</td>
+                <td>{{ddd}} - {{telefone}}</td>
+                <td>{{email}}</td>
+                <td>{{cidade}}</td>
+                <td>{{estado}}</td>
+                <td>{{percentualComissao}}</td>
+                <td>{{dataContratacao}}</td>
+                <td class="gap-2">
+                    <button
+                            class="btn btn-primary"
+                            hx-get="/ticket/getTicketByID/{{id}}"
+                            hx-target="#mustache_modal"
+                            hx-trigger="click"
+                            data-bs-toggle="modal"
+                            data-bs-target="#ticketModel"
+                    >
+                        Edit
+                    </button>
+                    <button
+                            class="btn btn-danger"
+                            hx-delete="/ticket/deleteTicketByID/{{id}}"
+                            hx-target="#ticket_list"
+                            hx-trigger="click"
+                    >
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>
