@@ -1,6 +1,5 @@
 package br.com.lince.hackathon.cliente;
 
-import br.com.lince.hackathon.foo.Foo;
 import org.jdbi.v3.freemarker.UseFreemarkerEngine;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -24,7 +23,7 @@ public interface ClienteRepository {
      */
     @RegisterBeanMapper(Cliente.class)
     @UseFreemarkerEngine
-    @SqlQuery("SELECT * FROM cliente ORDER BY nm_cliente OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
+    @SqlQuery("SELECT nm_cliente, nr_cpf, dt_nascimento, nr_telefone, ds_email, nm_bairro, nr_cep, nm_cidade, nm_estado, nr_residencia, nm_rua FROM cliente ORDER BY nr_cpf OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
     List<Cliente> selectPage(@Define("page") int page, @Define("count") int count);
 
     /**
@@ -44,8 +43,8 @@ public interface ClienteRepository {
      */
     @RegisterBeanMapper(Cliente.class)
     @UseFreemarkerEngine
-    @SqlQuery("SELECT bar, bas, boo FROM foo WHERE bar = :nr_cpf")
-    Cliente findByBar(@Bind("bar") int nr_cpf);
+    @SqlQuery("SELECT * FROM cliente WHERE nr_cpf = :nr_cpf")
+    Cliente findByCliente(@Bind("cliente") int nr_cpf);
 
     /**
      * Verifica se existe um foo com o {bar} informado
@@ -69,21 +68,21 @@ public interface ClienteRepository {
     /**
      * Cadastra um novo foo na base de dados.
      *
-     * @param foo foo a ser cadastrado
+     * @param cliente foo a ser cadastrado
      */
     @UseFreemarkerEngine
-    @SqlUpdate("INSERT INTO foo(bas, boo) VALUES (:Cliente.bas, :Cliente.boo)")
-    void insert(@BindBean("foo") Foo foo);
+    @SqlUpdate("INSERT INTO cliente(nm_cliente, nr_cpf, dt_nascimento, nr_telefone, ds_email, nm_bairro, nr_cep, nm_cidade, nm_estado, nr_residencia, nm_rua) VALUES (:Cliente.nm_cliente, :Cliente.nr_cpf, :Cliente.dt_nascimento, :Cliente.nr_telefone, :Cliente.ds_email, :Cliente.nr_cep, :Cliente.nm_cidade, :Cliente.nm_estado, :Cliente.nm_bairro, :Cliente.nm_rua, :Cliente.nr_residencia)")
+    void insert(@BindBean("cliente") Cliente cliente);
 
     /**
      * Atualiza um foo na base de dados, conforme o valor de {bar} desse foo
      *
      * @param cliente foo a ser cadastrado
      */
-    /*
+
     @UseFreemarkerEngine
-    @SqlUpdate("UPDATE Cliente SET bas = :Cliente.bas, boo = :Cliente.boo WHERE nr_cpf = :Cliente.bar")
+    @SqlUpdate("UPDATE Cliente SET nm_cliente = :Cliente.bas, nm_cliente = :Cliente.nm_cliente WHERE nr_cpf = :Cliente.bar")
     void update(@BindBean("foo") Cliente cliente);
-    */
+
 }
 

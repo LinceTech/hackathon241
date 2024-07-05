@@ -1,10 +1,6 @@
 package br.com.lince.hackathon.cliente;
 
-import br.com.lince.hackathon.endereco.Endereco;
-import br.com.lince.hackathon.foo.Foo;
 import br.com.lince.hackathon.foo.FooRepository;
-import br.com.lince.hackathon.foo.FooServlet;
-import br.com.lince.hackathon.foo.FooViewData;
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
@@ -16,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
@@ -56,7 +51,7 @@ public class ClienteServlet extends HttpServlet {
         if (requestPath.isBlank()) {
             loadFullPage(request, response);
         } else if (requestPath.equals("/upsert")) {
-            insertOrUpdateFoo(request, response);
+            insertOrUpdateCliente(request, response);
         } else {
             response.getWriter().write("Not found : " + requestPath);
         }
@@ -66,15 +61,17 @@ public class ClienteServlet extends HttpServlet {
      * Trata a requisição para retorna a página de foos carregada com todos os dados
      */
     private void loadFullPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<FooViewData>("cliente/cadastro", response);
-        final var page = NumberUtils.toInt(request.getParameter("cadastro"), 0);
+        final var renderer = new TemplateRenderer<ClienteViewData>("cliente/page", response);
+        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
 
-        JDBIConnection.instance().withExtension(ClienteRepository.class, dao -> {
+        JDBIConnection.instance().withExtension(ClienteRepository.class, cliente -> {
             final var now = LocalDateTime.now();
-            final var count = dao.count();
-            final var foos = dao.selectPage(page, PAGE_SIZE);
+            final var count = cliente.count();
+            final var clientes = cliente.selectPage(page, PAGE_SIZE);
 
-            renderer.render(new FooViewData(foos, now, page, PAGE_SIZE, count));
+            logger.severe(clientes+" <-- clientes");
+
+            renderer.render(new ClienteViewData(clientes, now, page, PAGE_SIZE, count));
 
             return null;
         });
@@ -83,9 +80,9 @@ public class ClienteServlet extends HttpServlet {
     /*
      * Trata a requisição para inserir ou atualizar um foo, e retorna página atualizada
      */
-    private void insertOrUpdateFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<FooViewData>("cliente/cadastro", response);
-        final var page = NumberUtils.toInt(request.getParameter("cadastro"), 0);
+    private void insertOrUpdateCliente(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<ClienteViewData>("cliente/page", response);
+        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
 
         final var dt_nascimento = NumberUtils.toInt(request.getParameter("dt_nascimento"), 0);
         final var nr_telefone = NumberUtils.toInt(request.getParameter("nr_telefone"), 0);
@@ -103,27 +100,65 @@ public class ClienteServlet extends HttpServlet {
         LocalDate localDate  = LocalDate.now();
 
 
-        Endereco endereco = new Endereco(nm_bairro, nr_cep, nm_cidade, nm_estado, nr_residencia, nm_rua);
-
-        final var cliente = new Cliente(nm_cliente,  nr_cpf, localDate,  nr_telefone, ds_email, endereco);
+        final var cliente_insert = new Cliente(nm_cliente, nr_cpf, localDate, nr_telefone, ds_email, nm_bairro, nr_cep, nm_cidade, nm_estado, nr_residencia, nm_rua);
 
         final var errors = new HashMap<String, String>();
 
         if (nm_cliente.isBlank()) {
-            errors.put("basError", "Não pode ser vazio");
+            errors.put("basError", "Nome não pode ser vazio");
         } else if (nm_cliente.length() > 100) {
-            errors.put("basError", "Não pode ser maior que 60 caracteres");
+            errors.put("basError", "Nome não pode ser maior que 100 caracteres");
         }
 
+        if(nr_cpf.isBlank()){
+            errors.put("basError", "CPF pode ser vazio");
+        }
 
+        if(nr_telefone == 0){
+            errors.put("basError", "Telefone não pode ser vazio");
+        } else if(String.valueOf(nr_telefone).length() < 11){
+            errors.put("basError", "Telefone invalido!");
+        }
+
+        if(ds_email.isBlank()){
+            errors.put("basError", "E-mail não pode ser vazio");
+        } else if (ds_email.length() > 100) {
+            errors.put("basError", "E-mail não pode ser maior que 100 caracteres");
+        }
+
+        if(nr_cep.isBlank()){
+            errors.put("basError", "C.E.P não pode ser vazio");
+        } else if (nr_cep.length() > 100) {
+            errors.put("basError", "C.E.P não pode ser maior que 8 caracteres");
+        }
+
+        if(nm_cidade.isBlank()){
+            errors.put("basError", "Cidade não pode ser vazio");
+        } else if (nm_cidade.length() > 100) {
+            errors.put("basError", "Cidade não pode ser maior que 8 caracteres");
+        }
+
+        if(nm_estado.isBlank()){
+            errors.put("basError", "Estado não pode ser vazio");
+        }
+
+        if(nm_rua.isBlank()){
+            errors.put("basError", "Rua não pode ser vazio");
+        } else if (nm_rua.length() > 100) {
+            errors.put("basError", "Rua não pode ser maior que 100 caracteres");
+        }
+
+        if(nr_residencia == 0){
+            errors.put("basError", "Número residencia não pode ser vazio");
+        }
 
         JDBIConnection.instance().withExtension(ClienteRepository.class, cliente -> {
             // Verificar se ocorreram erros no formulário
             if (errors.isEmpty()) {
-                if (cliente.exists(nr_cpf) {
-                    cliente.update(cliente);
+                if (cliente.exists(nr_cpf)) {
+                    cliente.update(cliente_insert);
                 } else {
-                    cliente.insert(cliente);
+                    cliente.insert(cliente_insert);
                 }
             }
 
@@ -132,9 +167,9 @@ public class ClienteServlet extends HttpServlet {
             final var clientes = cliente.selectPage(page, PAGE_SIZE);
 
             if (errors.isEmpty()) {
-                renderer.render(new FooViewData(clientes, now, page, PAGE_SIZE, count));
+                renderer.render(new ClienteViewData(clientes, now, page, PAGE_SIZE, count));
             } else {
-                renderer.render(new FooViewData(errors, cliente, clientes, now, page, PAGE_SIZE, count));
+                renderer.render(new ClienteViewData(errors, cliente_insert, clientes, now, page, PAGE_SIZE, count));
             }
 
             return null;
@@ -145,11 +180,11 @@ public class ClienteServlet extends HttpServlet {
      * Trata a requisição para alimentar o formulário de cadastro ou edição de foos
      */
     private void loadFormEditFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<Foo>("cliente/form", response);
-        final var bar = NumberUtils.toInt(request.getParameter("bar"), 0);
+        final var renderer = new TemplateRenderer<Cliente>("cliente/form", response);
+        final var nr_cpf = NumberUtils.toInt(request.getParameter("nr_cpf"), 0);
 
-        JDBIConnection.instance().withExtension(FooRepository.class, dao -> {
-            renderer.render(dao.findByBar(bar));
+        JDBIConnection.instance().withExtension(ClienteRepository.class, cliente -> {
+            renderer.render(cliente.findByCliente(nr_cpf));
             return null;
         });
     }
@@ -160,8 +195,8 @@ public class ClienteServlet extends HttpServlet {
     private void deleteFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var bar = Integer.parseInt(request.getParameter("bar"));
 
-        JDBIConnection.instance().withExtension(FooRepository.class, dao -> {
-            dao.delete(bar);
+        JDBIConnection.instance().withExtension(FooRepository.class, cliente -> {
+            cliente.delete(bar);
             loadFullPage(request, response);
             return null;
         });
