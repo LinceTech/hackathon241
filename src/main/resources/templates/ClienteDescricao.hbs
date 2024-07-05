@@ -1,0 +1,39 @@
+<div class="container text-center" id="ticket_list">
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>Título</th>
+            <th>Descrição</th>
+            <th>Ação</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each cliente}}
+            <tr>
+                <td>{{titulo}}</td>
+                <td>{{descricao}}</td>
+                <td class="gap-2">
+                    <button
+                            class="btn btn-primary"
+                            hx-get="/cliente/getTicketByID/{{id}}"
+                            hx-target="#mustache_modal"
+                            hx-trigger="click"
+                            data-bs-toggle="modal"
+                            data-bs-target="#ticketModel"
+                    >
+                        Editar
+                    </button>
+                    <button
+                            class="btn btn-danger"
+                            hx-delete="/cliente/deleteclienteByID/{{id}}"
+                            hx-target="#cliete_lista"
+                            hx-trigger="click"
+                    >
+                        Deletar
+                    </button>
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>
