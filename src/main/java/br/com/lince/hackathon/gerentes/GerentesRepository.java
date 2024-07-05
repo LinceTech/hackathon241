@@ -36,26 +36,26 @@ public interface GerentesRepository {
     void insereGerente(@BindBean("gerentes") Gerentes gerentes);
 
     @SqlUpdate(
-            "UPDATE Gerentes SET " +
-                    "nome=:nome," +
-                    "cpf=:cpf," +
-                    "ddd=:ddd," +
-                    "telefone=:telefone," +
-                    "email=:email," +
-                    "cidade=:cidade," +
-                    "estado=:estado," +
-                    "percentual_comissao=:percentual_comissao," +
-                    "data_contratacao=:data_contratacao " +
-                    "WHERE id=:id"
+            "UPDATE GERENTES SET " +
+                    "nome=:gerente.nome," +
+                    "cpf=:gerente.cpf," +
+                    "ddd=:gerente.ddd," +
+                    "telefone=:gerente.telefone," +
+                    "email=:gerente.email," +
+                    "cidade=:gerente.cidade," +
+                    "estado=:gerente.estado," +
+                    "percentual_comissao=:gerente.percentualComissao," +
+                    "data_contratacao=:gerente.dataContratacao " +
+                    "WHERE id=:gerente.id"
     )
-    void atualizaGerente(@BindBean Gerentes Gerentes);
+    void atualizaGerente(@BindBean("gerente") Gerentes gerentes);
 
     @RegisterBeanMapper(Gerentes.class)
     @SqlQuery("SELECT * FROM GERENTES (NOLOCK) WHERE id=:id")
-    Gerentes pegaGerentesPeloID(Long id);
+    Gerentes pegaGerentesPeloID(@Bind("id") Long id);
 
     @SqlUpdate("DELETE FROM GERENTES WHERE id=:id")
-    void deleteGerente(Long id);
+    void deleteGerente(@Bind("id") Long id);
 
     @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM GERENTES WHERE id=:id), 1, 0)")
     boolean existeGerente(@Bind("id") Long id);

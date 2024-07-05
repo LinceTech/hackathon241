@@ -27,18 +27,18 @@
                 <td class="gap-2">
                     <button
                             class="btn btn-primary"
-                            hx-get="/ticket/getTicketByID/{{id}}"
+                            hx-get="/hackathon/gerentes/edit?id={{id}}"
                             hx-target="#mustache_modal"
                             hx-trigger="click"
                             data-bs-toggle="modal"
-                            data-bs-target="#ticketModel"
+                            data-bs-target="#gerenteModal"
                     >
                         Edit
                     </button>
                     <button
                             class="btn btn-danger"
-                            hx-delete="/ticket/deleteTicketByID/{{id}}"
-                            hx-target="#ticket_list"
+                            hx-get="/hackathon/gerentes/delete?id={{id}}"
+                            hx-target="#cliente_lista"
                             hx-trigger="click"
                     >
                         Delete
