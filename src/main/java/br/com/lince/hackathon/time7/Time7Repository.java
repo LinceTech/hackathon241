@@ -46,7 +46,7 @@ public interface Time7Repository {
 
 
     @UseFreemarkerEngine
-    @SqlUpdate("INSERT INTO Gerente(Id, Nome, CPF, Telefone, Email, Cidade, Estado, Comissao, DtContrata) " +
+    @SqlUpdate("INSERT INTO Gerente(Nome, CPF, Telefone, Email, Cidade, Estado, Comissao, DtContrata) " +
                "VALUES (:gerente.nome       , " +
                        ":gerente.cpf        , " +
                        ":gerente.telefone   , " +
@@ -99,7 +99,7 @@ public interface Time7Repository {
 
 
     @UseFreemarkerEngine
-    @SqlUpdate("INSERT INTO Cliente(Id, Nome, CPF, DtNascimento, Telefone, Email, CEP, Cidade, Estado, Bairro, Rua, Numero) " +
+    @SqlUpdate("INSERT INTO Cliente(Nome, CPF, DtNascimento, Telefone, Email, CEP, Cidade, Estado, Bairro, Rua, Numero) " +
                "VALUES (:cliente.nome         , " +
                        ":cliente.cpf          , " +
                        ":cliente.dtNascimento , " +
@@ -158,31 +158,29 @@ public interface Time7Repository {
 
 
     @UseFreemarkerEngine
-    @SqlUpdate("INSERT INTO Veiculo(Id, Cliente, Gerente, Veiculo, DtInicio, DtFinal, CustoDiaria, ComissaoGerente, ValorTotal, DtPagamento) " +
-            "VALUES (:veiculo.cliente         , " +
-            ":veiculo.gerente         , " +
-            ":veiculo.veiculo         , " +
-            ":veiculo.dtInicio        , " +
-            ":veiculo.dtFinal         , " +
-            ":veiculo.custoDiaria     , " +
-            ":veiculo.comissaoGerente , " +
-            ":veiculo.valorTotal      , " +
-            ":veiculo.dtPagamento      )")
+    @SqlUpdate("INSERT INTO Veiculo(Marca, Modelo, Placa, Cor, AnoFabrica, CustoDiaria, Descricao, TipoCombustivel,) " +
+            "VALUES (:veiculo.marca            , " +
+                    ":veiculo.modelo           , " +
+                    ":veiculo.placa            , " +
+                    ":veiculo.cor              , " +
+                    ":veiculo.anoFabrica       , " +
+                    ":veiculo.custoDiaria      , " +
+                    ":veiculo.descricao        , " +
+                    ":veiculo.tipoCombustivel  )")
     void insertVeiculo(@BindBean("veiculo") Veiculo veiculo);
 
 
     @UseFreemarkerEngine
     @SqlUpdate("UPDATE Veiculo SET " +
-                                   "Cliente         = :veiculo.cliente         ," +
-                                   "Gerente         = :veiculo.gerente         ," +
-                                   "Veiculo         = :veiculo.veiculo         ," +
-                                   "DtInicio        = :veiculo.dtInicio        ," +
-                                   "DtFinal         = :veiculo.dtFinal         ," +
-                                   "CustoDiaria     = :veiculo.custoDiaria     ," +
-                                   "ComissaoGerente = :veiculo.comissaoGerente ," +
-                                   "ValorTotal      = :veiculo.valorTotal      ," +
-                                   "DtPagamento     = :veiculo.dtPagamento      " +
-                                   "WHERE Id        = :veiculo.id               ")
+                                   "Marca            = :veiculo.marca           ," +
+                                   "Modelo           = :veiculo.modelo          ," +
+                                   "Placa            = :veiculo.placa           ," +
+                                   "Cor              = :veiculo.cor             ," +
+                                   "AnoFabrica       = :veiculo.anoFabrica      ," +
+                                   "CustoDiaria      = :veiculo.custoDiaria     ," +
+                                   "Descricao        = :veiculo.descricao       ," +
+                                   "TipoCombustivel  = :veiculo.tipoCombustivel  " +
+                                   "WHERE Id         = :veiculo.id               ")
     void updateVeiculo(@BindBean("veiculo") Veiculo veiculo);
 
 
@@ -233,6 +231,7 @@ public interface Time7Repository {
                                    "Cor             = :locacao.cor             ," +
                                    "AnoFabrica      = :locacao.anoFabrica      ," +
                                    "CustoDiaria     = :locacao.custoDiaria     ," +
+                                   "Descricao       = :locacao.descricao       ," +
                                    "Descricao       = :locacao.descricao       ," +
                                    "TipoCombustivel = :locacao.tipoCombustivel  " +
                                    "WHERE Id        = :locacao.id               ")
