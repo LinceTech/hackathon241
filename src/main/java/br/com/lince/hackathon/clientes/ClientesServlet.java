@@ -78,22 +78,9 @@ public class ClientesServlet extends HttpServlet {
         final var rua = request.getParameter("rua").trim();
         final var numero = request.getParameter("numero").trim();
         final var cep = request.getParameter("cep").trim();
+
         final var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         final var dataNascimento = LocalDate.parse(dtNascimento, formatter);
-
-//        final var id = NumberUtils.toLong(request.getParameter("id"), 0);
-//        final var nome ="TESTE";
-//        final var cpf = "2134";
-//        final var dataNascimento = "2024-07-05";
-//        final var ddd = 22;
-//        final var telefone = 1533;
-//        final var email = "TESTE@HOMAISL.COM";
-//        final var cidade = "GASPAR";
-//        final var estado = "SC";
-//        final var bairro = "COLONINHA";
-//        final var rua = "COLONINHA STREET";
-//        final var numero = "1010";
-
 
         Clientes clientes = new Clientes();
 
@@ -144,7 +131,19 @@ public class ClientesServlet extends HttpServlet {
     void carregaClientesModal(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<Clientes>("/clientes/ClienteModal", response);
 
-        //renderer.render(new Clientes());
+        final var clienteID = NumberUtils.toLong(request.getParameter("id"), 0);
+
+        JDBIConnection.instance().withExtension(ClientesRepository.class, dao -> {
+            Clientes cliente = new Clientes();
+
+            if(clienteID != 0){
+                cliente = dao.pegaClientesPeloID(clienteID);
+            }
+
+            renderer.render(cliente);
+
+           return null;
+        });
     }
 
     void carregaClientesPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
