@@ -29,10 +29,12 @@
                         class="form-control"
                         id="cpf"
                         name="cpf"
-                >
-                    {{cpf}}</input>
-            </div>
+                        maxlength="14"
+                        size="14"
+                        value="{{cpf}}"
 
+                >
+            </div>
 
             <div class="mb-3">
                 <label for="dataNascimento" class="form-label">Data</label>
@@ -41,30 +43,31 @@
                         class="form-control"
                         id="dataNascimento"
                         name="dataNascimento"
+                        value="{{dataNascimento}}"
                 >
-                    {{dataNascimento}}</input>
             </div>
 
             <div class="mb-3">
-                <label for="ddd" class="form-label">DDD</label>
-                <input
-                        type="number"
-                        class="form-control"
-                        id="ddd"
-                        name="ddd"
-                >
-                    {{ddd}}</input>
-            </div>
-
-            <div class="mb-3">
-                <label for="telefone" class="form-label">Telefone</label>
-                <input
-                        type=tel
-                        class="form-control"
-                        id="telefone"
-                        name="telefone"
-                >
-                    {{telefone}}</input>
+                <label for="telefone_completo" class="form-label">Telefone</label>
+                <div class="input-group">
+                    <span class="input-group-text">DDD</span>
+                    <input
+                            type="number"
+                            class="form-control"
+                            id="ddd"
+                            name="ddd"
+                            placeholder="(XX)"
+                            value="{{ddd}}"
+                    >
+                    <input
+                            type="tel"
+                            class="form-control"
+                            id="telefone"
+                            name="telefone"
+                            placeholder="XXXXX-XXXX"
+                            value="{{telefone}}"
+                    >
+                </div>
             </div>
 
             <div class="mb-3">
@@ -74,8 +77,8 @@
                         class="form-control"
                         id="cep"
                         name="cep"
+                        value="{{cep}}"
                 >
-                    {{cep}}</input>
             </div>
 
             <div class="mb-3">
@@ -85,18 +88,17 @@
                         class="form-control"
                         id="cidade"
                         name="cidade"
+                        value="{{cidade}}"
                 >
-                    {{cidade}}</input>
             </div>
 
             <div class="mb-3">
                 <label for="estado" class="form-label">Estado</label>
-                <select>
-                <option value="Vazio"> </option>
-                <option value="SC">SC</option>
-                <option value="RS">RS</option>
-                <option value="PR">PR</option>
-                    {{estado}}
+                <select id="estado" name="estado" class="form-select">
+                    <option value="Vazio"></option>
+                    <option value="SC" {{#if (eq estado "SC")}}selected{{/if}}>SC</option>
+                    <option value="RS" {{#if (eq estado "RS")}}selected{{/if}}>RS</option>
+                    <option value="PR" {{#if (eq estado "PR")}}selected{{/if}}>PR</option>
                 </select>
             </div>
 
@@ -107,8 +109,8 @@
                         class="form-control"
                         id="bairro"
                         name="bairro"
+                        value="{{bairro}}"
                 >
-                    {{bairro}}</input>
             </div>
 
             <div class="mb-3">
@@ -118,8 +120,8 @@
                         class="form-control"
                         id="rua"
                         name="rua"
+                        value="{{rua}}"
                 >
-                    {{rua}}</input>
             </div>
 
             <div class="mb-3">
@@ -129,8 +131,8 @@
                         class="form-control"
                         id="numero"
                         name="numero"
+                        value="{{numero}}"
                 >
-                    {{numero}}</input>
             </div>
 
             <div class="mb-3">
@@ -141,16 +143,21 @@
                         id="email"
                         name="email"
                         placeholder="Informe seu e-mail"
+                        value="{{email}}"
                 >
-                    {{email}}</input>
             </div>
-
-
-
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            <button
+                    class="btn btn-primary"
+                    hx-post="/hackathon/clientes/save"
+                    hx-target="#mustache_modal"
+                    hx-trigger="click"
+                    data-bs-toggle="modal"
+                    data-bs-target="#ticketModel"
+            >
+                Salvar</button>
         </div>
     </form>
 </div>
