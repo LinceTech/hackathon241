@@ -75,7 +75,7 @@
         <label>
             <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">CEP:</span>
             <span>
-                <input type="text" name="nr_cep" maxlength="8" size="8" value="{{nr_cep}}">
+                <input type="text" id="cepInput" name="nr_cep" maxlength="8" size="8" value="{{nr_cep}}" onblur="buscarCEP()">
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
@@ -154,7 +154,7 @@
     <button hx-target="#formAndTable"
             hx-select="#formAndTable"
             hx-swap="outerHTML"
-            hx-post="page/upsert"
+            hx-post="cliente/upsert"
             hx-include="[name='page']"
             style="display: inline-flex">
         <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
@@ -169,7 +169,7 @@
         <button hx-target="#clienteForm"
                 hx-select="#clienteForm"
                 hx-swap="outerHTML"
-                hx-get="page/edit"
+                hx-get="cliente/edit"
                 style="display: inline-flex">
             <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar Cliente">
             &nbsp;

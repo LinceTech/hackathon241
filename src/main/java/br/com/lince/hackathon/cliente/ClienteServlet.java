@@ -12,8 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.logging.Logger;
+
+import static br.com.lince.hackathon.utils.Validacao.isCpf;
+import static br.com.lince.hackathon.utils.Validacao.isMaior18;
 
 @WebServlet("/cliente/*")
 public class ClienteServlet extends HttpServlet {
@@ -83,11 +88,9 @@ public class ClienteServlet extends HttpServlet {
     private void insertOrUpdateCliente(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<ClienteViewData>("cliente/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
-
-        final var dt_nascimento = NumberUtils.toInt(request.getParameter("dt_nascimento"), 0);
-        final var nr_telefone = NumberUtils.toInt(request.getParameter("nr_telefone"), 0);
-        final var nr_residencia = NumberUtils.toInt(request.getParameter("nr_residencia"), 0);
-
+        final var dt_nascimento = LocalDate.parse(request.getParameter("dt_nascimento"), DateTimeFormatter.ISO_DATE);
+        final var nr_telefone = NumberUtils.toLong(request.getParameter("nr_telefone"), 0);
+        final var nr_residencia = NumberUtils.toInt(request.getParameter("nr_residencia"));
         final var ds_email = request.getParameter("ds_email");
         final var nm_cidade = request.getParameter("nm_cidade");
         final var nm_estado = request.getParameter("nm_estado");
@@ -97,10 +100,7 @@ public class ClienteServlet extends HttpServlet {
         final var nr_cep = request.getParameter("nr_cep");
         final var nr_cpf = request.getParameter("nr_cpf");
 
-        LocalDate localDate  = LocalDate.now();
-
-
-        final var cliente_insert = new Cliente(nm_cliente, nr_cpf, localDate, nr_telefone, ds_email, nm_bairro, nr_cep, nm_cidade, nm_estado, nr_residencia, nm_rua);
+        final var cliente_insert = new Cliente(nm_cliente, nr_cpf, dt_nascimento, nr_telefone, ds_email, nm_bairro, nr_cep, nm_cidade, nm_estado, nr_residencia, nm_rua);
 
         final var errors = new HashMap<String, String>();
 
@@ -112,6 +112,8 @@ public class ClienteServlet extends HttpServlet {
 
         if(nr_cpf.isBlank()){
             errors.put("basError", "CPF pode ser vazio");
+        } else if(isCpf(nr_cpf) == false){
+            errors.put("basError", "CPF invalido");
         }
 
         if(nr_telefone == 0){
@@ -150,6 +152,13 @@ public class ClienteServlet extends HttpServlet {
 
         if(nr_residencia == 0){
             errors.put("basError", "Número residencia não pode ser vazio");
+        }
+
+        var ldNow = LocalDate.now();
+        var chrono = ChronoUnit.YEARS.between(dt_nascimento, ldNow );
+        isMaior18(dt_nascimento);
+        if (chrono < 18L) {
+            errors.put("dt_nascimentoError", "A idade não pode ser inferior a 18 anos!");
         }
 
         JDBIConnection.instance().withExtension(ClienteRepository.class, cliente -> {
