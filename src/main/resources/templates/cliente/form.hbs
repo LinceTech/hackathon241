@@ -1,0 +1,262 @@
+<form id="clienteForm">
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">Nome:</span>
+            <span>
+                <input type="text" name="nome" maxlength="60" size="60" value="{{nome}}">
+                {{#with errors}}
+                    {{#if basError}}
+                        <span class="error">
+                            nome: {{nomeError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div style="padding-top: 8px;">
+        <label>
+            <span style="width: 50px; display: inline-block; vertical-align: top;">CPF:</span>
+            <span>
+                <input 
+                          id="id"
+                          type="text"
+                          name="cpf"
+                          maxlength="11" value={{cpf}}>
+                {{#with errors}}
+                    {{#if cpfError}}
+                        <span style="color: red; font-weight: bold;">
+                            CPF: {{cpfError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <!-- DATA NASCIMENTO-->
+    <div style="padding-top: 8px;">
+        <label>
+            <span style="width: 200px; display: inline-block; vertical-align: top;">Data de nascimento:</span>
+            <span>
+                <input 
+                          id="id"
+                          type="date"
+                          name="dataNascimento"
+                          maxlength="10" value={{dataNascimento}}>
+                {{#with errors}}
+                    {{#if dataNascimentoError}}
+                        <span style="color: red; font-weight: bold;">
+                            Data de nascimento: {{dataNascimentoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <!-- TELEFONE -->
+    <div style="padding-top: 8px;">
+        <label>
+            <span style="width: 50px; display: inline-block; vertical-align: top;">Telefone:</span>
+            <span>
+                <input 
+                          id="id"
+                          type="tel"
+                          name="telefone"
+                          maxlength="11" value={{telefone}}>
+                {{#with errors}}
+                    {{#if telefoneError}}
+                        <span style="color: red; font-weight: bold;">
+                            Telefone: {{telefoneError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <!-- EMAIL -->
+    <div style="padding-top: 8px;">
+        <label>
+            <span style="width: 50px; display: inline-block; vertical-align: top;">Email:</span>
+            <span>
+                <input 
+                          id="id"
+                          type="email"
+                          name="email"
+                          maxlength="10" value={{email}}>
+                {{#with errors}}
+                    {{#if emailError}}
+                        <span style="color: red; font-weight: bold;">
+                            Email: {{emailError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+
+    <!-- CEP -->
+    </div>    <div style="padding-top: 8px;">
+        <label>
+            <span style="width: 50px; display: inline-block; vertical-align: top;">CEP:</span>
+            <span>
+                <input 
+                          id="id"
+                          type="text"
+                          pattern="\d{5}-\d{3}"/
+                          name="cep"
+                          maxlength="10" value={{cep}}>
+                {{#with errors}}
+                    {{#if cepError}}
+                        <span style="color: red; font-weight: bold;">
+                            CEP: {{cepError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <!-- CIDADE -->
+    <div style="padding-top: 8px;">
+        <label>
+            <span style="width: 50px; display: inline-block; vertical-align: top;">Cidade:</span>
+            <span>
+                <input 
+                          id="id"
+                          type="text"
+                          name="cidade"
+                          maxlength="10" value={{cidade}}>
+                {{#with errors}}
+                    {{#if cidadeError}}
+                        <span style="color: red; font-weight: bold;">
+                            Cidade: {{cidadeError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <!-- ESTADO -->
+    <div style="padding-top: 8px;">
+        <label>
+            <span style="width: 50px; display: inline-block; vertical-align: top;">Estado:</span>
+            <span>
+                <input 
+                          id="id"
+                          type="text"
+                          name="estado"
+                          maxlength="60" value={{estado}}>
+                {{#with errors}}
+                    {{#if estadoError}}
+                        <span style="color: red; font-weight: bold;">
+                            Estado: {{estadoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <!-- BAIRRO -->
+    <div style="padding-top: 8px;">
+        <label>
+            <span style="width: 50px; display: inline-block; vertical-align: top;">Bairro:</span>
+            <span>
+                <input 
+                          id="id"
+                          type="text"
+                          name="bairro"
+                          maxlength="60" value={{bairro}}>
+                {{#with errors}}
+                    {{#if bairroError}}
+                        <span style="color: red; font-weight: bold;">
+                            Bairro: {{bairroError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <!-- RUA -->
+    <div style="padding-top: 8px;">
+        <label>
+            <span style="width: 50px; display: inline-block; vertical-align: top;">Rua:</span>
+            <span>
+                <input 
+                          id="id"
+                          type="text"
+                          name="rua"
+                          maxlength="60" value={{rua}}>
+                {{#with errors}}
+                    {{#if ruaError}}
+                        <span style="color: red; font-weight: bold;">
+                            Rua: {{ruaError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <!-- NUMERO DA CASA -->
+    <div style="padding-top: 8px;">
+        <label>
+            <span style="width: 50px; display: inline-block; vertical-align: top;">Número:</span>
+            <span>
+                <input 
+                          id="id"
+                          type="text"
+                          name="numero"
+                          maxlength="5" value={{numero}}>
+                {{#with errors}}
+                    {{#if numeroError}}
+                        <span style="color: red; font-weight: bold;">
+                            Número da casa: {{numeroError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+    <br>
+{{!--     <button hx-target="#formAndTable" --}}
+{{!--             hx-select="#formAndTable" --}}
+{{!--             hx-swap="outerHTML" --}}
+{{!--             hx-post="cliente/upsert" --}}
+{{!--             hx-include="[name='page']" --}}
+{{!--             style="display: inline-flex"> --}}
+{{!--         <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item"> --}}
+{{!--         &nbsp; --}}
+{{!--         {{#if cpf}} --}}
+{{!--             Atualizar --}}
+{{!--         {{^}} --}}
+{{!--             Cadastrar --}}
+{{!--         {{/if}} --}}
+{{!--     </button> --}}
+    <button hx-target="#clienteForm"
+            hx-select="#clienteForm"
+            hx-swap="outerHTML"
+            hx-post="cliente/upsert"
+            hx-include="[name='page']"
+            style="display: inline-flex">
+        <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar item">
+        &nbsp;
+        Cadastrar
+    </button>
+</form>
