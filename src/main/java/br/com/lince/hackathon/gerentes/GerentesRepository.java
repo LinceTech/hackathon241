@@ -1,5 +1,7 @@
 package br.com.lince.hackathon.gerentes;
 
+import br.com.lince.hackathon.clientes.ClienteFiltros;
+import br.com.lince.hackathon.clientes.Clientes;
 import org.jdbi.v3.freemarker.UseFreemarkerEngine;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -13,11 +15,21 @@ import java.util.List;
 public interface GerentesRepository {
     @RegisterBeanMapper(Gerentes.class)
     @SqlQuery(
-            "SELECT * FROM GERENTES C (NOLOCK)" +
-                    " ORDER BY C.nome ASC OFFSET (${pagina} * ${qtRegistros}) ROWS FETCH NEXT ${qtRegistros} ROWS ONLY"
+            "SELECT * FROM GERENTES C (NOLOCK) \n" +
+            "WHERE C.nome LIKE CONCAT('%', :clienteFiltros.nome, '%') \n" +
+            "AND C.cpf    LIKE CONCAT('%', :clienteFiltros.documento, '%') \n" +
+            "AND C.cidade LIKE CONCAT('%', :clienteFiltros.cidade, '%') \n" +
+            "AND C.estado LIKE CONCAT('%', :clienteFiltros.estado, '%') \n" +
+            "ORDER BY C.nome ASC \n" +
+            "OFFSET (${pagina} * ${qtRegistros}) \n" +
+            "ROWS FETCH NEXT ${qtRegistros} ROWS ONLY"
     )
     @UseFreemarkerEngine
-    List<Gerentes> consultaPaginacao(@Define("pagina") int pagina, @Define("qtRegistros") int qtRegistros);
+    List<Gerentes> consultaPaginacao(
+            @Define("pagina") int pagina,
+            @Define("qtRegistros") int qtRegistros,
+            @BindBean("clienteFiltros") ClienteFiltros clienteFiltros
+    );
 
 
     @SqlUpdate(
@@ -59,4 +71,8 @@ public interface GerentesRepository {
 
     @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM GERENTES WHERE id=:id), 1, 0)")
     boolean existeGerente(@Bind("id") Long id);
+
+    @RegisterBeanMapper(Gerentes.class)
+    @SqlQuery("SELECT * FROM GERENTES (NOLOCK) WHERE nome=:nome")
+    Gerentes pesquisaGerenteNome(@Bind("nome") String nome);
 }

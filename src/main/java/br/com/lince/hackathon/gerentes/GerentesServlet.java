@@ -1,5 +1,6 @@
 package br.com.lince.hackathon.gerentes;
 
+import br.com.lince.hackathon.clientes.ClienteFiltros;
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -27,7 +28,7 @@ public class GerentesServlet extends HttpServlet {
         switch (requestPath) {
             case "":
             case "/":
-                carregaPagina(request, response);
+                carregaPagina(response);
                 break;
             case "/new":
             case "/edit":
@@ -36,9 +37,44 @@ public class GerentesServlet extends HttpServlet {
             case "/delete":
                 deletarGerente(request, response);
                 break;
+            case "/listar":
+                listarGerentes(request, response);
+                break;
             default:
                 response.getWriter().write("Not found : " + requestPath);
         }
+    }
+
+    private void listarGerentes(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<GerentesViewData>("/gerentes/GerenteLista", response);
+
+        final var nome = request.getParameter("nome").trim();
+        final var documento = request.getParameter("documento").trim();
+        final var cidade = request.getParameter("cidade").trim();
+        final var estado = request.getParameter("estado").trim();
+        final var proximaPagina = Boolean.parseBoolean(request.getParameter("proximaPagina").trim());
+
+        final var numeroPaginaReq = NumberUtils.toInt(request.getParameter("numeroPagina").trim(), 0);
+
+        final var filtros = new ClienteFiltros(nome, documento, cidade, estado);
+
+        JDBIConnection.instance().withExtension(GerentesRepository.class, dao -> {
+            int numeroPagina = numeroPaginaReq;
+
+            if (proximaPagina) {
+                numeroPagina++;
+            } else {
+                numeroPagina--;
+
+                numeroPagina = numeroPagina <= 0 ? 0 : numeroPagina;
+            }
+
+            List<Gerentes> list = dao.consultaPaginacao(numeroPagina, 15, filtros);
+
+            renderer.render(new GerentesViewData(list, nome, documento, cidade, estado, numeroPagina));
+
+            return null;
+        });
     }
 
     @Override
@@ -65,7 +101,7 @@ public class GerentesServlet extends HttpServlet {
         final var email = request.getParameter("email").trim();
         final var cidade = request.getParameter("cidade").trim();
         final var estado = request.getParameter("estado").trim();
-        final var percentualComissao = NumberUtils.toDouble(request.getParameter("percentualComissao").replace(",", "."), 0.0);
+        final var percentualComissao = NumberUtils.toDouble(request.getParameter("percentualComissao").replace(",", "."), 0);
         final var dataContratacaoReq = request.getParameter("dataContratacao").trim();
 
         final var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -91,30 +127,56 @@ public class GerentesServlet extends HttpServlet {
                 dao.insereGerente(gerente);
             }
 
-            final var listaGerentes = dao.consultaPaginacao(0, 15);
+            final var listaGerentes = dao.consultaPaginacao(0, 15, new ClienteFiltros("", "", "", ""));
 
-            renderer.render(new GerentesViewData(listaGerentes));
+            renderer.render(new GerentesViewData(listaGerentes, "", "", "", "", 0));
 
             return null;
         });
     }
 
-    private void deletarGerente(HttpServletRequest request, HttpServletResponse response) {
+    private void deletarGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<GerentesViewData>("/gerentes/GerenteLista", response);
 
+        final var gerenteID = NumberUtils.toLong(request.getParameter("id"), 0);
+
+        JDBIConnection.instance().withExtension(GerentesRepository.class, dao -> {
+            dao.deleteGerente(gerenteID);
+
+            List<Gerentes> list = dao.consultaPaginacao(0, 15, new ClienteFiltros("", "", "", ""));
+
+            renderer.render(new GerentesViewData(list, "", "", "", "", 0));
+
+            return null;
+        });
     }
 
     private void formularioGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<Gerentes>("/gerentes/GerenteModal", response);
 
-        renderer.render(new Gerentes());
+        final var gerenteID = NumberUtils.toLong(request.getParameter("id"), 0);
+
+        JDBIConnection.instance().withExtension(GerentesRepository.class, dao -> {
+            var gerente = new Gerentes();
+
+            if (gerenteID != 0) {
+                gerente = dao.pegaGerentesPeloID(gerenteID);
+            }
+
+            renderer.render(gerente);
+
+            return null;
+        });
     }
 
-    private void carregaPagina(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void carregaPagina(HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<GerentesViewData>("/gerentes/GerentePage", response);
 
         JDBIConnection.instance().withExtension(GerentesRepository.class, dao -> {
 
-            renderer.render(new GerentesViewData(dao.consultaPaginacao(0, 15)));
+            List<Gerentes> list = dao.consultaPaginacao(0, 15, new ClienteFiltros("", "", "", ""));
+
+            renderer.render(new GerentesViewData(list, "", "", "", "", 0));
 
             return null;
         });
