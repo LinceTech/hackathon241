@@ -9,7 +9,7 @@ public class Gerente {
 
     private String nr_cpf;
     private String nm_gerente;
-    private int nr_telefone;
+    private long nr_telefone;
     private String ds_email;
     private String nm_cidade;
     private String nm_estado;
@@ -19,7 +19,7 @@ public class Gerente {
 
     public Gerente(){}
 
-    public Gerente(String nr_cpf, String nm_gerente, int nr_telefone, String ds_email, String nm_cidade, String nm_estado, double pc_comissao, LocalDate dt_contratacao, LocalDate dt_nascimento) {
+    public Gerente(String nr_cpf, String nm_gerente, long nr_telefone, String ds_email, String nm_cidade, String nm_estado, double pc_comissao, LocalDate dt_contratacao, LocalDate dt_nascimento) {
         this.nr_cpf = nr_cpf;
         this.nm_gerente = nm_gerente;
         this.nr_telefone = nr_telefone;
@@ -67,7 +67,7 @@ public class Gerente {
         this.nm_gerente = nm_gerente;
     }
 
-    public void setNr_telefone(int nr_telefone) {
+    public void setNr_telefone(long nr_telefone) {
         this.nr_telefone = nr_telefone;
     }
 
@@ -103,7 +103,7 @@ public class Gerente {
         return nm_gerente;
     }
 
-    public int getNr_telefone() {
+    public long getNr_telefone() {
         return nr_telefone;
     }
 
