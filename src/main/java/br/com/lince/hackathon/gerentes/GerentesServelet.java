@@ -106,9 +106,7 @@ public class GerentesServelet extends HttpServlet {
         if (dataContratacaoS.isBlank()) {
             errors.add("Data da contratação não pode ser vazia");
         } else {
-            dataContratacao = LocalDate.parse(dataContratacaoS, DateTimeFormatter.BASIC_ISO_DATE);
-
-
+            dataContratacao = LocalDate.parse(dataContratacaoS, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         }
 
         final var gerentes = new Gerentes(nome, cpf, telefone, email, cidade, estado, percentual, dataContratacao);
