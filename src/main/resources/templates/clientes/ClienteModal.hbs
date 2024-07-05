@@ -1,0 +1,34 @@
+<div class="modal-content">
+    <form hx-post="/cliente/save" hx-target="#cliente_lista" id="clienteForm">
+        <div class="modal-header">
+            {{#if id}}
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Altere Cliente</h1>
+            {{else}}
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Crie Cliente</h1>
+            {{/if}}
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="id" name="id" value="{{id}}">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="title"
+                        name="title"
+                        placeholder="Type the title"
+                        value="{{title}}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3">{{description}}</textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+        </div>
+    </form>
+</div>
