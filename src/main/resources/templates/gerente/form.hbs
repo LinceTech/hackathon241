@@ -1,11 +1,9 @@
 <form id="gerenteForm">
-    <input type="hidden" name="nm_gerente" value="{{nm_gerente}}">
-
     <div>
         <label>
             <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">Nome:</span>
             <span>
-                <input type="text" name="nome" maxlength="100" size="80" value="{{nm_gerente}}">
+                <input type="text" required name="nm_gerente" maxlength="100" size="50" value="{{nm_gerente}}">
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
@@ -17,9 +15,23 @@
             <br>
         </label>
         <label>
-            <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">C.P.F:</span>
+            <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">CPF:</span>
             <span>
-                <input type="text" name="nr_cpf" maxlength="11" size="11" value="{{nr_cpf}}">
+                <input type="text" required name="nr_cpf" maxlength="11" size="11" value="{{nr_cpf}}">
+                {{#with errors}}
+                    {{#if basError}}
+                        <span class="error">
+                            Bas: {{basError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+        <label>
+            <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">Data de contratação:</span>
+            <span>
+                <input type="date" required name="dt_contratacao" maxlength="10" size="10" value="{{dt_contratacao}}">
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
@@ -33,7 +45,7 @@
         <label>
             <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">Data de nascimento:</span>
             <span>
-                <input type="date" name="dt_nascimento" maxlength="10" size="10" value="{{dt_nascimento}}">
+                <input type="date" required name="dt_nascimento" maxlength="10" size="10" value="{{dt_nascimento}}">
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
@@ -47,7 +59,7 @@
         <label>
             <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">Telefone:</span>
             <span>
-                <input type="text" name="nr_telefone" maxlength="10" size="10" value="{{nr_telefone}}">
+                <input type="text" required name="nr_telefone" maxlength="11" size="11" value="{{nr_telefone}}">
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
@@ -61,21 +73,7 @@
         <label>
             <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">E-mail:</span>
             <span>
-                <input type="text" name="ds_email" maxlength="10" size="10" value="{{ds_email}}">
-                {{#with errors}}
-                    {{#if basError}}
-                        <span class="error">
-                            Bas: {{basError}}
-                        </span>
-                    {{/if}}
-                {{/with}}
-            </span>
-            <br>
-        </label>
-        <label>
-            <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">CEP:</span>
-            <span>
-                <input type="text" name="nr_cep" maxlength="8" size="8" value="{{nr_cep}}">
+                <input type="email" required name="ds_email" maxlength="100" size="50" value="{{ds_email}}">
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
@@ -89,7 +87,7 @@
         <label>
             <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">Cidade:</span>
             <span>
-                <input type="text" name="nm_cidade" maxlength="8" size="8" value="{{nm_cidade}}">
+                <input type="text" required name="nm_cidade" maxlength="100" size="50" value="{{nm_cidade}}">
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
@@ -103,9 +101,9 @@
         <label>
             <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">Estado:</span>
             <span>
-                <select name="nm_estado">
+                <select name="nm_estado" required>
                     <option value="SC">Santa Catarina</option>
-                    <option value="SC">São Paulo</option>
+                    <option value="SP">São Paulo</option>
                 </select>
 
                 {{#with errors}}
@@ -119,23 +117,9 @@
             <br>
         </label>
         <label>
-            <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">Rua:</span>
+            <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">Percentual comissão:</span>
             <span>
-                <input type="text" name="nm_rua" maxlength="80" size="80" value="{{nm_rua}}">
-                {{#with errors}}
-                    {{#if basError}}
-                        <span class="error">
-                            Bas: {{basError}}
-                        </span>
-                    {{/if}}
-                {{/with}}
-            </span>
-            <br>
-        </label>
-        <label>
-            <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">N°:</span>
-            <span>
-                <input type="text" name="nr_residencia" maxlength="6" size="6" value="{{nr_residencia}}">
+                <input type="text" required name="pc_comissao" maxlength="8" size="8" value="{{pc_comissao}}">
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
@@ -154,7 +138,7 @@
     <button hx-target="#formAndTable"
             hx-select="#formAndTable"
             hx-swap="outerHTML"
-            hx-post="foo/upsert"
+            hx-post="gerente/upsert"
             hx-include="[name='page']"
             style="display: inline-flex">
         <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
@@ -169,7 +153,7 @@
         <button hx-target="#gerenteForm"
                 hx-select="#gerenteForm"
                 hx-swap="outerHTML"
-                hx-get="foo/edit"
+                hx-get="gerente/edit"
                 style="display: inline-flex">
             <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar gerente">
             &nbsp;
