@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>HBS - Index</title>
+
+    {{>head}}
+</head>
+<body>
+<form method="post">
+    <div>
+        <label>Nome
+            <input type="text" name="nome">
+        </label>
+    </div>
+    <div>
+        <label>CPF
+            <input type="text" name="cpf">
+        </label>
+    </div>
+    <div>
+        <label>Telefone
+            <input type="text" name="telefone">
+        </label>
+    </div>
+    <div>
+        <label>E-mail
+            <input type="text" name="email">
+        </label>
+    </div>
+    <div>
+        <label>Cidade
+            <input type="text" name="cidade">
+        </label>
+    </div>
+    <div>
+        <label>Estado
+            <input type="text" name="estado">
+        </label>
+    </div>
+    <div>
+        <label>Percentual de comissão
+            <input type="number" name="percentual">
+        </label>
+    </div>
+    <div>
+        <label>Data de contratação
+            <input type="date" name="dataContratacao">
+        </label>
+    </div>
+    <input type="button" hx-post="gerentes/cadastro/salvar" hx-trigger="click">
+
+    <table>
+        <th>
+            <td>
+                Nome
+            </td>
+            <td>
+                CPF
+            </td>
+            <td>
+                Telefone
+            </td>
+            <td>
+                E-mail
+            </td>
+            <td>
+                Cidade
+            </td>
+            <td>
+                Esado
+            </td>
+            <td>
+                Percentual de Comissão
+            </td>
+            <td>
+                Data de Contratação
+            </td>
+        </th>
+        <tr>
+            <td>
+
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
