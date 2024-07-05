@@ -4,6 +4,7 @@ import org.jdbi.v3.freemarker.UseFreemarkerEngine;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.customizer.Define;
+import org.jdbi.v3.sqlobject.customizer.DefineNamedBindings;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
@@ -13,10 +14,14 @@ public interface ClientesRepository {
     @RegisterBeanMapper(Clientes.class)
     @SqlQuery(
             "SELECT * FROM CLIENTES C (NOLOCK)" +
-                    "ORDER BY C.nome ASC OFFSET (${pagina} * ${qtRegistros}) ROWS FETCH NEXT ${qtRegistros} ROWS ONLY"
+                    "ORDER BY (${orderBy}) ASC OFFSET (${pagina} * ${qtRegistros}) ROWS FETCH NEXT ${qtRegistros} ROWS ONLY"
     )
     @UseFreemarkerEngine
-    List<Clientes> consultaPaginacao(@Define("pagina") int pagina, @Define("qtRegistros") int qtRegistros);
+    List<Clientes> consultaPaginacao(
+            @Define("pagina") int pagina,
+            @Define("qtRegistros") int qtRegistros,
+            @Define("ordernarPor") String ordernarPor
+    );
 
 
     @SqlUpdate(
