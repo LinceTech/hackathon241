@@ -115,7 +115,7 @@ public class ClienteServlet extends HttpServlet {
 
         if (cpf == 0) {
             errors.put("cpfError", "Não pode ser vazio");
-        } else if (ValidaCPF.isCPF(String.format("%11d",cpf))) {
+        } else if (!ValidaCPF.isCPF(String.format("%11d",cpf))) {
             errors.put("cpfError", "CPF inválido");
         }
 

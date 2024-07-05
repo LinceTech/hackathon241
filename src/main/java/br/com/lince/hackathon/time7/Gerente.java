@@ -3,38 +3,44 @@ package br.com.lince.hackathon.time7;
 import java.util.Objects;
 
 public class Gerente {
-    private int    id         ;
-    private String nome       ;
-    private long   cpf        ;
-    private long   telefone   ;
-    private String email      ;
-    private String cidade     ;
-    private String estado     ;
-    private float  comissao   ;
-    private int    dtContrata ;
+    private int    id           ;
+    private String nome         ;
+    private long   cpf          ;
+    private int    dtNascimento ;
+    private long   telefone     ;
+    private String email        ;
+    private int    cep          ;
+    private String cidade       ;
+    private String estado       ;
+    private float  comissao     ;
+    private int    dtContrata   ;
 
     public Gerente() {
     }
 
-    public Gerente(int    id        ,
-                   String nome      ,
-                   long cpf       ,
-                   long telefone  ,
-                   String email     ,
-                   String cidade    ,
-                   String estado    ,
-                   float  comissao  ,
-                   int    dtContrata ) {
+    public Gerente(int    id           ,
+                   String nome         ,
+                   long   cpf          ,
+                   int    dtNascimento ,
+                   long   telefone     ,
+                   String email        ,
+                   int    cep          ,
+                   String cidade       ,
+                   String estado       ,
+                   float  comissao     ,
+                   int    dtContrata   ) {
 
-        this.id         = id         ;
-        this.nome       = nome       ;
-        this.cpf        = cpf        ;
-        this.telefone   = telefone   ;
-        this.email      = email      ;
-        this.cidade     = cidade     ;
-        this.estado     = estado     ;
-        this.comissao   = comissao   ;
-        this.dtContrata = dtContrata ;
+        this.id           = id            ;
+        this.nome         = nome          ;
+        this.cpf          = cpf           ;
+        this.dtNascimento = dtNascimento  ;
+        this.telefone     = telefone      ;
+        this.email        = email         ;
+        this.cep          = cep           ;
+        this.cidade       = cidade        ;
+        this.estado       = estado        ;
+        this.comissao     = comissao      ;
+        this.dtContrata   = dtContrata    ;
     }
 
     public int getId() {
@@ -104,9 +110,20 @@ public class Gerente {
     public int getDtContrata() {
         return dtContrata;
     }
-
     public void setDtContrata(int dtContrata) {
         this.dtContrata = dtContrata;
+    }
+    public int getDtNascimento() {
+        return dtNascimento;
+    }
+    public void setDtNascimento(int dtNascimento) {
+        this.dtNascimento = dtNascimento;
+    }
+    public int getCep() {
+        return cep;
+    }
+    public void setCep(int cep) {
+        this.cep = cep;
     }
 
     @Override
@@ -118,33 +135,37 @@ public class Gerente {
             return false;
         }
         Gerente gerente = (Gerente) o;
-        return id == gerente.id && Objects.equals(nome      , gerente.nome      )
-                                && Objects.equals(cpf       , gerente.cpf       )
-                                && Objects.equals(telefone  , gerente.telefone  )
-                                && Objects.equals(email     , gerente.email     )
-                                && Objects.equals(cidade    , gerente.cidade    )
-                                && Objects.equals(estado    , gerente.estado    )
-                                && Objects.equals(comissao  , gerente.comissao  )
-                                && Objects.equals(dtContrata, gerente.dtContrata);
+        return id == gerente.id && Objects.equals(nome         , gerente.nome        )
+                                && Objects.equals(cpf          , gerente.cpf         )
+                                && Objects.equals(dtNascimento , gerente.dtNascimento)
+                                && Objects.equals(telefone     , gerente.telefone    )
+                                && Objects.equals(email        , gerente.email       )
+                                && Objects.equals(cep          , gerente.cep         )
+                                && Objects.equals(cidade       , gerente.cidade      )
+                                && Objects.equals(estado       , gerente.estado      )
+                                && Objects.equals(comissao     , gerente.comissao    )
+                                && Objects.equals(dtContrata   , gerente.dtContrata  );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, cpf, telefone, email, cidade, estado, comissao, dtContrata);
+        return Objects.hash(id, nome, cpf, dtNascimento, telefone, email, cep, cidade, estado, comissao, dtContrata);
     }
 
     @Override
     public String toString() {
         return "Gerente {" +
-                "  id        = "  + id         +
-                ", nome      = '" + nome       + '\'' +
-                ", cpf       = "  + cpf        +
-                ", telefone  = "  + telefone   +
-                ", email     = '" + email      + '\'' +
-                ", cidade    = '" + cidade     + '\'' +
-                ", estado    = '" + estado     + '\'' +
-                ", comissao  = "  + comissao   +
-                ", dtContrat = "  + dtContrata +
+                "  id           = "  + id           +
+                ", nome         = '" + nome         + '\'' +
+                ", cpf          = "  + cpf          +
+                ", dtNascimento = "  + dtNascimento +
+                ", telefone     = "  + telefone     +
+                ", email        = '" + email        + '\'' +
+                ", cep          = "  + cep          +
+                ", cidade       = '" + cidade       + '\'' +
+                ", estado       = '" + estado       + '\'' +
+                ", comissao     = "  + comissao     +
+                ", dtContrat    = "  + dtContrata   +
                 '}';
     }
 }

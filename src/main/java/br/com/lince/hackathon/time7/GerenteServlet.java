@@ -91,19 +91,35 @@ public class GerenteServlet extends HttpServlet {
         final var renderer = new TemplateRenderer<GerenteViewData>("gerente/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
 
+        //--request dos valores no formulario
+        System.out.println(" ------- request dos valores na tela -------");
         final var id           = NumberUtils.toInt(request.getParameter("id"), 0);
+        System.out.println("Id : " + id);
         final var nome         = request.getParameter("nome");
+        System.out.println("nome : " + nome);
         final long cpf         = NumberUtils.toLong(request.getParameter("cpf"), 0);
+        System.out.println("cpf : " + cpf);
+        final var dtNascimento   = NumberUtils.toInt(request.getParameter("dtNascimento").replaceAll("-", ""), 0);
+        System.out.println("dtNascimento : " + dtNascimento);
         final long telefone    = NumberUtils.toLong(request.getParameter("telefone"), 0);
-        final var email        = "";//request.getParameter("email");
-        final var cidade       = "";//request.getParameter("cidade");
-        final var estado       = "";//request.getParameter("estado");
-        final var comissao     = 0;// NumberUtils.toInt(request.getParameter("numero"), 0);
-        final var dtContrata   = NumberUtils.toInt(request.getParameter("dtNascimento").replaceAll("-", ""), 0);
+        System.out.println("telefone : " + telefone);
+        final var email        = request.getParameter("email");
+        System.out.println("email : " + email);
+        final var cep          = NumberUtils.toInt(request.getParameter("cep"), 0);
+        System.out.println("cep : " + cep);
+        final var cidade       = request.getParameter("cidade");
+        System.out.println("cidade : " + cidade);
+        final var estado       = request.getParameter("estado");
+        System.out.println("estado : " + estado);
+        final var comissao     = NumberUtils.toFloat(request.getParameter("comissao"), 0);
+        System.out.println("comissao : " + comissao);
+        final var dtcontratacao   = NumberUtils.toInt(request.getParameter("dtcontratacao").replaceAll("-", ""), 0);
+        System.out.println("dtcontratacao : " + dtcontratacao);
 
-        final var gerente = new Gerente(id, nome, cpf, telefone, email, cidade, estado, comissao, dtContrata);
+        final var gerente = new Gerente(id, nome, cpf, dtNascimento, telefone, email, cep, cidade, estado, comissao, dtcontratacao);
         final var errors = new HashMap<String, String>();
 
+        //--validações
         if (nome.isBlank()) {
             errors.put("nomeError", "Não pode ser vazio");
         } else if (nome.length() > 60) {
@@ -112,19 +128,44 @@ public class GerenteServlet extends HttpServlet {
 
         if (cpf == 0) {
             errors.put("cpfError", "Não pode ser vazio");
-        } else if (ValidaCPF.isCPF(String.format("%11d",cpf))) {
+        } else if (!ValidaCPF.isCPF(String.format("%11d",cpf))) {
             errors.put("cpfError", "CPF inválido");
         }
 
+        if (dtNascimento == 0) {
+            errors.put("dtNascimentoError", "Não pode ser vazio");
+        } else if (dtNascimento > now) {
+            errors.put("dtNascimentoError", "Data de Nascimento inválida");
+        } else if ((now - dtNascimento) < 180000) {
+            errors.put("dtNascimentoError", "Cliente deve ter mais de 18 anos");
+        }
+
+        if (telefone == 0) {
+            errors.put("telefoneError", "Não pode ser vazio");
+        } else if (!ValidaTelefone.validaFone(String.valueOf(telefone))){
+            errors.put("telefoneError", "Telefone invalido");
+        }
+
+        if (email.isBlank()) {
+            errors.put("emailError", "Não pode ser vazio");
+        } else if (!ValidaEmail.isValidEmail(email)){
+            errors.put("emailError", "Email invalido");
+        }
+
+        if (cep == 0) {
+            errors.put("cepError", "Não pode ser vazio");
+        }
+
+
         JDBIConnection.instance().withExtension(Time7Repository.class, dao -> {
             // Verificar se ocorreram erros no formulário
-//            if (errors.isEmpty()) {
-//                if (dao.existsGerente(id) && id != 0) {
-//                    dao.updateGerente(gerente);
-//                } else {
-//                    dao.insertGerente(gerente);
-//                }
-//            }
+            if (errors.isEmpty()) {
+                if (dao.existsGerente(id) && id != 0) {
+                    dao.updateGerente(gerente);
+                } else {
+                    dao.insertGerente(gerente);
+                }
+            }
 
             final var now = LocalDateTime.now();
             final var count = dao.count("Gerente");

@@ -46,9 +46,10 @@ public interface Time7Repository {
 
 
     @UseFreemarkerEngine
-    @SqlUpdate("INSERT INTO Gerente(Nome, CPF, Telefone, Email, Cidade, Estado, Comissao, DtContrata) " +
+    @SqlUpdate("INSERT INTO Gerente(Nome, CPF,DtNascimento Telefone, Email, Cidade, Estado, Comissao, DtContrata) " +
                "VALUES (:gerente.nome       , " +
                        ":gerente.cpf        , " +
+                       ":gerente.dtNascimento , " +
                        ":gerente.telefone   , " +
                        ":gerente.email      , " +
                        ":gerente.cidade     , " +
@@ -62,6 +63,7 @@ public interface Time7Repository {
     @SqlUpdate("UPDATE Gerente SET " +
                                    "Nome       = :gerente.nome      ," +
                                    "CPF        = :gerente.cpf       ," +
+                                   "DtNascimento = :gerente.dtNascimento       ," +
                                    "Telefone   = :gerente.telefone  ," +
                                    "Email      = :gerente.email     ," +
                                    "Cidade     = :gerente.cidade    ," +
