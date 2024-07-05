@@ -17,7 +17,7 @@ public class IndexServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<>("index", response);
+        final var renderer = new TemplateRenderer<>("cadastros/indexGerentes", response);
         final var params = new HashMap<String, Object>(Map.of("message", "Olá mundo..."));
 
         renderer.render(params);

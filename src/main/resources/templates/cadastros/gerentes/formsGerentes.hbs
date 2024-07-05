@@ -1,0 +1,46 @@
+<style>
+    #cadastroGerentesForm {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #cadastroGerentesForm > div {
+        display: flex;
+    }
+</style>
+
+<form id="cadastroGerentesForm" method="post">
+    <div>
+        <label for="nome">Nome</label>
+        <input name="nome">
+    </div>
+    <div>
+        <label for="cpf">CPF</label>
+        <input name="cpf">
+    </div>
+    <div>
+        <label for="telefone">Telefone</label>
+        <input name="telefone">
+    </div>
+    <div>
+        <label for="email">E-mail</label>
+        <input name="email">
+    </div>
+    <div>
+        <label for="cidade">Cidade</label>
+        <input name="cidade">
+    </div>
+    <div>
+        <label for="estado">Estado</label>
+        <input name="estado">
+    </div>
+    <div>
+        <label for="percentualComissao">Percentual de comissão</label>
+        <input name="percentualComissao">
+    </div>
+    <div>
+        <label for="dataContratacao">Data de contratação</label>
+        <input type="date" name="dataContratacao">
+    </div>
+    <button type="submit" hx-post="gerentes/upsert">Inserir</button>
+</form>
