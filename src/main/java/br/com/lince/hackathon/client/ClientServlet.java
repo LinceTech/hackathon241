@@ -26,9 +26,8 @@ public class ClientServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
-        System.out.println(requestPath);
+
         switch (requestPath) {
             case "":
             case "/":
@@ -51,12 +50,10 @@ public class ClientServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
-        System.out.println("requestPath " + requestPath);
+
         if (requestPath.isBlank()) {
-            System.out.println("requestPath is blank");
             loadFullPage(request, response);
         } else if (requestPath.equals("/upsert")) {
-            System.out.println("requestPath");
             insertOrUpdateFoo(request, response);
         } else {
             response.getWriter().write("Not found : " + requestPath);
@@ -83,11 +80,8 @@ public class ClientServlet extends HttpServlet {
     private void insertOrUpdateFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<ClientViewData>("client/pageClient", response);
         final var page = NumberUtils.toInt(request.getParameter("pageClient"), 0);
-        System.out.println("page :>>" + page);
         final var nome = request.getParameter("nome");
-        System.out.println("nome :>>" + nome);
         final var cpf = request.getParameter("cpf");
-        System.out.println("cpf :>>" + cpf);
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date_nascimento = new Date();
@@ -98,13 +92,9 @@ public class ClientServlet extends HttpServlet {
         }
 
         final var data_nascimento = request.getParameter("data_nascimento");
-        System.out.println("data_nascimento :>>" + data_nascimento);
         final var telefone = request.getParameter("telefone");
-        System.out.println("telefone :>>" + telefone);
         final var email = request.getParameter("email");
-        System.out.println("email :>>" + email);
         final var cep = request.getParameter("cep");
-        System.out.println("cep :>>" + cep);
         final var cidade = request.getParameter("cidade");
         final var estado = request.getParameter("estado");
         final var bairro = request.getParameter("bairro");
@@ -184,15 +174,12 @@ public class ClientServlet extends HttpServlet {
 
         JDBIConnection.instance().withExtension(ClientRepository.class, dao -> {
             // Verificar se ocorreram erros no formulário
-            System.out.println("dao :>>" + dao);
-            System.out.println("errors :>>" + errors);
             if (errors.isEmpty()) {
-                System.out.println("insert or update foo");
-//                if (dao.existsClient(client.getId())) {
-//                    dao.updateClientById(client);
-//                } else {
+                if (dao.existsClient(client.getId())) {
+                    dao.updateClientById(client);
+                } else {
                     dao.insertClient(client);
-//                }
+                }
             }
 
             final var now = LocalDateTime.now();
