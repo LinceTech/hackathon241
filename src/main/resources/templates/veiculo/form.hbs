@@ -1,0 +1,98 @@
+<form id="veiculoForm">
+    <input type="hidden" name="veiculo" value="{{veiculo}}">
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Marca:</span>
+            <span>
+                <input type="text" name="marca" maxlength="30" size="30" value="{{marca}}">
+                {{#with errors}}
+                    {{#if marcaError}}
+                        <span class="error">
+                            Marca: {{marcaError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Modelo:</span>
+            <span>
+                <input type="text" name="modelo" maxlength="60" size="60" value="{{modelo}}">
+                {{#with errors}}
+                    {{#if modeloError}}
+                        <span class="error">
+                            Modelo: {{modeloError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Placa:</span>
+            <span>
+                <input type="text" name="placa" maxlength="7" size="7" value="{{placa}}">
+                {{#with errors}}
+                    {{#if placaError}}
+                        <span class="error">
+                            Placa: {{placaError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Cor:</span>
+            <span>
+                <input type="text" name="cor" maxlength="30" size="30" value="{{cor}}">
+                {{#with errors}}
+                    {{#if corError}}
+                        <span class="error">
+                            Cor: {{corError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <br>
+    <button hx-target="#formAndTable"
+            hx-select="#formAndTable"
+            hx-swap="outerHTML"
+            hx-post="veiculo/upsert"
+            hx-include="[name='page']"
+            style="display: inline-flex">
+        <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
+        &nbsp;
+        {{#if veiculo}}
+            Atualizar
+        {{^}}
+            Cadastrar
+        {{/if}}
+    </button>
+    {{#if veiculo}}
+        <button hx-target="#veiculoForm"
+                hx-select="#veiculoForm"
+                hx-swap="outerHTML"
+                hx-get="veiculo/edit"
+                style="display: inline-flex">
+            <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar item">
+            &nbsp;
+            Cancelar
+        </button>
+    {{/if}}
+</form>
