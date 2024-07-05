@@ -3,6 +3,7 @@ package br.com.lince.hackathon.gerentes;
 import java.time.LocalDate;
 
 public class Gerentes {
+    int id;
     String nome;
     String cpf;
     String telefone;
@@ -24,6 +25,14 @@ public class Gerentes {
         this.estado = estado;
         this.percentual = percentual;
         this.dataContratacao = dataContratacao;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -74,19 +83,19 @@ public class Gerentes {
         this.estado = estado;
     }
 
-    public Float getPercentual() {
-        return percentual;
+    public String getPercentual() {
+        return percentual != null ? percentual.toString() : "";
     }
 
-    public void setPercentual(Float percentual) {
+    public void setPercentualDeComissao(Float percentual) {
         this.percentual = percentual;
     }
 
-    public LocalDate getDataContratacao() {
-        return dataContratacao;
+    public String getDataContratacao() {
+        return dataContratacao != null ? dataContratacao.toString() : "";
     }
 
-    public void setDataContratacao(LocalDate dataContratacao) {
+    public void setDataDeContratacao(LocalDate dataContratacao) {
         this.dataContratacao = dataContratacao;
     }
 }

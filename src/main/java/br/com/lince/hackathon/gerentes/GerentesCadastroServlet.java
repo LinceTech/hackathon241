@@ -1,7 +1,5 @@
 package br.com.lince.hackathon.gerentes;
 
-import br.com.lince.hackathon.foo.FooServlet;
-import br.com.lince.hackathon.foo.FooViewData;
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
 
@@ -12,14 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Logger;
 
 @WebServlet("/gerentesCadastro/*")
-public class GerentesServelet extends HttpServlet {
-    private static final Logger logger = Logger.getLogger(GerentesServelet.class.getName());
+public class GerentesCadastroServlet extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(GerentesCadastroServlet.class.getName());
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

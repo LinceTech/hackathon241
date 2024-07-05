@@ -3,8 +3,71 @@
 <head>
     <title>HBS - Index</title>
     {{>head}}
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
 </head>
 <body>
+    <div id="gerentesTable">
+        <div id="gerentesPagina">
+            <input type="hidden" name="page" value="{{index}}">
 
+            <div style="display: inline-flex; padding-bottom: 12px;">
+                {{#if hasPrevious}}
+                    <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
+                         alt="Página anterior"
+                         style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
+                         hx-target="#gerentesPagina"
+                         hx-select="#gerentesPagina"
+                         hx-swap="innerHTML"
+                         hx-get="gerentesLista?page={{previous}}">
+                {{/if}}
+
+                <span style="height: 18px; vertical-align: center;">
+                    Pagina <b>{{page}}</b> de <b>{{totalPages}}</b>
+                </span>
+
+                {{#if next}}
+                    <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
+                         alt="Próxima página"
+                         style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
+                         hx-target="#gerentesPagina"
+                         hx-select="#gerentesPagina"
+                         hx-swap="innerHTML"
+                         hx-get="gerentesLista?page={{next}}">
+                {{/if}}
+            </div>
+
+            <table>
+                <thead>
+                <tr>
+                    <th style="text-align: left;">Nome</th>
+                    <th style="text-align: left;">Telefone</th>
+                    <th style="text-align: left;">CPF</th>
+                    <th style="text-align: left;">E-mail</th>
+                    <th style="text-align: left;">Cidade</th>
+                    <th style="text-align: left;">Estado</th>
+                    <th style="text-align: right;">Percentual de Comissão</th>
+                    <th style="text-align: left;">Data de Contratação</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#gerentes}}
+                    {{>gerentes/gerentesLinha}}
+                {{/gerentes}}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>

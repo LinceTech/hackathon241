@@ -72,7 +72,7 @@
 </div>
 <div>
     <label>Percentual de comissão
-        <input type="number" name="percentual" value="{{gerentes.percentual}}">
+        <input type="number" step=".01" name="percentual" value="{{gerentes.percentual}}">
     </label>
     {{#with errors}}
         {{#if percentual}}
