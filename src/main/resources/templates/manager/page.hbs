@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>Cadastro</title>
+    {{>head}}
+</head>
+<body style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+">
+
+<h1>Cadastro de gerente</h1>
+<hr>
+
+<div id="formAndTable">
+    {{>manager/form manager}}
+
+    <hr>
+
+    <div id="managerItemsTable">
+        <input type="hidden" name="page" value="{{index}}">
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+´<form id="managerForm">
+    <div class="managerMain">
+        <div class="managerName">
+            <label for="name">Nome</label>
+            <input type="text" name="name" maxlength="100" size="100" value="{{name}}">
+                <!--            {{#with errors}}-->
+                <!--                {{#if nameError}}-->
+                <!--                    <span class="error">-->
+                <!--                            Bas: {{nameError}}-->
+                <!--                        </span>-->
+                    <!--                {{/if}}-->
+                <!--            {{/with}}-->
+        </div>
+
+        <div class="managerCpf">
+            <label for="cpf">CPF</label>
+            <input type="text" name="cpf" maxlength="11" size="11" value="{{cpf}}">
+        </div>
+
+        <div class="managerBirthDate">
+            <label for="date_birth">Data de nascimento</label>
+            <input type="date" name="date_birth" mask="00/00/0000" value="{{date_birth}}">
+        </div>
+
+        <div class="managerPhone">
+            <label for="phone">Telefone</label>
+            <input type="text" name="phone" maxlength="14" size="14" value="{{phone}}">
+        </div>
+
+        <div class="managerEmail">
+            <label for="email">E-mail</label>
+            <input type="text" name="email" maxlength="100" size="100" value="{{email}}">
+        </div>
+
+        <div class="managerState">
+            <label for="state">Estado</label>
+            <select name="state">
+                <option value="RJ">Rio de Janeiro</option>
+            </select>
+        </div>
+
+        <div class="managerCity">
+            <label for="city">Cidade</label>
+            <input type="text" name="city" maxlength="100" size="100" value="{{city}}">
+
+        </div>
+
+        <div class="managerCommissionPercentage">
+            <label for="commission_percentage">Permissão de comissão</label>
+            <input type="text" name="commission_percentage" maxlength="100" size="100" value="{{commission_percentage}}">
+        </div>
+
+        <div>
+            <label for="hiring_date">Data de contratação</label>
+            <input type="date" name="hiring_date" mask="00/00/0000" value="{{hiring_date}}">
+        </div>
+
+        <button hx-target="#managerItemsTable"
+                hx-select="#managerItemsTable"
+                hx-swap="outerHTML"
+                hx-post="manager/upsert">
+            Cadastrar
+        </button>
+    </div>
+</form>

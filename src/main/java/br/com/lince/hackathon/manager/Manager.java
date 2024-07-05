@@ -1,18 +1,20 @@
 package br.com.lince.hackathon.manager;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Date;
+import br.com.lince.hackathon.util.Service;
 
-public class manager {
+import java.time.LocalDate;
+
+public class Manager {
     private int id;
-    private int cpf;
+    private String cpf;
     private String name;
     private String email;
+    private String phone;
     private String city;
     private String state;
     private double commission_percentage;
-    private Date hiring_date;
+    private LocalDate hiring_date;
+    private LocalDate date_birth;
 
     public int getId() {
         return id;
@@ -22,11 +24,11 @@ public class manager {
         this.id = id;
     }
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
@@ -70,30 +72,63 @@ public class manager {
         this.commission_percentage = commission_percentage;
     }
 
-    public Date getHiring_date() {
+    public LocalDate getHiring_date() {
         return hiring_date;
     }
 
-    public void setHiring_date(Date hiring_date) {
+    public void setHiring_date(LocalDate hiring_date) {
         this.hiring_date = hiring_date;
     }
 
-    public manager(int cpf, String name, String email, String city, String state, double commission_percentage, Date hiring_date) {
+    public LocalDate getDate_birth() {
+        return date_birth;
+    }
+
+    public void setDate_birth(LocalDate date_birth) {
+        this.date_birth = date_birth;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Manager(int id, String cpf, String name, String email, String phone, String city,
+                   String state, double commission_percentage, LocalDate hiring_date, LocalDate date_birth) {
+        this.id = id;
         this.cpf = cpf;
         this.name = name;
         this.email = email;
+        this.phone = phone;
         this.city = city;
         this.state = state;
         this.commission_percentage = commission_percentage;
         this.hiring_date = hiring_date;
+        this.date_birth = date_birth;
     }
 
-    public manager() {
+    public Manager(String cpf, String name, String email, String phone, String city,
+                   String state, double commission_percentage, LocalDate hiring_date, LocalDate date_birth) {
+        this.cpf = cpf;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.city = city;
+        this.state = state;
+        this.commission_percentage = commission_percentage;
+        this.hiring_date = hiring_date;
+        this.date_birth = date_birth;
+    }
+
+    public Manager() {
     }
 
     @Override
     public String toString() {
-        return "manager{" +
+        return "Manager{" +
                 "id=" + id +
                 ", cpf=" + cpf +
                 ", name='" + name + '\'' +
@@ -102,6 +137,7 @@ public class manager {
                 ", state='" + state + '\'' +
                 ", commission_percentage=" + commission_percentage +
                 ", hiring_date=" + hiring_date +
+                ", date_birth=" + date_birth +
                 '}';
     }
 
