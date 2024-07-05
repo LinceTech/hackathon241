@@ -1,14 +1,13 @@
-package br.com.lince.hackathon.gerente;
+package br.com.lince.hackathon.veiculo;
 
-import br.com.lince.hackathon.gerente.Gerente;
-import br.com.lince.hackathon.gerente.GerenteRepository;
-import br.com.lince.hackathon.gerente.GerenteServlet;
-import br.com.lince.hackathon.gerente.GerenteViewData;
+import br.com.lince.hackathon.veiculo.Veiculo;
+import br.com.lince.hackathon.veiculo.VeiculoRepository;
+import br.com.lince.hackathon.veiculo.VeiculoServlet;
+import br.com.lince.hackathon.veiculo.VeiculoViewData;
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
 
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,8 +16,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-@WebServlet("/gerente/*")
-public class GerenteServlet  extends HttpServlet {
+public class VeiculoServlet extends HttpServlet {
     /*
      * O número de itens na paginação desta tela
      */
@@ -27,7 +25,7 @@ public class GerenteServlet  extends HttpServlet {
     /*
      * Logger padrão do servlet
      */
-    private static final Logger logger = Logger.getLogger(GerenteServlet.class.getName());
+    private static final Logger logger = Logger.getLogger(VeiculoServlet.class.getName());
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -40,11 +38,11 @@ public class GerenteServlet  extends HttpServlet {
                 break;
 
             case "/edit":
-                loadFormEditGerente(request, response);
+                loadFormEditVeiculo(request, response);
                 break;
 
             case "/delete":
-                deleteGerente(request, response);
+                deleteVeiculo(request, response);
                 break;
 
             default:
@@ -69,15 +67,15 @@ public class GerenteServlet  extends HttpServlet {
      * Trata a requisição para retorna a página de foos carregada com todos os dados
      */
     private void loadFullPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<GerenteViewData>("gerente/page", response);
+        final var renderer = new TemplateRenderer<VeiculoViewData>("veiculo/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
 
-        JDBIConnection.instance().withExtension(GerenteRepository.class, dao -> {
+        JDBIConnection.instance().withExtension(VeiculoRepository.class, dao -> {
             final var now = LocalDateTime.now();
             final var count = dao.count();
-            final var gerentes = dao.selectPage(page, PAGE_SIZE);
+            final var veiculos = dao.selectPage(page, PAGE_SIZE);
 
-            renderer.render(new GerenteViewData(gerentes, now, page, PAGE_SIZE, count));
+            renderer.render(new VeiculoViewData(veiculos, now, page, PAGE_SIZE, count));
 
             return null;
         });
@@ -87,20 +85,20 @@ public class GerenteServlet  extends HttpServlet {
      * Trata a requisição para inserir ou atualizar um foo, e retorna página atualizada
      */
     private void insertOrUpdateGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<GerenteViewData>("gerente/page", response);
+        final var renderer = new TemplateRenderer<VeiculoViewData>("veiculo/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
 
 
-        final var nome = request.getParameter("nome");
-        final var cpf = NumberUtils.toInt(request.getParameter("cpf"), 0);
-        final var telefone = NumberUtils.toInt(request.getParameter("telefone"), 0);
-        final var email = request.getParameter("email");
+
+        final var marca = NumberUtils.toInt(request.getParameter("marca"), 0);
+        final var modelo = request.getParameter("modelo");
+        final var placa = request.getParameter("placa");
+        final var cor = NumberUtils.toInt(request.getParameter("cor"), 0);
+        final var anoDeFabricacao = NumberUtils.toInt(request.getParameter("anoDeFabricacao"), 0);
+
         final var cidade = request.getParameter("cidade");
         final var estado = request.getParameter("estado");
-        final var percentualComissao = NumberUtils.toDouble(request.getParameter("percentualComissao").replaceAll(",","."), 0);
-        final var dataContratacao = NumberUtils.toInt(request.getParameter("dataContratacao"), 0);
-
-        System.out.println("cpf: "+ cpf);
+        final var custoDeDiaria = NumberUtils.toDouble(request.getParameter("percentualComissao").replaceAll(",","."), 0);
 
         final var gerente = new Gerente(nome, cpf, telefone, email, cidade, estado, percentualComissao, dataContratacao);
         final var errors = new HashMap<String, String>();

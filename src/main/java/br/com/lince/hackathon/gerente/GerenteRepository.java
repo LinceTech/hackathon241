@@ -41,7 +41,7 @@ public interface GerenteRepository {
      */
     @RegisterBeanMapper(Gerente.class)
     @UseFreemarkerEngine
-    @SqlQuery("SELECT nome, cpf, telefone, email, cidade, estado, replace(percentualComissao,'.',',') as percentualComissao, dataContratacao FROM gerente WHERE cpf = :cpf")
+    @SqlQuery("SELECT nome, cpf, telefone, email, cidade, estado, percentualComissao, dataContratacao FROM gerente WHERE cpf = :cpf")
     Gerente findByCpf(@Bind("cpf") int cpf);
 
     /**
