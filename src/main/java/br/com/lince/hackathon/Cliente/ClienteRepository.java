@@ -51,18 +51,19 @@ public interface ClienteRepository {
     @UseFreemarkerEngine
 //    @SqlUpdate("UPDATE foo SET bas = :foo.bas, boo = :foo.boo WHERE bar = :foo.bar")
     @SqlUpdate("UPDATE cliente SET nome = :cliente.nome, " +
-                                         ":cliente.cpf, " +
-                                         ":cliente.dataNascimento, " +
-                                         ":cliente.telefone, " +
-                                         ":cliente.email, " +
-                                         ":cliente.cep, " +
-                                         ":cliente.cidade, " +
-                                         ":cliente.estado, " +
-                                         ":cliente.bairro, " +
-                                         ":cliente.rua, " +
-                                         ":cliente.numero " +
-                                         "where :cliente.cpf")
+                                  "cpf = :cliente.cpf, " +
+                                  "dataNascimento = :cliente.dataNascimento, " +
+                                  "telefone = :cliente.telefone, " +
+                                  "email = :cliente.email, " +
+                                  "cep = :cliente.cep, " +
+                                  "cidade = :cliente.cidade, " +
+                                  "estado = :cliente.estado, " +
+                                  "bairro = :cliente.bairro, " +
+                                  "rua = :cliente.rua, " +
+                                  "numero = :cliente.numero " +
+                                  "where cpf = :cliente.cpf")
     void update(@BindBean("cliente") Cliente cliente);
+
 
     @RegisterBeanMapper(Cliente.class)
     @UseFreemarkerEngine

@@ -5,14 +5,15 @@ public class Funcoes {
         String[] datas = data.split("/");
         int dataInvertida = 0;
 
-        if(data.isEmpty() == false){
+        if(!data.isEmpty()){
             try {
                 dataInvertida =  Integer.parseInt(datas[2] + datas[1] + datas[0]);
-
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e) {
                 return 0;
             }
         }
-        return  dataInvertida;
+        return dataInvertida;
+
     }
 }

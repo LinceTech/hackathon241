@@ -44,7 +44,7 @@
             <span>
                 <input 
                           id="id"
-                          type="date"
+                          type="text"
                           name="dataNascimento"
                           maxlength="10" value={{dataNascimento}}>
                 {{#with errors}}
@@ -235,28 +235,30 @@
         </label>
     </div>
     <br>
-{{!--     <button hx-target="#formAndTable" --}}
-{{!--             hx-select="#formAndTable" --}}
-{{!--             hx-swap="outerHTML" --}}
-{{!--             hx-post="cliente/upsert" --}}
-{{!--             hx-include="[name='page']" --}}
-{{!--             style="display: inline-flex"> --}}
-{{!--         <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item"> --}}
-{{!--         &nbsp; --}}
-{{!--         {{#if cpf}} --}}
-{{!--             Atualizar --}}
-{{!--         {{^}} --}}
-{{!--             Cadastrar --}}
-{{!--         {{/if}} --}}
-{{!--     </button> --}}
-    <button hx-target="#clienteForm"
-            hx-select="#clienteForm"
+    <button hx-target="#formAndTable"
+            hx-select="#formAndTable"
             hx-swap="outerHTML"
             hx-post="cliente/upsert"
             hx-include="[name='page']"
             style="display: inline-flex">
-        <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar item">
+        <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
         &nbsp;
-        Cadastrar
+        {{#if cpf}}
+            Atualizar
+        {{^}}
+            Cadastrar
+        {{/if}}
     </button>
+    {{#if cpf}}
+        <button hx-target="#clienteForm"
+                hx-select="#clienteForm"
+                hx-swap="outerHTML"
+                hx-post="cliente/upsert"
+                hx-include="[name='page']"
+                style="display: inline-flex">
+            <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar item">
+            &nbsp;
+            Cadastrar
+        </button>
+    {{/if}}
 </form>
