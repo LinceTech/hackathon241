@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
+import static java.lang.System.out;
+
 public class JDBIConnection {
     private static final Logger logger = Logger.getLogger(JDBIConnection.class.getName());
 
@@ -23,7 +25,6 @@ public class JDBIConnection {
             final var database = env.get("DATABASE_NAME");
             final var user = env.get("DATABASE_USER");
             final var password = env.get("DATABASE_PASSWORD");
-
             if (server == null || server.isBlank()) {
                 logger.severe("DATABASE_SERVER vazio");
             }

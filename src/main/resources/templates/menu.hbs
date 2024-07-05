@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>Cadastro de clientes</title>
+    {{>head}}
+</head>
+<body >
+
+<style>
+    .sidebar {
+        height: 100%;
+        z-index: 100;
+        background-color: #f8f9fa;
+        padding-top: 1rem;
+    }
+</style>
+<div style="display: flex;min-height: 100vh">
+    <div class="sidebar" style="width: 300px;">
+        <h4 class="text-center" style="text-align: left !important;padding: 15px;">Menu</h4>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="hackathon">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="clientes">clientes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="clientes">Cadastro clientes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="gerentes">Gerentes</a>
+            </li>
+        </ul>
+    </div>
