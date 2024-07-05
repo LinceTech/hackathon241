@@ -120,7 +120,21 @@ public class VeiculoServlet extends HttpServlet {
             errors.put("placa", "Não pode ser menor que 7 caracteres");
         }
 
+        if (anoFabrica < 1886 || anoFabrica > now / 10000) {
+            errors.put("anoFabricaError", "Ano de fabricação inválido");
+        }
 
+        if (custoDiaria <= 0) {
+            errors.put("custoDiariaError", "Custo diária deve ser maior que zero");
+        }
+
+        if (descricao.length() > 8000) {
+            errors.put("descricaoError", "Não pode ser maior que 8000 caracteres");
+        }
+
+        if (tipoCombustivel < 1 || tipoCombustivel > 4) {
+            errors.put("tipoCombustivelError", "Tipo de combustível inválido");
+        }
 
         JDBIConnection.instance().withExtension(Time7Repository.class, dao -> {
             // Verificar se ocorreram erros no formulário
