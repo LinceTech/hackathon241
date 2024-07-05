@@ -23,16 +23,16 @@ public interface Time7Repository {
     // GERENTE
     @RegisterBeanMapper(Gerente.class)
     @UseFreemarkerEngine
-    @SqlQuery("SELECT *, DtContrata " +
+    @SqlQuery("SELECT * " +
               "FROM Gerente ORDER BY Id OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
     List<Gerente> selectPageGerente(@Define("page") int page, @Define("count") int count);
 
 
     @RegisterBeanMapper(Gerente.class)
     @UseFreemarkerEngine
-    @SqlQuery("SELECT *, DtContrata " +
+    @SqlQuery("SELECT * " +
               "FROM Gerente WHERE Id = :id")
-    Gerente findByBarGerente(@Bind("id") int id);
+    Gerente findByIdGerente(@Bind("id") int id);
 
 
     @UseFreemarkerEngine
@@ -76,16 +76,16 @@ public interface Time7Repository {
     //CLIENTE
     @RegisterBeanMapper(Cliente.class)
     @UseFreemarkerEngine
-    @SqlQuery("SELECT *, DtNascimento " +
+    @SqlQuery("SELECT * " +
             "FROM Cliente ORDER BY Id OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
     List<Cliente> selectPageCliente(@Define("page") int page, @Define("count") int count);
 
 
     @RegisterBeanMapper(Cliente.class)
     @UseFreemarkerEngine
-    @SqlQuery("SELECT *, DtNascimento " +
+    @SqlQuery("SELECT * " +
             "FROM Cliente WHERE Id = :id")
-    Cliente findByBarCliente(@Bind("id") int id);
+    Cliente findByIdCliente(@Bind("id") int id);
 
 
     @UseFreemarkerEngine
@@ -135,16 +135,16 @@ public interface Time7Repository {
     //VEICULO
     @RegisterBeanMapper(Veiculo.class)
     @UseFreemarkerEngine
-    @SqlQuery("SELECT *, DtInicio, DtFinal, DtPagamento " +
+    @SqlQuery("SELECT * " +
             "FROM Veiculo ORDER BY Id OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
     List<Veiculo> selectPageVeiculo(@Define("page") int page, @Define("count") int count);
 
 
     @RegisterBeanMapper(Veiculo.class)
     @UseFreemarkerEngine
-    @SqlQuery("SELECT *, DtInicio, DtFinal, DtPagamento " +
+    @SqlQuery("SELECT * " +
             "FROM Veiculo WHERE Id = :id")
-    Veiculo findByBarVeiculo(@Bind("id") int id);
+    Veiculo findByIdVeiculo(@Bind("id") int id);
 
 
     @UseFreemarkerEngine
@@ -197,7 +197,7 @@ public interface Time7Repository {
     @UseFreemarkerEngine
     @SqlQuery("SELECT * " +
             "FROM Locacao WHERE Id = :id")
-    Locacao findByBarLocacao(@Bind("id") int id);
+    Locacao findByIdLocacao(@Bind("id") int id);
 
 
     @UseFreemarkerEngine
