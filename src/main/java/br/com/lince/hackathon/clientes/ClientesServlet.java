@@ -1,6 +1,5 @@
 package br.com.lince.hackathon.clientes;
 
-import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
 
 import javax.servlet.ServletException;

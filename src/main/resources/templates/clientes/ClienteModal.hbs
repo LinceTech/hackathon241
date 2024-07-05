@@ -4,27 +4,149 @@
             {{#if id}}
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Altere Cliente</h1>
             {{else}}
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Crie Cliente</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastrar Cliente</h1>
             {{/if}}
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <input type="hidden" id="id" name="id" value="{{id}}">
             <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
+                <label for="title" class="form-label">Nome</label>
                 <input
                         type="text"
                         class="form-control"
-                        id="title"
-                        name="title"
-                        placeholder="Type the title"
-                        value="{{title}}"
+                        id="nome"
+                        name="nome"
+                        placeholder="Nome do cliente"
+                        value="{{nome}}"
                 >
             </div>
+
             <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" id="description" name="description" rows="3">{{description}}</textarea>
+                <label for="cpf" class="form-label">CPF</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="cpf"
+                        name="cpf"
+                >
+                    {{cpf}}</input>
             </div>
+
+
+            <div class="mb-3">
+                <label for="dataNascimento" class="form-label">Data</label>
+                <input
+                        type="date"
+                        class="form-control"
+                        id="dataNascimento"
+                        name="dataNascimento"
+                >
+                    {{dataNascimento}}</input>
+            </div>
+
+            <div class="mb-3">
+                <label for="ddd" class="form-label">DDD</label>
+                <input
+                        type="number"
+                        class="form-control"
+                        id="ddd"
+                        name="ddd"
+                >
+                    {{ddd}}</input>
+            </div>
+
+            <div class="mb-3">
+                <label for="telefone" class="form-label">Telefone</label>
+                <input
+                        type=tel
+                        class="form-control"
+                        id="telefone"
+                        name="telefone"
+                >
+                    {{telefone}}</input>
+            </div>
+
+            <div class="mb-3">
+                <label for="cep" class="form-label">CEP</label>
+                <input
+                        type="number"
+                        class="form-control"
+                        id="cep"
+                        name="cep"
+                >
+                    {{cep}}</input>
+            </div>
+
+            <div class="mb-3">
+                <label for="cidade" class="form-label">Cidade</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="cidade"
+                        name="cidade"
+                >
+                    {{cidade}}</input>
+            </div>
+
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estado</label>
+                <select>
+                <option value="Vazio"> </option>
+                <option value="SC">SC</option>
+                <option value="RS">RS</option>
+                <option value="PR">PR</option>
+                    {{estado}}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="bairro" class="form-label">Bairro</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="bairro"
+                        name="bairro"
+                >
+                    {{bairro}}</input>
+            </div>
+
+            <div class="mb-3">
+                <label for="rua" class="form-label">Rua</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="rua"
+                        name="rua"
+                >
+                    {{rua}}</input>
+            </div>
+
+            <div class="mb-3">
+                <label for="numero" class="form-label">Número</label>
+                <input
+                        type="number"
+                        class="form-control"
+                        id="numero"
+                        name="numero"
+                >
+                    {{numero}}</input>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        name="email"
+                        placeholder="Informe seu e-mail"
+                >
+                    {{email}}</input>
+            </div>
+
+
+
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
