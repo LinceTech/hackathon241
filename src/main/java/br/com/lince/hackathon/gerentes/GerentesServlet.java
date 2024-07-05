@@ -1,6 +1,5 @@
 package br.com.lince.hackathon.gerentes;
 
-import br.com.lince.hackathon.clientes.ClienteFiltros;
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -10,11 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -57,7 +54,7 @@ public class GerentesServlet extends HttpServlet {
 
         final var numeroPaginaReq = NumberUtils.toInt(request.getParameter("numeroPagina").trim(), 0);
 
-        final var filtros = new ClienteFiltros(nome, documento, cidade, estado);
+        final var filtros = new GerenteFiltros(nome, documento, cidade, estado);
 
         JDBIConnection.instance().withExtension(GerentesRepository.class, dao -> {
             int numeroPagina = numeroPaginaReq;
@@ -128,7 +125,7 @@ public class GerentesServlet extends HttpServlet {
                 dao.insereGerente(gerente);
             }
 
-            final var listaGerentes = dao.consultaPaginacao(0, 15, new ClienteFiltros("", "", "", ""));
+            final var listaGerentes = dao.consultaPaginacao(0, 15, new GerenteFiltros("", "", "", ""));
 
             renderer.render(new GerentesViewData(listaGerentes, "", "", "", "", 0));
 
@@ -144,7 +141,7 @@ public class GerentesServlet extends HttpServlet {
         JDBIConnection.instance().withExtension(GerentesRepository.class, dao -> {
             dao.deleteGerente(gerenteID);
 
-            List<Gerentes> list = dao.consultaPaginacao(0, 15, new ClienteFiltros("", "", "", ""));
+            List<Gerentes> list = dao.consultaPaginacao(0, 15, new GerenteFiltros("", "", "", ""));
 
             renderer.render(new GerentesViewData(list, "", "", "", "", 0));
 
@@ -175,7 +172,7 @@ public class GerentesServlet extends HttpServlet {
 
         JDBIConnection.instance().withExtension(GerentesRepository.class, dao -> {
 
-            List<Gerentes> list = dao.consultaPaginacao(0, 15, new ClienteFiltros("", "", "", ""));
+            List<Gerentes> list = dao.consultaPaginacao(0, 15, new GerenteFiltros("", "", "", ""));
 
             renderer.render(new GerentesViewData(list, "", "", "", "", 0));
 

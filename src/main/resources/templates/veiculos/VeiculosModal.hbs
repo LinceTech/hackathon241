@@ -1,0 +1,116 @@
+<div class="modal-content">
+    <form hx-post="/hackathon/veiculos/save" hx-target="#veiculos_lista" id="veiculosForm">
+        <div class="modal-header">
+            {{#if id}}
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Alterar Gerente</h1>
+            {{else}}
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastrar Gerente</h1>
+            {{/if}}
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="id" name="id" value="{{id}}">
+            <div class="mb-3">
+                <label for="title" class="form-label">Nome</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="nome"
+                        name="nome"
+                        placeholder="Nome do gerente"
+                        value="{{nome}}"
+                >
+            </div>
+
+            <div class="mb-3">
+                <label for="cpf" class="form-label">CPF</label>
+                <input
+                        placeholder="Informe o CPF"
+                        type="text"
+                        class="form-control"
+                        id="cpf"
+                        name="cpf"
+                        value="{{cpf}}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="ddd" class="form-label">DDD</label>
+                <input
+                        type="number"
+                        class="form-control"
+                        placeholder="Informe o DDD"
+                        id="ddd"
+                        name="ddd"
+                        value="{{ddd}}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="telefone" class="form-label">Telefone</label>
+                <input
+                        type=tel
+                        class="form-control"
+                        placeholder="Informe o telefone"
+                        id="telefone"
+                        name="telefone"
+                        value="{{telefone}}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        name="email"
+                        placeholder="Informe seu e-mail"
+                        value="{{email}}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="cidade" class="form-label">Cidade</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Informe a cidade"
+                        id="cidade"
+                        name="cidade"
+                        value="{{cidade}}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estado</label>
+                <select name="estado">
+                    <option value="Vazio"></option>
+                    <option {{#eq estado "SC"}} selected {{/eq}} value="SC">SC</option>
+                    <option {{#eq estado "RS"}} selected {{/eq}} value="RS">RS</option>
+                    <option {{#eq estado "PR"}} selected {{/eq}} value="PR">PR</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="rua" class="form-label">Percentual de comissão (%)</label>
+                <input
+                        placeholder="Informe o percentual de comissão"
+                        type="text"
+                        class="form-control"
+                        id="percentualComissao"
+                        name="percentualComissao"
+                        value="{{percentualComissao}}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="rua" class="form-label">Data contratação</label>
+                <input
+                        type="date"
+                        class="form-control"
+                        id="dataContratacao"
+                        name="dataContratacao"
+                        value="{{dataContratacao}}"
+                >
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Salvar</button>
+        </div>
+    </form>
+</div>

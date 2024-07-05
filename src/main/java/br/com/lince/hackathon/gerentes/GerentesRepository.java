@@ -1,7 +1,5 @@
 package br.com.lince.hackathon.gerentes;
 
-import br.com.lince.hackathon.clientes.ClienteFiltros;
-import br.com.lince.hackathon.clientes.Clientes;
 import org.jdbi.v3.freemarker.UseFreemarkerEngine;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -28,7 +26,7 @@ public interface GerentesRepository {
     List<Gerentes> consultaPaginacao(
             @Define("pagina") int pagina,
             @Define("qtRegistros") int qtRegistros,
-            @BindBean("clienteFiltros") ClienteFiltros clienteFiltros
+            @BindBean("clienteFiltros") GerenteFiltros gerenteFiltros
     );
 
 

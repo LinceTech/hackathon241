@@ -1,0 +1,142 @@
+<div class="container" id="cliente_lista">
+    <form
+            hx-get="/hackathon/gerentes/listar"
+            hx-target="#cliente_lista"
+    >
+        <div class="container d-flex gap-2">
+            <div class="mb-3 ">
+                <label for="nome" class="form-label">Nome</label>
+                <input
+                        placeholder="Informe o nome:"
+                        type="text"
+                        class="form-control"
+                        id="nome"
+                        name="nome"
+                        value="{{nome}}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="cpf" class="form-label">Documento</label>
+                <input
+                        placeholder="Informe o documento:"
+                        type="text"
+                        class="form-control"
+                        id="documento"
+                        name="documento"
+                        value="{{documento}}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="cidade" class="form-label">Cidade</label>
+                <input
+                        placeholder="Informe a cidade:"
+                        type="text"
+                        class="form-control"
+                        id="cidade"
+                        name="cidade"
+                        value="{{cidade}}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estado</label>
+                <input
+                        placeholder="Informe o estado:"
+                        type="text"
+                        class="form-control"
+                        id="estado"
+                        name="estado"
+                        value="{{estado}}"
+                >
+            </div>
+            <div class="mb-3 d-flex flex-column justify-content-end">
+                <div class="d-flex align-items-center gap-2">
+                    <button
+                            class="btn btn-primary"
+                            type="submit"
+                    >
+                        Consultar
+                    </button>
+                    <button
+                            class="btn btn-primary"
+                            type="reset"
+                            hx-get="/hackathon/gerentes/listar?nome=&documento=&estado=&cidade=&proximaPagina=false&numeroPagina=0"
+                            hx-target="#cliente_lista"
+                            hx-trigger="click"
+                    >
+                        Limpar filtros
+                    </button>
+                    <button
+                            class="btn btn-primary"
+                            type="reset"
+                            hx-get="/hackathon/gerentes/listar?nome=&documento=&estado=&cidade=&proximaPagina=false&numeroPagina={{numeroPagina}}"
+                            hx-target="#cliente_lista"
+                            hx-trigger="click"
+                    >
+                        <
+                    </button>
+                    <input type="hidden" name="numeroPagina" value="{{numeroPagina}}">
+                    <input type="hidden" name="proximaPagina" value="{{proximaPagina}}">
+                    <div class="h5">{{numeroPagina}}</div>
+                    <button
+                            class="btn btn-primary"
+                            type="reset"
+                            hx-get="/hackathon/gerentes/listar?nome=&documento=&estado=&cidade=&proximaPagina=true&numeroPagina={{numeroPagina}}"
+                            hx-target="#cliente_lista"
+                            hx-trigger="click"
+                    >
+                        >
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Telefone</th>
+            <th>Email</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Percentual comissão</th>
+            <th>Data contratação</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each gerentes}}
+            <tr>
+                <td>{{nome}}</td>
+                <td>{{cpf}}</td>
+                <td>{{ddd}} - {{telefone}}</td>
+                <td>{{email}}</td>
+                <td>{{cidade}}</td>
+                <td>{{estado}}</td>
+                <td>{{percentualComissao}}</td>
+                <td>{{dataContratacao}}</td>
+                <td class="gap-2">
+                    <button
+                            class="btn btn-primary"
+                            hx-get="/hackathon/gerentes/edit?id={{id}}"
+                    hx-target="#mustache_modal"
+                    hx-trigger="click"
+                    data-bs-toggle="modal"
+                    data-bs-target="#gerenteModal"
+                    >
+                    Edit
+                    </button>
+                    <button
+                            class="btn btn-danger"
+                            hx-get="/hackathon/gerentes/delete?id={{id}}"
+                    hx-target="#cliente_lista"
+                    hx-trigger="click"
+                    >
+                    Delete
+                    </button>
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>

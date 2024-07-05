@@ -1,12 +1,12 @@
-package br.com.lince.hackathon.clientes;
+package br.com.lince.hackathon.gerentes;
 
-public class ClienteFiltros {
+public class GerenteFiltros {
     private final String nome;
     private final String documento;
     private final String cidade;
     private final String estado;
 
-    public ClienteFiltros(String nome, String documento, String cidade, String estado) {
+    public GerenteFiltros(String nome, String documento, String cidade, String estado) {
         this.nome = nome;
         this.documento = documento;
         this.cidade = cidade;
