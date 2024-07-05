@@ -55,7 +55,8 @@ public interface ClientesRepository {
                     "estado=:clientes.estado," +
                     "bairro=:clientes.bairro," +
                     "rua=:clientes.rua," +
-                    "numero=:clientes.numero " +
+                    "numero=:clientes.numero, " +
+                    "data_nascimento=:clientes.dataNascimento " +
                     "WHERE id=:clientes.id"
     )
     void atualizaCliente(@BindBean("clientes") Clientes clientes);
@@ -64,11 +65,11 @@ public interface ClientesRepository {
     @SqlQuery("SELECT * FROM CLIENTES (NOLOCK) WHERE id=:id")
     Clientes pegaClientesPeloID(@Bind("id") Long id);
 
-
-
     @SqlUpdate("DELETE FROM CLIENTES WHERE id=:id")
     void deleteCliente(@Bind("id") Long id);
 
-    @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM LOCACAO WHERE id_cliente=:id AND devolvido = 0), 1, 0)")
-    boolean verificaAlocacaoCliente(@Bind("id") Long id);
+    @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM CLIENTES WHERE id=:id), 1, 0)")
+    boolean existeCliente(@Bind("id") Long id);
+
+
 }

@@ -6,6 +6,8 @@ import br.com.lince.hackathon.foo.FooViewData;
 import br.com.lince.hackathon.gerentes.Gerentes;
 import br.com.lince.hackathon.clientes.ClientesRepository;
 import br.com.lince.hackathon.clientes.ClientesViewData;
+import br.com.lince.hackathon.gerentes.GerentesRepository;
+import br.com.lince.hackathon.gerentes.GerentesViewData;
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -63,20 +65,22 @@ public class ClientesServlet extends HttpServlet {
     private void criarOuAtualizaCliente(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<ClientesViewData>("clientes/ClienteLista", response);
 
-        final var id = org.apache.commons.lang3.math.NumberUtils.toLong(request.getParameter("id"), 0);
+        final var id = NumberUtils.toLong(request.getParameter("id"), 0);
         final var nome = request.getParameter("nome").trim();
         final var cpf = request.getParameter("cpf").trim().replace("\\D", "");
-        final var dataNascimento = request.getParameter("dataNascimento").trim();
-        final var ddd = org.apache.commons.lang3.math.NumberUtils.toInt(request.getParameter("ddd"), 0);
-        final var telefone = org.apache.commons.lang3.math.NumberUtils.toInt(request.getParameter("telefone"), 0);
+        final var dtNascimento = request.getParameter("dataNascimento").trim();
+        final var ddd = NumberUtils.toInt(request.getParameter("ddd"), 0);
+        final var telefone = NumberUtils.toInt(request.getParameter("telefone"), 0);
         final var email = request.getParameter("email").trim();
         final var cidade = request.getParameter("cidade").trim();
         final var estado = request.getParameter("estado").trim();
         final var bairro = request.getParameter("bairro").trim();
         final var rua = request.getParameter("rua").trim();
         final var numero = request.getParameter("numero").trim();
+        final var cep = request.getParameter("cep").trim();
+
         final var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        final var dtNascimento = LocalDate.parse(dataNascimento, formatter);
+        final var dataNascimento = LocalDate.parse(dtNascimento, formatter);
 
         Clientes clientes = new Clientes();
 
@@ -91,11 +95,12 @@ public class ClientesServlet extends HttpServlet {
         clientes.setBairro(bairro);
         clientes.setRua(rua);
         clientes.setNumero(numero);
-        clientes.setDataNascimento(dtNascimento);
+        clientes.setCep(cep);
+        clientes.setDataNascimento(dataNascimento);
 
 
         JDBIConnection.instance().withExtension(ClientesRepository.class, dao -> {
-            if (dao.verificaAlocacaoCliente(id)) {
+            if (dao.existeCliente(id)) {
                 dao.atualizaCliente(clientes);
             } else {
                 dao.insereCliente(clientes);
@@ -109,14 +114,36 @@ public class ClientesServlet extends HttpServlet {
         });
     }
 
-    private void deletarClientes(HttpServletRequest request, HttpServletResponse response) {
+    private void deletarClientes(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<ClientesViewData>("/clientes/ClienteLista", response);
 
+        final var clienteID = NumberUtils.toLong(request.getParameter("id"), 0);
+
+        JDBIConnection.instance().withExtension(ClientesRepository.class, dao -> {
+            dao.deleteCliente(clienteID);
+
+            renderer.render(new ClientesViewData(dao.consultaPaginacao(0, 15)));
+
+            return null;
+        });
     }
 
     void carregaClientesModal(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<Clientes>("/clientes/ClienteModal", response);
 
-        renderer.render(new Clientes());
+        final var clienteID = NumberUtils.toLong(request.getParameter("id"), 0);
+
+        JDBIConnection.instance().withExtension(ClientesRepository.class, dao -> {
+            Clientes cliente = new Clientes();
+
+            if(clienteID != 0){
+                cliente = dao.pegaClientesPeloID(clienteID);
+            }
+
+            renderer.render(cliente);
+
+           return null;
+        });
     }
 
     void carregaClientesPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -129,54 +156,4 @@ public class ClientesServlet extends HttpServlet {
         });
     }
 
-    void insereCliente(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        final var renderer = new TemplateRenderer<FooViewData>("clientes/ClientePage", response);
-//        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
-//        final var bar = NumberUtils.toInt(request.getParameter("bar"), 0);
-//        final var nome = request.getParameter("nome");
-//        final var nome = request.getParameter("nome");
-//        final var nome = request.getParameter("nome");
-//        final var nome = request.getParameter("nome");
-//        final var nome = request.getParameter("nome");
-//        final var nome = request.getParameter("nome");
-//        final var nome = request.getParameter("nome");
-//        final var boo = request.getParameter("boo");
-//        final var clientes = new Clientes(nome);
-//        final var errors = new HashMap<String, String>();
-//
-//        if (nome.isBlank()) {
-//            errors.put("basError", "Não pode ser vazio");
-//        } else if (nome.length() > 60) {
-//            errors.put("basError", "Não pode ser maior que 60 caracteres");
-//        }
-//
-//        if (boo.isBlank()) {
-//            errors.put("booError", "Não pode ser vazio");
-//        }
-//
-//        JDBIConnection.instance().withExtension(FooRepository.class, dao -> {
-//            // Verificar se ocorreram erros no formulário
-//            if (errors.isEmpty()) {
-//                if (dao.exists(bar)) {
-//                    dao.update(foo);
-//                } else {
-//                    dao.insert(foo);
-//                }
-//            }
-//
-//            final var now = LocalDateTime.now();
-//            final var count = dao.count();
-//            final var foos = dao.selectPage(page, PAGE_SIZE);
-//
-//            if (errors.isEmpty()) {
-//                renderer.render(new FooViewData(foos, now, page, PAGE_SIZE, count));
-//            } else {
-//                renderer.render(new FooViewData(errors, foo, foos, now, page, PAGE_SIZE, count));
-//            }
-//
-//            return null;
-//        });
-
-        response.sendRedirect("/clientes/ClientePage");
-    }
 }
