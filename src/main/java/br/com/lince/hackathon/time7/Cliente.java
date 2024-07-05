@@ -169,7 +169,7 @@ public class Cliente {
 
     @Override
     public int hashCode() {
-        return Objects.hash(nome, cpf, dtNascimento, telefone, email, cep, cidade, estado, bairro, rua, numero);
+        return Objects.hash(id, nome, cpf, dtNascimento, telefone, email, cep, cidade, estado, bairro, rua, numero);
     }
 
     @Override
