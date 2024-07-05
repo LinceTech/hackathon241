@@ -4,20 +4,20 @@ import java.util.Objects;
 
 public class Endereco {
 
+    private String bairro;
     private String cep;
     private String cidade;
     private String estado;
-    private String bairro;
-    private String rua;
     private int numeroResidencia;
+    private String rua;
 
-    public Endereco(final String cep, final String cidade, final String estado, final String bairro, final String rua, final int numeroResidencia) {
+    public Endereco(final String bairro, final String cep, final String cidade, final String estado, final int numeroResidencia, final String rua) {
+        this.bairro = bairro;
         this.cep = cep;
         this.cidade = cidade;
         this.estado = estado;
-        this.bairro = bairro;
-        this.rua = rua;
         this.numeroResidencia = numeroResidencia;
+        this.rua = rua;
     }
 
     public String getCep() {
