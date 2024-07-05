@@ -1,15 +1,13 @@
 package br.com.lince.hackathon.time7;
 
-import br.com.lince.hackathon.foo.Foo;
-
 import java.util.Objects;
 
 public class Cliente {
     private int    id           ;
     private String nome         ;
-    private float  cpf          ;
+    private long   cpf          ;
     private int    dtNascimento ;
-    private float  telefone     ;
+    private long telefone     ;
     private String email        ;
     private int    cep          ;
     private String cidade       ;
@@ -23,9 +21,9 @@ public class Cliente {
 
     public Cliente(int    id           ,
                    String nome         ,
-                   float  cpf          ,
+                   long cpf          ,
                    int    dtNascimento ,
-                   float  telefone     ,
+                   long telefone     ,
                    String email        ,
                    int    cep          ,
                    String cidade       ,
@@ -64,11 +62,11 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public float getCpf() {
+    public long getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(long cpf) {
         this.cpf = cpf;
     }
 
@@ -80,11 +78,11 @@ public class Cliente {
         this.dtNascimento = dtNascimento;
     }
 
-    public float getTelefone() {
+    public long getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(int telefone) {
+    public void setTelefone(long telefone) {
         this.telefone = telefone;
     }
 
