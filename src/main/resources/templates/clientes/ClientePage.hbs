@@ -1,5 +1,5 @@
 {{>head}}
-<div class="d-flex justify-content-center w-100">
+<div class="d-flex flex-column justify-content-center w-100">
     <div class="w-100 m-5 border rounded d-flex flex-column justify-content-center">
         <div class="d-flex justify-content-center position-relative">
             <div class="h4 text-center">Clientes</div>
@@ -11,16 +11,16 @@
                     hx-target="#mustache_modal"
                     hx-trigger="click"
                     data-bs-toggle="modal"
-                    data-bs-target="#ticketModel"
+                    data-bs-target="#clienteModel"
             >
-                Cadastrar cliente
+                Cadastrar Cliente
             </button>
         </div>
-        {{>ClienteDescricao}}
     </div>
+    {{>clientes/ClienteLista}}
     <div
             class="modal fade"
-            id="ticketModel"
+            id="clienteModal"
             tabindex="-1"
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"
