@@ -42,5 +42,8 @@
         <label for="dataContratacao">Data de contratação</label>
         <input type="date" name="dataContratacao">
     </div>
-    <button type="submit" hx-post="gerentes/upsert">Inserir</button>
+    <button hx-post="gerentes/upsert"
+            hx-target="#cadastroGerentesForm"
+            hx-select="#cadastroGerentesForm"
+            hx-swap="outerHTML">Cadastrar</button>
 </form>

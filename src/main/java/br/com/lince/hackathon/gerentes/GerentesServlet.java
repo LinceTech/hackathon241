@@ -122,15 +122,15 @@ public class GerentesServlet extends HttpServlet {
                 }
             }
 
-//            final var now = LocalDateTime.now();
-//            final var count = dao.count();
-//            final var gerentes = dao.selectPage(page, PAGE_SIZE);
-//
-//            if (errors.isEmpty()) {
-//                renderer.render(new GerentesViewData(gerentes, now, page, PAGE_SIZE, count));
-//            } else {
-//                renderer.render(new GerentesViewData(errors, gerente, gerentes, now, page, PAGE_SIZE, count));
-//            }
+            final var now = LocalDateTime.now();
+            final var count = dao.count();
+            final var gerentes = dao.selectPage(page, PAGE_SIZE);
+
+            if (errors.isEmpty()) {
+                renderer.render(new GerentesViewData(gerentes, now, page, PAGE_SIZE, count));
+            } else {
+                renderer.render(new GerentesViewData(errors, gerente, gerentes, now, page, PAGE_SIZE, count));
+            }
 
             return null;
         });
