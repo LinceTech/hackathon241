@@ -7,7 +7,7 @@ public class Cliente {
     private String nome         ;
     private long   cpf          ;
     private int    dtNascimento ;
-    private long telefone     ;
+    private long   telefone     ;
     private String email        ;
     private int    cep          ;
     private String cidade       ;
@@ -21,9 +21,9 @@ public class Cliente {
 
     public Cliente(int    id           ,
                    String nome         ,
-                   long cpf          ,
+                   long   cpf          ,
                    int    dtNascimento ,
-                   long telefone     ,
+                   long   telefone     ,
                    String email        ,
                    int    cep          ,
                    String cidade       ,

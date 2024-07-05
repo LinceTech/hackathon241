@@ -56,7 +56,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Telefone:</span>
             <span>
-                <input type="text" name="telefone" value="{{telefone}}">
+                <input type="text" name="telefone" size="14" maxlength="14" value="{{telefone}}">
                 {{#with errors}}
                     {{#if telefoneError}}
                         <span class="error">
@@ -68,6 +68,136 @@
             <br>
         </label>
     </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Email:</span>
+            <span>
+                <input type="text" name="email" size="60" maxlength="60" value="{{email}}">
+                {{#with errors}}
+                    {{#if emailError}}
+                        <span class="error">
+                            email: {{emailError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">CEP: </span>
+            <span>
+                <input type="text" name="cep" size="9" maxlength="9" value="{{cep}}">
+                {{#with errors}}
+                    {{#if cepError}}
+                        <span class="error">
+                            cep: {{cepError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Estado:</span>
+            <span>
+                <select name="estado">
+                  <option value="AC">AC</option>
+                  <option value="AL">AL</option>
+                  <option value="AP">AP</option>
+                  <option value="AM">AM</option>
+                  <option value="BA">BA</option>
+                  <option value="CE">CE</option>
+                  <option value="DF">DF</option>
+                  <option value="ES">ES</option>
+                  <option value="GO">GO</option>
+                  <option value="MA">MA</option>
+                  <option value="MT">MT</option>
+                  <option value="MS">MS</option>
+                  <option value="MG">MG</option>
+                  <option value="PA">PA</option>
+                  <option value="PB">PB</option>
+                  <option value="PR">PR</option>
+                  <option value="PE">PE</option>
+                  <option value="PI">PI</option>
+                  <option value="RJ">RJ</option>
+                  <option value="RN">RN</option>
+                  <option value="RS">RS</option>
+                  <option value="RO">RO</option>
+                  <option value="RR">RR</option>
+                  <option value="SC">SC</option>
+                  <option value="SP">SP</option>
+                  <option value="SE">SE</option>
+                </select>
+                {{#with errors}}
+                    {{#if estadoError}}
+                        <span class="error">
+                            estado: {{estadoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Cidade:</span>
+            <span>
+                <input type="text" name="cidade" size="60" maxlength="60" value="{{cidade}}">
+                {{#with errors}}
+                    {{#if cidadeError}}
+                        <span class="error">
+                            cidade: {{cidadeError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Comissão:</span>
+            <span>
+                <input type="text" name="comissao" size="6" maxlength="6" value="{{comissao}}">
+                {{#with errors}}
+                    {{#if comissaoError}}
+                        <span class="error">
+                            comissao: {{comissaoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Data Contratação:</span>
+            <span>
+                <input type="date" name="dtcontratacao" size="10" maxlength="10" value="{{dtcontratacao}}">
+                {{#with errors}}
+                    {{#if dtcontratacaoError}}
+                        <span class="error">
+                            dtcontratacao: {{dtcontratacaoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
 
     <br>
     <button hx-target="#formAndTable"
