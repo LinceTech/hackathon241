@@ -1,0 +1,34 @@
+<div style="margin-left: 55px;" class="col-auto">
+    <button class="btn btn-primary mb-3"
+            hx-target="#divFormularioClient"
+            hx-select="#divFormularioClient"
+            hx-swap="outerHTML"
+            hx-get="clientes/"
+            style="display: inline-flex">Adicionar cliente</button>
+</div>
+
+<h2 style="margin-left: 55px;">Listagem de Clientes</h2>
+
+<table style="margin-left: 55px;" class="table table-hover">
+    <thead>
+    <tr scope="col">
+        <th>ID</th>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>E-mail</th>
+        <th>Nascimento</th>
+        <th>Cidade</th>
+        <th>UF</th>
+        <th>Bairro</th>
+        <th>Rua</th>
+        <th>CEP</th>
+        <th>Número</th>
+        <th>Ação</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#clients}}
+        {{>client/rowClient}}
+    {{/clients}}
+    </tbody>
+</table>

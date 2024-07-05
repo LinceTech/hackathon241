@@ -57,7 +57,7 @@ public class Client {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {

@@ -1,5 +1,7 @@
 package br.com.lince.hackathon.client;
 
+import br.com.lince.hackathon.foo.Foo;
+import br.com.lince.hackathon.foo.FooRepository;
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
@@ -28,7 +30,9 @@ public class ClientServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
-        System.out.println(requestPath);
+
+        System.out.println("requestPath >> " + requestPath);
+
         switch (requestPath) {
             case "":
             case "/":
@@ -36,13 +40,12 @@ public class ClientServlet extends HttpServlet {
                 break;
 
             case "/edit":
-//                loadFormEditFoo(request, response);
+                loadFormEditClient(request, response);
                 break;
 
             case "/delete":
-//                deleteFoo(request, response);
+                deleteClient(request, response);
                 break;
-
             default:
                 response.getWriter().write("Not found : " + requestPath);
         }
@@ -68,10 +71,15 @@ public class ClientServlet extends HttpServlet {
         final var renderer = new TemplateRenderer<ClientViewData>("client/pageClient", response);
         final var page = NumberUtils.toInt(request.getParameter("pageClient"), 0);
 
+        System.out.println("request loadFull " + request);
+        System.out.println("response loadFull" + response);
+
         JDBIConnection.instance().withExtension(ClientRepository.class, dao -> {
             final var now = LocalDateTime.now();
             final var count = dao.countClient();
             final var clients = dao.selectPageClient(page, PAGE_SIZE);
+
+            System.out.println("clients " + new ClientViewData(clients, now, page, PAGE_SIZE, count).toString());
 
             renderer.render(new ClientViewData(clients, now, page, PAGE_SIZE, count));
 
@@ -79,15 +87,17 @@ public class ClientServlet extends HttpServlet {
         });
     }
 
-    /*ATUALIZA VALORES*/
+    /*ATUALIZA E INSERE VALORES*/
     private void insertOrUpdateFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<ClientViewData>("client/pageClient", response);
         final var page = NumberUtils.toInt(request.getParameter("pageClient"), 0);
-        System.out.println("page :>>" + page);
+        int id = 0;
+        try {
+            id = Integer.parseInt(request.getParameter("id"));
+        } catch(Exception e){
+        }
         final var nome = request.getParameter("nome");
-        System.out.println("nome :>>" + nome);
         final var cpf = request.getParameter("cpf");
-        System.out.println("cpf :>>" + cpf);
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date_nascimento = new Date();
@@ -98,13 +108,9 @@ public class ClientServlet extends HttpServlet {
         }
 
         final var data_nascimento = request.getParameter("data_nascimento");
-        System.out.println("data_nascimento :>>" + data_nascimento);
         final var telefone = request.getParameter("telefone");
-        System.out.println("telefone :>>" + telefone);
         final var email = request.getParameter("email");
-        System.out.println("email :>>" + email);
         final var cep = request.getParameter("cep");
-        System.out.println("cep :>>" + cep);
         final var cidade = request.getParameter("cidade");
         final var estado = request.getParameter("estado");
         final var bairro = request.getParameter("bairro");
@@ -115,7 +121,7 @@ public class ClientServlet extends HttpServlet {
         }catch (Exception e){
             numero = 0;
         }
-        final var client = new Client(0, numero, nome, date_nascimento, cpf,telefone,email,cep,estado,bairro,cidade,rua);
+        final var client = new Client(id, numero, nome, date_nascimento, cpf,telefone,email,cep,estado,bairro,cidade,rua);
         final var errors = new HashMap<String, String>();
 
         //NOME
@@ -186,13 +192,14 @@ public class ClientServlet extends HttpServlet {
             // Verificar se ocorreram erros no formulário
             System.out.println("dao :>>" + dao);
             System.out.println("errors :>>" + errors);
+            System.out.println("client.getId() :>>" + client.getId());
             if (errors.isEmpty()) {
                 System.out.println("insert or update foo");
-//                if (dao.existsClient(client.getId())) {
-//                    dao.updateClientById(client);
-//                } else {
+                if (dao.existsClient(client.getId())) {
+                    dao.updateClientById(client);
+                } else {
                     dao.insertClient(client);
-//                }
+                }
             }
 
             final var now = LocalDateTime.now();
@@ -208,4 +215,27 @@ public class ClientServlet extends HttpServlet {
             return null;
         });
     }
+
+    /*EDIT COM O FORMULÁRIO*/
+    private void loadFormEditClient(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<Client>("client/formClient", response);
+        final var id = Integer.parseInt(request.getParameter("id"));
+
+        JDBIConnection.instance().withExtension(ClientRepository.class, dao -> {
+            renderer.render(dao.findClientById(id));
+            return null;
+        });
+    }
+
+    private void deleteClient(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var id = Integer.parseInt(request.getParameter("id"));
+        System.out.println("id :>>" + id);
+
+        JDBIConnection.instance().withExtension(ClientRepository.class, dao -> {
+            dao.deleteClientById(id);
+            loadFullPage(request, response);
+            return null;
+        });
+    }
+
 }
