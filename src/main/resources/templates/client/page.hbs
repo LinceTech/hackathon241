@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>Cadastro</title>
+    {{>head}}
+</head>
+<body style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+">
+
+<h1>Cadastro de cliente</h1>
+<hr>
+
+<div id="formAndTable">
+    {{>client/form client}}
+
+    <hr>
+
+    <div id="clientItemsTable">
+        <input type="hidden" name="page" value="{{index}}">
+    </div>
+</div>
+
+</body>
+</html>

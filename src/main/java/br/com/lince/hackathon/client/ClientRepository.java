@@ -36,4 +36,18 @@ public interface ClientRepository {
     @SqlUpdate("INSERT INTO client(name, cpf, birth_date, phone, email, cep, city, state, neighborhood, street, number) " +
             "VALUES (:client.name, :client.cpf, :client.birth_date, :client.phone, :client.email, :client.cep, :client.city, :client.state, :client.neighborhood, :client.street, :client.number)")
     void insert(@BindBean("client") Client client);
+
+    @UseFreemarkerEngine
+    @SqlUpdate("UPDATE client SET name = :client.name, " +
+            "birth_date = :client.birth_date" +
+            "phone = :client.phone" +
+            "email = :client.email" +
+            "cep = :client.cep" +
+            "city = :client.city" +
+            "state = :client.state" +
+            "neighborhood = :client.neighborhood" +
+            "street = :client.street" +
+            "number = :client.number" +
+            " WHERE cpf = :client.cpf")
+    void update(@BindBean("client") Client client);
 }

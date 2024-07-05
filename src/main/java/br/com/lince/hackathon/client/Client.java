@@ -34,6 +34,20 @@ public class Client {
         this.number = number;
     }
 
+    public Client(String name, String cpf, LocalDate birth_date, String phone, String email, String cep, String city, String state, String neighborhood, String street, Integer number) {
+        this.name = name;
+        this.cpf = cpf;
+        this.birth_date = birth_date;
+        this.phone = phone;
+        this.email = email;
+        this.cep = cep;
+        this.city = city;
+        this.state = state;
+        this.neighborhood = neighborhood;
+        this.street = street;
+        this.number = number;
+    }
+
     public Integer getId() {
         return id;
     }

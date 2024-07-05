@@ -5,7 +5,7 @@ import java.time.Period;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class service {
+public class Service {
 
     public static boolean validarCPF(String cpf) {
         // Remove caracteres que não são dígitos
