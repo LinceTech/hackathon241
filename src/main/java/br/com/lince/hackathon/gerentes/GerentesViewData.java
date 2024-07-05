@@ -8,16 +8,38 @@ public class GerentesViewData {
     private final String cpf;
     private final String cidade;
     private final String estado;
+    private final int numeroPagina;
 
-    public GerentesViewData(List<Gerentes> gerentes, String nome, String cpf, String cidade, String estado) {
+    public GerentesViewData(List<Gerentes> gerentes, String nome, String cpf, String cidade, String estado, int numeroPagina) {
         this.gerentes = gerentes;
         this.nome = nome;
         this.cpf = cpf;
         this.cidade = cidade;
         this.estado = estado;
+        this.numeroPagina = numeroPagina;
     }
 
     public List<Gerentes> getGerentes() {
         return gerentes;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public int getNumeroPagina() {
+        return numeroPagina;
     }
 }

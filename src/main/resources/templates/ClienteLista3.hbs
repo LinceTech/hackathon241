@@ -1,21 +1,37 @@
-<div class="container text-center" id="ticket_list">
+<div class="container text-center" id="cliente_lista">
     <table class="table table-bordered">
         <thead class="thead-dark">
         <tr>
             <th>Nome</th>
+            <th>CPF</th>
+            <th>Data</th>
             <th>Telefone</th>
-            <th>Ação</th>
+            <th>E-mail</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Bairro</th>
+            <th>Rua</th>
+            <th>Número</th>
+            <th>Ações</th>
         </tr>
         </thead>
         <tbody>
-        {{#each cliente}}
+        {{#each clientes}}
             <tr>
-                <td>{{titulo}}</td>
-                <td>{{descricao}}</td>F
+                <td>{{nome}}</td>
+                <td>{{cpf}}</td>
+                <td>{{dataNascimento}}</td>
+                <td>{{ddd}} - {{telefone}}</td>
+                <td>{{email}}</td>
+                <td>{{cidade}}</td>
+                <td>{{estado}}</td>
+                <td>{{bairro}}</td>
+                <td>{{rua}}</td>
+                <td>{{numero}}</td>
                 <td class="gap-2">
                     <button
                             class="btn btn-primary"
-                            hx-get="/cliente/getTicketByID/{{id}}"
+                            hx-get="/ticket/getTicketByID/{{id}}"
                             hx-target="#mustache_modal"
                             hx-trigger="click"
                             data-bs-toggle="modal"
@@ -25,8 +41,8 @@
                     </button>
                     <button
                             class="btn btn-danger"
-                            hx-delete="/cliente/deleteclienteByID/{{id}}"
-                            hx-target="#cliete_lista"
+                            hx-delete="/ticket/deleteTicketByID/{{id}}"
+                            hx-target="#ticket_list"
                             hx-trigger="click"
                     >
                         Deletar

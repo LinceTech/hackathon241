@@ -1,7 +1,9 @@
 package br.com.lince.hackathon.clientes;
 
+import br.com.lince.hackathon.gerentes.Gerentes;
 import org.jdbi.v3.freemarker.UseFreemarkerEngine;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.customizer.DefineNamedBindings;
@@ -14,57 +16,59 @@ public interface ClientesRepository {
     @RegisterBeanMapper(Clientes.class)
     @SqlQuery(
             "SELECT * FROM CLIENTES C (NOLOCK)" +
-                    "ORDER BY (${orderBy}) ASC OFFSET (${pagina} * ${qtRegistros}) ROWS FETCH NEXT ${qtRegistros} ROWS ONLY"
+                    " ORDER BY C.nome ASC OFFSET (${pagina} * ${qtRegistros}) ROWS FETCH NEXT ${qtRegistros} ROWS ONLY"
     )
     @UseFreemarkerEngine
     List<Clientes> consultaPaginacao(
             @Define("pagina") int pagina,
-            @Define("qtRegistros") int qtRegistros,
-            @Define("ordernarPor") String ordernarPor
+            @Define("qtRegistros") int qtRegistros
     );
+
 
 
     @SqlUpdate(
             "INSERT INTO CLIENTES VALUES (" +
-                    ":nome," +
-                    ":cpf," +
-                    ":dataNascimento," +
-                    ":ddd," +
-                    ":telefone," +
-                    ":email," +
-                    ":cep," +
-                    ":cidade," +
-                    ":estado," +
-                    ":bairro," +
-                    ":rua," +
-                    ":numero" +
+                    ":clientes.nome," +
+                    ":clientes.cpf," +
+                    ":clientes.dataNascimento," +
+                    ":clientes.ddd," +
+                    ":clientes.telefone," +
+                    ":clientes.email," +
+                    ":clientes.cep," +
+                    ":clientes.cidade," +
+                    ":clientes.estado," +
+                    ":clientes.bairro," +
+                    ":clientes.rua," +
+                    ":clientes.numero" +
                     ")"
     )
-    void insereCliente(@BindBean Clientes clientes);
+    void insereCliente(@BindBean("clientes") Clientes clientes);
 
     @SqlUpdate(
             "UPDATE CLIENTES SET " +
-                    "nome=:nome," +
-                    "ddd=:ddd," +
-                    "telefone=:telefone," +
-                    "email=:email," +
-                    "cep=:cep," +
-                    "cidade=:cidade," +
-                    "estado=:estado," +
-                    "bairro=:bairro," +
-                    "rua=:rua," +
-                    "numero=:numero " +
-                    "WHERE id=:id"
+                    "nome=:clientes.nome," +
+                    "ddd=:clientes.ddd," +
+                    "telefone=:clientes.telefone," +
+                    "email=:clientes.email," +
+                    "cep=:clientes.cep," +
+                    "cidade=:clientes.cidade," +
+                    "estado=:clientes.estado," +
+                    "bairro=:clientes.bairro," +
+                    "rua=:clientes.rua," +
+                    "numero=:clientes.numero " +
+                    "WHERE id=:clientes.id"
     )
-    void atualizaCliente(@BindBean Clientes clientes);
+    void atualizaCliente(@BindBean("clientes") Clientes clientes);
 
     @RegisterBeanMapper(Clientes.class)
     @SqlQuery("SELECT * FROM CLIENTES (NOLOCK) WHERE id=:id")
-    Clientes pegaClientesPeloID(Long id);
+    Clientes pegaClientesPeloID(@Bind("id") Long id);
+
+
 
     @SqlUpdate("DELETE FROM CLIENTES WHERE id=:id")
-    void deleteCliente(Long id);
+    void deleteCliente(@Bind("id") Long id);
 
-    @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM LOCACAO WHERE id_cliente = :bar AND devolvido = 0), 1, 0)")
-    boolean verificaAlocacaoCliente(int id);
+    @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM LOCACAO WHERE id_cliente=:id AND devolvido = 0), 1, 0)")
+    boolean verificaAlocacaoCliente(@Bind("id") Long id);
 }
