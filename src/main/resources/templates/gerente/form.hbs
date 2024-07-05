@@ -1,0 +1,98 @@
+<form id="gerenteForm">
+    <input type="hidden" name="gerente" value="{{gerente}}">
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Nome:</span>
+            <span>
+                <input type="text" name="nome" maxlength="60" size="60" value="{{nome}}">
+                {{#with errors}}
+                    {{#if nomeError}}
+                        <span class="error">
+                            Nome: {{nomeError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">CPF:</span>
+            <span>
+                <input type="text" name="cpf" size="14" maxlength="14" value="{{cpf}}">
+                {{#with errors}}
+                    {{#if cpfError}}
+                        <span class="error">
+                            CPF: {{cpfError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Data Nascimento:</span>
+            <span>
+                <input type="date" name="dtNascimento" value="{{dtNascimento}}">
+                {{#with errors}}
+                    {{#if dtNascimentoError}}
+                        <span class="error">
+                            Data: {{dtNascimentoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Telefone:</span>
+            <span>
+                <input type="text" name="telefone" value="{{telefone}}">
+                {{#with errors}}
+                    {{#if telefoneError}}
+                        <span class="error">
+                            Tel: {{telefoneError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <br>
+    <button hx-target="#formAndTable"
+            hx-select="#formAndTable"
+            hx-swap="outerHTML"
+            hx-post="gerente/upsert"
+            hx-include="[name='page']"
+            style="display: inline-flex">
+        <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
+        &nbsp;
+        {{#if gerente}}
+            Atualizar
+        {{^}}
+            Cadastrar
+        {{/if}}
+    </button>
+    {{#if gerente}}
+        <button hx-target="#gerenteForm"
+                hx-select="#gerenteForm"
+                hx-swap="outerHTML"
+                hx-get="gerente/edit"
+                style="display: inline-flex">
+            <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar item">
+            &nbsp;
+            Cancelar
+        </button>
+    {{/if}}
+</form>
