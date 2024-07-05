@@ -98,36 +98,36 @@ public class Service {
         }
     }
 
-    public static List<State> findStates(){
+    public static List<State> findStates(String uf){
         List<State> states = new ArrayList<>();
 
-        states.add(new State("AC", "Acre"));
-        states.add(new State("AL", "Alagoas"));
-        states.add(new State("AP", "Amapá"));
-        states.add(new State("AM", "Amazonas"));
-        states.add(new State("BA", "Bahia"));
-        states.add(new State("CE", "Ceará"));
-        states.add(new State("DF", "Distrito Federal"));
-        states.add(new State("ES", "Espírito Santo"));
-        states.add(new State("GO", "Goiás"));
-        states.add(new State("MA", "Maranhão"));
-        states.add(new State("MT", "Mato Grosso"));
-        states.add(new State("MS", "Mato Grosso do Sul"));
-        states.add(new State("MG", "Minas Gerais"));
-        states.add(new State("PA", "Pará"));
-        states.add(new State("PB", "Paraíba"));
-        states.add(new State("PR", "Paraná"));
-        states.add(new State("PE", "Pernambuco"));
-        states.add(new State("PI", "Piauí"));
-        states.add(new State("RJ", "Rio de Janeiro"));
-        states.add(new State("RN", "Rio Grande do Norte"));
-        states.add(new State("RS", "Rio Grande do Sul"));
-        states.add(new State("RO", "Rondônia"));
-        states.add(new State("RR", "Roraima"));
-        states.add(new State("SC", "Santa Catarina"));
-        states.add(new State("SP", "São Paulo"));
-        states.add(new State("SE", "Sergipe"));
-        states.add(new State("TO", "Tocantins"));
+        states.add(new State("AC", "Acre", (uf.equals("AC"))));
+        states.add(new State("AL", "Alagoas", (uf.equals("AL"))));
+        states.add(new State("AP", "Amapá", (uf.equals("AP"))));
+        states.add(new State("AM", "Amazonas", (uf.equals("AM"))));
+        states.add(new State("BA", "Bahia", (uf.equals("BA"))));
+        states.add(new State("CE", "Ceará", (uf.equals("CE"))));
+        states.add(new State("DF", "Distrito Federal", (uf.equals("DF"))));
+        states.add(new State("ES", "Espírito Santo", (uf.equals("ES"))));
+        states.add(new State("GO", "Goiás", (uf.equals("GO"))));
+        states.add(new State("MA", "Maranhão", (uf.equals("MA"))));
+        states.add(new State("MT", "Mato Grosso", (uf.equals("MT"))));
+        states.add(new State("MS", "Mato Grosso do Sul", (uf.equals("MS"))));
+        states.add(new State("MG", "Minas Gerais", (uf.equals("MG"))));
+        states.add(new State("PA", "Pará", (uf.equals("PA"))));
+        states.add(new State("PB", "Paraíba", (uf.equals("PB"))));
+        states.add(new State("PR", "Paraná", (uf.equals("PR"))));
+        states.add(new State("PE", "Pernambuco", (uf.equals("PE"))));
+        states.add(new State("PI", "Piauí", (uf.equals("PI"))));
+        states.add(new State("RJ", "Rio de Janeiro", (uf.equals("RJ"))));
+        states.add(new State("RN", "Rio Grande do Norte", (uf.equals("RN"))));
+        states.add(new State("RS", "Rio Grande do Sul", (uf.equals("RS"))));
+        states.add(new State("RO", "Rondônia", (uf.equals("RO"))));
+        states.add(new State("RR", "Roraima", (uf.equals("RR"))));
+        states.add(new State("SC", "Santa Catarina", (uf.equals("SC"))));
+        states.add(new State("SP", "São Paulo", (uf.equals("SP"))));
+        states.add(new State("SE", "Sergipe", (uf.equals("SE"))));
+        states.add(new State("TO", "Tocantins", (uf.equals("TO"))));
 
         return states;
     }

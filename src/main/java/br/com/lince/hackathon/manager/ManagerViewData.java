@@ -2,6 +2,7 @@ package br.com.lince.hackathon.manager;
 
 import br.com.lince.hackathon.client.Client;
 import br.com.lince.hackathon.foo.Foo;
+import br.com.lince.hackathon.util.State;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ public class ManagerViewData {
     private final Manager manager;
     private final List<Manager> managers;
     private final LocalDateTime dateTime;
+    private final List<State> states;
     private final int page;
     private final int pageSize;
     private final int count;
@@ -20,6 +22,7 @@ public class ManagerViewData {
     public ManagerViewData(
             List<Manager> managers,
             LocalDateTime dateTime,
+            List<State> states,
             int page,
             int pageSize,
             int count
@@ -27,6 +30,7 @@ public class ManagerViewData {
         this.managers = managers;
         this.dateTime = dateTime;
         this.page = page;
+        this.states = states;
         this.pageSize = pageSize;
         this.count = count;
         this.errors = null;
@@ -38,6 +42,7 @@ public class ManagerViewData {
             Manager manager,
             List<Manager> managers,
             LocalDateTime dateTime,
+            List<State> states,
             int page,
             int pageSize,
             int count
@@ -45,6 +50,7 @@ public class ManagerViewData {
         this.managers = managers;
         this.dateTime = dateTime;
         this.page = page;
+        this.states = states;
         this.pageSize = pageSize;
         this.count = count;
         this.errors = errors;
@@ -89,6 +95,10 @@ public class ManagerViewData {
 
     public boolean getHasPrevious() {
         return page > 0;
+    }
+
+    public List<State> getStates() {
+        return states;
     }
 
     public int getPrevious() {

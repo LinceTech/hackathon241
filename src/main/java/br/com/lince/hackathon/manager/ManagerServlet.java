@@ -89,6 +89,10 @@ public class ManagerServlet extends HttpServlet {
             errors.put("Comissão Error", "Informe um percentual de comissão valido");
         }
 
+        if (state.isBlank()) {
+            errors.put("stateError", "Estado não pode ser vazio");
+        }
+
 
         JDBIConnection.instance().withExtension(ManagerRepository.class, dao -> {
             // Verificar se ocorreram erros no formulário
@@ -103,11 +107,12 @@ public class ManagerServlet extends HttpServlet {
             final var now = LocalDateTime.now();
             final var count = dao.count();
             final var managers = dao.selectPage(page, PAGE_SIZE);
+            final var states = Service.findStates("");
 
             if (errors.isEmpty()) {
-                renderer.render(new ManagerViewData(managers, now, page, PAGE_SIZE, count));
+                renderer.render(new ManagerViewData(managers, now, states, page, PAGE_SIZE, count));
             } else {
-                renderer.render(new ManagerViewData(errors, manager, managers, now, page, PAGE_SIZE, count));
+                renderer.render(new ManagerViewData(errors, manager, managers,now, states, page, PAGE_SIZE, count));
             }
 
             return null;
@@ -128,11 +133,16 @@ public class ManagerServlet extends HttpServlet {
     }
 
     private void loadFormEditManager(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<Manager>("manager/form", response);
+        final var renderer = new TemplateRenderer<ManegerEdit>("manager/form", response);
+        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
         final var id = NumberUtils.toInt(request.getParameter("id"), 0);
 
         JDBIConnection.instance().withExtension(ManagerRepository.class, dao -> {
-            renderer.render(dao.findByManagerId(id));
+            final var manager = dao.findByManagerId(id);
+            final var states = Service.findStates(manager.getState());
+
+            final var edit = new ManegerEdit(manager, states);
+            renderer.render(edit);
             return null;
         });
     }
@@ -144,9 +154,11 @@ public class ManagerServlet extends HttpServlet {
         JDBIConnection.instance().withExtension(ManagerRepository.class, dao -> {
             final var now = LocalDateTime.now();
             final var count = dao.count();
-            final var manager = dao.selectPage(page, PAGE_SIZE);
+            final var managers = dao.selectPage(page, PAGE_SIZE);
+            final var states = Service.findStates("");
 
-            renderer.render(new ManagerViewData(manager, now, page, PAGE_SIZE, count));
+
+            renderer.render(new ManagerViewData(managers, now, states, page, PAGE_SIZE, count));
 
             return null;
         });
