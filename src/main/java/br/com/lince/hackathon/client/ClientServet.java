@@ -76,7 +76,7 @@ public class ClientServet extends HttpServlet {
     }
 
     private void insertOrUpdateClient(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+        final var renderer = new TemplateRenderer<ClientViewData>("client/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
         final var name = request.getParameter("name");
         final var cpf = request.getParameter("cpf");
@@ -151,6 +151,17 @@ public class ClientServet extends HttpServlet {
                 } else {
                     dao.insert(client);
                 }
+            }
+
+            final var now = LocalDateTime.now();
+            final var count = dao.count();
+            final var clients = dao.selectPage(page, PAGE_SIZE);
+            final var states = Service.findStates();
+
+            if (errors.isEmpty()) {
+                renderer.render(new ClientViewData(clients, now, states, page, PAGE_SIZE, count));
+            } else {
+                renderer.render(new ClientViewData(errors, client, clients, now, states, page, PAGE_SIZE, count));
             }
 
             return null;

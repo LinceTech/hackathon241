@@ -50,7 +50,7 @@
 
         <div class="clienEmail">
             <label for="email">E-mail</label>
-            <input type="text" name="email" maxlength="100" size="100" value="{{email}}">
+            <input type="text" name="email" maxlength="100" size="30" value="{{email}}">
             {{#with errors}}
                 {{#if emailError}}
                     <span class="error">
@@ -90,7 +90,7 @@
 
         <div class="clientCity">
             <label for="city">Cidade</label>
-            <input type="text" name="city" maxlength="100" size="100" value="{{city}}">
+            <input type="text" name="city" maxlength="100" size="60" value="{{city}}">
             {{#with errors}}
                 {{#if cityError}}
                     <span class="error">
@@ -102,7 +102,7 @@
 
         <div class="clientNeighborhood">
             <label for="neighborhood">Bairro</label>
-            <input type="text" name="neighborhood" maxlength="100" size="100" value="{{neighborhood}}">
+            <input type="text" name="neighborhood" maxlength="100" size="60" value="{{neighborhood}}">
             {{#with errors}}
                 {{#if neighborhoodError}}
                     <span class="error">
@@ -114,7 +114,7 @@
 
         <div class="clientStreet">
             <label for="street">Rua</label>
-            <input type="text" name="street" maxlength="100" size="100" value="{{street}}">
+            <input type="text" name="street" maxlength="100" size="60" value="{{street}}">
             {{#with errors}}
                 {{#if streetError}}
                     <span class="error">
@@ -126,7 +126,7 @@
 
         <div class="clientNumber">
             <label for="number">Número</label>
-            <input type="text" name="number" maxlength="100" size="100" value="{{number}}">
+            <input type="text" name="number" maxlength="100" size="6" value="{{number}}">
             {{#with errors}}
                 {{#if numberError}}
                     <span class="error">
