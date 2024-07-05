@@ -4,6 +4,8 @@ import br.com.lince.hackathon.foo.FooRepository;
 import br.com.lince.hackathon.foo.FooViewData;
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
+import br.com.lince.hackathon.util.Service;
+import br.com.lince.hackathon.viacep.ViaCepRepository;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
 
 import javax.servlet.ServletException;
@@ -65,8 +67,9 @@ public class ClientServet extends HttpServlet {
             final var now = LocalDateTime.now();
             final var count = dao.count();
             final var clients = dao.selectPage(page, PAGE_SIZE);
+            final var states = Service.findStates();
 
-            renderer.render(new ClientViewData(clients, now, page, PAGE_SIZE, count));
+            renderer.render(new ClientViewData(clients, now, states, page, PAGE_SIZE, count));
 
             return null;
         });
@@ -77,21 +80,68 @@ public class ClientServet extends HttpServlet {
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
         final var name = request.getParameter("name");
         final var cpf = request.getParameter("cpf");
-        final var birth_date = LocalDate.parse(request.getParameter("birthDate"));
+        final var birth_date = Service.verificaData(request.getParameter("birthDate"));
         final var phone = request.getParameter("phone");
         final var email = request.getParameter("email");
         final var cep = request.getParameter("cep");
         final var city = request.getParameter("city");
-        System.out.println(request.getParameter("state") + "STATE STATE ");
         final var state = request.getParameter("state");
         final var neighborhood = request.getParameter("neighborhood");
         final var street = request.getParameter("street");
-        final var number = Integer.parseInt(request.getParameter("number"));
+        final var number = NumberUtils.toInt(request.getParameter("number"), 0);
         final var client = new Client(name, cpf, birth_date, phone, email, cep, city, state, neighborhood, street, number);
         final var errors = new HashMap<String, String>();
 
+        if (name.isBlank()) {
+            errors.put("nameError", "Nome não pode ser vazio");
+        }
+
         if (cpf.isBlank()) {
             errors.put("cpfError", "CPF não pode ser vazio");
+        }
+
+        if (phone.isBlank()) {
+            errors.put("phoneError", "Telefone não pode ser vazio");
+        }
+
+        if (email.isBlank()) {
+            errors.put("emailError", "E-mail não pode ser vazio");
+        }
+
+        if (cep.isBlank()) {
+            errors.put("cepError", "CEP não pode ser vazio");
+        }
+
+        if (state.isBlank()) {
+            errors.put("stateError", "Estado não pode ser vazio");
+        }
+
+        if (neighborhood.isBlank()) {
+            errors.put("neighborhoodError", "Bairro não pode ser vazio");
+        }
+
+        if (street.isBlank()) {
+            errors.put("streetError", "Rua não pode ser vazio");
+        }
+
+        if (number == 0) {
+            errors.put("numberError", "Estado não pode ser vazio");
+        }
+
+        if (!Service.validarCPF(cpf)) {
+            errors.put("cpfError", "CPF inválido");
+        }
+
+        if (!Service.validarEmail(email)) {
+            errors.put("emailError","E-mail inválido");
+        }
+
+        if (!Service.validarIdade(client.getBirth_date())) {
+            errors.put("birth_dateError","O cliente precisa ser maior de idade");
+        }
+
+        if (!ViaCepRepository.exist(cep)){
+            errors.put("cepError", "Cep não encontrado");
         }
 
         JDBIConnection.instance().withExtension(ClientRepository.class, dao -> {

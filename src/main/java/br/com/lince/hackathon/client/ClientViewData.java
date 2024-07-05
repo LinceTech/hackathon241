@@ -1,6 +1,7 @@
 package br.com.lince.hackathon.client;
 
 import br.com.lince.hackathon.foo.Foo;
+import br.com.lince.hackathon.util.State;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ public class ClientViewData {
 
     private final Client client;
     private final List<Client> clients;
+    private final List<State> states;
     private final LocalDateTime dateTime;
     private final int page;
     private final int pageSize;
@@ -19,6 +21,7 @@ public class ClientViewData {
     public ClientViewData(
             List<Client> clients,
             LocalDateTime dateTime,
+            List<State> states,
             int page,
             int pageSize,
             int count
@@ -26,6 +29,7 @@ public class ClientViewData {
         this.clients = clients;
         this.dateTime = dateTime;
         this.page = page;
+        this.states = states;
         this.pageSize = pageSize;
         this.count = count;
         this.errors = null;
@@ -36,6 +40,7 @@ public class ClientViewData {
             HashMap<String, String> errors,
             Client client, List<Client> clients,
             LocalDateTime dateTime,
+            List<State> states,
             int page,
             int pageSize,
             int count
@@ -43,10 +48,15 @@ public class ClientViewData {
         this.clients = clients;
         this.dateTime = dateTime;
         this.page = page;
+        this.states = states;
         this.pageSize = pageSize;
         this.count = count;
         this.errors = errors;
         this.client = client;
+    }
+
+    public List<State> getStates() {
+        return states;
     }
 
     public Client getClient() {

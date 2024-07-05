@@ -3,66 +3,137 @@
         <div class="clientName">
             <label for="name">Nome</label>
             <input type="text" name="name" maxlength="100" size="100" value="{{name}}">
-<!--            {{#with errors}}-->
-<!--                {{#if nameError}}-->
-<!--                    <span class="error">-->
-<!--                            Bas: {{nameError}}-->
-<!--                        </span>-->
-<!--                {{/if}}-->
-<!--            {{/with}}-->
+            {{#with errors}}
+                {{#if nameError}}
+                    <span class="error">
+                            Nome: {{nameError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
         <div class="clientCpf">
             <label for="cpf">CPF</label>
             <input type="text" name="cpf" maxlength="11" size="11" value="{{cpf}}">
+            {{#with errors}}
+                {{#if cpfError}}
+                    <span class="error">
+                            CPF: {{cpfError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
         <div class="clientBirthDate">
             <label for="birthDate">Data de nascimento</label>
-            <input type="date" name="birthDate" maxlength="10" size="10" value="{{bith_date}}">
+            <input type="date" name="birthDate" maxlength="10" size="10" value="{{birth_date}}">
+            {{#with errors}}
+                {{#if birth_dateError}}
+                    <span class="error">
+                            Data de nascimento: {{birth_dateError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
         <div class="clientPhone">
             <label for="phone">Telefone</label>
             <input type="text" name="phone" maxlength="14" size="14" value="{{phone}}">
+            {{#with errors}}
+                {{#if phoneError}}
+                    <span class="error">
+                            Nome: {{phoneError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
         <div class="clienEmail">
             <label for="email">E-mail</label>
             <input type="text" name="email" maxlength="100" size="100" value="{{email}}">
+            {{#with errors}}
+                {{#if emailError}}
+                    <span class="error">
+                            E-mail: {{emailError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
         <div class="clientCep">
             <label for="cep">CEP</label>
-            <input type="text" name="cep" maxlength="9" size="9" value="{{cep}}">
+            <input type="text" name="cep" id="cep" maxlength="9" size="9"
+                   value="{{cep}}"
+            >
+            {{#with errors}}
+                {{#if cepError}}
+                    <span class="error">
+                            CEP: {{cepError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
         <div class="clientState">
             <label for="state">Estado</label>
-            <select name="state">
-                <option value="RJ">Rio de Janeiro</option>
-            </select>
+            <select name="state">{{#states}}
+                <option value="{{uf}}">{{name}}</option>
+            {{/states}}</select>
+            {{#with errors}}
+                {{#if stateError}}
+                    <span class="error">
+                            Estado: {{stateError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
         <div class="clientCity">
             <label for="city">Cidade</label>
             <input type="text" name="city" maxlength="100" size="100" value="{{city}}">
-
+            {{#with errors}}
+                {{#if cityError}}
+                    <span class="error">
+                            Cidade: {{cityError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
         <div class="clientNeighborhood">
             <label for="neighborhood">Bairro</label>
             <input type="text" name="neighborhood" maxlength="100" size="100" value="{{neighborhood}}">
+            {{#with errors}}
+                {{#if neighborhoodError}}
+                    <span class="error">
+                            Bairro: {{neighborhoodError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
         <div class="clientStreet">
             <label for="street">Rua</label>
             <input type="text" name="street" maxlength="100" size="100" value="{{street}}">
+            {{#with errors}}
+                {{#if streetError}}
+                    <span class="error">
+                            Rua: {{streetError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
         <div class="clientNumber">
             <label for="number">Número</label>
             <input type="text" name="number" maxlength="100" size="100" value="{{number}}">
+            {{#with errors}}
+                {{#if numberError}}
+                    <span class="error">
+                            Número: {{numberError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
         <button hx-target="#formAndTable"
@@ -72,4 +143,12 @@
             Cadastrar
         </button>
     </div>
+
+    <script>
+        document.getElementById('cep').addEventListener('htmx:afterSwap', function(event) {
+            var data = event.detail.elt;
+            console.log(document.getElementById("cidade"));
+        });
+    </script>
+
 </form>
