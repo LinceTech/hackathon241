@@ -7,9 +7,9 @@ import java.util.Objects;
 public class Cliente {
     private int    id           ;
     private String nome         ;
-    private int    cpf          ;
+    private float  cpf          ;
     private int    dtNascimento ;
-    private int    telefone     ;
+    private float  telefone     ;
     private String email        ;
     private int    cep          ;
     private String cidade       ;
@@ -23,9 +23,9 @@ public class Cliente {
 
     public Cliente(int    id           ,
                    String nome         ,
-                   int    cpf          ,
+                   float  cpf          ,
                    int    dtNascimento ,
-                   int    telefone     ,
+                   float  telefone     ,
                    String email        ,
                    int    cep          ,
                    String cidade       ,
@@ -64,7 +64,7 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public int getCpf() {
+    public float getCpf() {
         return cpf;
     }
 
@@ -80,7 +80,7 @@ public class Cliente {
         this.dtNascimento = dtNascimento;
     }
 
-    public int getTelefone() {
+    public float getTelefone() {
         return telefone;
     }
 

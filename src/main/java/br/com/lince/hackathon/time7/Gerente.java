@@ -5,8 +5,8 @@ import java.util.Objects;
 public class Gerente {
     private int    id         ;
     private String nome       ;
-    private int    cpf        ;
-    private int    telefone   ;
+    private float  cpf        ;
+    private float  telefone   ;
     private String email      ;
     private String cidade     ;
     private String estado     ;
@@ -18,8 +18,8 @@ public class Gerente {
 
     public Gerente(int    id        ,
                    String nome      ,
-                   int    cpf       ,
-                   int    telefone  ,
+                   float  cpf       ,
+                   float  telefone  ,
                    String email     ,
                    String cidade    ,
                    String estado    ,
@@ -53,7 +53,7 @@ public class Gerente {
         this.nome = nome;
     }
 
-    public int getCpf() {
+    public float getCpf() {
         return cpf;
     }
 
@@ -61,7 +61,7 @@ public class Gerente {
         this.cpf = cpf;
     }
 
-    public int getTelefone() {
+    public float getTelefone() {
         return telefone;
     }
 
