@@ -8,6 +8,7 @@ import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+@WebServlet("/veiculo/*")
 public class VeiculoServlet extends HttpServlet {
     /*
      * O número de itens na paginação desta tela
@@ -57,7 +59,7 @@ public class VeiculoServlet extends HttpServlet {
         if (requestPath.isBlank()) {
             loadFullPage(request, response);
         } else if (requestPath.equals("/upsert")) {
-            insertOrUpdateGerente(request, response);
+            insertOrUpdateVeiculo(request, response);
         } else {
             response.getWriter().write("Not found : " + requestPath);
         }
@@ -84,69 +86,66 @@ public class VeiculoServlet extends HttpServlet {
     /*
      * Trata a requisição para inserir ou atualizar um foo, e retorna página atualizada
      */
-    private void insertOrUpdateGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void insertOrUpdateVeiculo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<VeiculoViewData>("veiculo/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
-
-
 
         final var marca = NumberUtils.toInt(request.getParameter("marca"), 0);
         final var modelo = request.getParameter("modelo");
         final var placa = request.getParameter("placa");
         final var cor = NumberUtils.toInt(request.getParameter("cor"), 0);
         final var anoDeFabricacao = NumberUtils.toInt(request.getParameter("anoDeFabricacao"), 0);
-
-        final var cidade = request.getParameter("cidade");
-        final var estado = request.getParameter("estado");
         final var custoDeDiaria = NumberUtils.toDouble(request.getParameter("percentualComissao").replaceAll(",","."), 0);
+        final var descricaoPromocional = request.getParameter("descricaoPromocional");
+        final var tipoDeCombustivel = NumberUtils.toInt(request.getParameter("tipoDeCombustivel"), 0);
 
-        final var gerente = new Gerente(nome, cpf, telefone, email, cidade, estado, percentualComissao, dataContratacao);
+        final var veiculo = new Veiculo(marca, modelo, placa, cor, anoDeFabricacao, custoDeDiaria, descricaoPromocional, tipoDeCombustivel);
         final var errors = new HashMap<String, String>();
 
 
-        if (nome.isBlank()) {
-            errors.put("nomeError", "Não pode ser vazio");
+        if (modelo.isBlank()) {
+            errors.put("modeloError", "Não pode ser vazio");
         }
-        if (cpf == 0 ) {
-            errors.put("cpfError", "Não pode ser vazio");
+        if (marca == 0 ) {
+            errors.put("marcaError", "Não pode ser vazio");
         }
-        if (telefone == 0) {
-            errors.put("telefoneError", "Não pode ser vazio");
+        if (placa.isBlank()) {
+            errors.put("placaError", "Não pode ser vazio");
         }
-        if (email.isBlank()) {
-            errors.put("emailError", "Não pode ser vazio");
+        if (cor == 0) {
+            errors.put("corError", "Não pode ser vazio");
         }
-        if (cidade.isBlank()) {
-            errors.put("cidadeError", "Não pode ser vazio");
+        if (anoDeFabricacao == 0) {
+            errors.put("anoDeFabricacaoError", "Não pode ser vazio");
         }
-        if (estado.isBlank()) {
-            errors.put("estadoError", "Não pode ser vazio");
+        if (custoDeDiaria == 0) {
+            errors.put("custoDeDiariaError", "Não pode ser vazio");
         }
-        if (percentualComissao == 0) {
-            errors.put("percentualComissaoError", "Não pode ser vazio");
+        if (descricaoPromocional.isBlank()) {
+            errors.put("modeloError", "Não pode ser vazio");
         }
-        if (dataContratacao == 0) {
-            errors.put("dataContratacaoError", "Não pode ser vazio");
+        if (tipoDeCombustivel == 0) {
+            errors.put("descricaoPromocionalError", "Não pode ser vazio");
         }
 
-        JDBIConnection.instance().withExtension(GerenteRepository.class, dao -> {
+        JDBIConnection.instance().withExtension(VeiculoRepository.class, dao -> {
             // Verificar se ocorreram erros no formulário
             if (errors.isEmpty()) {
-                if (dao.exists(cpf)) {
-                    dao.update(gerente);
+                if (dao.exists(placa)) {
+                    dao.update(veiculo);
                 } else {
-                    dao.insert(gerente);
+                    dao.insert(veiculo);
                 }
             }
 
             final var now = LocalDateTime.now();
             final var count = dao.count();
-            final var gerentes = dao.selectPage(page, PAGE_SIZE);
+            final var veiculos = dao.selectPage(page, PAGE_SIZE);
 
             if (errors.isEmpty()) {
-                renderer.render(new GerenteViewData(gerentes, now, page, PAGE_SIZE, count));
+                renderer.render(new VeiculoViewData(veiculos, now, page, PAGE_SIZE, count));
             } else {
-                renderer.render(new GerenteViewData(errors, gerente, gerentes, now, page, PAGE_SIZE, count));
+                renderer.render(new VeiculoViewData(errors, veiculo, veiculos, now, page, PAGE_SIZE, count));
             }
 
             return null;
@@ -156,12 +155,12 @@ public class VeiculoServlet extends HttpServlet {
     /*
      * Trata a requisição para alimentar o formulário de cadastro ou edição de foos
      */
-    private void loadFormEditGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<Gerente>("gerente/form", response);
-        final var cpf = NumberUtils.toInt(request.getParameter("cpf"), 0);
+    private void loadFormEditVeiculo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<Veiculo>("veiculo/form", response);
+        final var placa = NumberUtils.toInt(request.getParameter("placa"), 0);
 
-        JDBIConnection.instance().withExtension(GerenteRepository.class, dao -> {
-            renderer.render(dao.findByCpf(cpf));
+        JDBIConnection.instance().withExtension(VeiculoRepository.class, dao -> {
+            renderer.render(dao.findByPlaca(request.getParameter("placa")));
             return null;
         });
     }
@@ -169,11 +168,11 @@ public class VeiculoServlet extends HttpServlet {
     /*
      * Trata a requisição de exclusão de foos
      */
-    private void deleteGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var cpf = Integer.parseInt(request.getParameter("cpf"));
+    private void deleteVeiculo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var placa = request.getParameter("placa");
 
-        JDBIConnection.instance().withExtension(GerenteRepository.class, dao -> {
-            dao.delete(cpf);
+        JDBIConnection.instance().withExtension(VeiculoRepository.class, dao -> {
+            dao.delete(placa);
             loadFullPage(request, response);
             return null;
         });
