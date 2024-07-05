@@ -31,7 +31,7 @@
                 <td class="gap-2">
                     <button
                             class="btn btn-primary"
-                            hx-get="/ticket/getTicketByID?id={{id}}"
+                            hx-get="/hackathon/clientes/edit?id={{id}}"
                             hx-target="#mustache_modal"
                             hx-trigger="click"
                             data-bs-toggle="modal"
@@ -41,7 +41,7 @@
                     </button>
                     <button
                             class="btn btn-danger"
-                            hx-delete="/ticket/deleteTicketByID?id={{id}}"
+                            hx-get="/hackathon/clientes/delete?id={{id}}"
                             hx-target="#cliente_lista"
                             hx-trigger="click"
                     >

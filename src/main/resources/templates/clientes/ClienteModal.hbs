@@ -1,5 +1,5 @@
 <div class="modal-content">
-    <form hx-post="/cliente/save" hx-target="#cliente_lista" id="clienteForm">
+    <form hx-post="/hackathon/clientes/save" hx-target="#cliente_lista" id="clienteForm">
         <div class="modal-header">
             {{#if id}}
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Altere Cliente</h1>
@@ -149,15 +149,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-            <button
-                    class="btn btn-primary"
-                    hx-post="/hackathon/clientes/save"
-                    hx-target="#mustache_modal"
-                    hx-trigger="click"
-                    data-bs-toggle="modal"
-                    data-bs-target="#ticketModel"
-            >
-                Salvar</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Salvar</button>
         </div>
     </form>
 </div>

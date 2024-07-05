@@ -65,7 +65,7 @@ public class GerentesServlet extends HttpServlet {
         final var email = request.getParameter("email").trim();
         final var cidade = request.getParameter("cidade").trim();
         final var estado = request.getParameter("estado").trim();
-        final var percentualComissao = NumberUtils.toDouble(request.getParameter("percentualComissao").replace(",", "."), 0);
+        final var percentualComissao = NumberUtils.toDouble(request.getParameter("percentualComissao").replace(",", "."), 0.0);
         final var dataContratacaoReq = request.getParameter("dataContratacao").trim();
 
         final var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -99,36 +99,14 @@ public class GerentesServlet extends HttpServlet {
         });
     }
 
-    private void deletarGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<GerentesViewData>("/gerentes/GerenteLista", response);
+    private void deletarGerente(HttpServletRequest request, HttpServletResponse response) {
 
-        final var gerenteID = NumberUtils.toLong(request.getParameter("id"), 0);
-
-        JDBIConnection.instance().withExtension(GerentesRepository.class, dao -> {
-            dao.deleteGerente(gerenteID);
-
-            renderer.render(new GerentesViewData(dao.consultaPaginacao(0, 15)));
-
-            return null;
-        });
     }
 
     private void formularioGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<Gerentes>("/gerentes/GerenteModal", response);
 
-        final var gerenteID = NumberUtils.toLong(request.getParameter("id"), 0);
-
-        JDBIConnection.instance().withExtension(GerentesRepository.class, dao -> {
-            var gerente = new Gerentes();
-
-            if (gerenteID != 0) {
-                gerente = dao.pegaGerentesPeloID(gerenteID);
-            }
-
-            renderer.render(gerente);
-
-            return null;
-        });
+        renderer.render(new Gerentes());
     }
 
     private void carregaPagina(HttpServletRequest request, HttpServletResponse response) throws IOException {

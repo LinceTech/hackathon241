@@ -69,6 +69,8 @@ public interface ClientesRepository {
     @SqlUpdate("DELETE FROM CLIENTES WHERE id=:id")
     void deleteCliente(@Bind("id") Long id);
 
-    @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM LOCACAO WHERE id_cliente=:id AND devolvido = 0), 1, 0)")
-    boolean verificaAlocacaoCliente(@Bind("id") Long id);
+    @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM CLIENTES WHERE id=:id), 1, 0)")
+    boolean existeCliente(@Bind("id") Long id);
+
+
 }
