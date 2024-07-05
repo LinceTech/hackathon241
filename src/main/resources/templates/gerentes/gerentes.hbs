@@ -3,9 +3,101 @@
 <head>
     <title>HBS - Index</title>
     {{>head}}
+    <style>
+        td, th {
+            border: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #ddd;
+        }
+        .erro {
+            color: red;
+        }
+    </style>
 </head>
 <body>
-<a href="gerentes/cadastro"><button>Cadastrar</button></a>
-<a href="gerentes/nada"><button></button></a>
+<form method="post">
+    <div>
+        <label>Nome
+            <input type="text" name="nome">
+        </label>
+    </div>
+    <div>
+        <label>CPF
+            <input type="text" name="cpf">
+        </label>
+    </div>
+    <div>
+        <label>Telefone
+            <input type="text" name="telefone">
+        </label>
+    </div>
+    <div>
+        <label>E-mail
+            <input type="text" name="email">
+        </label>
+    </div>
+    <div>
+        <label>Cidade
+            <input type="text" name="cidade">
+        </label>
+    </div>
+    <div>
+        <label>Estado
+            <input type="text" name="estado">
+        </label>
+    </div>
+    <div>
+        <label>Percentual de comissão
+            <input type="number" name="percentual">
+        </label>
+    </div>
+    <div>
+        <label>Data de contratação
+            <input type="date" name="dataContratacao">
+        </label>
+    </div>
+    <button hx-post="gerentes/cadastrar" hx-target=".erro">Cadastrar</button>
+    <span class="erro"></span>
+<hr>
+</form>
+    <table>
+        <thead>
+        <tr>
+        <th>
+            Nome
+        </th>
+        <th>
+            CPF
+        </th>
+        <th>
+            Telefone
+        </th>
+        <th>
+            E-mail
+        </th>
+        <th>
+            Cidade
+        </th>
+        <th>
+            Estado
+        </th>
+        <th>
+            Percentual de Comissão
+        </th>
+        <th>
+            Data de Contratação
+        </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </body>
 </html>
