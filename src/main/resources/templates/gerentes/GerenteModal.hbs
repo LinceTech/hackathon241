@@ -1,8 +1,10 @@
-<div class="modal-content" id="clienteForm">
+<div class="modal-content" id="gerente_formulario">
     <form
             hx-post="/hackathon/gerentes/save"
-            hx-target="#clienteForm"
+            hx-target="#gerente_lista"
+            hx-target-500="#gerente_formulario"
             hx-swap="outerHTML"
+            id="form_gerente_formulario"
     >
         <div class="modal-header">
             {{#if id}}
@@ -180,15 +182,19 @@
                         value="{{dataContratacao}}"
                 >
             </div>
-            {{#if salvou}}
-                <div class="mb-3 text-success">
-                    Salvo com sucesso
-                </div>
-            {{/if}}
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
             <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
     </form>
+    <script>
+        var formulario = document.getElementById("form_gerente_formulario");
+
+        formulario.addEventListener("htmx:afterRequest", (event) => {
+            if (event?.detail?.xhr?.status == 200) {
+                $("#gerenteModal").modal('hide');
+            }
+        })
+    </script>
 </div>

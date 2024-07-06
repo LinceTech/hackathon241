@@ -15,7 +15,6 @@ public class Gerentes {
     private double percentualComissao;
     private LocalDate dataContratacao;
     private HashMap<String, String> erros;
-    private boolean salvou;
 
     public Gerentes() {
     }
@@ -30,8 +29,7 @@ public class Gerentes {
             String cidade,
             String estado,
             double percentualComissao,
-            LocalDate dataContratacao,
-            boolean salvou
+            LocalDate dataContratacao
     ) {
         this.id = id;
         this.nome = nome;
@@ -43,7 +41,6 @@ public class Gerentes {
         this.estado = estado;
         this.percentualComissao = percentualComissao;
         this.dataContratacao = dataContratacao;
-        this.salvou = salvou;
     }
 
     public Long getId() {
@@ -132,13 +129,5 @@ public class Gerentes {
 
     public void setErros(HashMap<String, String> erros) {
         this.erros = erros;
-    }
-
-    public boolean getSalvou() {
-        return salvou;
-    }
-
-    public void setSalvou(boolean salvou) {
-        this.salvou = salvou;
     }
 }

@@ -1,7 +1,7 @@
-<div class="container" id="cliente_lista">
+<div class="container" id="gerente_lista">
     <form
             hx-get="/hackathon/gerentes/listar"
-            hx-target="#cliente_lista"
+            hx-target="#gerente_lista"
     >
         <div class="container d-flex gap-2">
             <div class="mb-3 ">
@@ -61,7 +61,7 @@
                             class="btn btn-primary"
                             type="reset"
                             hx-get="/hackathon/gerentes/listar?nome=&documento=&estado=&cidade=&proximaPagina=false&numeroPagina=0"
-                            hx-target="#cliente_lista"
+                            hx-target="#gerente_lista"
                             hx-trigger="click"
                     >
                         Limpar filtros
@@ -70,7 +70,7 @@
                             class="btn btn-primary"
                             type="reset"
                             hx-get="/hackathon/gerentes/listar?nome=&documento=&estado=&cidade=&proximaPagina=false&numeroPagina={{numeroPagina}}"
-                            hx-target="#cliente_lista"
+                            hx-target="#gerente_lista"
                             hx-trigger="click"
                     >
                         <
@@ -82,7 +82,7 @@
                             class="btn btn-primary"
                             type="reset"
                             hx-get="/hackathon/gerentes/listar?nome=&documento=&estado=&cidade=&proximaPagina=true&numeroPagina={{numeroPagina}}"
-                            hx-target="#cliente_lista"
+                            hx-target="#gerente_lista"
                             hx-trigger="click"
                     >
                         >
@@ -130,7 +130,7 @@
                     <button
                             class="btn btn-danger"
                             hx-get="/hackathon/gerentes/delete?id={{id}}"
-                    hx-target="#cliente_lista"
+                    hx-target="#gerente_lista"
                     hx-trigger="click"
                     >
                     Delete

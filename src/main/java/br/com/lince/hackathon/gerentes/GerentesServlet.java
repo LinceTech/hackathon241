@@ -86,7 +86,7 @@ public class GerentesServlet extends HttpServlet {
 
             List<Gerentes> list = dao.consultaPaginacao(numeroPagina, 15, filtros);
 
-            renderer.render(new GerentesViewData(null, list, nome, documento, cidade, estado, numeroPagina));
+            renderer.render(new GerentesViewData(list, nome, documento, cidade, estado, numeroPagina));
 
             return null;
         });
@@ -147,8 +147,7 @@ public class GerentesServlet extends HttpServlet {
                 cidade,
                 estado,
                 percentualComissao,
-                null,
-                false
+                null
         );
 
         if (gerente.getNome().isBlank()) {
@@ -177,12 +176,12 @@ public class GerentesServlet extends HttpServlet {
         }
         if (gerente.getPercentualComissao() == 0) {
             erros.put("percentualComissaoErro", "Informe o percentual de comissão");
-        }else if(percentualComissao > 25.0){
+        } else if (percentualComissao > 25.0) {
             erros.put("percentualComissaoErro", "O percentual de comissão não pode ser maior que 25%");
         }
         if (dataContratacaoReq.isBlank()) {
             erros.put("dataContratacaoErro", "Informe data de contratacao");
-        }else{
+        } else {
             final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             final LocalDate dataContratacao = LocalDate.parse(dataContratacaoReq, formatter);
 
@@ -192,10 +191,10 @@ public class GerentesServlet extends HttpServlet {
         final Long idConsulta = id;
 
         JDBIConnection.instance().withExtension(GerentesRepository.class, dao -> {
-            var renderer = new TemplateRenderer<Gerentes>("gerentes/GerenteModal", response);
+            var rendererModal = new TemplateRenderer<Gerentes>("gerentes/GerenteModal", response);
+            var renderLista = new TemplateRenderer<GerentesViewData>("gerentes/GerenteLista", response);
 
             if (erros.isEmpty()) {
-                gerente.setSalvou(true);
                 if (dao.existeGerente(idConsulta)) {
                     dao.atualizaGerente(gerente);
                 } else {
@@ -203,11 +202,16 @@ public class GerentesServlet extends HttpServlet {
                 }
             }
 
-            if(erros.isEmpty()){
-                renderer.render(gerente);
-            }else{
+            if (erros.isEmpty()) {
+                final var list = dao.consultaPaginacao(0, 15, new GerenteFiltros("", "", "", ""));
+
+                renderLista.render(new GerentesViewData(list, "", "", "", "", 0));
+            } else {
+                response.setStatus(500);
+                response.setHeader("HX-Reswap", "innerHTML");
+
                 gerente.setErros(erros);
-                renderer.render(gerente);
+                rendererModal.render(gerente);
             }
 
             return null;
@@ -224,7 +228,7 @@ public class GerentesServlet extends HttpServlet {
 
             List<Gerentes> list = dao.consultaPaginacao(0, 15, new GerenteFiltros("", "", "", ""));
 
-            renderer.render(new GerentesViewData(null, list, "", "", "", "", 0));
+            renderer.render(new GerentesViewData(list, "", "", "", "", 0));
 
             return null;
         });
@@ -255,7 +259,7 @@ public class GerentesServlet extends HttpServlet {
 
             List<Gerentes> list = dao.consultaPaginacao(0, 15, new GerenteFiltros("", "", "", ""));
 
-            renderer.render(new GerentesViewData(null, list, "", "", "", "", 0));
+            renderer.render(new GerentesViewData(list, "", "", "", "", 0));
 
             return null;
         });
