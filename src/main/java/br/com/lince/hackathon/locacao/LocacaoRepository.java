@@ -12,18 +12,6 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import java.util.List;
 
 public interface LocacaoRepository {
-//    @RegisterBeanMapper(Locacao.class)
-//    @SqlQuery(
-//            "SELECT * FROM LOCACAO C (NOLOCK) \n" +
-//                    "WHERE C.id_veiculo  LIKE CONCAT('%', :locacaoFiltros.id_veiculo, '%') \n" +
-//                    "AND C.id_cliente    LIKE CONCAT('%', :locacaoFiltros.id_cliente, '%') \n" +
-//                    "AND C.id LIKE CONCAT('%', :locacaoFiltros.cidade, '%') \n" +
-//                    "AND C.estado LIKE CONCAT('%', :locacaoFiltros.estado, '%') \n" +
-//                    "ORDER BY C.nome ASC \n" +
-//                    "OFFSET (${pagina} * ${qtRegistros}) \n" +
-//                    "ROWS FETCH NEXT ${qtRegistros} ROWS ONLY"
-//    )
-
     @RegisterBeanMapper(Locacao.class)
     @SqlUpdate(
             "INSERT INTO LOCACAO VALUES (" +
