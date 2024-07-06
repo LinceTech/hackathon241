@@ -36,7 +36,7 @@ public class Cliente {
      * @param nm_rua valor para boo
      * @param nr_residencia valor para boo
      */
-    public Cliente(String nm_cliente, String nr_cpf, LocalDate dt_nascimento, int nr_telefone, String ds_email, String nm_bairro, String nr_cep, String nm_cidade, String nm_estado, int nr_residencia, String nm_rua) {
+    public Cliente(String nm_cliente, String nr_cpf, LocalDate dt_nascimento, long nr_telefone, String ds_email, String nm_bairro, String nr_cep, String nm_cidade, String nm_estado, int nr_residencia, String nm_rua) {
         this.nm_cliente = nm_cliente;
         this.nr_cpf = nr_cpf;
         this.dt_nascimento = dt_nascimento;
@@ -53,7 +53,7 @@ public class Cliente {
     private String nm_cliente;
     private String nr_cpf;
     private LocalDate dt_nascimento;
-    private int nr_telefone;
+    private long nr_telefone;
     private String ds_email;
     private String nm_bairro;
     private String nr_cep;
@@ -92,7 +92,7 @@ public class Cliente {
         this.dt_nascimento = dt_nascimento;
     }
 
-    public int getNr_telefone() {
+    public long getNr_telefone() {
         return nr_telefone;
     }
 

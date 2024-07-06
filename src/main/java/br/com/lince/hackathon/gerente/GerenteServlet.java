@@ -19,6 +19,9 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import static br.com.lince.hackathon.utils.Validacao.isCpf;
+import static br.com.lince.hackathon.utils.Validacao.isMaior18;
+
 /**
  * Servlet que responde a todas as ações relacionadas ao gerenciamento de gerentes
  */
