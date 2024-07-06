@@ -28,6 +28,11 @@ public interface ClientRepository {
     @SqlQuery("SELECT id, name, cpf, birth_date, phone, email, cep, city, state, neighborhood, street, number FROM client WHERE cpf = :cpf")
     Foo findByCpf(@Bind("cpf") String cpf);
 
+    @RegisterBeanMapper(Client.class)
+    @UseFreemarkerEngine
+    @SqlQuery("SELECT id, name, cpf, birth_date, phone, email, cep, city, state, neighborhood, street, number FROM client WHERE id = :id")
+    Foo findById(@Bind("id") Integer id);
+
     @UseFreemarkerEngine
     @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM client WHERE cpf = :cpf), 1, 0)")
     boolean exists(@Bind("cpf") String cpf);

@@ -1,5 +1,6 @@
 package br.com.lince.hackathon.client;
 
+import br.com.lince.hackathon.foo.Foo;
 import br.com.lince.hackathon.foo.FooRepository;
 import br.com.lince.hackathon.foo.FooViewData;
 import br.com.lince.hackathon.standard.JDBIConnection;
@@ -41,6 +42,9 @@ public class ClientServet extends HttpServlet {
             case "/":
                 loadFullPage(request, response);
                 break;
+            case "/edit":
+                loadFormEditFoo(request, response);
+                break;
             default:
                 response.getWriter().write("Not found : " + requestPath);
         }
@@ -71,6 +75,16 @@ public class ClientServet extends HttpServlet {
 
             renderer.render(new ClientViewData(clients, now, states, page, PAGE_SIZE, count));
 
+            return null;
+        });
+    }
+
+    private void loadFormEditFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<Foo>("client/form", response);
+        final var id = NumberUtils.toInt(request.getParameter("id"), 0);
+
+        JDBIConnection.instance().withExtension(ClientRepository.class, dao -> {
+            renderer.render(dao.findById(id));
             return null;
         });
     }
