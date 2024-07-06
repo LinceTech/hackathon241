@@ -3,6 +3,7 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/main/resources/database/cliente.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/database/gerente.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/database/locacao.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/database/veiculo.sql" dialect="TSQL" />
     <file url="PROJECT" dialect="TSQL" />
   </component>
