@@ -58,7 +58,8 @@ public class ClienteViewData {
      */
     public ClienteViewData(
             HashMap<String, String> errors,
-            Cliente cliente, List<Cliente> clientes,
+            Cliente cliente,
+            List<Cliente> clientes,
             LocalDateTime dateTime,
             int page,
             int pageSize,
