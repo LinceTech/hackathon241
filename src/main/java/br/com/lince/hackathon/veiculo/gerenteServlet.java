@@ -1,4 +1,4 @@
-package br.com.lince.hackathon.gerente;
+package br.com.lince.hackathon.veiculo;
 
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -112,7 +111,7 @@ public class gerenteServlet extends HttpServlet {
         final var indativo = 1;
         final var pccomissao = NumberUtils.toDouble(request.getParameter("PCCOMISSAO"), 0.0);
         final var dtcontratacao = LocalDate.parse(request.getParameter("DTCONTRATACAO"), DateTimeFormatter.ISO_LOCAL_DATE);
-        final var gerente = new Gerente(cdgerente, nome, cpf, telefone, ddd, email, cidade, estado, pccomissao, dtcontratacao, indativo);
+        final var gerente = new Veiculo(cdgerente, nome, cpf, telefone, ddd, email, cidade, estado, pccomissao, dtcontratacao, indativo);
         final var errors = new HashMap<String, String>();
 
         if (cdgerente == 0) {
@@ -200,7 +199,7 @@ public class gerenteServlet extends HttpServlet {
      * Trata a requisição para alimentar o formulário de cadastro ou edição de foos
      */
     private void loadFormEditGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<Gerente>("gerente/form", response);
+        final var renderer = new TemplateRenderer<Veiculo>("gerente/form", response);
         final var gerente = NumberUtils.toInt(request.getParameter("CDGERENTE"), 0);
 
         JDBIConnection.instance().withExtension(gerenteRepository.class, dao -> {
