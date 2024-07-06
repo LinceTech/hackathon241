@@ -1,5 +1,7 @@
 package br.com.lince.hackathon.locacao;
 
+import br.com.lince.hackathon.clientes.Clientes;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -8,7 +10,7 @@ public class Locacao {
     public Long idGerente;
     public Long idVeiculo;
     public LocalDate dataIncio;
-    public LocalDate dataEntraga;
+    public LocalDate dataEntrega;
     public BigDecimal valorDiaria;
     public double percentualGerente;
     public BigDecimal valorTotal;
@@ -23,7 +25,7 @@ public class Locacao {
             Long idGerente,
             Long idVeiculo,
             LocalDate dataIncio,
-            LocalDate dataEntraga,
+            LocalDate dataEntrega,
             BigDecimal valorDiaria,
             double percentualGerente,
             BigDecimal valorTotal,
@@ -34,7 +36,7 @@ public class Locacao {
         this.idGerente = idGerente;
         this.idVeiculo = idVeiculo;
         this.dataIncio = dataIncio;
-        this.dataEntraga = dataEntraga;
+        this.dataEntrega = dataEntrega;
         this.valorDiaria = valorDiaria;
         this.percentualGerente = percentualGerente;
         this.valorTotal = valorTotal;
@@ -74,12 +76,12 @@ public class Locacao {
         this.dataIncio = dataIncio;
     }
 
-    public LocalDate getDataEntraga() {
-        return dataEntraga;
+    public LocalDate getDataEntregadataEntrega() {
+        return dataEntrega;
     }
 
-    public void setDataEntraga(LocalDate dataEntraga) {
-        this.dataEntraga = dataEntraga;
+    public void setDataEntrega(LocalDate dataEntrega) {
+        this.dataEntrega = dataEntrega;
     }
 
     public BigDecimal getValorDiaria() {

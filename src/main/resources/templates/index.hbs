@@ -1,32 +1,10 @@
 {{>head}}
-<div class="d-flex justify-content-center w-100">
-    <div class="w-100 m-5 border rounded d-flex flex-column justify-content-center">
-        <div class="d-flex justify-content-center position-relative">
-            <div class="h4 text-center">Cadastro de Clientes</div>
-        </div>
-        <div class="p-2">
-            <button
-                    class="btn btn-primary"
-                    hx-get="/ClienteModal"
-                    hx-target="#mustache_modal"
-                    hx-trigger="click"
-                    data-bs-toggle="modal"
-                    data-bs-target="#ClienteModal"
-            >
-                Cadastro de Clientes
-            </button>
-        </div>
-        {{>ClienteDescricao}}
-
-    </div>
-    <div
-            class="modal fade"
-            id="ClienteModal"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-    >
-        <div class="modal-dialog modal-dialog-centered" id="mustache_modal">
+<div class="d-flex flex-column justify-content-center">
+    <div class="m-5 border rounded d-flex flex-column justify-content-center">
+        <div class="d-flex justify-content-start position-relative">
+            <div class="p-2">
+                <div class="h4 text-center">Home</div>
+            </div>
         </div>
     </div>
 </div>

@@ -2,9 +2,9 @@
     <div class="row">
         <div class="col-sm-auto bg-light sticky-top">
             <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px">
-                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                <div hx-get="/hackathon/" hx-target="#content" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                     <span class="fs-4">Hackathon</span>
-                </a>
+                </div>
                 <hr>
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
@@ -15,6 +15,11 @@
                     <li>
                         <div hx-get="/hackathon/gerentes" hx-target="#content" class="nav-link link-dark" style="cursor: pointer">
                             Gerentes
+                        </div>
+                    </li>
+                    <li>
+                        <div hx-get="/hackathon/locacoes" hx-target="#content" class="nav-link link-dark" style="cursor: pointer">
+                            Locacoes
                         </div>
                     </li>
                 </ul>
