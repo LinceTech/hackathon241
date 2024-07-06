@@ -3,6 +3,7 @@ package br.com.lince.hackathon.veiculo;
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
 import br.com.lince.hackathon.time7.Time7Repository;
+import br.com.lince.hackathon.time7.ValidaPlacaCarro;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -117,8 +118,8 @@ public class VeiculoServlet extends HttpServlet {
 
         if (placa.isBlank()) {
             errors.put("placaError", "Não pode ser vazio");
-        } else if (placa.length() < 7) {
-            errors.put("placa", "Não pode ser menor que 7 caracteres");
+        } else if (!ValidaPlacaCarro.isPlacaValid(placa)) {
+            errors.put("placaError", "Placa invalida");
         }
 
         if (anoFabrica < 1886 || anoFabrica > now / 10000) {
