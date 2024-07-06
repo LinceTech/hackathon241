@@ -1,6 +1,5 @@
 package br.com.lince.hackathon.veiculos;
 
-
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -57,11 +56,11 @@ public class VeiculosServlet extends HttpServlet {
     }
 
     private void listarVeiculos(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<VeiculosViewData>("/veiculos/VeiculoLista", response);
+        final var renderer = new TemplateRenderer<VeiculosViewData>("/veiculos/VeiculosLista", response);
 
         final var marca = request.getParameter("marca").trim();
         final var modelo = request.getParameter("modelo").trim();
-        final var anoFabricacao = Integer.parseInt(request.getParameter("anoFabricacao").trim());
+        final var anoFabricacao = NumberUtils.toInt(request.getParameter("anoFabricacao").trim());
         final var placa = request.getParameter("placa").trim();
         final var cor = request.getParameter("cor").trim();
         final var tipoCombustivel = request.getParameter("tipoCombustivel").trim();
@@ -137,11 +136,11 @@ public class VeiculosServlet extends HttpServlet {
                 modelo,
                 placa,
                 cor,
-                anoFabricacao,
                 custoDiaria,
                 descricaoPromocional,
-                tipoCombustivel
-                );
+                tipoCombustivel,
+                anoFabricacao
+        );
 
         if (veiculo.getMarca().isBlank()) {
             erros.put("marcaErro", "Informe a marca");
@@ -156,7 +155,7 @@ public class VeiculosServlet extends HttpServlet {
             erros.put("corErro", "Informe a cor");
         }
         if (veiculo.getCustoDiaria() == 0) {
-            erros.put("emailErro", "Informe o custo da diária");
+            erros.put("custoDiariaErro", "Informe o custo da diária");
         }
         if (veiculo.getDescricaoPromocional().isBlank()) {
             erros.put("descricaoPromocionalErro", "Informe a descrição promocional");
@@ -172,7 +171,7 @@ public class VeiculosServlet extends HttpServlet {
 
         JDBIConnection.instance().withExtension(VeiculosRepository.class, dao -> {
             var rendererModal = new TemplateRenderer<Veiculos>("veiculos/VeiculosModal", response);
-            var renderLista = new TemplateRenderer<VeiculosViewData>("veiculos/VeiculoLista", response);
+            var renderLista = new TemplateRenderer<VeiculosViewData>("veiculos/VeiculosLista", response);
 
 
             if (erros.isEmpty()) {
@@ -182,10 +181,8 @@ public class VeiculosServlet extends HttpServlet {
                     dao.insereVeiculo(veiculo);
                 }
             }
-
             if (erros.isEmpty()) {
                 final var list = dao.consultaPaginacao(0, 15, new VeiculoFiltros("", "", 0, "", "", ""));
-
                 renderLista.render(new VeiculosViewData(list, "","",0,"","","", 0));
             } else {
                 response.setStatus(500);
@@ -200,7 +197,7 @@ public class VeiculosServlet extends HttpServlet {
     }
 
     private void deletarVeiculo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<VeiculosViewData>("/veiculos/VeiculoLista", response);
+        final var renderer = new TemplateRenderer<VeiculosViewData>("/veiculos/VeiculosLista", response);
 
         final var veiculoID = NumberUtils.toLong(request.getParameter("id"), 0);
 

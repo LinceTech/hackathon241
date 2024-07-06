@@ -75,6 +75,7 @@
                     <button
                             class="btn btn-primary"
                             type="submit"
+                            id="fazConsultaVeiculos"
                     >
                         Consultar
                     </button>
@@ -90,7 +91,7 @@
                     <button
                             class="btn btn-primary"
                             type="reset"
-                            hx-get="/hackathon/veiculos/listar?marca=&modelo=&cor=&anofabricacao=&proximaPagina=true&numeroPagina={{numeroPagina}}"
+                            hx-get="/hackathon/veiculos/listar?marca=&modelo=&cor=&anofabricacao=&proximaPagina=false&numeroPagina={{numeroPagina}}"
                             hx-target="#veiculos_lista"
                             hx-trigger="click"
                     >

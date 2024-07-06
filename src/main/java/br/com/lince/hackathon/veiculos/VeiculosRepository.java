@@ -39,8 +39,8 @@ public interface VeiculosRepository {
                     ":veiculos.modelo," +
                     ":veiculos.placa," +
                     ":veiculos.cor," +
-                    ":veiculos.ano_fabricacao," +
-                    ":veiculos.custo_diaria," +
+                    ":veiculos.anoFabricacao," +
+                    ":veiculos.custoDiaria," +
                     ":veiculos.descricaoPromocional," +
                     ":veiculos.tipoCombustivel" +
                     ")"

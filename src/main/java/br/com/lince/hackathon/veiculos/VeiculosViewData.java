@@ -1,8 +1,5 @@
 package br.com.lince.hackathon.veiculos;
 
-import br.com.lince.hackathon.veiculos.Veiculos;
-
-import java.util.HashMap;
 import java.util.List;
 
 public class VeiculosViewData {

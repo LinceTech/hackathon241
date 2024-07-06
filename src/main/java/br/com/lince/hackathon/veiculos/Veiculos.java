@@ -8,14 +8,17 @@ public class Veiculos {
     private String modelo;
     private String placa;
     private String cor;
-    private int anoFabricacao;
     private Double custoDiaria;
     private String descricaoPromocional;
     private String tipoCombustivel;
+    private int anoFabricacao;
     private HashMap<String, String> erros;
+
+
 
     public Veiculos() {
     }
+
 
     public Veiculos(
             Long id,
@@ -23,10 +26,10 @@ public class Veiculos {
             String modelo,
             String placa,
             String cor,
-            int anoFabricacao,
             Double custoDiaria,
             String descricaoPromocional,
-            String tipoCombustivel
+            String tipoCombustivel,
+            int anoFabricacao
     ) {
         this.id = id;
         this.marca = marca;
