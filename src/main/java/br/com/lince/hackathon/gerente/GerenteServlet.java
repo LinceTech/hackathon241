@@ -113,7 +113,7 @@ public class GerenteServlet  extends HttpServlet {
         }
         if (email.isBlank()) {
             errors.put("emailError", "Não pode ser vazio");
-        }else if(Funcoes.validaEmail(email)){
+        }else if(Funcoes.validaEmail(email) == false){
             errors.put("emailError", "Inválido");
         }
 
@@ -149,7 +149,11 @@ public class GerenteServlet  extends HttpServlet {
             if (errors.isEmpty()) {
                 renderer.render(new GerenteViewData(gerentes, now, page, PAGE_SIZE, count));
             } else {
-                renderer.render(new GerenteViewData(errors, gerente, gerentes, now, page, PAGE_SIZE, count));
+                Gerente g = dao.findByCpf(cpfNumerico);
+                g.setDataContratacaoAlfa(Funcoes.formataData(g.getDataContratacao()));
+                g.setCpfAlfa(Funcoes.formatarCPF(g.getCpf()));
+                g.setTelefoneAlfa(Funcoes.formatarTelefone(g.getTelefone()));
+                renderer.render(new GerenteViewData(errors, g, gerentes, now, page, PAGE_SIZE, count));
             }
 
             return null;

@@ -89,12 +89,22 @@ public class Funcoes {
     }
 
     public static boolean validaEmail(String email) {
-        return email.matches("/^[a-z0-9.]+@[a-z0-9]+\\.[a-z]+\\.([a-z]+)?$/i\n");
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
     }
 
     public static long formataCelular(String telefone) {
-        System.out.println(telefone);
-        return Long.parseLong(telefone.replace(" ", "").replaceAll("[^0-9]",""));
+        if(!telefone.isBlank()){
+            try{
+                return Long.parseLong(telefone.replace(" ", "").replaceAll("[^0-9]",""));
+            }catch(NumberFormatException e){
+                return 0;
+            }
+        }else{
+            return 0;
+        }
     }
 
     public static String formatarCPF(long cpf) {

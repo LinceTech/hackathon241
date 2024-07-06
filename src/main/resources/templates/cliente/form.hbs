@@ -24,6 +24,7 @@
                           id="id"
                           type="text"
                           name="cpf"
+                          class="cpf"
                           maxlength="11" value={{cpf}}>
                 {{#with errors}}
                     {{#if cpfError}}
@@ -63,6 +64,7 @@
                 <input 
                           id="id"
                           type="tel"
+                          class="telefone"
                           name="telefone"
                           maxlength="11" value={{telefone}}>
                 {{#with errors}}
@@ -97,21 +99,23 @@
     <!-- CEP -->
     </div>    <div style="padding-top: 8px;">
         <label>
-            <span style="width: 150px; display: inline-block; vertical-align: top;">CEP:</span>
+            <span method="get" action="." style="width: 150px; display: inline-block; vertical-align: top;">CEP:</span>
             <span>
-                <input 
-                          id="id"
-                          type="text"
-                          pattern="\d{5}-\d{3}"/
-                          name="cep"
-                          maxlength="10" value={{cep}}>
-                {{#with errors}}
-                    {{#if cepError}}
-                        <span style="color: red; font-weight: bold;">
-                            CEP: {{cepError}}
-                        </span>
-                    {{/if}}
-                {{/with}}
+                <label>
+                    <input
+                              id="cep"
+                              type="text"
+                              pattern="\d{5}-\d{3}"/
+                              name="cep"
+                              class="cep"
+                              maxlength="10" value={{cep}}>
+                    {{#with errors}}
+                        {{#if cepError}}
+                            <span style="color: red; font-weight: bold;">
+                                CEP: {{cepError}}
+                            </span>
+                        {{/if}}
+                    {{/with}}
             </span>
             <br>
         </label>
@@ -148,6 +152,7 @@
                           id="id"
                           type="text"
                           name="estado"
+                          class="estado"
                           maxlength="60" value={{estado}}>
                 {{#with errors}}
                     {{#if estadoError}}
@@ -214,6 +219,7 @@
                           id="id"
                           type="text"
                           name="numero"
+                          class="numero"
                           maxlength="5" value={{numero}}>
                 {{#with errors}}
                     {{#if numeroError}}

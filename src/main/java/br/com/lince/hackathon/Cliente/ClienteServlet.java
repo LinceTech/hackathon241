@@ -114,7 +114,7 @@ public class ClienteServlet extends HttpServlet {
 
         if (email.isBlank()) {
             errors.put("emailError", "E-mail não pode ser vazio");
-        }else if(Funcoes.validaEmail(email)){
+        }else if(Funcoes.validaEmail(email) == false){
             errors.put("emailError", "E-mail inválido");
         }
 
