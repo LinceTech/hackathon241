@@ -137,10 +137,12 @@ public class GerenteServlet extends HttpServlet {
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
         final var pageSize = NumberUtils.toInt(request.getParameter("pageSize"), 15);
 
-        System.out.println("nr_cpf ->>" + nr_cpf);
         if (!Validacao.isCpf(nr_cpf)) {
-            System.out.println("ENTROUUU");
             errors.put("nr_cpfError", "CPF inválido!");
+        }
+
+        if (!Validacao.isEmail(ds_email)) {
+            errors.put("ds_emailError", "E-mail inválido!");
         }
 
         //Email é validado a partir do field email do HTML
