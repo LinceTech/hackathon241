@@ -1,51 +1,73 @@
-<div class="container" id="cliente_lista">
+<div class="container" id="veiculos_lista">
     <form
-            hx-get="/hackathon/gerentes/listar"
-            hx-target="#cliente_lista"
+            hx-get="/hackathon/veiculos/listar"
+            hx-target="#veiculos_lista"
     >
         <div class="container d-flex gap-2">
             <div class="mb-3 ">
-                <label for="nome" class="form-label">Nome</label>
+                <label for="marca" class="form-label">Marca</label>
                 <input
-                        placeholder="Informe o nome:"
+                        placeholder="Informe a marca:"
                         type="text"
                         class="form-control"
-                        id="nome"
-                        name="nome"
-                        value="{{nome}}"
+                        id="marca"
+                        name="marca"
+                        value="{{marca}}"
                 >
             </div>
             <div class="mb-3">
-                <label for="cpf" class="form-label">Documento</label>
+                <label for="modelo" class="form-label">Modelo</label>
                 <input
-                        placeholder="Informe o documento:"
+                        placeholder="Informe o modelo:"
                         type="text"
                         class="form-control"
-                        id="documento"
-                        name="documento"
-                        value="{{documento}}"
+                        id="modelo"
+                        name="modelo"
+                        value="{{modelo}}"
                 >
             </div>
             <div class="mb-3">
-                <label for="cidade" class="form-label">Cidade</label>
+                <label for="anofabricacao" class="form-label">Ano de fabricação</label>
                 <input
-                        placeholder="Informe a cidade:"
-                        type="text"
+                        placeholder="Informe o ano:"
+                        type="number"
                         class="form-control"
-                        id="cidade"
-                        name="cidade"
-                        value="{{cidade}}"
+                        id="anofabricacao"
+                        name="anofabricacao"
+                        value="{{anofabricacao}}"
                 >
             </div>
             <div class="mb-3">
-                <label for="estado" class="form-label">Estado</label>
+                <label for="placa" class="form-label">Placa</label>
                 <input
-                        placeholder="Informe o estado:"
+                        placeholder="Informe a placa:"
                         type="text"
                         class="form-control"
-                        id="estado"
-                        name="estado"
-                        value="{{estado}}"
+                        id="placa"
+                        name="placa"
+                        value="{{placa}}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="cor" class="form-label">Cor</label>
+                <input
+                        placeholder="Informe a cor:"
+                        type="text"
+                        class="form-control"
+                        id="cor"
+                        name="cor"
+                        value="{{cor}}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="tipocombustivel" class="form-label">Tipo de Combustivel</label>
+                <input
+                        placeholder="Informe a combustivel:"
+                        type="text"
+                        class="form-control"
+                        id="tipocombustivel"
+                        name="tipocombustivel"
+                        value="{{tipocombustivel}}"
                 >
             </div>
             <div class="mb-3 d-flex flex-column justify-content-end">
@@ -53,14 +75,15 @@
                     <button
                             class="btn btn-primary"
                             type="submit"
+                            id="fazConsultaVeiculos"
                     >
                         Consultar
                     </button>
                     <button
                             class="btn btn-primary"
                             type="reset"
-                            hx-get="/hackathon/gerentes/listar?nome=&documento=&estado=&cidade=&proximaPagina=false&numeroPagina=0"
-                            hx-target="#cliente_lista"
+                            hx-get="/hackathon/veiculos/listar?marca=&modelo=&cor=&anofabricacao=&proximaPagina=false&numeroPagina=0"
+                            hx-target="#veiculos_lista"
                             hx-trigger="click"
                     >
                         Limpar filtros
@@ -68,8 +91,8 @@
                     <button
                             class="btn btn-primary"
                             type="reset"
-                            hx-get="/hackathon/gerentes/listar?nome=&documento=&estado=&cidade=&proximaPagina=false&numeroPagina={{numeroPagina}}"
-                            hx-target="#cliente_lista"
+                            hx-get="/hackathon/veiculos/listar?marca=&modelo=&cor=&anofabricacao=&proximaPagina=false&numeroPagina={{numeroPagina}}"
+                            hx-target="#veiculos_lista"
                             hx-trigger="click"
                     >
                         <
@@ -80,8 +103,8 @@
                     <button
                             class="btn btn-primary"
                             type="reset"
-                            hx-get="/hackathon/gerentes/listar?nome=&documento=&estado=&cidade=&proximaPagina=true&numeroPagina={{numeroPagina}}"
-                            hx-target="#cliente_lista"
+                            hx-get="/hackathon/veiculos/listar?marca=&modelo=&cor=&anofabricacao=&proximaPagina=true&numeroPagina={{numeroPagina}}"
+                            hx-target="#veiculos_lista"
                             hx-trigger="click"
                     >
                         >
@@ -93,43 +116,43 @@
     <table class="table table-bordered">
         <thead class="thead-dark">
         <tr>
-            <th>Nome</th>
-            <th>CPF</th>
-            <th>Telefone</th>
-            <th>Email</th>
-            <th>Cidade</th>
-            <th>Estado</th>
-            <th>Percentual comissão</th>
-            <th>Data contratação</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Placa</th>
+            <th>Cor</th>
+            <th>Ano Fabricação</th>
+            <th>Custo Diaria</th>
+            <th>Descrição Promocional</th>
+            <th>Tipo Combustivel</th>
             <th>Ações</th>
         </tr>
         </thead>
         <tbody>
-        {{#each gerentes}}
+        {{#each veiculos}}
             <tr>
-                <td>{{nome}}</td>
-                <td>{{cpf}}</td>
-                <td>{{ddd}} - {{telefone}}</td>
-                <td>{{email}}</td>
-                <td>{{cidade}}</td>
-                <td>{{estado}}</td>
-                <td>{{percentualComissao}}</td>
-                <td>{{dataContratacao}}</td>
+                <td>{{marca}}</td>
+                <td>{{modelo}}</td>
+                <td>{{placa}}</td>
+                <td>{{cor}}</td>
+                <td>{{anofabricacao}}</td>
+                <td>{{custodiaria}}</td>
+                <td>{{discricacaopromocional}}</td>
+                <td>{{tipocombustivel}}</td>
                 <td class="gap-2">
                     <button
                             class="btn btn-primary"
-                            hx-get="/hackathon/gerentes/edit?id={{id}}"
+                            hx-get="/hackathon/veiculos/edit?id={{id}}"
                     hx-target="#mustache_modal"
                     hx-trigger="click"
                     data-bs-toggle="modal"
-                    data-bs-target="#gerenteModal"
+                    data-bs-target="#veiculosModal"
                     >
                     Edit
                     </button>
                     <button
                             class="btn btn-danger"
-                            hx-get="/hackathon/gerentes/delete?id={{id}}"
-                    hx-target="#cliente_lista"
+                            hx-get="/hackathon/veiculos/delete?id={{id}}"
+                    hx-target="#veiculos_lista"
                     hx-trigger="click"
                     >
                     Delete

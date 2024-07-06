@@ -1,6 +1,6 @@
 package br.com.lince.hackathon.veiculos;
 
-import java.time.LocalDate;
+import java.util.HashMap;
 
 public class Veiculos {
     private Long id;
@@ -8,13 +8,17 @@ public class Veiculos {
     private String modelo;
     private String placa;
     private String cor;
-    private LocalDate anoFabricacao;
     private Double custoDiaria;
     private String descricaoPromocional;
     private String tipoCombustivel;
+    private int anoFabricacao;
+    private HashMap<String, String> erros;
+
+
 
     public Veiculos() {
     }
+
 
     public Veiculos(
             Long id,
@@ -22,10 +26,10 @@ public class Veiculos {
             String modelo,
             String placa,
             String cor,
-            LocalDate anoFabricacao,
             Double custoDiaria,
             String descricaoPromocional,
-            String tipoCombustivel
+            String tipoCombustivel,
+            int anoFabricacao
     ) {
         this.id = id;
         this.marca = marca;
@@ -56,8 +60,8 @@ public class Veiculos {
     public String getCor() {return cor;}
     public void setCor(String cor) {this.cor = cor;}
 
-    public LocalDate getAnoFabricacao() {return anoFabricacao;}
-    public void  setAnoFabricacao(LocalDate anoFabricacao) {this.anoFabricacao = anoFabricacao;}
+    public int getAnoFabricacao() {return anoFabricacao;}
+    public void  setAnoFabricacao(int anoFabricacao) {this.anoFabricacao = anoFabricacao;}
 
     public Double getCustoDiaria() {return custoDiaria;}
     public void setCustoDiaria(Double custoDiaria) {this.custoDiaria = custoDiaria;}
@@ -67,4 +71,8 @@ public class Veiculos {
 
     public String getTipoCombustivel() {return tipoCombustivel;}
     public void setTipoCombustivel(String tipoCombustivel) {this.tipoCombustivel = tipoCombustivel;}
+
+    public HashMap<String, String> getErros() {return erros;}
+    public void setErros(HashMap<String, String> erros) { this.erros = erros;}
+
 }
