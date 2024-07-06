@@ -45,7 +45,7 @@ public interface ClienteRepository {
     @RegisterBeanMapper(Cliente.class)
     @UseFreemarkerEngine
     @SqlQuery("SELECT * FROM cliente WHERE nr_cpf = :nr_cpf")
-    Cliente findByCliente(@Bind("cliente") int nr_cpf);
+    Cliente findByCliente(@Bind("cliente") String nr_cpf);
 
     /**
      * Verifica se existe um foo com o {bar} informado
@@ -60,11 +60,11 @@ public interface ClienteRepository {
     /**
      * Remove um foo da base de dados
      *
-     * @param bar valor para apagar identificar o foo a ser apagado
+     * @param nr_cpf valor para apagar identificar o foo a ser apagado
      */
     @UseFreemarkerEngine
     @SqlUpdate("DELETE FROM Cliente WHERE nr_cpf = :nr_cpf")
-    void delete(@Bind("bar") int bar);
+    void delete(@Bind("nr_cpf") String nr_cpf);
 
     /**
      * Cadastra um novo foo na base de dados.
@@ -82,8 +82,7 @@ public interface ClienteRepository {
      */
 
     @UseFreemarkerEngine
-    @SqlUpdate("UPDATE Cliente SET nm_cliente = :Cliente.bas, nm_cliente = :Cliente.nm_cliente WHERE nr_cpf = :Cliente.bar")
-    void update(@BindBean("foo") Cliente cliente);
-
+    @SqlUpdate("UPDATE Cliente SET nm_cliente = :Cliente.nm_cliente WHERE nr_cpf = :Cliente.nr_cpf")
+    void update(@BindBean("nr_cpf") Cliente cliente);
 }
 

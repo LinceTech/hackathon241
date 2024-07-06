@@ -42,7 +42,7 @@ public class ClienteServlet extends HttpServlet {
                 break;
 
             case "/delete":
-                deleteFoo(request, response);
+                deleteCliente(request, response);
                 break;
 
             default:
@@ -185,12 +185,10 @@ public class ClienteServlet extends HttpServlet {
         });
     }
 
-    /*
-     * Trata a requisição para alimentar o formulário de cadastro ou edição de foos
-     */
+
     private void loadFormEditFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<Cliente>("cliente/form", response);
-        final var nr_cpf = NumberUtils.toInt(request.getParameter("nr_cpf"), 0);
+        final var nr_cpf = request.getParameter("nr_cpf");
 
         JDBIConnection.instance().withExtension(ClienteRepository.class, cliente -> {
             renderer.render(cliente.findByCliente(nr_cpf));
@@ -198,14 +196,11 @@ public class ClienteServlet extends HttpServlet {
         });
     }
 
-    /*
-     * Trata a requisição de exclusão de foos
-     */
-    private void deleteFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var bar = Integer.parseInt(request.getParameter("bar"));
+    private void deleteCliente(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var nr_cpf = request.getParameter("nr_cpf");
 
-        JDBIConnection.instance().withExtension(FooRepository.class, cliente -> {
-            cliente.delete(bar);
+        JDBIConnection.instance().withExtension(ClienteRepository.class, cliente -> {
+            cliente.delete(nr_cpf);
             loadFullPage(request, response);
             return null;
         });
