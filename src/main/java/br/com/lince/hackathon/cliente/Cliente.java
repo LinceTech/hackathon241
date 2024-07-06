@@ -110,6 +110,12 @@ public class Cliente {
         return cep;
     }
 
+    public String getCepFormat() {
+        String cepStr = cep + "";
+        String cepFormat = cepStr.replaceFirst("(\\d{5})(\\d{3})", "$1-$2");
+        return cepFormat;
+    }
+
     public void setCep(int cep) {
         this.cep = cep;
     }

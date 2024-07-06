@@ -102,7 +102,7 @@ public class ClienteServlet extends HttpServlet {
         final var dtNascimento = NumberUtils.toInt(request.getParameter("dtNascimento").replaceAll("-", ""), 0);
         final long telefone    = NumberUtils.toLong(request.getParameter("telefone"), 0);
         final var email        = request.getParameter("email");
-        final var cep          = NumberUtils.toInt(request.getParameter("cep"), 0);
+        final var cep          = NumberUtils.toInt(request.getParameter("cep").replaceAll("[^0-9.]", ""), 0);
         final var cidade       = request.getParameter("cidade");
         final var estado       = request.getParameter("estado");
         final var bairro       = request.getParameter("bairro");

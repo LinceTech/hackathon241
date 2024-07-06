@@ -91,7 +91,7 @@
             <span style="width: 120px; display: inline-block;">CEP: </span>
             <span>
                 <input type="text" id="cep" name="cep" size="9" maxlength="9" onblur="pesquisacep(this.value);"
-                       value="{{cliente.cep}}">
+                       value="{{cliente.cepFormat}}">
                 {{#with errors}}
                     {{#if cepError}}
                         <span class="error">
