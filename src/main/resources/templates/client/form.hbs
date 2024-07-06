@@ -1,4 +1,4 @@
-´<form id="clientForm">
+<form id="clientForm">
     <div class="clientMain">
         <div class="clientName">
             <label for="name">Nome</label>
@@ -65,6 +65,7 @@
             <input type="text" name="cep" id="cep" maxlength="9" size="9"
                    value="{{client.cep}}"
             >
+            <div id="erroCep"></div>
             {{#with errors}}
                 {{#if cepError}}
                     <span class="error">
@@ -90,7 +91,7 @@
 
         <div class="clientCity">
             <label for="city">Cidade</label>
-            <input type="text" name="city" maxlength="100" size="60" value="{{client.city}}">
+            <input type="text" name="city" id="city" maxlength="100" size="60" value="{{client.city}}">
             {{#with errors}}
                 {{#if cityError}}
                     <span class="error">
@@ -102,7 +103,7 @@
 
         <div class="clientNeighborhood">
             <label for="neighborhood">Bairro</label>
-            <input type="text" name="neighborhood" maxlength="100" size="60" value="{{client.neighborhood}}">
+            <input type="text" name="neighborhood"  id="neighborhood" maxlength="100" size="60" value="{{client.neighborhood}}">
             {{#with errors}}
                 {{#if neighborhoodError}}
                     <span class="error">
@@ -114,7 +115,7 @@
 
         <div class="clientStreet">
             <label for="street">Rua</label>
-            <input type="text" name="street" maxlength="100" size="60" value="{{client.street}}">
+            <input type="text" name="street" id="street" maxlength="100" size="60" value="{{client.street}}">
             {{#with errors}}
                 {{#if streetError}}
                     <span class="error">
@@ -192,10 +193,9 @@
         var cep = document.getElementById('cep');
         cep.addEventListener("focusout", () => buscaEndereco(cep.value) )
 
-        document.getElementById('cep').addEventListener('htmx:afterSwap', function(event) {
-        var data = event.detail.elt;
-        console.log(document.getElementById("cidade"));
-        });
+        // document.getElementById('cep').addEventListener('htmx:afterSwap', function(event) {
+        // var data = event.detail.elt;
+        // console.log(document.getElementById("cidade"));
     </script>
 
 </form>

@@ -5,19 +5,24 @@ import org.jdbi.v3.freemarker.UseFreemarkerEngine;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.customizer.BindMap;
 import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ClientRepository {
 
     @RegisterBeanMapper(Client.class)
     @UseFreemarkerEngine
     @SqlQuery("SELECT id, name, cpf, birth_date, phone, email, cep, city, state, neighborhood, street, number\n" +
-            "FROM client ORDER BY id OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
-    List<Client> selectPage(@Define("page") int page, @Define("count") int count);
+            "FROM client ${whereClause} ORDER BY id OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
+    List<Client> selectPage(@Define("page") int page,
+                            @Define("count") int count,
+                            @Define("whereClause") String where,
+                            @BindMap Map<String, Object> params);
 
     @UseFreemarkerEngine
     @SqlQuery("SELECT COUNT(*) FROM client")
