@@ -109,7 +109,7 @@ public class GerenteServlet extends HttpServlet {
         System.out.println("telefone : " + telefone);
         final var email        = request.getParameter("email");
         System.out.println("email : " + email);
-        final var cep          = NumberUtils.toInt(request.getParameter("cep"), 0);
+        final var cep          = NumberUtils.toInt(request.getParameter("cep").replaceAll("[^0-9.]", ""), 0);
         System.out.println("cep : " + cep);
         final var cidade       = request.getParameter("cidade");
         System.out.println("cidade : " + cidade);
@@ -117,10 +117,10 @@ public class GerenteServlet extends HttpServlet {
         System.out.println("estado : " + estado);
         final var comissao     = NumberUtils.toFloat(request.getParameter("comissao"), 0);
         System.out.println("comissao : " + comissao);
-        final var dtcontratacao   = NumberUtils.toInt(request.getParameter("dtcontratacao").replaceAll("-", ""), 0);
-        System.out.println("dtcontratacao : " + dtcontratacao);
+        final var dtContrata   = NumberUtils.toInt(request.getParameter("dtContrata").replaceAll("-", ""), 0);
+        System.out.println("dtContrata : " + dtContrata);
 
-        final var gerente = new Gerente(id, nome, cpf, dtNascimento, telefone, email, cep, cidade, estado, comissao, dtcontratacao);
+        final var gerente = new Gerente(id, nome, cpf, dtNascimento, telefone, email, cep, cidade, estado, comissao, dtContrata);
         final var errors = new HashMap<String, String>();
 
         // VALIDA NOME
@@ -132,8 +132,7 @@ public class GerenteServlet extends HttpServlet {
         // VALIDA CPF
         if (cpf == 0) {
             errors.put("cpfError", "Não pode ser vazio");
-        }
-        else if (!ValidaCPF.isCPF(String.format("%11d",cpf))) {
+        } else if (!ValidaCPF.isCPF(String.format("%011d",cpf))) {
             errors.put("cpfError", "CPF inválido");
         }
         // VALIDA DATA NASCIMENTO
@@ -171,8 +170,8 @@ public class GerenteServlet extends HttpServlet {
             errors.put("comissaoError", "Comissão não pode ser maior que 25%");
         }
         // VALIDA DATA NASCIMENTO
-        if (dtcontratacao == 0) {
-            errors.put("dtNascimentoError", "Não pode ser vazio");
+        if (dtContrata == 0) {
+            errors.put("dtContrataError", "Não pode ser vazio");
         }
 
         JDBIConnection.instance().withExtension(Time7Repository.class, dao -> {

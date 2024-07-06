@@ -1,5 +1,5 @@
 <form id="gerenteForm">
-    <input type="hidden" name="gerente" value="{{gerente}}">
+    <input type="hidden" name="id" value="{{id}}">
 
     <div>
         <label>
@@ -39,7 +39,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Data Nascimento: </span>
             <span>
-                <input type="text" id="dtNascimento" name="dtNascimento" value="{{dtNascimento}}">
+                <input type="date" id="dtNascimento" name="dtNascimento" value="{{dtNascimentoFormat}}">
                 {{#with errors}}
                     {{#if dtNascimentoError}}
                         <span class="error">
@@ -56,7 +56,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Telefone:</span>
             <span>
-                <input type="text" name="telefone" size="14" maxlength="14" value="{{telefone}}">
+                <input type="text" name="telefone" size="11" maxlength="11" value="{{telefone}}">
                 {{#with errors}}
                     {{#if telefoneError}}
                         <span class="error">
@@ -77,7 +77,7 @@
                 {{#with errors}}
                     {{#if emailError}}
                         <span class="error">
-                            email: {{emailError}}
+                            E-mail: {{emailError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -90,11 +90,11 @@
         <label>
             <span style="width: 120px; display: inline-block;">CEP: </span>
             <span>
-                <input type="text" name="cep" size="9" maxlength="9" value="{{cep}}">
+                <input type="text" name="cep" size="9" maxlength="9" value="{{cepFormat}}">
                 {{#with errors}}
                     {{#if cepError}}
                         <span class="error">
-                            cep: {{cepError}}
+                            CEP: {{cepError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -138,7 +138,7 @@
                 {{#with errors}}
                     {{#if estadoError}}
                         <span class="error">
-                            estado: {{estadoError}}
+                            Estado: {{estadoError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -155,7 +155,7 @@
                 {{#with errors}}
                     {{#if cidadeError}}
                         <span class="error">
-                            cidade: {{cidadeError}}
+                            Cidade: {{cidadeError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -172,7 +172,7 @@
                 {{#with errors}}
                     {{#if comissaoError}}
                         <span class="error">
-                            comissao: {{comissaoError}}
+                            Comissão: {{comissaoError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -185,11 +185,11 @@
         <label>
             <span style="width: 120px; display: inline-block;">Data Contratação:</span>
             <span>
-                <input type="date" name="dtcontratacao" size="10" maxlength="10" value="{{dtcontratacao}}">
+                <input type="date" name="dtContrata" size="10" maxlength="10" value="{{dtContrataFormat}}">
                 {{#with errors}}
-                    {{#if dtcontratacaoError}}
+                    {{#if dtContrataError}}
                         <span class="error">
-                            dtcontratacao: {{dtcontratacaoError}}
+                            Data: {{dtContrataError}}
                         </span>
                     {{/if}}
                 {{/with}}
