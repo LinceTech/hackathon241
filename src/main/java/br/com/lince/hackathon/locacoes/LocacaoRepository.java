@@ -15,6 +15,10 @@ public interface LocacaoRepository {
 
     @UseFreemarkerEngine
     @SqlQuery("SELECT COUNT(*) FROM locacoes")
+    int count();
+
+    @UseFreemarkerEngine
+    @SqlQuery("SELECT COUNT(*) FROM locacoes")
     int countFilter(@Define("locacaoFiltro") LocacaoFiltro locacaoFiltro);
 
     @RegisterBeanMapper(Locacao.class)
@@ -23,4 +27,5 @@ public interface LocacaoRepository {
             "FROM locacoes " +
             "ORDER BY ${campo}  ${sentido} OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
     List<Locacao> selectFilterPage(@Define("page") int page, @Define("count") int count, @Define("locacaoFiltro") LocacaoFiltro locacaoFiltro, @Define ("campo") String campo, @Define("sentido") String sentido);
+
 }

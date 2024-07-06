@@ -1,5 +1,6 @@
 package br.com.lince.hackathon.gerentes;
 
+import br.com.lince.hackathon.clientes.Cliente;
 import br.com.lince.hackathon.foo.Foo;
 import org.jdbi.v3.freemarker.UseFreemarkerEngine;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
@@ -42,6 +43,6 @@ public interface GerenteRepository {
 
     @RegisterBeanMapper(Gerentes.class)
     @UseFreemarkerEngine
-    @SqlQuery("SELECT id, Nome, CPF, Telefone, Email, Cidade, Estado, PercentualDeComissao, DataDeContratacao FROM gerente WHERE id=:id")
-    Gerentes selectByID(@Define("id") int id);
+    @SqlQuery("SELECT * FROM gerente WHERE id = :id")
+    Gerentes findById(@Bind("id") int id);
 }

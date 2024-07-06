@@ -7,10 +7,24 @@ import java.util.List;
 
 public class LocacaoViewData {
     private List<Locacao> locacoes;
+    private Locacao locacao;
+    private LocacaoFiltro locaoFiltro;
+    private HashMap<String, String> errors;
     private int page;
     private int pageSize;
     private int count;
-    private LocacaoFiltro locaoFiltro;
+
+    public LocacaoViewData() {
+    }
+    public LocacaoViewData(HashMap<String, String> errors, Locacao locacao) {
+        this.errors = errors;
+        this.locacao = locacao;
+    }
+    public LocacaoViewData(HashMap<String, String> errors, Locacao locacao,List<Locacao> locacoes) {
+        this.errors = errors;
+        this.locacao = locacao;
+        this.locacoes = locacoes;
+    }
 
     public LocacaoViewData(List<Locacao> locacoes, int page, int pageSize, int count, LocacaoFiltro locacaoFiltro) {
         this.locacoes = locacoes;
@@ -18,26 +32,6 @@ public class LocacaoViewData {
         this.pageSize = pageSize;
         this.count = count;
         this.locaoFiltro = locacaoFiltro;
-    }
-
-    public List<Locacao> getLocacoes() {
-        return locacoes;
-    }
-
-    public void setLocacoes(List<Locacao> locacoes) {
-        this.locacoes = locacoes;
-    }
-
-    public int getPage() {
-        return page;
-    }
-
-    public void setPage(int page) {
-        this.page = page;
-    }
-
-    public int getPageSize() {
-        return pageSize;
     }
 
     public void setPageSize(int pageSize) {
@@ -58,5 +52,11 @@ public class LocacaoViewData {
 
     public void setLocaoFiltro(LocacaoFiltro locaoFiltro) {
         this.locaoFiltro = locaoFiltro;
+    }
+    public HashMap<String, String> getErrors() {
+        return errors;
+    }
+    public Locacao getLocacao() {
+        return locacao;
     }
 }

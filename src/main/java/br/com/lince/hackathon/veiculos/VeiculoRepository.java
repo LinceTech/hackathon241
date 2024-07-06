@@ -41,6 +41,6 @@ public interface VeiculoRepository {
 
     @RegisterBeanMapper(Veiculos.class)
     @UseFreemarkerEngine
-    @SqlQuery("SELECT id, Marca, Modelo, Placa, Cor, AnoDeFabricacao, CustoDeDiaria, DescricaoPromocional, TipoDeCombustivel FROM veiculo WHERE id=:id")
-    Veiculos findByID(@Define("id") int id);
+    @SqlQuery("SELECT * FROM veiculo WHERE id = :id")
+    Veiculos findById(@Bind("id") int id);
 }
