@@ -42,7 +42,7 @@ public class ClienteServlet extends HttpServlet {
                 break;
 
             case "/delete":
-                deleteFoo(request, response);
+                deleteCliente(request, response);
                 break;
 
             default:
@@ -105,53 +105,53 @@ public class ClienteServlet extends HttpServlet {
         final var errors = new HashMap<String, String>();
 
         if (nm_cliente.isBlank()) {
-            errors.put("basError", "Nome não pode ser vazio");
+            errors.put("nomeError", "Nome não pode ser vazio");
         } else if (nm_cliente.length() > 100) {
-            errors.put("basError", "Nome não pode ser maior que 100 caracteres");
+            errors.put("nomeError", "Nome não pode ser maior que 100 caracteres");
         }
 
         if(nr_cpf.isBlank()){
-            errors.put("basError", "CPF pode ser vazio");
+            errors.put("cpfError", "CPF pode ser vazio");
         } else if(isCpf(nr_cpf) == false){
-            errors.put("basError", "CPF invalido");
+            errors.put("cpfError", "CPF invalido");
         }
 
         if(nr_telefone == 0){
-            errors.put("basError", "Telefone não pode ser vazio");
+            errors.put("telefError", "Telefone não pode ser vazio");
         } else if(String.valueOf(nr_telefone).length() < 11){
-            errors.put("basError", "Telefone invalido!");
+            errors.put("telefError", "Telefone invalido!");
         }
 
         if(ds_email.isBlank()){
-            errors.put("basError", "E-mail não pode ser vazio");
+            errors.put("emailError", "E-mail não pode ser vazio");
         } else if (ds_email.length() > 100) {
-            errors.put("basError", "E-mail não pode ser maior que 100 caracteres");
+            errors.put("emailError", "E-mail não pode ser maior que 100 caracteres");
         }
 
         if(nr_cep.isBlank()){
-            errors.put("basError", "C.E.P não pode ser vazio");
+            errors.put("cepError", "C.E.P não pode ser vazio");
         } else if (nr_cep.length() > 100) {
-            errors.put("basError", "C.E.P não pode ser maior que 8 caracteres");
+            errors.put("cepError", "C.E.P não pode ser maior que 8 caracteres");
         }
 
         if(nm_cidade.isBlank()){
-            errors.put("basError", "Cidade não pode ser vazio");
+            errors.put("cidadeError", "Cidade não pode ser vazio");
         } else if (nm_cidade.length() > 100) {
-            errors.put("basError", "Cidade não pode ser maior que 8 caracteres");
+            errors.put("cidadeError", "Cidade não pode ser maior que 8 caracteres");
         }
 
         if(nm_estado.isBlank()){
-            errors.put("basError", "Estado não pode ser vazio");
+            errors.put("estadoError", "Estado não pode ser vazio");
         }
 
         if(nm_rua.isBlank()){
-            errors.put("basError", "Rua não pode ser vazio");
+            errors.put("ruaError", "Rua não pode ser vazio");
         } else if (nm_rua.length() > 100) {
-            errors.put("basError", "Rua não pode ser maior que 100 caracteres");
+            errors.put("ruaError", "Rua não pode ser maior que 100 caracteres");
         }
 
         if(nr_residencia == 0){
-            errors.put("basError", "Número residencia não pode ser vazio");
+            errors.put("residenciaError", "Número residencia não pode ser vazio");
         }
 
         var ldNow = LocalDate.now();
@@ -162,7 +162,8 @@ public class ClienteServlet extends HttpServlet {
         }
 
         JDBIConnection.instance().withExtension(ClienteRepository.class, cliente -> {
-            // Verificar se ocorreram erros no formulário
+
+
             if (errors.isEmpty()) {
                 if (cliente.exists(nr_cpf)) {
                     cliente.update(cliente_insert);
@@ -170,7 +171,6 @@ public class ClienteServlet extends HttpServlet {
                     cliente.insert(cliente_insert);
                 }
             }
-
             final var now = LocalDateTime.now();
             final var count = cliente.count();
             final var clientes = cliente.selectPage(page, PAGE_SIZE);
@@ -185,12 +185,10 @@ public class ClienteServlet extends HttpServlet {
         });
     }
 
-    /*
-     * Trata a requisição para alimentar o formulário de cadastro ou edição de foos
-     */
+
     private void loadFormEditFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<Cliente>("cliente/form", response);
-        final var nr_cpf = NumberUtils.toInt(request.getParameter("nr_cpf"), 0);
+        final var nr_cpf = request.getParameter("nr_cpf");
 
         JDBIConnection.instance().withExtension(ClienteRepository.class, cliente -> {
             renderer.render(cliente.findByCliente(nr_cpf));
@@ -198,14 +196,11 @@ public class ClienteServlet extends HttpServlet {
         });
     }
 
-    /*
-     * Trata a requisição de exclusão de foos
-     */
-    private void deleteFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var bar = Integer.parseInt(request.getParameter("bar"));
+    private void deleteCliente(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var nr_cpf = request.getParameter("nr_cpf");
 
-        JDBIConnection.instance().withExtension(FooRepository.class, cliente -> {
-            cliente.delete(bar);
+        JDBIConnection.instance().withExtension(ClienteRepository.class, cliente -> {
+            cliente.delete(nr_cpf);
             loadFullPage(request, response);
             return null;
         });

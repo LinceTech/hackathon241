@@ -1,14 +1,22 @@
-<tr id="fooItem{{bar}}">
-    <td style="width: 40px; text-align: right;">{{bar}}</td>
-    <td style="width: 200px; text-align: left;">{{bas}}</td>
-    <td style="width: 300px; text-align: left;">{{boo}}</td>
+<tr id="clienteItem{{bar}}">
+    <td style="width: 40px; text-align: right;">{{nm_cliente}}</td>
+    <td style="width: 200px; text-align: left;">{{nr_cpf}}</td>
+    <td style="width: 300px; text-align: left;">{{dt_nascimento}}</td>
+    <td style="width: 300px; text-align: left;">{{nr_telefone}}</td>
+    <td style="width: 300px; text-align: left;">{{ds_email}}</td>
+    <td style="width: 300px; text-align: left;">{{nr_cep}}</td>
+    <td style="width: 300px; text-align: left;">{{nm_cidade}}</td>
+    <td style="width: 300px; text-align: left;">{{nm_estado}}</td>
+    <td style="width: 300px; text-align: left;">{{nm_bairro}}</td>
+    <td style="width: 300px; text-align: left;">{{nm_rua}}</td>
+    <td style="width: 300px; text-align: left;">{{nr_residencia}}</td>
     <td style="width: 50px">
         <img src="https://img.icons8.com/?size=18&id=71201&format=png&color=000000"
              alt="Editar item"
              style="cursor: pointer"
-             hx-target="#fooForm"
+             hx-target="#clienteForm"
              hx-replace="innerHTML"
-             hx-get="foo/edit?bar={{bar}}">
+             hx-get="cliente/edit?nr_cpf={{nr_cpf}}">
 
         <img src="https://img.icons8.com/?size=18&id=67884&format=png&color=000000"
              alt="Apagar item"
@@ -16,7 +24,7 @@
              hx-target="#formAndTable"
              hx-select="#formAndTable"
              hx-replace="innerHTML"
-             hx-get="foo/delete?bar={{bar}}"
-        hx-include="[name='page']">
+             hx-get="cliente/delete?nr_cpf={{nr_cpf}}"
+            hx-include="[name='page']">
     </td>
 </tr>

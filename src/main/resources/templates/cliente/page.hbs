@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <title>Foo View</title>
+    <title>Cadastro de cliente</title>
     {{>head}}
 </head>
 <body>
-
-
 
 <div id="formAndTable">
     {{>cliente/form cliente}}
 
     <hr>
 
-    <div id="fooItemsTable">
+    <div id="clientesTable">
         <input type="hidden" name="page" value="{{index}}">
 
         <div style="display: inline-flex; padding-bottom: 12px;">
@@ -21,8 +19,8 @@
                 <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
                      alt="Página anterior"
                      style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
-                     hx-target="#fooItemsTable"
-                     hx-select="#fooItemsTable"
+                     hx-target="#clientesItensTable"
+                     hx-select="#clientesItensTable"
                      hx-swap="innerHTML"
                      hx-get="foo?page={{previous}}">
             {{/if}}
@@ -35,8 +33,8 @@
                 <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
                      alt="Próxima página"
                      style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
-                     hx-target="#fooItemsTable"
-                     hx-select="#fooItemsTable"
+                     hx-target="#clientesItensTable"
+                     hx-select="#clientesItensTable"
                      hx-swap="innerHTML"
                      hx-get="foo?page={{next}}">
             {{/if}}
@@ -45,9 +43,17 @@
         <table>
             <thead>
             <tr>
-                <th style="width: 40px; text-align: right;">Foo</th>
-                <th style="width: 200px; text-align: left;">Bar</th>
-                <th style="width: 300px; text-align: left;">Bas</th>
+                <th style="width: 150px; text-align: right;">Nome</th>
+                <th style="width: 115px; text-align: left;">C.P.F</th>
+                <th style="width: 144px; text-align: left;">Data nascimento</th>
+                <th style="width: 50px">Telefone</th>
+                <th style="width: 50px">E-mail</th>
+                <th style="width: 50px">CEP</th>
+                <th style="width: 100px">Cidade</th>
+                <th style="width: 50px">Estado</th>
+                <th style="width: 50px">Bairro</th>
+                <th style="width: 50px">Rua</th>
+                <th style="width: 50px">Número</th>
                 <th style="width: 50px">Ação</th>
             </tr>
             </thead>

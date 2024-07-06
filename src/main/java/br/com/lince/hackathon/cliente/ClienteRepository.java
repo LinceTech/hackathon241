@@ -1,5 +1,6 @@
 package br.com.lince.hackathon.cliente;
 
+import br.com.lince.hackathon.gerente.Gerente;
 import org.jdbi.v3.freemarker.UseFreemarkerEngine;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -44,7 +45,7 @@ public interface ClienteRepository {
     @RegisterBeanMapper(Cliente.class)
     @UseFreemarkerEngine
     @SqlQuery("SELECT * FROM cliente WHERE nr_cpf = :nr_cpf")
-    Cliente findByCliente(@Bind("cliente") int nr_cpf);
+    Cliente findByCliente(@Bind("cliente") String nr_cpf);
 
     /**
      * Verifica se existe um foo com o {bar} informado
@@ -59,11 +60,11 @@ public interface ClienteRepository {
     /**
      * Remove um foo da base de dados
      *
-     * @param bar valor para apagar identificar o foo a ser apagado
+     * @param nr_cpf valor para apagar identificar o foo a ser apagado
      */
     @UseFreemarkerEngine
     @SqlUpdate("DELETE FROM Cliente WHERE nr_cpf = :nr_cpf")
-    void delete(@Bind("bar") int bar);
+    void delete(@Bind("nr_cpf") String nr_cpf);
 
     /**
      * Cadastra um novo foo na base de dados.
@@ -71,7 +72,7 @@ public interface ClienteRepository {
      * @param cliente foo a ser cadastrado
      */
     @UseFreemarkerEngine
-    @SqlUpdate("INSERT INTO cliente(nm_cliente, nr_cpf, dt_nascimento, nr_telefone, ds_email, nm_bairro, nr_cep, nm_cidade, nm_estado, nr_residencia, nm_rua) VALUES (:Cliente.nm_cliente, :Cliente.nr_cpf, :Cliente.dt_nascimento, :Cliente.nr_telefone, :Cliente.ds_email, :Cliente.nr_cep, :Cliente.nm_cidade, :Cliente.nm_estado, :Cliente.nm_bairro, :Cliente.nm_rua, :Cliente.nr_residencia)")
+    @SqlUpdate("INSERT INTO cliente VALUES (:cliente.nm_cliente, :cliente.nr_cpf, :cliente.dt_nascimento, :cliente.nr_telefone, :cliente.ds_email, :cliente.nr_cep, :cliente.nm_cidade, :cliente.nm_estado, :cliente.nm_bairro, :cliente.nm_rua, :cliente.nr_residencia)")
     void insert(@BindBean("cliente") Cliente cliente);
 
     /**
@@ -81,8 +82,7 @@ public interface ClienteRepository {
      */
 
     @UseFreemarkerEngine
-    @SqlUpdate("UPDATE Cliente SET nm_cliente = :Cliente.bas, nm_cliente = :Cliente.nm_cliente WHERE nr_cpf = :Cliente.bar")
-    void update(@BindBean("foo") Cliente cliente);
-
+    @SqlUpdate("UPDATE Cliente SET nm_cliente = :Cliente.nm_cliente WHERE nr_cpf = :Cliente.nr_cpf")
+    void update(@BindBean("nr_cpf") Cliente cliente);
 }
 

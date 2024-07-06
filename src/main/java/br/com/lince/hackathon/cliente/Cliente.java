@@ -5,19 +5,18 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Cliente {
-    /*
     private String nm_cliente;
     private String nr_cpf;
     private LocalDate dt_nascimento;
-    private int nr_telefone;
+    private long nr_telefone;
     private String ds_email;
     private String nm_bairro;
     private String nr_cep;
-    private String nm_cidade;
     private String nm_estado;
-    private int nr_residencia;
+    private String nm_cidade;
     private String nm_rua;
-    */
+    private int nr_residencia;
+
 
     public Cliente() {
     }
@@ -49,18 +48,6 @@ public class Cliente {
         this.nm_rua = nm_rua;
         this.nr_residencia = nr_residencia;
     }
-
-    private String nm_cliente;
-    private String nr_cpf;
-    private LocalDate dt_nascimento;
-    private long nr_telefone;
-    private String ds_email;
-    private String nm_bairro;
-    private String nr_cep;
-    private String nm_estado;
-    private String nm_cidade;
-    private String nm_rua;
-    private int nr_residencia;
 
     /**
      * Atributo bar, sem significado algum
@@ -96,7 +83,7 @@ public class Cliente {
         return nr_telefone;
     }
 
-    public void setNr_telefone(int nr_telefone) {
+    public void setNr_telefone(long nr_telefone) {
         this.nr_telefone = nr_telefone;
     }
 
