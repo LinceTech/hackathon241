@@ -1,0 +1,65 @@
+<form hx-post="gerentesLista/filtro" hx-trigger="submit, reset:afterSettle" hx-target="#listaGerente">
+    <div>
+        <label>Nome
+            <input type="text" name="nome" value="{{gerenteFiltro.nome}}">
+        </label>
+        <label>Documento
+            <input type="text" name="cpf" value="{{gerenteFiltro.cpf}}">
+        </label>
+        <label>Cidade
+            <input type="text" name="cidade" value="{{gerenteFiltro.cidade}}">
+        </label>
+        <label>Estado
+            <input type="text" name="estado" value="{{gerenteFiltro.estado}}">
+        </label>
+    </div>
+    <button>Filtrar</button>
+    <br>
+    <div id="gerentesTable">
+        <div id="gerentesPagina">
+            <input type="hidden" name="page" value="{{index}}">
+
+            <div style="display: inline-flex; padding-bottom: 12px;">
+                {{#if hasPrevious}}
+                    <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
+                         alt="Página anterior"
+                         style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
+                         hx-target="#listaGerente"
+                         hx-post="gerentesLista/page?page={{previous}}">
+                {{/if}}
+
+                <span style="height: 18px; vertical-align: center;">
+                        Pagina <b>{{page}}</b> de <b>{{totalPages}}</b>
+                    </span>
+
+                {{#if next}}
+                    <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
+                         alt="Próxima página"
+                         style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
+                         hx-target="#listaGerente"
+                         hx-post="gerentesLista/page?page={{next}}">
+                {{/if}}
+            </div>
+
+            <table>
+                <thead>
+                <tr>
+                    <th style="text-align: left; cursor:pointer;" hx-get="gerentesLista/ordenar?page={{page}}&sentido={{sentido}}&campo=nome" hx-trigger="click">Nome</th>
+                    <th style="text-align: left;">Telefone</th>
+                    <th style="text-align: left;">CPF</th>
+                    <th style="text-align: left;">E-mail</th>
+                    <th style="text-align: left; cursor:pointer;" hx-get="gerentesLista/ordenar?page={{page}}&sentido={{sentido}}&campo=cidade" hx-trigger="click">Cidade</th>
+                    <th style="text-align: left;">Estado</th>
+                    <th style="text-align: right;">Percentual de Comissão</th>
+                    <th style="text-align: left; cursor:pointer;" hx-get="gerentesLista/ordenar?page={{page}}&sentido={{sentido}}&campo=DataDeContratacao" hx-trigger="click">Data de Contratação</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#gerentes}}
+                    {{>gerentes/gerentesLinha}}
+                {{/gerentes}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
