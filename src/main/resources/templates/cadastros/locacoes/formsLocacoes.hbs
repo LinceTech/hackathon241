@@ -1,0 +1,74 @@
+<style>
+    #cadastroLocacoesForm{
+        display: flex;
+        flex-direction: column;
+        z-index: 9;
+    }
+
+    #cadastroLocacoesForm > div {
+        display: flex;
+    }
+</style>
+
+<form id="cadastroLocacoesForm" method="post">
+    <div>
+        <label for="cliente">Cliente</label>
+        <input name="cliente" value="{{cliente}}">
+    </div>
+    <div>
+        <label for="gerenteResponsavel">Gerente Responsável</label>
+        <input name="gerenteResponsavel" value="{{gerenteResponsavel}}">
+    </div>
+    <div>
+        <label for="veiculo">Veiculo</label>
+        <input name="veiculo" value="{{veiculo}}">
+    </div>
+    <div>
+        <label for="dataInicio">Data Inicio</label>
+        <input type="date" name="dataInicio" value="{{dataInicio}}">
+    </div>
+    <div>
+        <label for="dataEntregaVeiculo">Data Entrega Veiculos</label>
+        <input type="date" name="dataEntregaVeiculo" value="{{dataEntregaVeiculo}}">
+    </div>
+    <div>
+        <label for="valorDiaria">Valor Diaria</label>
+        <input name="valorDiaria" value="{{valorDiaria}}">
+    </div>
+    <div>
+        <label for="percentualComissaoGerente">Percentual Comissão Gerentes</label>
+        <input name="percentualComissaoGerente" value="{{percentualComissaoGerente}}">
+    </div>
+    <div>
+        <label for="valorTotalPago">Valor Total Pago</label>
+        <input name="valorTotalPago" value="{{valorTotalPago}}">
+    </div>
+    <div>
+        <label for="dataPagamento">Data Pagamento</label>
+        <input type="date" name="dataPagamento" value="{{dataPagamento}}">
+    </div>
+
+    <input type="hidden" name="id" value="{{id}}">
+
+    <button hx-post="locacao/upsert?id={{id}}"
+            hx-target="#ListaLoc"
+            hx-swap="outerHTML">
+        {{#if id}}
+            Atualizar
+        {{^}}
+            Cadastrar
+        {{/if}}
+    </button>
+
+    {{#if id}}
+        <button hx-target="#ListaLoc"
+                hx-select="#ListaLoc"
+                hx-swap="outerHTML"
+                hx-get="locacao/cancel"
+                style="display: inline-flex">
+            <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar item">
+            &nbsp;
+            Cancelar
+        </button>
+    {{/if}}
+</form>

@@ -13,38 +13,59 @@
 <form id="cadastroGerentesForm" method="post">
     <div>
         <label for="nome">Nome</label>
-        <input name="nome">
+        <input name="nome" value="{{nome}}">
     </div>
     <div>
         <label for="cpf">CPF</label>
-        <input name="cpf">
+        <input name="cpf" value="{{cpf}}">
     </div>
     <div>
         <label for="telefone">Telefone</label>
-        <input name="telefone">
+        <input name="telefone" value="{{telefone}}">
     </div>
     <div>
         <label for="email">E-mail</label>
-        <input name="email">
+        <input name="email" value="{{email}}">
     </div>
     <div>
         <label for="cidade">Cidade</label>
-        <input name="cidade">
+        <input name="cidade" value="{{cidade}}">
     </div>
     <div>
         <label for="estado">Estado</label>
-        <input name="estado">
+        <input name="estado" value="{{estado}}">
     </div>
     <div>
         <label for="percentualComissao">Percentual de comissão</label>
-        <input name="percentualComissao">
+        <input name="percentualComissao" value="{{percentualComissao}}">
     </div>
     <div>
         <label for="dataContratacao">Data de contratação</label>
-        <input type="date" name="dataContratacao">
+        <input type="date" name="dataContratacao" value="{{dataContratacao}}">
     </div>
+
+    <input type="hidden" name="id" value="{{id}}">
+
     <button hx-post="gerentes/upsert"
-            hx-target="#cadastroGerentesForm"
-            hx-select="#cadastroGerentesForm"
-            hx-swap="outerHTML">Cadastrar</button>
+            hx-target="#ListaGer"
+            hx-select="#ListaGer"
+            hx-swap="outerHTML">
+        {{#if id}}
+            Atualizar
+        {{^}}
+            Cadastrar
+        {{/if}}
+    </button>
+
+    {{#if id}}
+        <button hx-target="#ListaGer"
+                hx-select="#ListaGer"
+                hx-swap="outerHTML"
+                hx-get="gerentes/cancel"
+                style="display: inline-flex">
+            <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar item">
+            &nbsp;
+            Cancelar
+        </button>
+    {{/if}}
 </form>

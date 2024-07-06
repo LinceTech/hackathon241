@@ -36,12 +36,20 @@ public class GerentesServlet extends HttpServlet {
 
         switch (requestPath) {
             case "":
+                System.out.println("RequestPath vazio");
             case "/":
                 loadFullPage(request, response);
                 break;
-
+            case "/cadastrar":
+                carregaCadastroGerentes(request, response);
+                break;
             case "/edit":
-//                loadFormEditGerentes(request, response);
+                System.out.println("Cadastrar");
+                loadFormEditGerentes(request, response);
+                break;
+
+            case "/cancel":
+                loadFullPage(request, response);
                 break;
 
             case "/delete":
@@ -139,21 +147,22 @@ public class GerentesServlet extends HttpServlet {
     /*
      * Trata a requisição para alimentar o formulário de cadastro ou edição de foos
      */
-//    private void loadFormEditFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        final var renderer = new TemplateRenderer<Foo>("gerentes/form", response);
-//        final var bar = NumberUtils.toInt(request.getParameter("bar"), 0);
-//
-//        JDBIConnection.instance().withExtension(FooRepository.class, dao -> {
-//            renderer.render(dao.findByBar(bar));
-//            return null;
-//        });
-//    }
+    private void loadFormEditGerentes(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<Gerentes>("cadastros/gerentes/formsGerentes", response);
+        final var id = NumberUtils.toInt(request.getParameter("id"), 0);
+
+        System.out.println("id" + id);
+
+        JDBIConnection.instance().withExtension(GerentesRepository.class, dao -> {
+            renderer.render(dao.findById(id));
+            return null;
+        });
+    }
 
     /*
      * Trata a requisição de exclusão de foos
      */
     private void deleteGerentes(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("request.getParameter(\"id\") delete == "+request.getParameter("id"));
         final var id = Integer.parseInt(request.getParameter("id"));
 
         JDBIConnection.instance().withExtension(GerentesRepository.class, dao -> {
@@ -162,4 +171,17 @@ public class GerentesServlet extends HttpServlet {
             return null;
         });
     }
+
+    private void carregaCadastroGerentes(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        final var renderer = new TemplateRenderer<GerentesViewData>("cadastros/gerentes/formsGerentes", response);
+//        final var page = NumberUtils.toInt(request.getParameter("cadastro/pageGerentes"), 0);
+        renderer.render(new GerentesViewData(null, null, 0, PAGE_SIZE, 0));
+        //JDBIConnection.instance().withExtension(GerentesRepository.class, dao -> {
+
+            //renderer.render(new GerentesViewData());
+        //    return null;
+        //});
+    }
+
 }

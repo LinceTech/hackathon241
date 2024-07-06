@@ -38,6 +38,6 @@ public interface GerentesRepository {
     void insert(@BindBean("gerente") Gerentes gerente);
 
     @UseFreemarkerEngine
-    @SqlUpdate("UPDATE tb_gerentes SET nome = :gerente.nome, cpf = :gerente.cpf, telefone = :gerente.telefone, email = :gerente.email, cidade = :gerente.cidade, estado = :gerente.estado, percentualComissao = :gerente.percentualComissao, dataContratacao = :gerente.dataContratacao WHERE tb_gerentes.id = :gerentes.id")
+    @SqlUpdate("UPDATE tb_gerentes SET nome = :gerente.nome, cpf = :gerente.cpf, telefone = :gerente.telefone, email = :gerente.email, cidade = :gerente.cidade, estado = :gerente.estado, percentualComissao = :gerente.percentualComissao, dataContratacao = :gerente.dataContratacao WHERE tb_gerentes.id = :gerente.id")
     void update(@BindBean("gerente") Gerentes gerente);
 }

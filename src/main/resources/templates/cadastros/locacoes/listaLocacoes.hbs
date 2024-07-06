@@ -1,0 +1,33 @@
+<form id="formListaLocacoes">
+    <div class="listaLocacoes mt-4">
+        <h2>Lista de Locações</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Gerente Resposável</th>
+                    <th scope="col">Veículo</th>
+                    <th scope="col">Data início</th>
+                    <th scope="col">Data entrega</th>
+                    <th scope="col">Valor Diario</th>
+                    <th scope="col">Percentual comissão gerente</th>
+                    <th scope="col">Valor Total Pago</th>
+                    <th scope="col">Data Pagamento</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#locacoes}}
+                {{>cadastros/locacoes/linhalocacoes locacoes}}
+            {{/locacoes}}
+            </tbody>
+        </table>
+    </div>
+</form>
+
+<button
+        hx-target="#ListaLoc"
+        hx-swap="outerHTML"
+        hx-get="locacao/edit?comMenu=1"
+        style="display: inline-flex">
+    Cadastrar Locações
+</button>

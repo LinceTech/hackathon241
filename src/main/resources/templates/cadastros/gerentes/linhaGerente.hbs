@@ -11,10 +11,12 @@
         <img src="https://img.icons8.com/?size=18&id=71201&format=png&color=000000"
              alt="Editar item"
              style="cursor: pointer"
-             hx-target="#formListaGerentes"
+             hx-target="#ListaGer"
              hx-replace="innerHTML"
-             hx-get="gerentes/edit?id={{id}}">
-
+             hx-get="gerentes/edit?id={{id}}"
+        >
+    </td>
+    <td style="width: 50px">
         <img src="https://img.icons8.com/?size=18&id=67884&format=png&color=000000"
              alt="Apagar item"
              style="cursor: pointer"
@@ -22,6 +24,6 @@
              hx-select="#ListaGer"
              hx-replace="innerHTML"
              hx-get="gerentes/delete?id={{id}}"
-             hx-include="[name='pageGerentes']">
+        >
     </td>
 </tr>
