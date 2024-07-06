@@ -1,5 +1,8 @@
 package br.com.lince.hackathon.cliente;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class Cliente {
@@ -76,6 +79,11 @@ public class Cliente {
 
     public int getDtNascimento() {
         return dtNascimento;
+    }
+
+    public String getDtNascimentoFormat() throws ParseException {
+        Date data = new SimpleDateFormat("yyyyMMdd").parse(String.valueOf(dtNascimento));
+        return new SimpleDateFormat("yyyy-MM-dd").format(data);
     }
 
     public void setDtNascimento(int dtNascimento) {

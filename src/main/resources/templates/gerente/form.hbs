@@ -1,5 +1,5 @@
 <form id="gerenteForm">
-    <input type="hidden" name="gerente" value="{{id}}">
+    <input type="hidden" name="gerente" value="{{gerente}}">
 
     <div>
         <label>
@@ -39,7 +39,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Data Nascimento: </span>
             <span>
-                <input type="text" id="dtNascimento" name="dtNascimento" value="{{dataNasc}}">
+                <input type="text" id="dtNascimento" name="dtNascimento" value="{{dtNascimento}}">
                 {{#with errors}}
                     {{#if dtNascimentoError}}
                         <span class="error">
@@ -77,7 +77,7 @@
                 {{#with errors}}
                     {{#if emailError}}
                         <span class="error">
-                            E-mail: {{emailError}}
+                            email: {{emailError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -94,7 +94,7 @@
                 {{#with errors}}
                     {{#if cepError}}
                         <span class="error">
-                            CEP: {{cepError}}
+                            cep: {{cepError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -138,7 +138,7 @@
                 {{#with errors}}
                     {{#if estadoError}}
                         <span class="error">
-                            Estado: {{estadoError}}
+                            estado: {{estadoError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -155,7 +155,7 @@
                 {{#with errors}}
                     {{#if cidadeError}}
                         <span class="error">
-                            Cidade: {{cidadeError}}
+                            cidade: {{cidadeError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -172,7 +172,7 @@
                 {{#with errors}}
                     {{#if comissaoError}}
                         <span class="error">
-                            Comissão: {{comissaoError}}
+                            comissao: {{comissaoError}}
                         </span>
                     {{/if}}
                 {{/with}}
