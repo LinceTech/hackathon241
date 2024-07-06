@@ -1,185 +1,184 @@
-//package br.com.lince.hackathon.locacao;
-//
-//import br.com.lince.hackathon.Veiculo.Veiculo;
-//import br.com.lince.hackathon.Veiculo.VeiculoRepository;
-//import br.com.lince.hackathon.standard.JDBIConnection;
-//import br.com.lince.hackathon.standard.TemplateRenderer;
-//import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
-//
-//import javax.servlet.annotation.WebServlet;
-//import javax.servlet.http.HttpServlet;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//import java.io.IOException;
-//import java.time.LocalDate;
-//import java.time.LocalDateTime;
-//
-////@WebServlet("/locacao/*")
-//public class LocacaoServlet extends HttpServlet {
-//    private static final int PAGE_SIZE = 10;
-//
-//    private static final Logger logger = Logger.getLogger(LocacaoServlet.class.getName());
-//
-//    @Override
-//    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
-//
-//        switch (requestPath) {
-//            case "":
-//            case "/":
-//                loadFullPage(request, response);
-//                break;
-//
-//            case "/edit":
-//                loadFormEditLocacao(request, response);
-//                break;
-//
-//            case "/delete":
-//                deleteLocacao(request, response);
-//                break;
-//
-//            default:
-//                response.getWriter().write("Not found: " + requestPath);
+package br.com.lince.hackathon.locacao;
+
+import br.com.lince.hackathon.Cliente.Cliente;
+import br.com.lince.hackathon.Cliente.ClienteRepository;
+import br.com.lince.hackathon.gerente.Gerente;
+import br.com.lince.hackathon.gerente.GerenteRepository;
+import br.com.lince.hackathon.veiculo.Veiculo;
+import br.com.lince.hackathon.veiculo.VeiculoRepository;
+import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
+import br.com.lince.hackathon.standard.TemplateRenderer;
+import br.com.lince.hackathon.standard.JDBIConnection;
+
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.logging.Logger;
+
+@WebServlet("/locacao/*")
+public class LocacaoServlet extends HttpServlet {
+    private static final int PAGE_SIZE = 15;
+
+    /*
+     * Logger padrão do servlet
+     */
+    private static final Logger logger = Logger.getLogger(LocacaoServlet.class.getName());
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
+
+        switch (requestPath) {
+            case "":
+            case "/":
+                loadFullPage(request, response);
+                break;
+
+            case "/edit":
+                loadFormEditLocacao(request, response);
+                break;
+
+            case "/delete":
+                deleteLocacao(request, response);
+                break;
+
+            default:
+                response.getWriter().write("Not found : " + requestPath);
+        }
+    }
+
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
+
+        if (requestPath.isBlank()) {
+            loadFullPage(request, response);
+        } else if (requestPath.equals("/upsert")) {
+            insertOrUpdateLocacao(request, response);
+        } else {
+            response.getWriter().write("Not found : " + requestPath);
+        }
+    }
+
+    /*
+     * Trata a requisição para retorna a página de foos carregada com todos os dados
+     */
+    private void loadFullPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<LocacaoViewData>("locacao/page", response);
+        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
+
+        JDBIConnection.instance().withExtension(LocacaoRepository.class, dao -> {
+            final var now = LocalDateTime.now();
+            final var count = dao.count();
+            final var locacoes = dao.selectPage(page, PAGE_SIZE);
+
+            renderer.render(new LocacaoViewData(locacoes, now, page, PAGE_SIZE, count));
+
+            return null;
+        });
+    }
+
+    private void insertOrUpdateLocacao(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<LocacaoViewData>("locacao/page", response);
+        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
+
+        final var id = NumberUtils.toInt(request.getParameter("id"), 0);
+        final var clienteCpf = NumberUtils.toLong(request.getParameter("clienteCpf"), 0);
+        final var gerenteCpf = NumberUtils.toLong(request.getParameter("gerenteCpf"), 0);
+        final var veiculoPlaca = request.getParameter("veiculoPlaca");
+        final var dataInicio = NumberUtils.toInt(request.getParameter("dataInicio"), 0);
+        final var dataEntrega = NumberUtils.toInt(request.getParameter("dataEntrega"), 0);
+        final var valorDiaria = NumberUtils.toDouble(request.getParameter("valorDiaria").replaceAll(",","."), 0);
+        final var percentualComissao = NumberUtils.toDouble(request.getParameter("percentualComissao").replaceAll(",","."), 0);
+        final var valorTotalPago = NumberUtils.toDouble(request.getParameter("valorTotalPago").replaceAll(",","."), 0);
+        final var dataPagamento = NumberUtils.toInt(request.getParameter("dataPagamento"), 0);
+
+
+
+        final var locacao = new Locacao(id, clienteCpf, gerenteCpf, veiculoPlaca, dataInicio,dataEntrega,valorDiaria,percentualComissao,valorTotalPago,dataPagamento);
+        final var errors = new HashMap<String, String>();
+
+        if (clienteCpf == 0 ) {
+            errors.put("clienteCpfError", "Não pode ser vazio");
+        }
+        System.out.println("gerenteCpf > " + gerenteCpf);
+//        if (gerenteCpf == 0 ) {
+//            errors.put("gerenteCpfError", "Não pode ser vazio");
 //        }
-//    }
-//
-//    @Override
-//    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
-//        System.out.println(requestPath);
-//
-//        if (requestPath.isBlank()) {
-//            loadFullPage(request, response);
-//        } else if (requestPath.equals("/upsert")) {
-//            insertOrUpdateLocacao(request, response);
-//        } else {
-//            response.getWriter().write("Not found: " + requestPath);
-//        }
-//    }
-//
-//    private void loadFullPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        final var renderer = new TemplateRenderer<LocacaoViewData>("locacao/page", response);
-//        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
-//
-//        JDBIConnection.instance().withExtension(LocacaoRepository.class, dao -> {
-//            final var now = LocalDateTime.now();
-//            final var count = dao.count();
-//            final var locacoes = dao.selectPage(page, PAGE_SIZE);
-//
-//            renderer.render(new LocacaoViewData(locacoes, now, page, PAGE_SIZE, count));
-//
-//            return null;
-//        });
-//    }
-//
-//    private void insertOrUpdateLocacao(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        final var renderer = new TemplateRenderer<LocacaoViewData>("locacao/page", response);
-//        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
-//
-//        final var id = NumberUtils.toInt(request.getParameter("id"));
-//        final var clienteId = NumberUtils.toInt(request.getParameter("clienteId"));
-//        final var gerenteId = NumberUtils.toInt(request.getParameter("gerenteId"));
-//        final var veiculoId = NumberUtils.toInt(request.getParameter("veiculoId"));
-//        final var dataInicio = LocalDate.parse(request.getParameter("dataInicio"));
-//        final var dataEntrega = LocalDate.parse(request.getParameter("dataEntrega"));
-//        final var valorDiaria = Double.parseDouble(request.getParameter("valorDiaria"));
-//        final var percentualComissao = Double.parseDouble(request.getParameter("percentualComissao"));
-//        final var valorTotalPago = Double.parseDouble(request.getParameter("valorTotalPago"));
-//        final var dataPagamento = LocalDate.parse(request.getParameter("dataPagamento"));
-//
-//        JDBIConnection.instance().withExtension(ClienteRepository.class, clienteDao -> {
-//            Cliente cliente = clienteDao.findById(clienteId);
-//
-//            JDBIConnection.instance().withExtension(GerenteRepository.class, gerenteDao -> {
-//                Gerente gerente = gerenteDao.findById(gerenteId);
-//
-//                JDBIConnection.instance().withExtension(VeiculoRepository.class, veiculoDao -> {
-//                    Veiculo veiculo = veiculoDao.findById(veiculoId);
-//
-//                    final var locacao = new Locacao(id, cliente, gerente, veiculo, dataInicio, dataEntrega, valorDiaria, percentualComissao, valorTotalPago, dataPagamento);
-//                    final var errors = new HashMap<String, String>();
-//
-//                    validateFields(locacao, errors);
-//
-//                    JDBIConnection.instance().withExtension(LocacaoRepository.class, dao -> {
-//                        if (errors.isEmpty()) {
-//                            if (dao.exists(id)) {
-//                                dao.update(locacao);
-//                            } else {
-//                                dao.insert(locacao);
-//                            }
-//                        }
-//
-//                        final var now = LocalDateTime.now();
-//                        final var count = dao.count();
-//                        final var locacoes = dao.selectPage(page, PAGE_SIZE);
-//
-//                        if (errors.isEmpty()) {
-//                            renderer.render(new LocacaoViewData(locacoes, now, page, PAGE_SIZE, count));
-//                        } else {
-//                            renderer.render(new LocacaoViewData(errors, locacao, locacoes, now, page, PAGE_SIZE, count));
-//                        }
-//
-//                        return null;
-//                    });
-//
-//                    return null;
-//                });
-//
-//                return null;
-//            });
-//
-//            return null;
-//        });
-//    }
-//
-//    private void validateFields(Locacao locacao, HashMap<String, String> errors) {
-//        if (locacao.getCliente() == null) {
-//            errors.put("clienteError", "Cliente não pode ser vazio");
-//        }
-//        if (locacao.getGerente() == null) {
-//            errors.put("gerenteError", "Gerente não pode ser vazio");
-//        }
-//        if (locacao.getVeiculo() == null) {
-//            errors.put("veiculoError", "Veículo não pode ser vazio");
-//        }
-//        if (locacao.getDataInicio() == null) {
-//            errors.put("dataInicioError", "Data de início não pode ser vazia");
-//        }
-//        if (locacao.getDataEntrega() == null) {
-//            errors.put("dataEntregaError", "Data de entrega não pode ser vazia");
-//        }
-//        if (locacao.getValorDiaria() <= 0) {
-//            errors.put("valorDiariaError", "Valor da diária deve ser maior que zero");
-//        }
-//        if (locacao.getPercentualComissao() < 0) {
-//            errors.put("percentualComissaoError", "Percentual de comissão deve ser maior ou igual a zero");
-//        }
-//        if (locacao.getValorTotalPago() <= 0) {
-//            errors.put("valorTotalPagoError", "Valor total pago deve ser maior que zero");
-//        }
-//        if (locacao.getDataPagamento() == null) {
-//            errors.put("dataPagamentoError", "Data de pagamento não pode ser vazia");
-//        }
-//    }
-//
-//    private void loadFormEditLocacao(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        final var renderer = new TemplateRenderer<Locacao>("locacao/form", response);
-//        final var id = NumberUtils.toInt(request.getParameter("id"));
-//
-//        JDBIConnection.instance().withExtension(LocacaoRepository.class, dao -> {
-//            renderer.render(dao.findById(id));
-//            return null;
-//        });
-//    }
-//
-//    private void deleteLocacao(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        final var id = NumberUtils.toInt(request.getParameter("id"));
-//
-//        JDBIConnection.instance().withExtension(LocacaoRepository.class, dao -> {
-//            dao.delete(id);
-//            loadFullPage(request, response);
-//            return null;
-//        });
-//    }
-//}
+        if (veiculoPlaca.isBlank()) {
+            errors.put("veiculoPlacaError", "Não pode ser vazio");
+        }
+        if (dataInicio == 0 ) {
+            errors.put("dataInicioError", "Não pode ser vazio");
+        }
+        if (dataEntrega == 0 ) {
+            errors.put("dataEntregaError", "Não pode ser vazio");
+        }
+        if (valorDiaria == 0 ) {
+            errors.put("valorDiariaError", "Não pode ser vazio");
+        }
+        if (percentualComissao == 0 ) {
+            errors.put("percentualComissaoError", "Não pode ser vazio");
+        }
+        if (valorTotalPago == 0 ) {
+            errors.put("valorTotalPagoError", "Não pode ser vazio");
+        }
+        if (dataPagamento == 0 ) {
+            errors.put("dataPagamentoError", "Não pode ser vazio");
+        }
+
+        System.out.println("errors >:"+errors);
+
+        JDBIConnection.instance().withExtension(LocacaoRepository.class, dao -> {
+            // Verificar se ocorreram erros no formulário
+            if (errors.isEmpty()) {
+                if (dao.exists(id)) {
+                    System.out.println("Passou 2");
+                    dao.update(locacao);
+                } else {
+                    System.out.println("insert 2");
+                    dao.insert(locacao);
+                }
+            }
+
+            final var now = LocalDateTime.now();
+            final var count = dao.count();
+            final var locacoes = dao.selectPage(page, PAGE_SIZE);
+
+            if (errors.isEmpty()) {
+                renderer.render(new LocacaoViewData(locacoes, now, page, PAGE_SIZE, count));
+            } else {
+                renderer.render(new LocacaoViewData(errors, locacao, locacoes, now, page, PAGE_SIZE, count));
+            }
+
+            return null;
+        });
+    }
+
+    private void loadFormEditLocacao(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<Locacao>("locacao/form", response);
+        final var id = NumberUtils.toInt(request.getParameter("id"), 0);
+        System.out.println("entrou form");
+        JDBIConnection.instance().withExtension(LocacaoRepository.class, dao -> {
+            renderer.render(dao.findById(id));
+            return null;
+        });
+    }
+
+    /*
+     * Trata a requisição de exclusão de foos
+     */
+    private void deleteLocacao(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var id = NumberUtils.toInt(request.getParameter("id"), 0);
+
+        JDBIConnection.instance().withExtension(LocacaoRepository.class, dao -> {
+            dao.delete(id);
+            loadFullPage(request, response);
+            return null;
+        });
+    }
+}

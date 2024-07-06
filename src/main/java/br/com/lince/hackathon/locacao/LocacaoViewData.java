@@ -1,8 +1,6 @@
 package br.com.lince.hackathon.locacao;
 
-import br.com.lince.hackathon.Cliente.Cliente;
-import br.com.lince.hackathon.gerente.Gerente;
-//import br.com.lince.hackathon.Veiculo.Veiculo;
+import br.com.lince.hackathon.locacao.Locacao;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -10,62 +8,88 @@ import java.util.List;
 
 public class LocacaoViewData {
     public LocacaoViewData(
-            List<Cliente> clientes,
-            List<Gerente> gerentes,
-            //List<Veiculo> veiculos,
+            List<Locacao> locacoes,
             LocalDateTime dateTime,
             int page,
             int pageSize,
             int count
     ) {
-        this.clientes = clientes;
-        this.gerentes = gerentes;
-        //this.veiculos = veiculos;
+        this.locacoes = locacoes;
         this.dateTime = dateTime;
         this.page = page;
         this.pageSize = pageSize;
         this.count = count;
         this.errors = null;
-        //this.locacao = null;
+        this.locacao = null;
     }
+
 
     public LocacaoViewData(
             HashMap<String, String> errors,
-            Cliente cliente,
-            Gerente gerente,
-            //Veiculo veiculo,
-            List<Cliente> clientes,
-            List<Gerente> gerentes,
-            //List<Veiculo> veiculos,
+            Locacao locacao, List<Locacao> locacoes,
             LocalDateTime dateTime,
             int page,
             int pageSize,
             int count
     ) {
-        this.errors = errors;
-        //this.cliente = cliente;
-        //this.gerente = gerente;
-        //this.veiculo = veiculo;
-        this.clientes = clientes;
-        this.gerentes = gerentes;
-        //this.veiculos = veiculos;
+        this.locacoes = locacoes;
         this.dateTime = dateTime;
         this.page = page;
         this.pageSize = pageSize;
         this.count = count;
-        //this.locacao = locacao;
+        this.errors = errors;
+        this.locacao = locacao;
     }
 
-    //private final Cliente cliente;
-    //private final Gerente gerente;
-    //private final Veiculo veiculo;
-    private final List<Cliente> clientes;
-    private final List<Gerente> gerentes;
-    //private final List<Veiculo> veiculos;
+    private final Locacao locacao;
+    private final List<Locacao> locacoes;
     private final LocalDateTime dateTime;
     private final int page;
     private final int pageSize;
     private final int count;
     private final HashMap<String, String> errors;
-    //private final Locacao locacao;
+
+    public HashMap<String, String> getErrors() {
+        return errors;
+    }
+
+    public Locacao getLocacao() {
+        return locacao;
+    }
+
+    public List<Locacao> getLocacoes() {
+        return locacoes;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public int getIndex() {
+        return page;
+    }
+
+    public int getPage() {
+        return page + 1;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public int getTotalPages() {
+        return Double.valueOf(Math.ceil(((Integer.valueOf(count).doubleValue()) / pageSize))).intValue();
+    }
+
+    public boolean getHasPrevious() {
+        return page > 0;
+    }
+
+    public int getPrevious() {
+        return page - 1;
+    }
+
+    public int getNext() {
+        return getPage() < getTotalPages() ? page + 1 : 0;
+    }
 }

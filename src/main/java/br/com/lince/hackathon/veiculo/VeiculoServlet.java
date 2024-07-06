@@ -90,18 +90,21 @@ public class VeiculoServlet extends HttpServlet {
         final var renderer = new TemplateRenderer<VeiculoViewData>("veiculo/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
 
-        final var marca = NumberUtils.toInt(request.getParameter("marca"), 0);
+        System.out.println(request.getParameter("modelo"));
+        System.out.println(request.getParameter("placa"));
+        System.out.println(request.getParameter("descricaoPromocional"));
+
         final var modelo = request.getParameter("modelo");
+        final var marca = NumberUtils.toInt(request.getParameter("marca"), 0);
         final var placa = request.getParameter("placa");
         final var cor = NumberUtils.toInt(request.getParameter("cor"), 0);
         final var anoDeFabricacao = NumberUtils.toInt(request.getParameter("anoDeFabricacao"), 0);
-        final var custoDeDiaria = NumberUtils.toDouble(request.getParameter("percentualComissao").replaceAll(",","."), 0);
+        final var custoDeDiaria = NumberUtils.toDouble(request.getParameter("custoDeDiaria").replaceAll(",","."), 0);
         final var descricaoPromocional = request.getParameter("descricaoPromocional");
         final var tipoDeCombustivel = NumberUtils.toInt(request.getParameter("tipoDeCombustivel"), 0);
 
         final var veiculo = new Veiculo(marca, modelo, placa, cor, anoDeFabricacao, custoDeDiaria, descricaoPromocional, tipoDeCombustivel);
         final var errors = new HashMap<String, String>();
-
 
         if (modelo.isBlank()) {
             errors.put("modeloError", "Não pode ser vazio");
@@ -129,7 +132,6 @@ public class VeiculoServlet extends HttpServlet {
         }
 
         JDBIConnection.instance().withExtension(VeiculoRepository.class, dao -> {
-            // Verificar se ocorreram erros no formulário
             if (errors.isEmpty()) {
                 if (dao.exists(placa)) {
                     dao.update(veiculo);
