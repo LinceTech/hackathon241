@@ -25,7 +25,7 @@
                      hx-target="#gerenteItemsTable"
                      hx-select="#gerenteItemsTable"
                      hx-swap="innerHTML"
-                     hx-get="gerente?page={{previous}}">
+                     hx-get="gerente?page={{previous}}&pageSize={{pageSize}}">
             {{/if}}
 
             <span style="height: 18px; vertical-align: center;">
@@ -39,7 +39,7 @@
                      hx-target="#gerenteItemsTable"
                      hx-select="#gerenteItemsTable"
                      hx-swap="innerHTML"
-                     hx-get="gerente?page={{next}}">
+                     hx-get="gerente?page={{next}}&pageSize={{pageSize}}">
             {{/if}}
         </div>
 

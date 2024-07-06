@@ -1,3 +1,11 @@
+$(function(){
+    if ($('#gerenteForm').length) {
+        $('#nr_cpf, .formataCpf').mask('000.000.000-00')
+        $('#nr_telefone, .formataTel').mask('(00) 00000-0000')
+        $('#pc_comissao, .formataCom').mask('00.00')
+    }
+})
+
 function buscarCEP() {
     var cep = document.getElementById('cepInput').value.trim();
     var nm_cidade = document.getElementById('nm_cidade');
@@ -28,5 +36,4 @@ function buscarCEP() {
             // Trata erros de requisição
             console.error('Erro na requisição:', error);
         });
-
 }

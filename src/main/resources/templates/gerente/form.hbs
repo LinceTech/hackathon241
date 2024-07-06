@@ -17,7 +17,7 @@
         <label>
             <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">CPF:</span>
             <span>
-                <input type="text" required name="nr_cpf" maxlength="11" size="11" value="{{nr_cpf}}">
+                <input type="text" required id="nr_cpf" name="nr_cpf" maxlength="11" size="11" value="{{nr_cpf}}">
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
@@ -59,7 +59,7 @@
         <label>
             <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">Telefone:</span>
             <span>
-                <input type="text" required name="nr_telefone" maxlength="11" size="11" value="{{nr_telefone}}">
+                <input type="text" required id="nr_telefone" name="nr_telefone" maxlength="11" size="11" value="{{nr_telefone}}">
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
@@ -119,7 +119,7 @@
         <label>
             <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">% comissão:</span>
             <span>
-                <input type="text" required name="pc_comissao" maxlength="8" size="8" value="{{pc_comissao}}">
+                <input type="text" required id="pc_comissao" name="pc_comissao" maxlength="5" size="5" value="{{pc_comissao}}">
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
@@ -131,8 +131,6 @@
             <br>
         </label>
     </div>
-
-
 
     <br>
     <button hx-target="#formAndTable"
