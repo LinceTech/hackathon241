@@ -27,7 +27,7 @@ public interface ClienteRepository {
     @UseFreemarkerEngine
     @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM cliente " +
               "WHERE cpf = :cpf), 1, 0)")
-    boolean exists(@Bind("cpf") int cpf);
+    boolean exists(@Bind("cpf") long cpf);
 
     @UseFreemarkerEngine
     @SqlUpdate("INSERT INTO cliente(nome, cpf, dataNascimento, telefone, email, cep, cidade, estado, bairro, rua, numero) " +
@@ -44,10 +44,7 @@ public interface ClienteRepository {
                     ":cliente.numero)")
     void insert(@BindBean("cliente") Cliente cliente);
 
-    /*
-        Atualiza o cliente
-     */
-    @UseFreemarkerEngine
+        @UseFreemarkerEngine
 //    @SqlUpdate("UPDATE foo SET bas = :foo.bas, boo = :foo.boo WHERE bar = :foo.bar")
     @SqlUpdate("UPDATE cliente SET nome = :cliente.nome, " +
                                   "cpf = :cliente.cpf, " +

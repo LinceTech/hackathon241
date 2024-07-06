@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class LocacaoRepository {
     private List<Locacao> locacoes = new ArrayList<>();
 
-    // Methods to add, update, delete, and retrieve locacoes
     public void addLocacao(Locacao locacao) {
         locacoes.add(locacao);
     }

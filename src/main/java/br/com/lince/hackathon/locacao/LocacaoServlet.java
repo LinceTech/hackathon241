@@ -1,13 +1,21 @@
-package br.com.lince.hackathon.locacao;
-
+//package br.com.lince.hackathon.locacao;
+//
 //import br.com.lince.hackathon.Veiculo.Veiculo;
 //import br.com.lince.hackathon.Veiculo.VeiculoRepository;
-
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-
-//@WebServlet("/locacao/*")
-public class LocacaoServlet extends HttpServlet {
+//import br.com.lince.hackathon.standard.JDBIConnection;
+//import br.com.lince.hackathon.standard.TemplateRenderer;
+//import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
+//
+//import javax.servlet.annotation.WebServlet;
+//import javax.servlet.http.HttpServlet;
+//import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletResponse;
+//import java.io.IOException;
+//import java.time.LocalDate;
+//import java.time.LocalDateTime;
+//
+////@WebServlet("/locacao/*")
+//public class LocacaoServlet extends HttpServlet {
 //    private static final int PAGE_SIZE = 10;
 //
 //    private static final Logger logger = Logger.getLogger(LocacaoServlet.class.getName());
@@ -57,7 +65,7 @@ public class LocacaoServlet extends HttpServlet {
 //            final var now = LocalDateTime.now();
 //            final var count = dao.count();
 //            final var locacoes = dao.selectPage(page, PAGE_SIZE);
-
+//
 //            renderer.render(new LocacaoViewData(locacoes, now, page, PAGE_SIZE, count));
 //
 //            return null;
@@ -174,4 +182,4 @@ public class LocacaoServlet extends HttpServlet {
 //            return null;
 //        });
 //    }
-}
+//}

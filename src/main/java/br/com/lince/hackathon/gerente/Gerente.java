@@ -5,26 +5,10 @@ import br.com.lince.hackathon.foo.Foo;
 import java.util.Objects;
 
 public class Gerente {
-    /**
-     * Construtor vazio, necessário para uso com JDBI mapper
-     */
     public Gerente() {
     }
 
-    /**
-     * Construir uma instância de Foo.
-     *
-     * @param nome valor para nome
-     * @param cpf valor para cpf
-     * @param telefone valor para telefone
-     * @param email valor para email
-     * @param cidade valor para cidade
-     * @param estado valor para estado
-     * @param percentualComissao valor para percentualComissao
-     * @param dataContratacao valor para dataContratacao
-     */
-
-    public Gerente(String nome, int cpf, int telefone, String email, String cidade, String estado, double percentualComissao, int dataContratacao) {
+    public Gerente(String nome, long cpf, long telefone, String email, String cidade, String estado, double percentualComissao, int dataContratacao, String dataContratacaoAlfa, String cpfAlfa, String telefoneAlfa) {
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
@@ -33,26 +17,47 @@ public class Gerente {
         this.estado = estado;
         this.percentualComissao = percentualComissao;
         this.dataContratacao = dataContratacao;
+        this.dataContratacaoAlfa = dataContratacaoAlfa;
+        this.telefoneAlfa = telefoneAlfa;
     }
 
     private String nome;
-    private int cpf;
-    private int telefone;
+    private long cpf;
+    private String cpfAlfa;
+    private long telefone;
+    private String telefoneAlfa;
     private String email;
     private String cidade;
     private String estado;
     private double percentualComissao;
     private int dataContratacao;
+    private String dataContratacaoAlfa;
+
+    public String getDataContratacaoAlfa() {
+        return dataContratacaoAlfa;
+    }
+
+    public String getCpfAlfa() {
+        return cpfAlfa;
+    }
+
+    public void setCpfAlfa(String cpfAlfa) {
+        this.cpfAlfa = cpfAlfa;
+    }
+
+    public void setDataContratacaoAlfa(String dataContratacaoAlfa) {
+        this.dataContratacaoAlfa = dataContratacaoAlfa;
+    }
 
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(long cpf) {
         this.cpf = cpf;
     }
 
-    public void setTelefone(int telefone) {
+    public void setTelefone(long telefone) {
         this.telefone = telefone;
     }
 
@@ -80,7 +85,7 @@ public class Gerente {
         return nome;
     }
 
-    public int getCpf() {
+    public long getCpf() {
         return cpf;
     }
 
@@ -88,7 +93,7 @@ public class Gerente {
         return email;
     }
 
-    public int getTelefone() {
+    public long getTelefone() {
         return telefone;
     }
 
@@ -106,6 +111,14 @@ public class Gerente {
 
     public int getDataContratacao() {
         return dataContratacao;
+    }
+
+    public String getTelefoneAlfa() {
+        return telefoneAlfa;
+    }
+
+    public void setTelefoneAlfa(String telefoneAlfa) {
+        this.telefoneAlfa = telefoneAlfa;
     }
 
     @Override
@@ -140,4 +153,5 @@ public class Gerente {
                 ", dataContratacao=" + dataContratacao +
                 '}';
     }
+
 }

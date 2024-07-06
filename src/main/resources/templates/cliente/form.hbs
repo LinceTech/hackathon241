@@ -1,7 +1,7 @@
 <form id="clienteForm">
     <div>
         <label>
-            <span style="width: 50px; display: inline-block;">Nome:</span>
+            <span style="width: 150px; display: inline-block;">Nome:</span>
             <span>
                 <input type="text" name="nome" maxlength="60" size="60" value="{{nome}}">
                 {{#with errors}}
@@ -18,7 +18,7 @@
 
     <div style="padding-top: 8px;">
         <label>
-            <span style="width: 50px; display: inline-block; vertical-align: top;">CPF:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;">CPF:</span>
             <span>
                 <input 
                           id="id"
@@ -40,14 +40,9 @@
     <!-- DATA NASCIMENTO-->
     <div style="padding-top: 8px;">
         <label>
-            <span style="width: 200px; display: inline-block; vertical-align: top;">Data de nascimento:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;">Data de nascimento:</span>
             <span>
-                <input 
-                          id="id"
-                          type="date"
-                          name="dataNascimento"
-
-                          maxlength="10" value={{dataNascimento}}>
+                <input  type="text" name="dataNascimento" class="data" maxlength="10" size="10" value="{{dataNascimentoAlfa}}">
                 {{#with errors}}
                     {{#if dataNascimentoError}}
                         <span style="color: red; font-weight: bold;">
@@ -63,7 +58,7 @@
     <!-- TELEFONE -->
     <div style="padding-top: 8px;">
         <label>
-            <span style="width: 50px; display: inline-block; vertical-align: top;">Telefone:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;">Telefone:</span>
             <span>
                 <input 
                           id="id"
@@ -85,28 +80,24 @@
     <!-- EMAIL -->
     <div style="padding-top: 8px;">
         <label>
-            <span style="width: 50px; display: inline-block; vertical-align: top;">Email:</span>
-            <span>
-                <input 
-                          id="id"
-                          type="email"
-                          name="email"
-                          maxlength="10" value={{email}}>
-                {{#with errors}}
-                    {{#if emailError}}
-                        <span style="color: red; font-weight: bold;">
-                            Email: {{emailError}}
-                        </span>
-                    {{/if}}
-                {{/with}}
-            </span>
+                <span style="width: 150px; display: inline-block;">E-mail:</span>
+                    <span>
+                        <input type="text" name="email" maxlength="30" size="30" value="{{email}}">
+                        {{#with errors}}
+                            {{#if emailError}}
+                                <span class="error">
+                                    Email: {{emailError}}
+                                </span>
+                            {{/if}}
+                        {{/with}}
+                    </span>
             <br>
         </label>
 
     <!-- CEP -->
     </div>    <div style="padding-top: 8px;">
         <label>
-            <span style="width: 50px; display: inline-block; vertical-align: top;">CEP:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;">CEP:</span>
             <span>
                 <input 
                           id="id"
@@ -129,7 +120,7 @@
     <!-- CIDADE -->
     <div style="padding-top: 8px;">
         <label>
-            <span style="width: 50px; display: inline-block; vertical-align: top;">Cidade:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;">Cidade:</span>
             <span>
                 <input 
                           id="id"
@@ -151,7 +142,7 @@
     <!-- ESTADO -->
     <div style="padding-top: 8px;">
         <label>
-            <span style="width: 50px; display: inline-block; vertical-align: top;">Estado:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;">Estado:</span>
             <span>
                 <input 
                           id="id"
@@ -173,7 +164,7 @@
     <!-- BAIRRO -->
     <div style="padding-top: 8px;">
         <label>
-            <span style="width: 50px; display: inline-block; vertical-align: top;">Bairro:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;">Bairro:</span>
             <span>
                 <input 
                           id="id"
@@ -195,7 +186,7 @@
     <!-- RUA -->
     <div style="padding-top: 8px;">
         <label>
-            <span style="width: 50px; display: inline-block; vertical-align: top;">Rua:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;">Rua:</span>
             <span>
                 <input 
                           id="id"
@@ -217,7 +208,7 @@
     <!-- NUMERO DA CASA -->
     <div style="padding-top: 8px;">
         <label>
-            <span style="width: 50px; display: inline-block; vertical-align: top;">Número:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;">Número:</span>
             <span>
                 <input 
                           id="id"

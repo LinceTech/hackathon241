@@ -57,9 +57,6 @@ public class ClienteServlet extends HttpServlet {
         }
     }
 
-    /*
-     * Trata a requisição para retorna a página de clientes carregada com todos os dados
-     */
     private void loadFullPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<ClienteViewData>("cliente/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
@@ -80,7 +77,7 @@ public class ClienteServlet extends HttpServlet {
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
 
         final var nome = request.getParameter("nome");
-        final var cpf = NumberUtils.toInt(request.getParameter("cpf"));
+        final var cpf = request.getParameter("cpf").replace(".", "").replace("-","");
         final var dataNascimento = Funcoes.inverteData(request.getParameter("dataNascimento"));
         final var telefone = NumberUtils.toInt(request.getParameter("telefone").replaceAll("-", "").replaceAll(" ", ""));
         final var email = request.getParameter("email");
@@ -90,8 +87,9 @@ public class ClienteServlet extends HttpServlet {
         final var bairro = request.getParameter("bairro");
         final var rua = request.getParameter("rua");
         final var numero = NumberUtils.toInt(request.getParameter("numero"));
+        final var cpfNumerico = NumberUtils.toLong(cpf.replace(".","").replace("-",""));
 
-        final var cliente = new Cliente(nome, cpf, dataNascimento, telefone, email, cep, cidade, estado, bairro, rua, numero);
+        final var cliente = new Cliente(nome, cpfNumerico, dataNascimento, telefone, email, cep, cidade, estado, bairro, rua, numero);
         final var errors = new HashMap<String, String>();
 
         if (nome.isBlank()) {
@@ -100,8 +98,10 @@ public class ClienteServlet extends HttpServlet {
             errors.put("nomeError", "Nome não pode ser maior que 60 caracteres");
         }
 
-        if (cpf == 0) {
-            errors.put("cpfError", "CPF não pode ser vazio");
+        if (cpf.isEmpty()) {
+            errors.put("cpfError", "Não pode ser vazio");
+        }else if(Funcoes.validaCpf(cpf)){
+            errors.put("cpfError", "Inválido");
         }
 
         if (dataNascimento == 0) {
@@ -114,6 +114,8 @@ public class ClienteServlet extends HttpServlet {
 
         if (email.isBlank()) {
             errors.put("emailError", "E-mail não pode ser vazio");
+        }else if(Funcoes.validaEmail(email)){
+            errors.put("emailError", "E-mail inválido");
         }
 
         if (cep == 0) {
@@ -143,10 +145,9 @@ public class ClienteServlet extends HttpServlet {
         JDBIConnection.instance().withExtension(ClienteRepository.class, dao -> {
             // Verificar se ocorreram erros no formulário
             if (errors.isEmpty()) {
-                if (dao.exists(cpf)) {
+                if (dao.exists(cpfNumerico)) {
                     dao.update(cliente);
                 } else {
-                    System.out.println(cliente);
                     dao.insert(cliente);
                 }
             }

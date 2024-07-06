@@ -1,5 +1,6 @@
 package br.com.lince.hackathon.gerente;
 
+import br.com.lince.hackathon.Utils.Funcoes;
 import br.com.lince.hackathon.gerente.Gerente;
 import br.com.lince.hackathon.gerente.GerenteRepository;
 import br.com.lince.hackathon.gerente.GerenteServlet;
@@ -12,6 +13,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.DefaultFormatter;
+import javax.swing.text.MaskFormatter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -19,14 +22,8 @@ import java.util.logging.Logger;
 
 @WebServlet("/gerente/*")
 public class GerenteServlet  extends HttpServlet {
-    /*
-     * O número de itens na paginação desta tela
-     */
     private static final int PAGE_SIZE = 15;
 
-    /*
-     * Logger padrão do servlet
-     */
     private static final Logger logger = Logger.getLogger(GerenteServlet.class.getName());
 
     @Override
@@ -65,9 +62,6 @@ public class GerenteServlet  extends HttpServlet {
         }
     }
 
-    /*
-     * Trata a requisição para retorna a página de foos carregada com todos os dados
-     */
     private void loadFullPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<GerenteViewData>("gerente/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
@@ -83,41 +77,46 @@ public class GerenteServlet  extends HttpServlet {
         });
     }
 
-    /*
-     * Trata a requisição para inserir ou atualizar um foo, e retorna página atualizada
-     */
     private void insertOrUpdateGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<GerenteViewData>("gerente/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
 
-
         final var nome = request.getParameter("nome");
-        final var cpf = NumberUtils.toInt(request.getParameter("cpf"), 0);
-        final var telefone = NumberUtils.toInt(request.getParameter("telefone"), 0);
+        final var cpf = request.getParameter("cpf").replace(".", "").replace("-","");
+        final var telefone = Funcoes.formataCelular(request.getParameter("telefone"));
         final var email = request.getParameter("email");
         final var cidade = request.getParameter("cidade");
         final var estado = request.getParameter("estado");
         final var percentualComissao = NumberUtils.toDouble(request.getParameter("percentualComissao").replaceAll(",","."), 0);
-        final var dataContratacao = NumberUtils.toInt(request.getParameter("dataContratacao"), 0);
+        System.out.println(request.getParameter("dataContratacao"));
+        final var dataContratacao = Funcoes.inverteData(request.getParameter("dataContratacao"));
+        final var cpfNumerico = NumberUtils.toLong(cpf.replace(".","").replace("-",""));
 
-        System.out.println("cpf: "+ cpf);
+        System.out.println(dataContratacao + "DATAAAAAA");
 
-        final var gerente = new Gerente(nome, cpf, telefone, email, cidade, estado, percentualComissao, dataContratacao);
+        final var gerente = new Gerente(nome, cpfNumerico, telefone, email, cidade, estado, percentualComissao, dataContratacao, "","","");
         final var errors = new HashMap<String, String>();
 
 
         if (nome.isBlank()) {
             errors.put("nomeError", "Não pode ser vazio");
         }
-        if (cpf == 0 ) {
+
+        if (cpf.isBlank()) {
             errors.put("cpfError", "Não pode ser vazio");
+        }else if(Funcoes.validaCpf(cpf)){
+            errors.put("cpfError", "Inválido");
         }
+
         if (telefone == 0) {
             errors.put("telefoneError", "Não pode ser vazio");
         }
         if (email.isBlank()) {
             errors.put("emailError", "Não pode ser vazio");
+        }else if(Funcoes.validaEmail(email)){
+            errors.put("emailError", "Inválido");
         }
+
         if (cidade.isBlank()) {
             errors.put("cidadeError", "Não pode ser vazio");
         }
@@ -126,6 +125,8 @@ public class GerenteServlet  extends HttpServlet {
         }
         if (percentualComissao == 0) {
             errors.put("percentualComissaoError", "Não pode ser vazio");
+        }else if(percentualComissao > 25){
+            errors.put("percentualComissaoError", "Nao pode ser maior do que 25%!");
         }
         if (dataContratacao == 0) {
             errors.put("dataContratacaoError", "Não pode ser vazio");
@@ -134,7 +135,7 @@ public class GerenteServlet  extends HttpServlet {
         JDBIConnection.instance().withExtension(GerenteRepository.class, dao -> {
             // Verificar se ocorreram erros no formulário
             if (errors.isEmpty()) {
-                if (dao.exists(cpf)) {
+                if (dao.exists(cpfNumerico)) {
                     dao.update(gerente);
                 } else {
                     dao.insert(gerente);
@@ -155,22 +156,20 @@ public class GerenteServlet  extends HttpServlet {
         });
     }
 
-    /*
-     * Trata a requisição para alimentar o formulário de cadastro ou edição de foos
-     */
     private void loadFormEditGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<Gerente>("gerente/form", response);
-        final var cpf = NumberUtils.toInt(request.getParameter("cpf"), 0);
+        final var cpf = NumberUtils.toLong(request.getParameter("cpf"), 0);
 
         JDBIConnection.instance().withExtension(GerenteRepository.class, dao -> {
-            renderer.render(dao.findByCpf(cpf));
+            Gerente g = dao.findByCpf(cpf);
+            g.setDataContratacaoAlfa(Funcoes.formataData(g.getDataContratacao()));
+            g.setCpfAlfa(Funcoes.formatarCPF(g.getCpf()));
+            g.setTelefoneAlfa(Funcoes.formatarTelefone(g.getTelefone()));
+            renderer.render(g);
             return null;
         });
     }
 
-    /*
-     * Trata a requisição de exclusão de foos
-     */
     private void deleteGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var cpf = Integer.parseInt(request.getParameter("cpf"));
 

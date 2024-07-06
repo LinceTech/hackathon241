@@ -7,15 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GerenteViewData {
-    /**
-     * Construtor utilizado para renderizar a página com a lista de gerentes.
-     *
-     * @param gerentes     lista de foos
-     * @param dateTime data e hora
-     * @param page     número da pagina
-     * @param pageSize número de itens da página atual
-     * @param count    número total de foos
-     */
     public GerenteViewData(
             List<Gerente> gerentes,
             LocalDateTime dateTime,
@@ -32,17 +23,6 @@ public class GerenteViewData {
         this.gerente = null;
     }
 
-    /**
-     * Construtor utilizado para renderizar a página com a lista de foos.
-     *
-     * @param errors   mapa contendo os errors que ocorreram no formulário
-     * @param gerente      item a ser alimentado no formulário de cadastro/edição
-     * @param gerentes     lista de foos
-     * @param dateTime data e hora
-     * @param page     número da pagina
-     * @param pageSize número de itens da página atual
-     * @param count    número total de foos
-     */
     public GerenteViewData(
             HashMap<String, String> errors,
             Gerente gerente, List<Gerente> gerentes,

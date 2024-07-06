@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Cliente {
 
     private String nome;
-    private int cpf;
+    private long cpf;
     private int dataNascimento;
     private int telefone;
     private String email;
@@ -21,7 +21,7 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(String nome, int cpf, int dataNascimento, int telefone, String email, int cep, String cidade, String estado, String bairro, String rua, int numero) {
+    public Cliente(String nome, long cpf, int dataNascimento, int telefone, String email, int cep, String cidade, String estado, String bairro, String rua, int numero) {
         this.nome = nome;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
@@ -43,11 +43,11 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public int getCpf() {
+    public long getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(long cpf) {
         this.cpf = cpf;
     }
 
