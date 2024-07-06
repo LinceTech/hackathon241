@@ -37,9 +37,9 @@
 
     <div>
         <label>
-            <span style="width: 120px; display: inline-block;">Data Nascimento:</span>
+            <span style="width: 120px; display: inline-block;">Data Nascimento: </span>
             <span>
-                <input type="date" name="dtNascimento" value="{{dtNascimento}}">
+                <input type="text" id="dtNascimento" name="dtNascimento" value="{{dtNascimento}}">
                 {{#with errors}}
                     {{#if dtNascimentoError}}
                         <span class="error">

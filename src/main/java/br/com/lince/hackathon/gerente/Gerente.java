@@ -110,18 +110,23 @@ public class Gerente {
     public int getDtContrata() {
         return dtContrata;
     }
+
     public void setDtContrata(int dtContrata) {
         this.dtContrata = dtContrata;
     }
+
     public int getDtNascimento() {
         return dtNascimento;
     }
+
     public void setDtNascimento(int dtNascimento) {
         this.dtNascimento = dtNascimento;
     }
+
     public int getCep() {
         return cep;
     }
+
     public void setCep(int cep) {
         this.cep = cep;
     }
