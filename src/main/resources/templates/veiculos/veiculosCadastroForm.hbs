@@ -1,0 +1,103 @@
+<div>
+    <label>Marca
+        <input type="text" name="marca" value="{{veiculos.marca}}">
+    </label>
+    {{#with errors}}
+        {{#if marca}}
+            <span style="color: red; font-weight: bold;">
+                    Marca: {{marca}}
+                </span>
+        {{/if}}
+    {{/with}}
+</div>
+<div>
+    <label>Modelo
+        <input type="text" name="modelo" value="{{veiculos.modelo}}">
+    </label>
+    {{#with errors}}
+        {{#if modelo}}
+            <span style="color: red; font-weight: bold;">
+                    Modelo: {{modelo}}
+                </span>
+        {{/if}}
+    {{/with}}
+</div>
+<div>
+    <label>Placa
+        <input type="text" name="placa" value="{{veiculos.placa}}">
+    </label>
+    {{#with errors}}
+        {{#if placa}}
+            <span style="color: red; font-weight: bold;">
+                    Placa: {{placa}}
+                </span>
+        {{/if}}
+    {{/with}}
+</div>
+<div>
+    <label>Cor
+        <input type="text" name="cor" value="{{veiculos.cor}}">
+    </label>
+    {{#with errors}}
+        {{#if cor}}
+            <span style="color: red; font-weight: bold;">
+                    Cor: {{cor}}
+                </span>
+        {{/if}}
+    {{/with}}
+</div>
+<div>
+    <label>Ano de Fabricação
+        <input type="number" name="anoDeFabricacao" value="{{veiculos.anoDeFabricacao}}">
+    </label>
+    {{#with errors}}
+        {{#if anoDeFabricacao}}
+            <span style="color: red; font-weight: bold;">
+                    Ano de Fabricação: {{anoDeFabricacao}}
+                </span>
+        {{/if}}
+    {{/with}}
+</div>
+<div>
+    <label>Custo de Diária
+        <input type="number" step=".01" name="custoDeDiaria" value="{{veiculos.custoDeDiaria}}">
+    </label>
+    {{#with errors}}
+        {{#if custoDeDiaria}}
+            <span style="color: red; font-weight: bold;">
+                    Custo de Diária: {{custoDeDiaria}}
+                </span>
+        {{/if}}
+    {{/with}}
+</div>
+<div>
+    <label>Descrição Promocional<br>
+        <textarea name="descricaoPromocional" rows="5">{{veiculos.descricaoPromocional}}</textarea>
+    </label>
+    {{#with errors}}
+        {{#if descricaoPromocional}}
+            <span style="color: red; font-weight: bold;">
+                    Descrição Promocional: {{descricaoPromocional}}
+                </span>
+        {{/if}}
+    {{/with}}
+</div>
+<div>
+    <label>Tipo de Combustível
+        <select name="tipoDeCombustivel">
+            <option {{#if veiculos.semCombustivel}}selected{{/if}} value="0"></option>
+            <option {{#if veiculos.fgAlcool}}selected{{/if}} value="1">alcool</option>
+            <option {{#if veiculos.fgGasolina}}selected{{/if}} value="2">gasolina</option>
+            <option {{#if veiculos.fgGNV}}selected{{/if}} value="3">GNV</option>
+            <option {{#if veiculos.fgEletrico}}selected{{/if}} value="4">eletrico</option>
+        </select>
+    </label>
+    {{#with errors}}
+        {{#if tipoDeCombustivel}}
+            <span style="color: red; font-weight: bold;">
+                    Tipo de Combustível: {{tipoDeCombustivel}}
+                </span>
+        {{/if}}
+    {{/with}}
+</div>
+<button>Cadastrar</button>
