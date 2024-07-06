@@ -1,5 +1,6 @@
 package br.com.lince.hackathon.locacoes;
 
+import br.com.lince.hackathon.gerentes.Gerentes;
 import org.jdbi.v3.freemarker.UseFreemarkerEngine;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Define;
