@@ -13,11 +13,13 @@ public class VeiculoFiltro {
     boolean fgGNV;
     boolean fgEletrico;
 
-    public VeiculoFiltro(String marca, String modelo, String anoDeFabricacao, String cor) {
+    public VeiculoFiltro(String marca, String modelo, String anoDeFabricacao, String cor, String placa, String tipoDeCombustivel) {
         this.marca = marca;
         this.modelo = modelo;
         this.anoDeFabricacao = anoDeFabricacao;
         this.cor = cor;
+        this.placa = placa;
+        this.tipoDeCombustivel = tipoDeCombustivel;
     }
 
     public String getMarca() {
@@ -53,7 +55,7 @@ public class VeiculoFiltro {
     }
 
     public String getPlaca() {
-        return placa;
+        return placa != null ? placa : "";
     }
 
     public void setPlaca(String placa) {
@@ -61,7 +63,7 @@ public class VeiculoFiltro {
     }
 
     public String getTipoDeCombustivel() {
-        return tipoDeCombustivel;
+        return tipoDeCombustivel  != null ? tipoDeCombustivel : "";
     }
 
     public void setTipoDeCombustivel(String tipoDeCombustivel) {

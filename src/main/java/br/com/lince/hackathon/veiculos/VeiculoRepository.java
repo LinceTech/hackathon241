@@ -18,7 +18,7 @@ public interface VeiculoRepository {
 
     @RegisterBeanMapper(Veiculos.class)
     @UseFreemarkerEngine
-    @SqlUpdate("INSERT INTO veiculo(Marca, Modelo, Placa, Cor, AnoDeFabricacao, CustoDeDiaria, DescricaoPromocional, TipoDeCombustivel) VALUES (:veiculos.marca, :veiculos.modelo, :veiculos.placa, :veiculos.cor, :veiculos.anoDeFabricacao, :veiculos.custoDeDiaria, :veiculos.descricaoPromocional, :veiculos.tipoDeCombustivel)")
+    @SqlUpdate("INSERT INTO veiculo(Marca, Modelo, Placa, Cor, AnoDeFabricacao, CustoDeDiaria, DescricaoPromocional, TipoDeCombustivel) VALUES (:veiculos.marca, :veiculos.modelo, :veiculos.placa, :veiculos.cor, :veiculos.anoDeFabricacao, :veiculos.custoDeDiaria, :veiculos.descricaoPromocional, :veiculos.tipoDeCombustivelInt)")
     void insert(@BindBean("veiculos") Veiculos veiculos);
 
     @RegisterBeanMapper(Veiculos.class)
@@ -32,10 +32,10 @@ public interface VeiculoRepository {
 
     @RegisterBeanMapper(Veiculos.class)
     @UseFreemarkerEngine
-    @SqlQuery("SELECT id, Marca, Modelo, Placa, Cor, AnoDeFabricacao, CustoDeDiaria, DescricaoPromocional, TipoDeCombustivel FROM veiculo where veiculo.Marca like '%${veiculoFiltro.marca}%' and veiculo.Modelo like '%${veiculoFiltro.modelo}%' and veiculo.AnoDeFabricacao like '%${veiculoFiltro.anoDeFabricacao}%' and veiculo.cor like '%${veiculoFiltro.cor}%' ORDER BY ${campo}  ${sentido} OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
+    @SqlQuery("SELECT id, Marca, Modelo, Placa, Cor, AnoDeFabricacao, CustoDeDiaria, DescricaoPromocional, TipoDeCombustivel FROM veiculo where veiculo.Marca like '%${veiculoFiltro.marca}%' and veiculo.Modelo like '%${veiculoFiltro.modelo}%' and veiculo.AnoDeFabricacao like '%${veiculoFiltro.anoDeFabricacao}%' and veiculo.cor like '%${veiculoFiltro.cor}%' and veiculo.placa like '%${veiculoFiltro.placa}%' and veiculo.TipoDeCombustivel like '%${veiculoFiltro.tipoDeCombustivel}%' ORDER BY ${campo}  ${sentido} OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
     List<Veiculos> selectFilterPage(@Define("page") int page, @Define("count") int count, @Define("veiculoFiltro") VeiculoFiltro veiculoFiltro, @Define ("campo") String campo, @Define("sentido") String sentido);
 
     @UseFreemarkerEngine
-    @SqlQuery("SELECT COUNT(*) FROM veiculo where veiculo.Marca like '%${veiculoFiltro.marca}%' and veiculo.Modelo like '%${veiculoFiltro.modelo}%' and veiculo.AnoDeFabricacao like '%${veiculoFiltro.anoDeFabricacao}%' and veiculo.cor like '%${veiculoFiltro.cor}%'")
+    @SqlQuery("SELECT COUNT(*) FROM veiculo where veiculo.Marca like '%${veiculoFiltro.marca}%' and veiculo.Modelo like '%${veiculoFiltro.modelo}%' and veiculo.AnoDeFabricacao like '%${veiculoFiltro.anoDeFabricacao}%' and veiculo.cor like '%${veiculoFiltro.cor}%' and veiculo.placa like '%${veiculoFiltro.placa}%' and veiculo.TipoDeCombustivel like '%${veiculoFiltro.tipoDeCombustivel}%'")
     int countFilter(@Define("veiculoFiltro") VeiculoFiltro veiculoFiltro);
 }

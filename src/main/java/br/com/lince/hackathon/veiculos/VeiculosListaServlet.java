@@ -43,10 +43,12 @@ public class VeiculosListaServlet extends HttpServlet {
         final var modelo = request.getParameter("modelo");
         final var anoDeFabricacao = request.getParameter("anoDeFabricacao");
         final var cor = request.getParameter("cor");
-        final var veiculoFiltro = new VeiculoFiltro(marca, modelo, anoDeFabricacao, cor);
+        final var tipoDeCombustivel = request.getParameter("tipoDeCombustivel");
+        final var placa = request.getParameter("placa");
+        final var veiculoFiltro = new VeiculoFiltro(marca, modelo, anoDeFabricacao, cor, placa, tipoDeCombustivel);
         final var campo = request.getParameter("campo");
         final var sentido = request.getParameter("sentido");
-
+        setarFlags(veiculoFiltro);
 
         JDBIConnection.instance().withExtension(VeiculoRepository.class, dao -> {
             final var count = dao.countFilter(veiculoFiltro);
@@ -79,8 +81,10 @@ public class VeiculosListaServlet extends HttpServlet {
         final var modelo = request.getParameter("modelo");
         final var anoDeFabricacao = request.getParameter("anoDeFabricacao");
         final var cor = request.getParameter("cor");
-        final var veiculoFiltro = new VeiculoFiltro(marca, modelo, anoDeFabricacao, cor);
-        
+        final var tipoDeCombustivel = request.getParameter("tipoDeCombustivel");
+        final var placa = request.getParameter("placa");
+        final var veiculoFiltro = new VeiculoFiltro(marca, modelo, anoDeFabricacao, cor, placa, tipoDeCombustivel);
+        setarFlags(veiculoFiltro);
 
         JDBIConnection.instance().withExtension(VeiculoRepository.class, dao -> {
             final var count = dao.countFilter(veiculoFiltro);
@@ -109,17 +113,38 @@ public class VeiculosListaServlet extends HttpServlet {
         final var modelo = request.getParameter("modelo");
         final var anoDeFabricacao = request.getParameter("anoDeFabricacao");
         final var cor = request.getParameter("cor");
-        final var veiculoFiltro = new VeiculoFiltro(marca, modelo, anoDeFabricacao, cor);
-
-        System.out.println("LOAD");
+        final var tipoDeCombustivel = request.getParameter("tipoDeCombustivel");
+        final var placa = request.getParameter("placa");
+        final var veiculoFiltro = new VeiculoFiltro(marca, modelo, anoDeFabricacao, cor, placa, tipoDeCombustivel);
+        setarFlags(veiculoFiltro);
 
         JDBIConnection.instance().withExtension(VeiculoRepository.class, dao -> {
             final var count = dao.countFilter(veiculoFiltro);
             final var veiculos = dao.selectFilterPage(page, PAGE_SIZE, veiculoFiltro, "id", "ASC");
 
-        System.out.println("LOAD" + veiculos.get(0).getMarca());
             renderer.render(new VeiculosViewData(veiculos, page, PAGE_SIZE, count, veiculoFiltro));
             return null;
         });
+    }
+
+    private void setarFlags(VeiculoFiltro vf) {
+        int tp = vf.getTipoDeCombustivel().isBlank() ? 0 : Integer.parseInt(vf.getTipoDeCombustivel());
+        switch (tp) {
+            case 1:
+                vf.fgAlcool=true;
+                break;
+            case 2:
+                vf.fgGasolina=true;
+                break;
+            case 3:
+                vf.fgGNV=true;
+                break;
+            case 4:
+                vf.fgEletrico=true;
+                break;
+            default:
+                vf.semCombustivel=true;
+                break;
+        }
     }
 }

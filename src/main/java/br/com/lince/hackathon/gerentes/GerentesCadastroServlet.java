@@ -97,6 +97,9 @@ public class GerentesCadastroServlet extends HttpServlet {
             errors.put("percentual", "Percentual de comissão não pode ser vazio");
         } else {
             percentual = Float.parseFloat(percentualS);
+            if(percentual > 25){
+                errors.put("percentual", "Percentual de comissão não pode ser maior que 25%");
+            }
         }
         LocalDate dataContratacao = null;
         if (dataContratacaoS.isBlank()) {

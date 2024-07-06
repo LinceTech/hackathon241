@@ -90,6 +90,10 @@ public class Veiculos {
         }
     }
 
+    public int getTipoDeCombustivelInt() {
+        return tipoDeCombustivel;
+    }
+
     public void setTipoDeCombustivel(int tipoDeCombustivel) {
         this.tipoDeCombustivel = tipoDeCombustivel;
     }
