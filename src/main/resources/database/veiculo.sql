@@ -4,9 +4,9 @@ create table veiculo (
     Modelo VARCHAR(60) NOT NULL,
     Placa VARCHAR(8) NOT NULL,
     Cor VARCHAR(60) NOT NULL,
-    AnoDeFabricação INTEGER NOT NULL,
+    AnoDeFabricacao INTEGER NOT NULL,
     CustoDeDiaria FLOAT NOT NULL,
-    DescriçãoPromocional VARCHAR(MAX) NOT NULL,
+    DescricaoPromocional VARCHAR(MAX) NOT NULL,
     TipoDeCombustivel INTEGER NOT NULL,
     PRIMARY KEY (id)
 )

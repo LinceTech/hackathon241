@@ -21,6 +21,18 @@ public class Veiculos {
     public Veiculos(){
     }
 
+    public Veiculos(int id, String marca, String modelo, String placa, String cor, int anoDeFabricacao, float custoDeDiaria, String descricaoPromocional, int tipoDeCombustivel) {
+        this.id = id;
+        this.cor = cor;
+        this.marca = marca;
+        this.placa = placa;
+        this.modelo = modelo;
+        this.anoDeFabricacao = anoDeFabricacao;
+        this.descricaoPromocional = descricaoPromocional;
+        this.tipoDeCombustivel = tipoDeCombustivel;
+        this.custoDeDiaria = custoDeDiaria;
+    }
+
     public Veiculos(String cor, String marca, String placa, String modelo, String descricaoPromocional, int tipoDeCombustivel, int anoDeFabricacao, Float custoDeDiaria) {
         this.cor = cor;
         this.marca = marca;
@@ -61,13 +73,29 @@ public class Veiculos {
     }
 
     public void setAnoDeFabricacao(int anoDeFabricacao) {this.anoDeFabricacao = anoDeFabricacao;}
+    public void setAnoDeFabricacao(String anoDeFabricacao) {this.anoDeFabricacao = Integer.parseInt(anoDeFabricacao);}
 
     public String getTipoDeCombustivel() {
-        return tipoDeCombustivel == 0 ? "" : Integer.toString(tipoDeCombustivel);
+        switch (tipoDeCombustivel) {
+            case 1:
+                return "alcool";
+            case 2:
+                return "gasolina";
+            case 3:
+                return "GNV";
+            case 4:
+                return "eletrico";
+            default:
+                return "inválido";
+        }
     }
 
     public void setTipoDeCombustivel(int tipoDeCombustivel) {
         this.tipoDeCombustivel = tipoDeCombustivel;
+    }
+
+    public void setTipoDeCombustivel(String tipoDeCombustivel) {
+        this.tipoDeCombustivel = Integer.parseInt(tipoDeCombustivel);
     }
 
     public String getPlaca() {
@@ -98,6 +126,10 @@ public class Veiculos {
 
     public void setCustoDeDiaria(Float custoDeDiaria) {
         this.custoDeDiaria = custoDeDiaria;
+    }
+
+    public void setCustoDeDiaria(String custoDeDiaria) {
+        this.custoDeDiaria = Float.parseFloat(custoDeDiaria);
     }
 
     public boolean isSemCombustivel() {

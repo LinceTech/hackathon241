@@ -23,36 +23,36 @@ public class VeiculosListaServlet extends HttpServlet {
         switch (requestPath) {
             case "":
             case "/":
-                loadListaGerentes("gerentes/gerentesLista", request, response);
+                loadListaVeiculo("veiculos/veiculosLista", request, response);
                 break;
             case "/delete":
-                excluiGerente(request, response);
+                excluiVeiculo(request, response);
                 break;
             case "/ordenar":
-                ordenarGerente(request, response);
+                ordenarVeiculo(request, response);
                 break;
             default:
                 response.getWriter().write("Not found : " + requestPath);
         }
     }
 
-    private void ordenarGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<VeiculosViewData>("gerentes/gerentesListaCorpo", response);
+    private void ordenarVeiculo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<VeiculosViewData>("veiculos/veiculosListaCorpo", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0)-1;
-        final var nome = request.getParameter("nome");
-        final var cpf = request.getParameter("cpf");
-        final var cidade = request.getParameter("cidade");
-        final var estado = request.getParameter("estado");
-        final var gerenteFiltro = new VeiculoFiltro(nome, cpf, cidade, estado);
+        final var marca = request.getParameter("marca");
+        final var modelo = request.getParameter("modelo");
+        final var anoDeFabricacao = request.getParameter("anoDeFabricacao");
+        final var cor = request.getParameter("cor");
+        final var veiculoFiltro = new VeiculoFiltro(marca, modelo, anoDeFabricacao, cor);
         final var campo = request.getParameter("campo");
         final var sentido = request.getParameter("sentido");
 
 
         JDBIConnection.instance().withExtension(VeiculoRepository.class, dao -> {
-            final var count = dao.countFilter(gerenteFiltro);
-            final var gerentes = dao.selectFilterPage(page, PAGE_SIZE, gerenteFiltro, campo, sentido);
+            final var count = dao.countFilter(veiculoFiltro);
+            final var gerentes = dao.selectFilterPage(page, PAGE_SIZE, veiculoFiltro, campo, sentido);
 
-            renderer.render(new VeiculosViewData(gerentes, page, PAGE_SIZE, count, gerenteFiltro, campo, sentido));
+            renderer.render(new VeiculosViewData(gerentes, page, PAGE_SIZE, count, veiculoFiltro, campo, sentido));
             return null;
         });
     }
@@ -62,60 +62,63 @@ public class VeiculosListaServlet extends HttpServlet {
         final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
 
         if (requestPath.isBlank()) {
-            loadListaGerentes("gerentes/gerentesLista", request, response);
+            loadListaVeiculo("veiculos/veiculosLista", request, response);
         } else if (requestPath.equals("/filtro")) {
-            filtrarGerente(request, response);
+            filtrarVeiculo(request, response);
         } else if (requestPath.equals("/page")) {
-            loadListaGerentes("gerentes/gerentesListaCorpo", request, response);
+            loadListaVeiculo("veiculos/veiculosListaCorpo", request, response);
         } else {
             response.getWriter().write("Not found : " + requestPath);
         }
     }
 
-    private void filtrarGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<VeiculosViewData>("gerentes/gerentesListaCorpo", response);
+    private void filtrarVeiculo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<VeiculosViewData>("veiculos/veiculosListaCorpo", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
-        final var nome = request.getParameter("nome");
-        final var cpf = request.getParameter("cpf");
-        final var cidade = request.getParameter("cidade");
-        final var estado = request.getParameter("estado");
-        final var gerenteFiltro = new VeiculoFiltro(nome, cpf, cidade, estado);
+        final var marca = request.getParameter("marca");
+        final var modelo = request.getParameter("modelo");
+        final var anoDeFabricacao = request.getParameter("anoDeFabricacao");
+        final var cor = request.getParameter("cor");
+        final var veiculoFiltro = new VeiculoFiltro(marca, modelo, anoDeFabricacao, cor);
         
 
         JDBIConnection.instance().withExtension(VeiculoRepository.class, dao -> {
-            final var count = dao.countFilter(gerenteFiltro);
-            final var gerentes = dao.selectFilterPage(page, PAGE_SIZE, gerenteFiltro, "nome", "ASC");
+            final var count = dao.countFilter(veiculoFiltro);
+            final var gerentes = dao.selectFilterPage(page, PAGE_SIZE, veiculoFiltro, "id", "ASC");
 
-            renderer.render(new VeiculosViewData(gerentes, page, PAGE_SIZE, count, gerenteFiltro));
+            renderer.render(new VeiculosViewData(gerentes, page, PAGE_SIZE, count, veiculoFiltro));
             return null;
         });
     }
 
-    private void excluiGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void excluiVeiculo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final int id = Integer.parseInt(request.getParameter("id"));
 
         JDBIConnection.instance().withExtension(VeiculoRepository.class, dao -> {
             dao.delete(id);
-            loadListaGerentes("gerentes/gerentesLista", request, response);
+            loadListaVeiculo("veiculos/veiculosLista", request, response);
             return null;
         });
     }
 
 
-    private void loadListaGerentes(String template, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void loadListaVeiculo(String template, HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<VeiculosViewData>(template, response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
-        final var nome = request.getParameter("nome");
-        final var cpf = request.getParameter("cpf");
-        final var cidade = request.getParameter("cidade");
-        final var estado = request.getParameter("estado");
-        final var gerenteFiltro = new VeiculoFiltro(nome, cpf, cidade, estado);
+        final var marca = request.getParameter("marca");
+        final var modelo = request.getParameter("modelo");
+        final var anoDeFabricacao = request.getParameter("anoDeFabricacao");
+        final var cor = request.getParameter("cor");
+        final var veiculoFiltro = new VeiculoFiltro(marca, modelo, anoDeFabricacao, cor);
+
+        System.out.println("LOAD");
 
         JDBIConnection.instance().withExtension(VeiculoRepository.class, dao -> {
-            final var count = dao.countFilter(gerenteFiltro);
-            final var gerentes = dao.selectFilterPage(page, PAGE_SIZE, gerenteFiltro, "nome", "ASC");
+            final var count = dao.countFilter(veiculoFiltro);
+            final var veiculos = dao.selectFilterPage(page, PAGE_SIZE, veiculoFiltro, "id", "ASC");
 
-            renderer.render(new VeiculosViewData(gerentes, page, PAGE_SIZE, count, gerenteFiltro));
+        System.out.println("LOAD" + veiculos.get(0).getMarca());
+            renderer.render(new VeiculosViewData(veiculos, page, PAGE_SIZE, count, veiculoFiltro));
             return null;
         });
     }

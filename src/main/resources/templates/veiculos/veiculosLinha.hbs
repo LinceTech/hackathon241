@@ -1,26 +1,26 @@
 <tr>
-    <td style="text-align: left;">{{nome}}</td>
-    <td style="text-align: left;">{{telefone}}</td>
-    <td style="text-align: left;">{{cpf}}</td>
-    <td style="text-align: left;">{{email}}</td>
-    <td style="text-align: left;">{{cidade}}</td>
-    <td style="text-align: left;">{{estado}}</td>
-    <td style="text-align: right;">{{percentual}}</td>
-    <td style="text-align: left;">{{dataContratacao}}</td>
+    <td style="text-align: left;">{{marca}}</td>
+    <td style="text-align: left;">{{modelo}}</td>
+    <td style="text-align: left;">{{placa}}</td>
+    <td style="text-align: left;">{{cor}}</td>
+    <td style="text-align: left;">{{anoDeFabricacao}}</td>
+    <td style="text-align: left;">{{custoDeDiaria}}</td>
+    <td style="text-align: left;">{{descricaoPromocional}}</td>
+    <td style="text-align: left;">{{tipoDeCombustivel}}</td>
     <td>
         <img src="https://img.icons8.com/?size=18&id=71201&format=png&color=000000"
              alt="Editar item"
              style="cursor: pointer"
-             hx-target="#gerentesLista"
+             hx-target="#veiculosLista"
              hx-replace="innerHTML"
-             hx-get="gerentesLista/edit?id={{id}}">
+             hx-get="veiculosLista/edit?id={{id}}">
 
         <img src="https://img.icons8.com/?size=18&id=67884&format=png&color=000000"
              alt="Apagar item"
              style="cursor: pointer"
-             hx-target="#gerentesTable"
-             hx-select="#gerentesTable"
+             hx-target="#veiculosTable"
+             hx-select="#veiculosTable"
              hx-replace="innerHTML"
-             hx-get="gerentesLista/delete?id={{id}}"
+             hx-get="veiculosLista/delete?id={{id}}"
     </td>
 </tr>
