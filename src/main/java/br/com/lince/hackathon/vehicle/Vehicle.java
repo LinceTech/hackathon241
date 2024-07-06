@@ -3,6 +3,11 @@ package br.com.lince.hackathon.vehicle;
 import br.com.lince.hackathon.foo.Foo;
 import br.com.lince.hackathon.util.Service;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.http.HttpRequest;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -10,6 +15,8 @@ public class Vehicle {
     private int id;
     private String brand;
     private String model;
+    private String brandName;
+    private String ModelName;
     private String plate;
     private String color;
     private int year_of_manufacture;
@@ -158,5 +165,13 @@ public class Vehicle {
                 ", promotion_description=" + promotion_description +
                 ", type_fuel=" + type_fuel +
                 '}';
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public String getModelName() {
+        return ModelName;
     }
 }

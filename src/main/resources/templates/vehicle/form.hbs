@@ -2,7 +2,7 @@
     <div class="vehicleMain">
         <div class="vehicleType_vehicle">
             <label for="type_vehicle">Tipo de veículo</label>
-            <select name="type_vehicle" id="type_vehicle" onchange="findByBrand($('#type_vehicle').val())">
+            <select name="type_vehicle" id="type_vehicle" onchange="findByType($('#type_vehicle').val())">
                 {{#vehiclesType}}
                     <option value="{{type}}" {{#selected}}selected{{/selected}}>{{name}}</option>
                 {{/vehiclesType}}
@@ -18,7 +18,7 @@
 
         <div class="vehicleBrand">
             <label for="brand">Marca</label>
-            <select name="brand" id="brand">
+            <select name="brand" id="brand" onchange="findByBrand($('#type_vehicle').val(), $('#brand').val())">
                 <option value="{{brand}}"></option>
             </select>
             {{#with errors}}
