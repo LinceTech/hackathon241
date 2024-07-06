@@ -49,16 +49,17 @@ public interface Time7Repository {
 
 
     @UseFreemarkerEngine
-    @SqlUpdate("INSERT INTO Gerente(Nome, CPF, DtNascimento, Telefone, Email, Cidade, Estado, Comissao, DtContrata) " +
-               "VALUES (:gerente.nome       , " +
-                       ":gerente.cpf        , " +
+    @SqlUpdate("INSERT INTO Gerente(Nome, CPF, DtNascimento, Telefone, Email, CEP, Cidade, Estado, Comissao, DtContrata) " +
+               "VALUES (:gerente.nome         , " +
+                       ":gerente.cpf          , " +
                        ":gerente.dtNascimento , " +
-                       ":gerente.telefone   , " +
-                       ":gerente.email      , " +
-                       ":gerente.cidade     , " +
-                       ":gerente.estado     , " +
-                       ":gerente.comissao   , " +
-                       ":gerente.dtContrata  )")
+                       ":gerente.telefone     , " +
+                       ":gerente.email        , " +
+                       ":gerente.cep          , " +
+                       ":gerente.cidade       , " +
+                       ":gerente.estado       , " +
+                       ":gerente.comissao     , " +
+                       ":gerente.dtContrata    )")
     void insertGerente(@BindBean("gerente") Gerente gerente);
 
 
@@ -69,6 +70,7 @@ public interface Time7Repository {
                                    "DtNascimento = :gerente.dtNascimento ," +
                                    "Telefone     = :gerente.telefone     ," +
                                    "Email        = :gerente.email        ," +
+                                   "CEP          = :gerente.cep          ," +
                                    "Cidade       = :gerente.cidade       ," +
                                    "Estado       = :gerente.estado       ," +
                                    "Comissao     = :gerente.comissao     ," +

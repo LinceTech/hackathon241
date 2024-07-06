@@ -1,5 +1,8 @@
 package br.com.lince.hackathon.gerente;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class Gerente {
@@ -83,6 +86,20 @@ public class Gerente {
         this.email = email;
     }
 
+    public int getCep() {
+        return cep;
+    }
+
+    public String getCepFormat() {
+        String cepStr = cep + "";
+        String cepFormat = cepStr.replaceFirst("(\\d{5})(\\d{3})", "$1-$2");
+        return cepFormat;
+    }
+
+    public void setCep(int cep) {
+        this.cep = cep;
+    }
+
     public String getCidade() {
         return cidade;
     }
@@ -111,6 +128,12 @@ public class Gerente {
         return dtContrata;
     }
 
+    public String getDtContrataFormat() throws ParseException {
+        if (dtContrata == 0) return "";
+        Date data = new SimpleDateFormat("yyyyMMdd").parse(String.valueOf(dtContrata));
+        return new SimpleDateFormat("yyyy-MM-dd").format(data);
+    }
+
     public void setDtContrata(int dtContrata) {
         this.dtContrata = dtContrata;
     }
@@ -119,17 +142,16 @@ public class Gerente {
         return dtNascimento;
     }
 
+    public String getDtNascimentoFormat() throws ParseException {
+        if (dtContrata == 0) return "";
+        Date data = new SimpleDateFormat("yyyyMMdd").parse(String.valueOf(dtNascimento));
+        return new SimpleDateFormat("yyyy-MM-dd").format(data);
+    }
+
     public void setDtNascimento(int dtNascimento) {
         this.dtNascimento = dtNascimento;
     }
 
-    public int getCep() {
-        return cep;
-    }
-
-    public void setCep(int cep) {
-        this.cep = cep;
-    }
 
     @Override
     public boolean equals(Object o) {
