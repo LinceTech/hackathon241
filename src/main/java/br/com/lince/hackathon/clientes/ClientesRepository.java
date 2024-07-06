@@ -76,5 +76,4 @@ public interface ClientesRepository {
 
     @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM CLIENTES WHERE cpf = :cpf AND id != :id), 1, 0)")
     boolean existeCpf(@Bind("cpf") String cpf, @Bind("id") Long id);
-
 }
