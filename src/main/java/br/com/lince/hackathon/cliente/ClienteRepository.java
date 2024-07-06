@@ -66,6 +66,11 @@ public interface ClienteRepository {
     @SqlUpdate("DELETE FROM Cliente WHERE nr_cpf = :nr_cpf")
     void delete(@Bind("nr_cpf") String nr_cpf);
 
+
+    @UseFreemarkerEngine
+    @SqlQuery("SELECT COUNT(*) FROM locacao WHERE nr_cpf_cliente = :nr_cpf AND dt_entrega = ''")
+    boolean verificaLocacao(@Bind("nr_cpf") String nr_cpf);
+
     /**
      * Cadastra um novo foo na base de dados.
      *

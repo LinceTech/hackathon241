@@ -101,7 +101,7 @@ public class ClienteServlet extends HttpServlet {
         final var nm_rua = request.getParameter("nm_rua");
         final var nm_cliente = request.getParameter("nm_cliente");
         final var nr_cep = request.getParameter("nr_cep");
-        final var nr_cpf = request.getParameter("nr_cpf");
+        final var nr_cpf = request.getParameter("nr_cpf").replace(".", "").replace("-", "").trim();
 
         final var errors = new HashMap<String, String>();
 
@@ -210,8 +210,15 @@ public class ClienteServlet extends HttpServlet {
     private void deleteCliente(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var nr_cpf = request.getParameter("nr_cpf");
 
+
+
+
         JDBIConnection.instance().withExtension(ClienteRepository.class, cliente -> {
-            cliente.delete(nr_cpf);
+
+            if(!cliente.verificaLocacao(nr_cpf)){
+                cliente.delete(nr_cpf);
+            }
+
             loadFullPage(request, response);
             return null;
         });
