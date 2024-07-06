@@ -1,7 +1,11 @@
 package br.com.lince.hackathon.locacoes;
 
+import br.com.lince.hackathon.clientes.Cliente;
+import br.com.lince.hackathon.clientes.ClienteRepository;
+import br.com.lince.hackathon.gerentes.GerenteRepository;
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
+import br.com.lince.hackathon.veiculos.VeiculoRepository;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @WebServlet("/locacaoLista/*")
@@ -19,7 +24,6 @@ public class LocacaoListaServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
-
         switch (requestPath) {
             case "":
             case "/":
@@ -109,12 +113,20 @@ public class LocacaoListaServlet extends HttpServlet {
         final var cliente = request.getParameter("cliente");
         final var gerente = request.getParameter("gerente");
         var situacao = request.getParameter("situacao");
-        situacao = situacao.equals("1") ? "=" : "<>";
+        if (situacao != null) {
+            situacao = situacao.equals("1") ? "=" : "<>";
+        } else {
+            situacao = "<>";
+        }
         final var LocacaoFiltro = new LocacaoFiltro(placa, cliente, gerente, situacao);
-
         JDBIConnection.instance().withExtension(LocacaoRepository.class, dao -> {
             final var count = dao.countFilter(LocacaoFiltro);
             final var locacoes = dao.selectFilterPage(page, PAGE_SIZE, LocacaoFiltro, "id", "ASC");
+            locacoes.forEach(locacao -> {
+                locacao.setCliente(JDBIConnection.instance().withExtension(ClienteRepository.class, daoC -> {daoC.findById(locacao.getId_cliente());return null;}));
+                locacao.setGerente(JDBIConnection.instance().withExtension(GerenteRepository.class, daoC -> {daoC.findById(locacao.getId_gerente());return null;}));
+                locacao.setVeiculo(JDBIConnection.instance().withExtension(VeiculoRepository.class, daoC -> {daoC.findById(locacao.getId_veiculo());return null;}));
+            });
 
             renderer.render(new LocacaoViewData(locacoes, page, PAGE_SIZE, count, LocacaoFiltro));
             return null;
