@@ -1,15 +1,13 @@
 <form id="clienteForm">
-    <input type="hidden" name="nm_cliente" value="{{nm_cliente}}">
-
     <div>
         <label>
             <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">Nome:</span>
             <span>
-                <input type="text" name="nome" maxlength="100" size="80" value="{{nm_cliente}}">
+                <input type="text" name="nm_cliente" maxlength="100" size="80" value="{{nm_cliente}}">
                 {{#with errors}}
-                    {{#if basError}}
+                    {{#if nomeError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            Bas: {{nomeError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -21,9 +19,9 @@
             <span>
                 <input type="text" name="nr_cpf" maxlength="11" size="11" value="{{nr_cpf}}">
                 {{#with errors}}
-                    {{#if basError}}
+                    {{#if cpfError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            Bas: {{cpfError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -47,11 +45,11 @@
         <label>
             <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">Telefone:</span>
             <span>
-                <input type="text" name="nr_telefone" maxlength="10" size="10" value="{{nr_telefone}}">
+                <input type="text" name="nr_telefone" maxlength="11" size="11" value="{{nr_telefone}}">
                 {{#with errors}}
-                    {{#if basError}}
+                    {{#if telefError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            Bas: {{telefError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -65,7 +63,7 @@
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            Bas: {{emailError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -73,13 +71,13 @@
             <br>
         </label>
         <label>
-            <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">CEP:</span>
+            <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;" >CEP:</span>
             <span>
                 <input type="text" id="cepInput" name="nr_cep" maxlength="8" size="8" value="{{nr_cep}}" onblur="buscarCEP()">
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            Bas: {{cepError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -89,11 +87,11 @@
         <label>
             <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">Cidade:</span>
             <span>
-                <input type="text" name="nm_cidade" maxlength="100" size="100" value="{{nm_cidade}}">
+                <input type="text" name="nm_cidade" id="nm_cidade" maxlength="100" size="100" value="{{nm_cidade}}">
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            Bas: {{cidadeError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -103,15 +101,29 @@
         <label>
             <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">Estado:</span>
             <span>
-                <select name="nm_estado">
-                    <option value="SC">Santa Catarina</option>
-                    <option value="SC">São Paulo</option>
+                <select name="nm_estado" id="nm_estado">
+                    <option value="SC">SC</option>
+                    <option value="SP">SP</option>
                 </select>
 
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            Bas: {{estadoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+        <label>
+            <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">Bairro:</span>
+            <span>
+                <input type="text" name="nm_bairro" id="nm_bairro" maxlength="100" size="50" value="{{nm_bairro}}">
+                {{#with errors}}
+                    {{#if basError}}
+                        <span class="error">
+                            Bas: {{bairoError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -121,11 +133,11 @@
         <label>
             <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">Rua:</span>
             <span>
-                <input type="text" name="nm_rua" maxlength="80" size="80" value="{{nm_rua}}">
+                <input type="text" name="nm_rua" id="nm_rua" maxlength="80" size="80" value="{{nm_rua}}">
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            Bas: {{ruaError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -135,11 +147,11 @@
         <label>
             <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">N°:</span>
             <span>
-                <input type="text" name="nr_residencia" maxlength="6" size="6" value="{{nr_residencia}}">
+                <input type="text" name="nr_residencia" id="nr_residencia" maxlength="6" size="6" value="{{nr_residencia}}">
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            Bas: {{residenciaError}}
                         </span>
                     {{/if}}
                 {{/with}}
