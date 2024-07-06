@@ -62,7 +62,7 @@ public interface GerenteRepository {
      */
     @UseFreemarkerEngine
     @SqlUpdate("DELETE FROM gerente WHERE nr_cpf = :nr_cpf")
-    void delete(@Bind("nr_cpf") int nr_cpf);
+    void delete(@Bind("nr_cpf") String nr_cpf);
 
     /**
      * Cadastra um novo Gerente na base de dados.

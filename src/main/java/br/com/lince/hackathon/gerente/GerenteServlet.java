@@ -4,6 +4,8 @@ import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
 import br.com.lince.hackathon.utils.Validacao;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
+import org.jdbi.v3.core.extension.ExtensionCallback;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +40,7 @@ public class GerenteServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var requestPath = isPathNull(request);
-
+        System.out.println("requestPath >>> "+requestPath);
         switch (requestPath) {
             case "":
             case "/":
@@ -165,10 +167,9 @@ public class GerenteServlet extends HttpServlet {
      * Trata a requisição de exclusão de gerentes
      */
     private void deleteGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var bar = Integer.parseInt(request.getParameter("bar"));
-
+        final var nr_cpf = request.getParameter("nr_cpf");
         JDBIConnection.instance().withExtension(GerenteRepository.class, dao -> {
-            dao.delete(bar);
+            dao.delete(nr_cpf);
             loadFullPage(request, response);
             return null;
         });
