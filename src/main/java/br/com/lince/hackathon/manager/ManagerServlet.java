@@ -22,14 +22,7 @@ import java.util.logging.Logger;
 
 @WebServlet("/manager/*")
 public class ManagerServlet extends HttpServlet {
-    /*
-     * O número de itens na paginação desta tela
-     */
     private static final int PAGE_SIZE = 5;
-
-    /*
-     * Logger padrão do servlet
-     */
     private static final Logger logger = Logger.getLogger(ManagerServlet.class.getName());
 
     @Override
@@ -138,7 +131,6 @@ public class ManagerServlet extends HttpServlet {
 
     private void loadFormEditManager(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<ManegerEdit>("manager/form", response);
-        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
         final var id = NumberUtils.toInt(request.getParameter("id"), 0);
 
         JDBIConnection.instance().withExtension(ManagerRepository.class, dao -> {

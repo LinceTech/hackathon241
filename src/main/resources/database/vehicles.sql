@@ -12,3 +12,5 @@ CREATE TABLE vehicles
 
     PRIMARY KEY (id)
 )
+
+ALTER TABLE vehicles ADD type_vehicle varchar(20);

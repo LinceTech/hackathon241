@@ -1,0 +1,25 @@
+<tr id="vehicleItem{{id}}">
+    <td style="width: 100px; text-align: left;">{{brand}}</td>
+    <td style="width: 200px; text-align: left;">{{model}}</td>
+    <td style="width: 300px; text-align: left;">{{plate}}</td>
+    <td style="width: 400px; text-align: left;">{{color}}</td>
+    <td style="width: 500px; text-align: left;">{{daily_cost}}</td>
+    <td style="width: 50px">
+
+        <img src="https://img.icons8.com/?size=18&id=71201&format=png&color=000000"
+             alt="Editar item"
+             style="cursor: pointer"
+             hx-target="#vehicleForm"
+             hx-replace="innerHTML"
+             hx-get="vehicle/edit?id={{id}}">
+
+        <img src="https://img.icons8.com/?size=18&id=67884&format=png&color=000000"
+             alt="Apagar item"
+             style="cursor: pointer"
+             hx-target="#vehicleItemsTable"
+             hx-select="#vehicleItemsTable"
+             hx-replace="innerHTML"
+             hx-get="vehicle/delete?id={{id}}"
+        hx-include="[name='page']">
+    </td>
+</tr>

@@ -3,6 +3,11 @@ package br.com.lince.hackathon.vehicle;
 import br.com.lince.hackathon.foo.Foo;
 import br.com.lince.hackathon.util.Service;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.http.HttpRequest;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -10,12 +15,15 @@ public class Vehicle {
     private int id;
     private String brand;
     private String model;
+    private String brandName;
+    private String ModelName;
     private String plate;
     private String color;
-    private String year_of_manufacture;
-    private String daily_cost ;
-    private double promotion_description;
-    private LocalDate type_fuel;
+    private int year_of_manufacture;
+    private double daily_cost ;
+    private String promotion_description;
+    private String type_fuel;
+    private String type_vehicle;
 
     public int getId() {
         return id;
@@ -57,40 +65,48 @@ public class Vehicle {
         this.color = color;
     }
 
-    public String getYear_of_manufacture() {
+    public int getYear_of_manufacture() {
         return year_of_manufacture;
     }
 
-    public void setYear_of_manufacture(String year_of_manufacture) {
+    public void setYear_of_manufacture(int year_of_manufacture) {
         this.year_of_manufacture = year_of_manufacture;
     }
 
-    public String getDaily_cost() {
+    public double getDaily_cost() {
         return daily_cost;
     }
 
-    public void setDaily_cost(String daily_cost) {
+    public void setDaily_cost(double daily_cost) {
         this.daily_cost = daily_cost;
     }
 
-    public double getPromotion_description() {
+    public String getPromotion_description() {
         return promotion_description;
     }
 
-    public void setPromotion_description(double promotion_description) {
+    public void setPromotion_description(String promotion_description) {
         this.promotion_description = promotion_description;
     }
 
-    public LocalDate getType_fuel() {
+    public String getType_fuel() {
         return type_fuel;
     }
 
-    public void setType_fuel(LocalDate type_fuel) {
+    public void setType_fuel(String type_fuel) {
         this.type_fuel = type_fuel;
     }
 
-    public Vehicle(int id, String brand, String model, String plate, String color, String year_of_manufacture,
-                   String daily_cost, double promotion_description, LocalDate type_fuel) {
+    public String getType_vehicle() {
+        return type_vehicle;
+    }
+
+    public void setType_vehicle(String type_vehicle) {
+        this.type_vehicle = type_vehicle;
+    }
+
+    public Vehicle(int id, String brand, String model, String plate, String color, int year_of_manufacture,
+                   double daily_cost, String promotion_description, String type_fuel, String type_vehicle) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -100,10 +116,11 @@ public class Vehicle {
         this.daily_cost = daily_cost;
         this.promotion_description = promotion_description;
         this.type_fuel = type_fuel;
+        this.type_vehicle = type_vehicle;
     }
 
-    public Vehicle(String brand, String model, String plate, String color, String year_of_manufacture,
-                   String daily_cost, double promotion_description, LocalDate type_fuel) {
+    public Vehicle(String brand, String model, String plate, String color, int year_of_manufacture, double daily_cost,
+                   String promotion_description, String type_fuel, String type_vehicle) {
         this.brand = brand;
         this.model = model;
         this.plate = plate;
@@ -112,6 +129,7 @@ public class Vehicle {
         this.daily_cost = daily_cost;
         this.promotion_description = promotion_description;
         this.type_fuel = type_fuel;
+        this.type_vehicle = type_vehicle;
     }
 
     public Vehicle() {
@@ -147,5 +165,13 @@ public class Vehicle {
                 ", promotion_description=" + promotion_description +
                 ", type_fuel=" + type_fuel +
                 '}';
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public String getModelName() {
+        return ModelName;
     }
 }
