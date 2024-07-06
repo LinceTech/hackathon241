@@ -151,13 +151,13 @@
             style="display: inline-flex">
         <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
         &nbsp;
-        {{#if veiculo}}
+        {{#if id}}
             Atualizar
         {{^}}
             Cadastrar
         {{/if}}
     </button>
-    {{#if veiculo}}
+    {{#if id}}
         <button hx-target="#veiculoForm"
                 hx-select="#veiculoForm"
                 hx-swap="outerHTML"
