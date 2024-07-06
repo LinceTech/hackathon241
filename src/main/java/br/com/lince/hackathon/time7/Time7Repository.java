@@ -31,6 +31,11 @@ public interface Time7Repository {
               "FROM Gerente ORDER BY Id OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
     List<Gerente> selectPageGerente(@Define("page") int page, @Define("count") int count);
 
+    @RegisterBeanMapper(Gerente.class)
+    @UseFreemarkerEngine
+    @SqlQuery("SELECT * FROM Gerente ORDER BY Nome")
+    List<Gerente> selectGerentes();
+
 
     @RegisterBeanMapper(Gerente.class)
     @UseFreemarkerEngine
@@ -86,6 +91,11 @@ public interface Time7Repository {
     @SqlQuery("SELECT * " +
             "FROM Cliente ORDER BY Id OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
     List<Cliente> selectPageCliente(@Define("page") int page, @Define("count") int count);
+
+    @RegisterBeanMapper(Cliente.class)
+    @UseFreemarkerEngine
+    @SqlQuery("SELECT * FROM Cliente ORDER BY Nome")
+    List<Cliente> selectClientes();
 
 
     @RegisterBeanMapper(Cliente.class)
@@ -145,6 +155,11 @@ public interface Time7Repository {
     @SqlQuery("SELECT * " +
             "FROM Veiculo ORDER BY Id OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
     List<Veiculo> selectPageVeiculo(@Define("page") int page, @Define("count") int count);
+
+    @RegisterBeanMapper(Veiculo.class)
+    @UseFreemarkerEngine
+    @SqlQuery("SELECT * FROM Veiculo ORDER BY Marca, Modelo, Placa")
+    List<Veiculo> selectVeiculos();
 
 
     @RegisterBeanMapper(Veiculo.class)

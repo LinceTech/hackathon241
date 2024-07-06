@@ -1,5 +1,8 @@
 package br.com.lince.hackathon.locacao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class Locacao {
@@ -76,12 +79,24 @@ public class Locacao {
         return dtInicio;
     }
 
+    public String getDtInicioFormat() throws ParseException {
+        if (dtInicio == 0) return "";
+        Date data = new SimpleDateFormat("yyyyMMdd").parse(String.valueOf(dtInicio));
+        return new SimpleDateFormat("yyyy-MM-dd").format(data);
+    }
+
     public void setDtInicio(int dtInicio) {
         this.dtInicio = dtInicio;
     }
 
     public int getDtFinal() {
         return dtFinal;
+    }
+
+    public String getDtFinalFormat() throws ParseException {
+        if (dtFinal == 0) return "";
+        Date data = new SimpleDateFormat("yyyyMMdd").parse(String.valueOf(dtFinal));
+        return new SimpleDateFormat("yyyy-MM-dd").format(data);
     }
 
     public void setDtFinal(int dtFinal) {
@@ -114,6 +129,12 @@ public class Locacao {
 
     public int getDtPagamento() {
         return dtPagamento;
+    }
+
+    public String getDtPagamentoFormat() throws ParseException {
+        if (dtPagamento == 0) return "";
+        Date data = new SimpleDateFormat("yyyyMMdd").parse(String.valueOf(dtPagamento));
+        return new SimpleDateFormat("yyyy-MM-dd").format(data);
     }
 
     public void setDtPagamento(int dtPagamento) {
