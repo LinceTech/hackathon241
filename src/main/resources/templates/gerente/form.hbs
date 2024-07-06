@@ -101,9 +101,8 @@
         <label>
             <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">Estado:</span>
             <span>
-                <select name="nm_estado" required>
-                    <option value="SC">Santa Catarina</option>
-                    <option value="SP">São Paulo</option>
+                <select name="nm_estado" id="nm_estado">
+                    {{>estados}}
                 </select>
 
                 {{#with errors}}
