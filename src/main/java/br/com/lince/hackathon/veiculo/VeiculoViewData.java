@@ -1,5 +1,10 @@
 package br.com.lince.hackathon.veiculo;
 
+import br.com.lince.hackathon.cliente.Cliente;
+import br.com.lince.hackathon.time7.Marcas;
+import br.com.lince.hackathon.time7.Modelos;
+
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +13,16 @@ import java.util.List;
  * Classe utilizada para agregar todos os dados necessários para alimentar o template veiculo/page
  */
 public class VeiculoViewData {
+
+    public VeiculoViewData(Veiculo veiculo) {
+        this.veiculos = null;
+        this.dateTime = null;
+        this.page = 0;
+        this.pageSize = 0;
+        this.count = 0;
+        this.errors = null;
+        this.veiculo = veiculo;
+    }
 
     /**
      * Construtor utilizado para renderizar a página com a lista de veiculos.
@@ -84,6 +99,10 @@ public class VeiculoViewData {
 
     public LocalDateTime getDateTime() {
         return dateTime;
+    }
+
+    public List<HashMap<String, String>> getMarcas() throws IOException {
+        return Marcas.buscaMarcas();
     }
 
     public int getIndex() {

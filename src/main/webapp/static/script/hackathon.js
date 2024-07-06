@@ -60,3 +60,48 @@ function pesquisacep(valor) {
         limpa_formulario_cep();
     }
 }
+
+function limpaModelos() {
+    let modelo = document.getElementById('modelo');
+    while (modelo.children.length > 1) {
+        modelo.removeChild(modelo.lastChild);
+    }
+}
+
+function populaModelos(data) {
+    limpaModelos();
+    let modelo = document.getElementById('modelo');
+
+    for (let i = 0; i < data.length; i++) {
+        let novo = document.createElement("option");
+        novo.value = data[i]["code"];
+        novo.textContent = data[i]["name"];
+        modelo.appendChild(novo);
+    }
+}
+
+function buscaModelos() {
+    const api_url = 'https://fipe.parallelum.com.br/api/v2/cars/brands';
+    let marca = document.getElementById('marca').value;
+
+    if (marca !== '') {
+        let url_modelos = api_url + '/' + marca + '/models';
+        fetch(url_modelos).then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            populaModelos(data);
+        })
+        .catch(error => {
+            limpaModelos();
+            console.error('Erro: ', error);
+        })
+    } else {
+        // marca sem valor, limpa combo.
+        limpaModelos();
+    }
+
+}
