@@ -1,14 +1,14 @@
-<tr id="gerenteItem{{cpf}}">
-    <td style="width: 40px; text-align: right;">{{cpf}}</td>
-    <td style="width: 200px; text-align: left;">{{nome}}</td>
-    <td style="width: 300px; text-align: left;">{{cidade}}</td>
+<tr id="veiculoItem{{placa}}">
+    <td style="width: 40px; text-align: right;">{{placa}}</td>
+    <td style="width: 200px; text-align: left;">{{marca}}</td>
+    <td style="width: 300px; text-align: left;">{{modelo}}</td>
     <td style="width: 50px">
         <img src="https://img.icons8.com/?size=18&id=71201&format=png&color=000000"
              alt="Editar item"
              style="cursor: pointer"
-             hx-target="#gerenteForm"
+             hx-target="#veiculoForm"
              hx-replace="innerHTML"
-             hx-get="gerente/edit?cpf={{cpf}}">
+             hx-get="veiculo/edit?placa={{placa}}">
 
         <img src="https://img.icons8.com/?size=18&id=67884&format=png&color=000000"
              alt="Apagar item"
@@ -16,7 +16,7 @@
              hx-target="#formAndTable"
              hx-select="#formAndTable"
              hx-replace="innerHTML"
-             hx-get="gerente/delete?cpf={{cpf}}"
+             hx-get="veiculo/delete?placa={{placa}}"
         hx-include="[name='page']">
     </td>
 </tr>

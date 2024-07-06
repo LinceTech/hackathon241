@@ -1,67 +1,48 @@
-package br.com.lince.hackathon.gerente;
+package br.com.lince.hackathon.veiculo;
 
-import br.com.lince.hackathon.gerente.Gerente;
+import br.com.lince.hackathon.veiculo.Veiculo;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
-public class GerenteViewData {
-    /**
-     * Construtor utilizado para renderizar a página com a lista de gerentes.
-     *
-     * @param gerentes     lista de foos
-     * @param dateTime data e hora
-     * @param page     número da pagina
-     * @param pageSize número de itens da página atual
-     * @param count    número total de foos
-     */
-    public GerenteViewData(
-            List<Gerente> gerentes,
+public class VeiculoViewData {
+    public VeiculoViewData(
+            List<Veiculo> veiculos,
             LocalDateTime dateTime,
             int page,
             int pageSize,
             int count
     ) {
-        this.gerentes = gerentes;
+        this.veiculos = veiculos;
         this.dateTime = dateTime;
         this.page = page;
         this.pageSize = pageSize;
         this.count = count;
         this.errors = null;
-        this.gerente = null;
+        this.veiculo = null;
     }
 
-    /**
-     * Construtor utilizado para renderizar a página com a lista de foos.
-     *
-     * @param errors   mapa contendo os errors que ocorreram no formulário
-     * @param gerente      item a ser alimentado no formulário de cadastro/edição
-     * @param gerentes     lista de foos
-     * @param dateTime data e hora
-     * @param page     número da pagina
-     * @param pageSize número de itens da página atual
-     * @param count    número total de foos
-     */
-    public GerenteViewData(
+
+    public VeiculoViewData(
             HashMap<String, String> errors,
-            Gerente gerente, List<Gerente> gerentes,
+            Veiculo veiculo, List<Veiculo> veiculos,
             LocalDateTime dateTime,
             int page,
             int pageSize,
             int count
     ) {
-        this.gerentes = gerentes;
+        this.veiculos = veiculos;
         this.dateTime = dateTime;
         this.page = page;
         this.pageSize = pageSize;
         this.count = count;
         this.errors = errors;
-        this.gerente = gerente;
+        this.veiculo = veiculo;
     }
 
-    private final Gerente gerente;
-    private final List<Gerente> gerentes;
+    private final Veiculo veiculo;
+    private final List<Veiculo> veiculos;
     private final LocalDateTime dateTime;
     private final int page;
     private final int pageSize;
@@ -72,12 +53,12 @@ public class GerenteViewData {
         return errors;
     }
 
-    public Gerente getGerente() {
-        return gerente;
+    public Veiculo getVeiculo() {
+        return veiculo;
     }
 
-    public List<Gerente> getGerentes() {
-        return gerentes;
+    public List<Veiculo> getVeiculos() {
+        return veiculos;
     }
 
     public LocalDateTime getDateTime() {

@@ -1,13 +1,13 @@
-<form id="gerenteForm">
+<form id="veiculoForm">
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">Nome:</span>
+            <span style="width: 150px; display: inline-block;">Marca:</span>
             <span>
-                <input type="text" name="nome" maxlength="60" size="60" value="{{nome}}">
+                <input type="text" id="marca" name="marca" maxlength="14" size="14" value="{{marca}}">
                 {{#with errors}}
-                    {{#if nomeError}}
+                    {{#if marcaError}}
                         <span class="error">
-                            Nome: {{nomeError}}
+                            Marca: {{marcaError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -18,13 +18,13 @@
 
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">CPF:</span>
+            <span style="width: 150px; display: inline-block;">Modelo:</span>
             <span>
-                <input type="text" id="cpf" name="cpf" maxlength="14" size="14" value="{{cpf}}">
+                <input type="text" name="modelo" maxlength="60" size="60" value="{{modelo}}">
                 {{#with errors}}
-                    {{#if cpfError}}
+                    {{#if modeloError}}
                         <span class="error">
-                            cpf: {{cpfError}}
+                            Modelo: {{modeloError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -35,13 +35,13 @@
 
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">Telefone:</span>
+            <span style="width: 150px; display: inline-block;">Placa:</span>
             <span>
-                <input type="text" name="telefone" maxlength="13" size="13" value="{{telefone}}">
+                <input type="text" name="placa" maxlength="60" size="60" value="{{placa}}">
                 {{#with errors}}
-                    {{#if telefoneError}}
+                    {{#if placaError}}
                         <span class="error">
-                            Telefone: {{telefoneError}}
+                            Placa: {{placaError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -52,13 +52,13 @@
 
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">E-mail:</span>
+            <span style="width: 150px; display: inline-block;">Cor:</span>
             <span>
-                <input type="text" name="email" maxlength="30" size="30" value="{{email}}">
+                <input type="text" name="cor" maxlength="60" size="60" value="{{cor}}">
                 {{#with errors}}
-                    {{#if emailError}}
+                    {{#if corError}}
                         <span class="error">
-                            Email: {{emailError}}
+                            Cor: {{corError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -66,15 +66,16 @@
             <br>
         </label>
     </div>
+
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">Cidade:</span>
+            <span style="width: 150px; display: inline-block;">Ano de Fabricação:</span>
             <span>
-                <input type="text" name="cidade" maxlength="60" size="60" value="{{cidade}}">
+                <input type="text" name="anoDeFabricacao" maxlength="60" size="60" value="{{anoDeFabricacao}}">
                 {{#with errors}}
-                    {{#if cidadeError}}
+                    {{#if anoDeFabricacaoError}}
                         <span class="error">
-                            Cidade: {{cidadeError}}
+                            Ano de Fabricação: {{anoDeFabricacaoError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -82,15 +83,16 @@
             <br>
         </label>
     </div>
+
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">Estado:</span>
+            <span style="width: 150px; display: inline-block;">Custo de Diaria:</span>
             <span>
-                <input type="text" name="estado" maxlength="60" size="60" value="{{estado}}">
+                <input type="text" name="custoDeDiaria" maxlength="60" size="60" value="{{custoDeDiaria}}">
                 {{#with errors}}
-                    {{#if estadoError}}
+                    {{#if custoDeDiariaError}}
                         <span class="error">
-                            Estado: {{estadoError}}
+                            Custo de Diaria: {{custoDeDiariaError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -98,15 +100,16 @@
             <br>
         </label>
     </div>
+
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">Percentual Comissão:</span>
+            <span style="width: 150px; display: inline-block;">Descrição Promocional:</span>
             <span>
-                <input type="text" name="percentualComissao" maxlength="5" size="5" value="{{percentualComissao}}">
+                <input type="text" name="descricaoPromocional" maxlength="60" size="60" value="{{descricaoPromocional}}">
                 {{#with errors}}
-                    {{#if percentualComissaoError}}
+                    {{#if descricaoPromocionalError}}
                         <span class="error">
-                            Percentual Comissão: {{percentualComissaoError}}
+                            Descrição Promocional: {{descricaoPromocionalError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -114,15 +117,16 @@
             <br>
         </label>
     </div>
+
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">Data Contratação:</span>
+            <span style="width: 150px; display: inline-block;">Tipo de Combustível:</span>
             <span>
-                <input  type="text" name="dataContratacao" maxlength="8" size="8" value="{{dataContratacao}}">
+                <input type="text" name="tipoDeCombustivel" maxlength="60" size="60" value="{{tipoDeCombustivel}}">
                 {{#with errors}}
-                    {{#if dataContratacaoError}}
+                    {{#if tipoDeCombustivelError}}
                         <span class="error">
-                            Data Contratação: {{dataContratacaoError}}
+                            Tipo de Combustível: {{tipoDeCombustivelError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -137,22 +141,22 @@
     <button hx-target="#formAndTable"
             hx-select="#formAndTable"
             hx-swap="outerHTML"
-            hx-post="gerente/upsert"
+            hx-post="veiculo/upsert"
             hx-include="[name='page']"
             style="display: inline-flex">
         <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
         &nbsp;
-        {{#if cpf}}
+        {{#if placa}}
             Atualizar
         {{^}}
             Cadastrar
         {{/if}}
     </button>
-    {{#if cpf}}
-        <button hx-target="#gerenteForm"
-                hx-select="#gerenteForm"
+    {{#if placa}}
+        <button hx-target="#veiculoForm"
+                hx-select="#veiculoForm"
                 hx-swap="outerHTML"
-                hx-get="gerente/edit"
+                hx-get="veiculo/edit"
                 style="display: inline-flex">
             <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar item">
             &nbsp;
