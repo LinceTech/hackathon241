@@ -4,6 +4,7 @@ import br.com.lince.hackathon.clientes.Cliente;
 import br.com.lince.hackathon.gerentes.Gerentes;
 import br.com.lince.hackathon.veiculos.Veiculos;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Locacao {
@@ -11,17 +12,17 @@ public class Locacao {
     private Cliente id_cliente;
     private Gerentes id_gerente;
     private Veiculos id_veiculo;
-    private Date data_inicio;
-    private Date data_entrega;
+    private LocalDate data_inicio;
+    private LocalDate data_entrega;
     private double valor_diaria;
     private double percentual_diaria;
     private double percentual_comissao;
     private double valor_total_pago;
-    private Date data_pagamento;
+    private LocalDate data_pagamento;
 
     public Locacao() {}
 
-    public Locacao(int id, Cliente id_cliente, Gerentes id_gerente, Veiculos id_veiculo, Date data_inicio, Date data_entrega, double valor_diaria, double percentual_diaria, double percentual_comissao, double valor_total_pago, Date data_pagamento) {
+    public Locacao(int id, Cliente id_cliente, Gerentes id_gerente, Veiculos id_veiculo, LocalDate data_inicio, LocalDate data_entrega, double valor_diaria, double percentual_diaria, double percentual_comissao, double valor_total_pago, LocalDate data_pagamento) {
         this.id = id;
         this.id_cliente = id_cliente;
         this.id_gerente = id_gerente;
@@ -67,19 +68,19 @@ public class Locacao {
         this.id_veiculo = id_veiculo;
     }
 
-    public Date getData_inicio() {
-        return data_inicio != null ? data_inicio : new Date();
+    public LocalDate getData_inicio() {
+        return data_inicio != null ? data_inicio : null;
     }
 
-    public void setData_inicio(Date data_inicio) {
+    public void setData_inicio(LocalDate data_inicio) {
         this.data_inicio = data_inicio;
     }
 
-    public Date getData_entrega() {
-        return data_entrega != null ? data_entrega : new Date();
+    public LocalDate getData_entrega() {
+        return data_entrega != null ? data_entrega : null;
     }
 
-    public void setData_entrega(Date data_entrega) {
+    public void setData_entrega(LocalDate data_entrega) {
         this.data_entrega = data_entrega;
     }
 
@@ -115,11 +116,11 @@ public class Locacao {
         this.valor_total_pago = valor_total_pago;
     }
 
-    public Date getData_pagamento() {
-        return data_pagamento != null ? data_pagamento : new Date();
+    public LocalDate getData_pagamento() {
+        return data_pagamento != null ? data_pagamento : null;
     }
 
-    public void setData_pagamento(Date data_pagamento) {
+    public void setData_pagamento(LocalDate data_pagamento) {
         this.data_pagamento = data_pagamento;
     }
 }

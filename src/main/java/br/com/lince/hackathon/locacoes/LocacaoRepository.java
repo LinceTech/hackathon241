@@ -12,4 +12,8 @@ public interface LocacaoRepository {
     @UseFreemarkerEngine
     @SqlQuery("SELECT * FROM locacoes ORDER BY id")
     List<Locacao> getAll();
+
+    @UseFreemarkerEngine
+    @SqlQuery("SELECT COUNT(*) FROM locacoes")
+    int count();
 }

@@ -1,5 +1,6 @@
 package br.com.lince.hackathon.gerentes;
 
+import br.com.lince.hackathon.clientes.Cliente;
 import br.com.lince.hackathon.foo.Foo;
 import org.jdbi.v3.freemarker.UseFreemarkerEngine;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
@@ -39,4 +40,9 @@ public interface GerenteRepository {
     @UseFreemarkerEngine
     @SqlQuery("SELECT COUNT(*) FROM gerente where gerente.Nome like '%${gerenteFiltro.nome}%' and gerente.CPF like '%${gerenteFiltro.cpf}%' and gerente.Cidade like '%${gerenteFiltro.cidade}%' and gerente.Estado like '%${gerenteFiltro.estado}%'")
     int countFilter(@Define("gerenteFiltro") GerenteFiltro gerenteFiltro);
+
+    @RegisterBeanMapper(Gerentes.class)
+    @UseFreemarkerEngine
+    @SqlQuery("SELECT * FROM gerente WHERE id = :id")
+    Gerentes findById(@Bind("id") int id);
 }
