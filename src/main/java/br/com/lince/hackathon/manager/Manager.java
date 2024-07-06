@@ -126,6 +126,10 @@ public class Manager {
     public Manager() {
     }
 
+    public boolean validateCommission(double commission_percentage) {
+        return (commission_percentage >= 0 && commission_percentage <= 25);
+    }
+
     @Override
     public String toString() {
         return "Manager{" +

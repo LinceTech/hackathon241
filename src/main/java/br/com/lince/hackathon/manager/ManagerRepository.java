@@ -23,7 +23,7 @@ public interface ManagerRepository {
     @RegisterBeanMapper(Manager.class)
     @UseFreemarkerEngine
     @SqlQuery("SELECT id, name, cpf, phone, email, city, state, commission_percentage, hiring_date, date_birth FROM MANAGER WHERE id = :id")
-    Foo findByManagerId(@Bind("id") int id);
+    Manager findByManagerId(@Bind("id") int id);
 
     @UseFreemarkerEngine
     @SqlUpdate("INSERT INTO manager(name, cpf, phone, email, city, state, commission_percentage, hiring_date, date_birth) VALUES (:manager.name, " +
@@ -33,7 +33,7 @@ public interface ManagerRepository {
     @UseFreemarkerEngine
     @SqlUpdate("UPDATE manager SET name = :manager.name, cpf = :manager.cpf, phone = :manager.phone, email = :manager.email, city = :manager.city, " +
             "state = :manager.state, commission_percentage = :manager.commission_percentage, hiring_date = :manager.hiring_date, " +
-            "date_birth = :manager.hiring_date  WHERE ID = :manager.id")
+            "date_birth = :manager.date_birth  WHERE CPF = :manager.cpf")
     void update(@BindBean("manager") Manager manager);
 
     @UseFreemarkerEngine

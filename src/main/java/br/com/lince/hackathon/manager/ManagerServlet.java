@@ -1,6 +1,7 @@
 package br.com.lince.hackathon.manager;
 
 
+import br.com.lince.hackathon.foo.Foo;
 import br.com.lince.hackathon.foo.FooRepository;
 import br.com.lince.hackathon.foo.FooServlet;
 import br.com.lince.hackathon.foo.FooViewData;
@@ -24,7 +25,7 @@ public class ManagerServlet extends HttpServlet {
     /*
      * O número de itens na paginação desta tela
      */
-    private static final int PAGE_SIZE = 20;
+    private static final int PAGE_SIZE = 5;
 
     /*
      * Logger padrão do servlet
@@ -41,13 +42,13 @@ public class ManagerServlet extends HttpServlet {
                 loadFullPage(request, response);
                 break;
 
-//            case "/edit":
-//                loadFormEdit(request, response);
-//                break;
-//
-//            case "/delete":
-//                deleteFoo(request, response);
-//                break;
+            case "/edit":
+                loadFormEditManager(request, response);
+                break;
+
+            case "/delete":
+                deleteManager(request, response);
+                break;
 
             default:
                 response.getWriter().write("Not found : " + requestPath);
@@ -55,9 +56,9 @@ public class ManagerServlet extends HttpServlet {
     }
 
     private void insertOrUpdateManager(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        final var renderer = new TemplateRenderer<FooViewData>("foo/page.hbs", response);
-//        final var page.hbs = NumberUtils.toInt(request.getParameter("page.hbs"), 0);
 
+        final var renderer = new TemplateRenderer<ManagerViewData>("manager/page", response);
+        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
         final var name = request.getParameter("name");
         final var cpf = request.getParameter("cpf");
         final var phone = request.getParameter("phone");
@@ -84,6 +85,14 @@ public class ManagerServlet extends HttpServlet {
             errors.put("Email Error", "Informe um e-mail valido");
         }
 
+        if (!manager.validateCommission(commission_percentage)) {
+            errors.put("Comissão Error", "Informe um percentual de comissão valido");
+        }
+
+        if (state.isBlank()) {
+            errors.put("stateError", "Estado não pode ser vazio");
+        }
+
 
         JDBIConnection.instance().withExtension(ManagerRepository.class, dao -> {
             // Verificar se ocorreram erros no formulário
@@ -95,15 +104,16 @@ public class ManagerServlet extends HttpServlet {
                 }
             }
 
-//            final var now = LocalDateTime.now();
-//            final var count = dao.count();
-//            final var foos = dao.selectPage(page.hbs, PAGE_SIZE);
-//
-//            if (errors.isEmpty()) {
-//                renderer.render(new FooViewData(foos, now, page.hbs, PAGE_SIZE, count));
-//            } else {
-//                renderer.render(new FooViewData(errors, foo, foos, now, page.hbs, PAGE_SIZE, count));
-//            }
+            final var now = LocalDateTime.now();
+            final var count = dao.count();
+            final var managers = dao.selectPage(page, PAGE_SIZE);
+            final var states = Service.findStates("");
+
+            if (errors.isEmpty()) {
+                renderer.render(new ManagerViewData(managers, now, states, page, PAGE_SIZE, count));
+            } else {
+                renderer.render(new ManagerViewData(errors, manager, managers,now, states, page, PAGE_SIZE, count));
+            }
 
             return null;
         });
@@ -122,6 +132,21 @@ public class ManagerServlet extends HttpServlet {
         }
     }
 
+    private void loadFormEditManager(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<ManegerEdit>("manager/form", response);
+        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
+        final var id = NumberUtils.toInt(request.getParameter("id"), 0);
+
+        JDBIConnection.instance().withExtension(ManagerRepository.class, dao -> {
+            final var manager = dao.findByManagerId(id);
+            final var states = Service.findStates(manager.getState());
+
+            final var edit = new ManegerEdit(manager, states);
+            renderer.render(edit);
+            return null;
+        });
+    }
+
     private void loadFullPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<ManagerViewData>("manager/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
@@ -129,10 +154,22 @@ public class ManagerServlet extends HttpServlet {
         JDBIConnection.instance().withExtension(ManagerRepository.class, dao -> {
             final var now = LocalDateTime.now();
             final var count = dao.count();
-            final var manager = dao.selectPage(page, PAGE_SIZE);
+            final var managers = dao.selectPage(page, PAGE_SIZE);
+            final var states = Service.findStates("");
 
-            renderer.render(new ManagerViewData(manager, now, page, PAGE_SIZE, count));
 
+            renderer.render(new ManagerViewData(managers, now, states, page, PAGE_SIZE, count));
+
+            return null;
+        });
+    }
+
+    private void deleteManager(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var id = Integer.parseInt(request.getParameter("id"));
+
+        JDBIConnection.instance().withExtension(ManagerRepository.class, dao -> {
+            dao.delete(id);
+            loadFullPage(request, response);
             return null;
         });
     }

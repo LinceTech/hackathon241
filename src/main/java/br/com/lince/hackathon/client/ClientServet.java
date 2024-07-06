@@ -71,7 +71,7 @@ public class ClientServet extends HttpServlet {
             final var now = LocalDateTime.now();
             final var count = dao.count();
             final var clients = dao.selectPage(page, PAGE_SIZE);
-            final var states = Service.findStates();
+            final var states = Service.findStates("");
 
             renderer.render(new ClientViewData(clients, now, states, page, PAGE_SIZE, count));
 

@@ -1,59 +1,157 @@
-´<form id="managerForm">
+<form id="managerForm">
     <div class="managerMain">
         <div class="managerName">
             <label for="name">Nome</label>
-            <input type="text" name="name" maxlength="100" size="100" value="{{name}}">
-                <!--            {{#with errors}}-->
-                <!--                {{#if nameError}}-->
-                <!--                    <span class="error">-->
-                <!--                            Bas: {{nameError}}-->
-                <!--                        </span>-->
-                    <!--                {{/if}}-->
-                <!--            {{/with}}-->
+            <input type="text" name="name" maxlength="100" size="100" value="{{manager.name}}">
+            {{#with errors}}
+                {{#if nameError}}
+                    <span class="error">
+                        Bas: {{nameError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
         <div class="managerCpf">
             <label for="cpf">CPF</label>
-            <input type="text" name="cpf" maxlength="11" size="11" value="{{cpf}}">
+            <input type="text" name="cpf" maxlength="11" size="11" value="{{manager.cpf}}">
+            {{#with errors}}
+                {{#if cpfError}}
+                    <span class="error">
+                            CPF: {{cpfError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
         <div class="managerBirthDate">
             <label for="date_birth">Data de nascimento</label>
-            <input type="date" name="date_birth" mask="00/00/0000" value="{{date_birth}}">
+            <input type="date" name="date_birth" maxlength="10" size="10" value="{{manager.date_birth}}">
+            {{#with errors}}
+                {{#if birth_dateError}}
+                    <span class="error">
+                            Data de nascimento: {{birth_dateError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
         <div class="managerPhone">
             <label for="phone">Telefone</label>
-            <input type="text" name="phone" maxlength="14" size="14" value="{{phone}}">
+            <input type="text" name="phone" maxlength="14" size="14" value="{{manager.phone}}">
+            {{#with errors}}
+                {{#if phoneError}}
+                    <span class="error">
+                            Nome: {{phoneError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
         <div class="managerEmail">
             <label for="email">E-mail</label>
-            <input type="text" name="email" maxlength="100" size="100" value="{{email}}">
+            <input type="text" name="email" maxlength="100" size="100" value="{{manager.email}}">
+            {{#with errors}}
+                {{#if emailError}}
+                    <span class="error">
+                            E-mail: {{emailError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
         <div class="managerState">
-            <label for="state">Estado</label>
-            <select name="state">
-                <option value="RJ">Rio de Janeiro</option>
-            </select>
+        <label for="state">Estado</label>
+        <select name="state">{{#states}}
+            <option value="{{uf}}" {{#selected}}selected{{/selected}}>{{name}}</option>
+        {{/states}}</select>
+        {{#with errors}}
+            {{#if stateError}}
+                <span class="error">
+                            Estado: {{stateError}}
+                    </span>
+            {{/if}}
+        {{/with}}
         </div>
 
         <div class="managerCity">
             <label for="city">Cidade</label>
-            <input type="text" name="city" maxlength="100" size="100" value="{{city}}">
-
+            <input type="text" name="city" maxlength="100" size="100" value="{{manager.city}}">
+            {{#with errors}}
+                {{#if cityError}}
+                    <span class="error">
+                            Cidade: {{cityError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
         <div class="managerCommissionPercentage">
-            <label for="commission_percentage">Permissão de comissão</label>
-            <input type="text" name="commission_percentage" maxlength="100" size="100" value="{{commission_percentage}}">
+            <label for="commission_percentage">Percentual de comissão</label>
+            <input type="text" name="commission_percentage" maxlength="14" size="14" value="{{manager.commission_percentage}}">
+            {{#with errors}}
+                {{#if commissionPercentageError}}
+                    <span class="error">
+                            Nome: {{commissionPercentageError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
 
-        <div>
+        <div class="hiring_date">
             <label for="hiring_date">Data de contratação</label>
-            <input type="date" name="hiring_date" mask="00/00/0000" value="{{hiring_date}}">
+            <input type="date" name="hiring_date" maxlength="10" size="10" value="{{manager.hiring_date}}">
+            {{#with errors}}
+                {{#if hiring_dateError}}
+                    <span class="error">
+                            Data de nascimento: {{hiring_dateError}}
+                    </span>
+                {{/if}}
+            {{/with}}
         </div>
+
+<!--        <div class="managerCpf">-->
+<!--            <label for="cpf">CPF</label>-->
+<!--            <input type="text" name="cpf" maxlength="11" size="11" value="{{cpf}}">-->
+<!--        </div>-->
+
+<!--        <div class="managerBirthDate">-->
+<!--            <label for="date_birth">Data de nascimento</label>-->
+<!--            <input type="date" name="date_birth" mask="00/00/0000" value="{{date_birth}}">-->
+<!--        </div>-->
+
+<!--        <div class="managerPhone">-->
+<!--            <label for="phone">Telefone</label>-->
+<!--            <input type="text" name="phone" maxlength="14" size="14" value="{{phone}}">-->
+<!--        </div>-->
+
+<!--        <div class="managerEmail">-->
+<!--            <label for="email">E-mail</label>-->
+<!--            <input type="text" name="email" maxlength="100" size="100" value="{{email}}">-->
+<!--        </div>-->
+
+<!--        <div class="managerState">-->
+<!--            <label for="state">Estado</label>-->
+<!--            <select name="state">-->
+<!--                <option value="RJ">Rio de Janeiro</option>-->
+<!--            </select>-->
+<!--        </div>-->
+
+<!--        <div class="managerCity">-->
+<!--            <label for="city">Cidade</label>-->
+<!--            <input type="text" name="city" maxlength="100" size="100" value="{{city}}">-->
+
+<!--        </div>-->
+
+<!--        <div class="managerCommissionPercentage">-->
+<!--            <label for="commission_percentage">Percentual de comissão</label>-->
+<!--            <input type="text" name="commission_percentage" maxlength="100" size="100" value="{{commission_percentage}}">-->
+<!--        </div>-->
+
+<!--        <div>-->
+<!--            <label for="hiring_date">Data de contratação</label>-->
+<!--            <input type="date" name="hiring_date" value="{{hiring_date}}">-->
+<!--        </div>-->
 
         <button hx-target="#managerItemsTable"
                 hx-select="#managerItemsTable"
@@ -63,3 +161,6 @@
         </button>
     </div>
 </form>
+<script>
+
+</script>

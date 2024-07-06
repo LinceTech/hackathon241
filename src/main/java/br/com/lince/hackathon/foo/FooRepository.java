@@ -19,12 +19,12 @@ public interface FooRepository {
      *
      * @param page  índice da pagina a ser carregada
      * @param count número de itens na pagina
-     * @return lista de foos considerando uma paginação de {count} itens, na página {page.hbs}
+     * @return lista de foos considerando uma paginação de {count} itens, na página {page}
      */
     @RegisterBeanMapper(Foo.class)
     @UseFreemarkerEngine
     @SqlQuery("SELECT bar, bas, boo FROM foo ORDER BY bar OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
-    List<Foo> selectPage(@Define("page.hbs") int page, @Define("count") int count);
+    List<Foo> selectPage(@Define("page") int page, @Define("count") int count);
 
     /**
      * Counts the number of rows in the foo table
