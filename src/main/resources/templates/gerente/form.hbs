@@ -1,11 +1,11 @@
 <form id="gerenteForm">
-    <input type="hidden" name="id" value="{{id}}">
+    <input type="hidden" name="id" value="{{gerente.id}}">
 
     <div>
         <label>
             <span style="width: 120px; display: inline-block;">Nome:</span>
             <span>
-                <input type="text" name="nome" maxlength="60" size="60" value="{{nome}}">
+                <input type="text" name="nome" maxlength="60" size="60" value="{{gerente.nome}}">
                 {{#with errors}}
                     {{#if nomeError}}
                         <span class="error">
@@ -22,7 +22,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">CPF:</span>
             <span>
-                <input type="text" name="cpf" size="14" maxlength="14" value="{{cpf}}">
+                <input type="text" name="cpf" size="14" maxlength="14" value="{{gerente.cpf}}">
                 {{#with errors}}
                     {{#if cpfError}}
                         <span class="error">
@@ -39,7 +39,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Data Nascimento: </span>
             <span>
-                <input type="text" id="dtNascimento" name="dtNascimento" value="{{dtNascimento}}">
+                <input type="text" id="dtNascimento" name="dtNascimento" value="{{gerente.dtNascimento}}">
                 {{#with errors}}
                     {{#if dtNascimentoError}}
                         <span class="error">
@@ -56,7 +56,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Telefone:</span>
             <span>
-                <input type="text" name="telefone" size="14" maxlength="14" value="{{telefone}}">
+                <input type="text" name="telefone" size="14" maxlength="14" value="{{gerente.telefone}}">
                 {{#with errors}}
                     {{#if telefoneError}}
                         <span class="error">
@@ -73,7 +73,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Email:</span>
             <span>
-                <input type="text" name="email" size="60" maxlength="60" value="{{email}}">
+                <input type="text" name="email" size="60" maxlength="60" value="{{gerente.email}}">
                 {{#with errors}}
                     {{#if emailError}}
                         <span class="error">
@@ -108,33 +108,11 @@
         <label>
             <span style="width: 120px; display: inline-block;">Estado:</span>
             <span>
-                <select name="estado">
-                  <option value="AC">AC</option>
-                  <option value="AL">AL</option>
-                  <option value="AP">AP</option>
-                  <option value="AM">AM</option>
-                  <option value="BA">BA</option>
-                  <option value="CE">CE</option>
-                  <option value="DF">DF</option>
-                  <option value="ES">ES</option>
-                  <option value="GO">GO</option>
-                  <option value="MA">MA</option>
-                  <option value="MT">MT</option>
-                  <option value="MS">MS</option>
-                  <option value="MG">MG</option>
-                  <option value="PA">PA</option>
-                  <option value="PB">PB</option>
-                  <option value="PR">PR</option>
-                  <option value="PE">PE</option>
-                  <option value="PI">PI</option>
-                  <option value="RJ">RJ</option>
-                  <option value="RN">RN</option>
-                  <option value="RS">RS</option>
-                  <option value="RO">RO</option>
-                  <option value="RR">RR</option>
-                  <option value="SC">SC</option>
-                  <option value="SP">SP</option>
-                  <option value="SE">SE</option>
+                <select id="estado" name="estado">
+                  <option value=""></option>
+                    {{#estados}}
+                        <option value="{{this}}" {{#if (eq gerente.estado this)}}selected{{/if}}>{{this}}</option>
+                    {{/estados}}
                 </select>
                 {{#with errors}}
                     {{#if estadoError}}
@@ -152,7 +130,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Cidade:</span>
             <span>
-                <input type="text" name="cidade" size="60" maxlength="60" value="{{cidade}}">
+                <input type="text" id="cidade" name="cidade" size="60" maxlength="60" value="{{gerente.cidade}}">
                 {{#with errors}}
                     {{#if cidadeError}}
                         <span class="error">
@@ -169,7 +147,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Comissão:</span>
             <span>
-                <input type="text" name="comissao" size="6" maxlength="6" value="{{comissao}}">
+                <input type="text" name="comissao" size="6" maxlength="6" value="{{gerente.comissao}}">
                 {{#with errors}}
                     {{#if comissaoError}}
                         <span class="error">
@@ -186,7 +164,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Data Contratação:</span>
             <span>
-                <input type="date" name="dtcontratacao" size="10" maxlength="10" value="{{dtcontratacao}}">
+                <input type="date" name="dtcontratacao" size="10" maxlength="10" value="{{gerente.dtcontratacao}}">
                 {{#with errors}}
                     {{#if dtcontratacaoError}}
                         <span class="error">

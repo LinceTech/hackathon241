@@ -2,8 +2,7 @@ package br.com.lince.hackathon.cliente;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 public class Cliente {
     private int    id           ;

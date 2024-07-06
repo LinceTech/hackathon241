@@ -196,11 +196,11 @@ public class GerenteServlet extends HttpServlet {
      * Trata a requisição para alimentar o formulário de cadastro ou edição de gerentes
      */
     private void loadFormEdit(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<Gerente>("gerente/form", response);
+        final var renderer = new TemplateRenderer<GerenteViewData>("gerente/form", response);
         final var id = NumberUtils.toInt(request.getParameter("id"), 0);
 
         JDBIConnection.instance().withExtension(Time7Repository.class, dao -> {
-            renderer.render(dao.findByIdGerente(id));
+            renderer.render(new GerenteViewData(dao.findByIdGerente(id)));
             return null;
         });
     }
