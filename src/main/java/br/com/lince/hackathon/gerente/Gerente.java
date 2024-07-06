@@ -1,5 +1,6 @@
 package br.com.lince.hackathon.gerente;
 
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 public class Gerente {
@@ -117,6 +118,12 @@ public class Gerente {
 
     public int getDtNascimento() {
         return dtNascimento;
+    }
+
+    public String getDtNascimentoFormat() {
+        SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dataNasc = dmyFormat.format(dtNascimento);
+        return dataNasc;
     }
 
     public void setDtNascimento(int dtNascimento) {

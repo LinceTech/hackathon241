@@ -123,20 +123,20 @@ public class GerenteServlet extends HttpServlet {
         final var gerente = new Gerente(id, nome, cpf, dtNascimento, telefone, email, cep, cidade, estado, comissao, dtcontratacao);
         final var errors = new HashMap<String, String>();
 
-        //--validações
+        // VALIDA NOME
         if (nome.isBlank()) {
             errors.put("nomeError", "Não pode ser vazio");
         } else if (nome.length() > 60) {
             errors.put("nomeError", "Não pode ser maior que 60 caracteres");
         }
-
+        // VALIDA CPF
         if (cpf == 0) {
             errors.put("cpfError", "Não pode ser vazio");
         }
-//        else if (!ValidaCPF.isCPF(String.format("%11d",cpf))) {
-//            errors.put("cpfError", "CPF inválido");
-//        }
-
+        else if (!ValidaCPF.isCPF(String.format("%11d",cpf))) {
+            errors.put("cpfError", "CPF inválido");
+        }
+        // VALIDA DATA NASCIMENTO
         if (dtNascimento == 0) {
             errors.put("dtNascimentoError", "Não pode ser vazio");
         } else if (dtNascimento > now) {
@@ -144,29 +144,36 @@ public class GerenteServlet extends HttpServlet {
         } else if ((now - dtNascimento) < 180000) {
             errors.put("dtNascimentoError", "Cliente deve ter mais de 18 anos");
         }
-
+        // VALIDA TELEFONE
         if (telefone == 0) {
             errors.put("telefoneError", "Não pode ser vazio");
         } else if (!ValidaTelefone.validaFone(String.valueOf(telefone))){
             errors.put("telefoneError", "Telefone invalido");
         }
-
+        // VALIDA EMAIL
         if (email.isBlank()) {
             errors.put("emailError", "Não pode ser vazio");
         } else if (!ValidaEmail.isValidEmail(email)){
             errors.put("emailError", "Email invalido");
         }
-
+        // VALIDA CEP
         if (cep == 0) {
             errors.put("cepError", "Não pode ser vazio");
         }
-
+        // VALIDA CIDADE
+        if (cidade.isBlank()) {
+            errors.put("cidadeError", "Não pode ser vazio");
+        }
+        // VALIDA COMISSAO
         if (comissao == 0) {
             errors.put("comissaoError", "Não pode ser vazio");
-        }else if(comissao > 25){
+        } else if(comissao > 25){
             errors.put("comissaoError", "Comissão não pode ser maior que 25%");
         }
-
+        // VALIDA DATA NASCIMENTO
+        if (dtcontratacao == 0) {
+            errors.put("dtNascimentoError", "Não pode ser vazio");
+        }
 
         JDBIConnection.instance().withExtension(Time7Repository.class, dao -> {
             // Verificar se ocorreram erros no formulário
