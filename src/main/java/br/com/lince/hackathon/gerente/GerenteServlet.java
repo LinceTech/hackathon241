@@ -113,9 +113,9 @@ public class GerenteServlet  extends HttpServlet {
         }
         if (email.isBlank()) {
             errors.put("emailError", "Não pode ser vazio");
-        }else if(Funcoes.validaEmail(email)){
-            errors.put("emailError", "Inválido");
-        }
+        }//else if(!Funcoes.validaEmail(email)){
+        //    errors.put("emailError", "Inválido");
+        //}
 
         if (cidade.isBlank()) {
             errors.put("cidadeError", "Não pode ser vazio");
