@@ -98,9 +98,9 @@ public class ClienteServlet extends HttpServlet {
 
         final var id           = NumberUtils.toInt(request.getParameter("id"), 0);
         final var nome         = request.getParameter("nome");
-        final long cpf         = NumberUtils.toLong(request.getParameter("cpf"), 0);
+        final var cpf          = NumberUtils.toLong(request.getParameter("cpf"), 0);
         final var dtNascimento = NumberUtils.toInt(request.getParameter("dtNascimento").replaceAll("-", ""), 0);
-        final long telefone    = NumberUtils.toLong(request.getParameter("telefone"), 0);
+        final var telefone     = NumberUtils.toLong(request.getParameter("telefone"), 0);
         final var email        = request.getParameter("email");
         final var cep          = NumberUtils.toInt(request.getParameter("cep").replaceAll("[^0-9.]", ""), 0);
         final var cidade       = request.getParameter("cidade");
