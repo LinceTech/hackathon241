@@ -1,4 +1,6 @@
 <form id="clienteForm">
+
+
     <div>
         <label>
             <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">Nome:</span>
@@ -7,7 +9,7 @@
                 {{#with errors}}
                     {{#if nomeError}}
                         <span class="error">
-                            Bas: {{nomeError}}
+                            Atenção: {{nomeError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -21,7 +23,7 @@
                 {{#with errors}}
                     {{#if cpfError}}
                         <span class="error">
-                            Bas: {{cpfError}}
+                            Atenção: {{cpfError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -31,11 +33,11 @@
         <label>
             <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">Data de nascimento:</span>
             <span>
-                <input type="date" name="dt_nascimento" maxlength="10" size="10" value="{{dt_nascimento}}">
+                <input type="date" name="dt_nascimento" id="dt_nascimento" maxlength="10" size="10" value="{{dt_nascimento}}">
                 {{#with errors}}
-                    {{#if basError}}
+                    {{#if dt_nascimentoError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            Atenção: {{dt_nascimentoError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -49,7 +51,7 @@
                 {{#with errors}}
                     {{#if telefError}}
                         <span class="error">
-                            Bas: {{telefError}}
+                            Atenção: {{telefError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -63,7 +65,7 @@
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
-                            Bas: {{emailError}}
+                            Atenção: {{emailError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -77,7 +79,7 @@
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
-                            Bas: {{cepError}}
+                            Atenção: {{cepError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -91,7 +93,7 @@
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
-                            Bas: {{cidadeError}}
+                            Atenção: {{cidadeError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -109,7 +111,7 @@
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
-                            Bas: {{estadoError}}
+                            Atenção: {{estadoError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -123,7 +125,7 @@
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
-                            Bas: {{bairoError}}
+                            Atenção: {{bairoError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -137,7 +139,7 @@
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
-                            Bas: {{ruaError}}
+                            Atenção: {{ruaError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -151,7 +153,7 @@
                 {{#with errors}}
                     {{#if basError}}
                         <span class="error">
-                            Bas: {{residenciaError}}
+                            Atenção: {{residenciaError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -159,9 +161,6 @@
             <br>
         </label>
     </div>
-
-
-
     <br>
     <button hx-target="#formAndTable"
             hx-select="#formAndTable"
@@ -169,15 +168,15 @@
             hx-post="cliente/upsert"
             hx-include="[name='page']"
             style="display: inline-flex">
-        <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
+        <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar cliente">
         &nbsp;
-        {{#if bar}}
+        {{#if nr_cpf}}
             Atualizar
         {{^}}
             Cadastrar
         {{/if}}
     </button>
-    {{#if bar}}
+    {{#if nr_cpf}}
         <button hx-target="#clienteForm"
                 hx-select="#clienteForm"
                 hx-swap="outerHTML"

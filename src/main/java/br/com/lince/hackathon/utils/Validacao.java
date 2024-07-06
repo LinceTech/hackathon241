@@ -1,14 +1,19 @@
 package br.com.lince.hackathon.utils;
 
+import br.com.lince.hackathon.cliente.ClienteServlet;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.logging.Logger;
 
 public class Validacao {
+
+    private static final Logger logger = Logger.getLogger(ClienteServlet.class.getName());
 
     public static boolean isMaior18(LocalDate dt_nascimento) {
         var ldNow = LocalDate.now();
         var chrono = ChronoUnit.YEARS.between(dt_nascimento, ldNow );
-
+        logger.severe(""+chrono);
         return chrono >= 18;
     }
 

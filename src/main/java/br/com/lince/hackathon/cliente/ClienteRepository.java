@@ -45,7 +45,7 @@ public interface ClienteRepository {
     @RegisterBeanMapper(Cliente.class)
     @UseFreemarkerEngine
     @SqlQuery("SELECT * FROM cliente WHERE nr_cpf = :nr_cpf")
-    Cliente findByCliente(@Bind("cliente") String nr_cpf);
+    Cliente findByCliente(@Bind("nr_cpf") String nr_cpf);
 
     /**
      * Verifica se existe um foo com o {bar} informado
@@ -82,7 +82,7 @@ public interface ClienteRepository {
      */
 
     @UseFreemarkerEngine
-    @SqlUpdate("UPDATE Cliente SET nm_cliente = :Cliente.nm_cliente WHERE nr_cpf = :Cliente.nr_cpf")
-    void update(@BindBean("nr_cpf") Cliente cliente);
+    @SqlUpdate("UPDATE cliente SET nr_telefone = :cliente.nr_telefone , ds_email = :cliente.ds_email , nr_cep = :cliente.nr_cep, nm_cidade = :cliente.nm_cidade, nm_estado = :cliente.nm_estado, nm_bairro = :cliente.nm_bairro, nm_rua = :cliente.nm_rua, nr_residencia = :cliente.nr_residencia WHERE nr_cpf = :cliente.nr_cpf")
+    void update(@BindBean("cliente") Cliente cliente);
 }
 

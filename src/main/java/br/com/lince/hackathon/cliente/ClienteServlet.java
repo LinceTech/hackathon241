@@ -3,6 +3,7 @@ package br.com.lince.hackathon.cliente;
 import br.com.lince.hackathon.foo.FooRepository;
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
+import br.com.lince.hackathon.utils.Validacao;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -38,7 +40,7 @@ public class ClienteServlet extends HttpServlet {
                 break;
 
             case "/edit":
-                loadFormEditFoo(request, response);
+                loadFormEditCliente(request, response);
                 break;
 
             case "/delete":
@@ -100,6 +102,7 @@ public class ClienteServlet extends HttpServlet {
         final var nr_cep = request.getParameter("nr_cep");
         final var nr_cpf = request.getParameter("nr_cpf");
 
+
         final var cliente_insert = new Cliente(nm_cliente, nr_cpf, dt_nascimento, nr_telefone, ds_email, nm_bairro, nr_cep, nm_cidade, nm_estado, nr_residencia, nm_rua);
 
         final var errors = new HashMap<String, String>();
@@ -150,20 +153,17 @@ public class ClienteServlet extends HttpServlet {
             errors.put("ruaError", "Rua não pode ser maior que 100 caracteres");
         }
 
-        if(nr_residencia == 0){
+        if(nr_residencia == 0) {
             errors.put("residenciaError", "Número residencia não pode ser vazio");
         }
-
-        var ldNow = LocalDate.now();
-        var chrono = ChronoUnit.YEARS.between(dt_nascimento, ldNow );
-        isMaior18(dt_nascimento);
-        if (chrono < 18L) {
+        /*
+        if (dt_nascimento.equals(LocalDate.MIN)) {
+            errors.put("dt_nascimentoError", "A data de nascimento não pode ser vazio!");
+        } else */if (!Validacao.isMaior18(dt_nascimento)) {
             errors.put("dt_nascimentoError", "A idade não pode ser inferior a 18 anos!");
         }
 
         JDBIConnection.instance().withExtension(ClienteRepository.class, cliente -> {
-
-
             if (errors.isEmpty()) {
                 if (cliente.exists(nr_cpf)) {
                     cliente.update(cliente_insert);
@@ -186,7 +186,7 @@ public class ClienteServlet extends HttpServlet {
     }
 
 
-    private void loadFormEditFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void loadFormEditCliente(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<Cliente>("cliente/form", response);
         final var nr_cpf = request.getParameter("nr_cpf");
 
