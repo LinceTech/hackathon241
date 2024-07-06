@@ -117,43 +117,55 @@ public class LocacaoCadastroServlet extends HttpServlet {
         private void insertOrUpdateCliente(HttpServletRequest request, HttpServletResponse response) throws IOException {
             var renderer = new TemplateRenderer<LocacaoViewData>("locacoes/locacaoCadastro", response);
             var id = NumberUtils.toInt(request.getParameter("id"), 0);
+            double valor_diaria = 0.0;
+            AtomicReference<Double> percentualComissao = new AtomicReference<>();
             HashMap<String,String> errors = new HashMap<>();
             // Acessando o repositório de Clientes
 
-            AtomicReference<Cliente> cliente = new AtomicReference<>();
-            JDBIConnection.instance().withExtension(ClienteRepository.class, clienteDao -> {
-                cliente.set(clienteDao.findById(NumberUtils.toInt(request.getParameter("id_cliente"))));
-                return null;
+            Cliente cliente = JDBIConnection.instance().withExtension(ClienteRepository.class, clienteDao -> {
+                return clienteDao.findById(NumberUtils.toInt(request.getParameter("id_cliente")));
             });
 
-            AtomicReference<Gerentes> gerente = new AtomicReference<>();
-            JDBIConnection.instance().withExtension(GerenteRepository.class, gerenteDao -> {
-                gerente.set(gerenteDao.findById(NumberUtils.toInt(request.getParameter("id_gerente"))));
-                return null;
+            Gerentes gerente = JDBIConnection.instance().withExtension(GerenteRepository.class, gerenteDao -> {
+                return gerenteDao.findById(NumberUtils.toInt(request.getParameter("id_gerente")));
             });
-            AtomicReference<Veiculos> veiculo = new AtomicReference<>();
-            JDBIConnection.instance().withExtension(VeiculoRepository.class, veiculoDao -> {
-                veiculo.set(veiculoDao.findById(NumberUtils.toInt(request.getParameter("id_veiculo"))));
-                return null;
+
+            Veiculos veiculo = JDBIConnection.instance().withExtension(VeiculoRepository.class, veiculoDao -> {
+                return veiculoDao.findById(NumberUtils.toInt(request.getParameter("id_veiculo")));
             });
 
             LocalDate data_inicio = null;
             try {
                 data_inicio = LocalDate.parse(request.getParameter("data_inicio").trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            } catch (java.time.format.DateTimeParseException e) {
+            } catch (Exception e) {
                 errors.put("dataInicioErro", "Data de início deve ser iformada");
             }
             LocalDate data_entrega = null;
             try {
                 data_entrega = LocalDate.parse(request.getParameter("data_final").trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            } catch (java.time.format.DateTimeParseException e) {
+            } catch (Exception e) {
                 errors.put("dataInicioErro", "Data de entrega deve ser iformada");
             }
+            try{
+                JDBIConnection.instance().withExtension(LocacaoRepository.class, locacaoDao -> {
+                    percentualComissao.set(locacaoDao.getComissao(gerente));
+                    return null;
+                });
+            } catch (Exception e){
+                errors.put("valorDiariaErro", "Erro ao coletar a comissão de gerente");
+            }
 
-            final var locacao = new Locacao();
+            try {
+                valor_diaria = Double.parseDouble(request.getParameter("valorDiaria"));
+            } catch (Exception e) {
+                errors.put("valorDiariaErro", "Informe um valor de diária válido");
+            }
 
 
-            renderer.render(new LocacaoViewData(errors,locacao));
+            //final var locacao = new Locacao(cliente,gerente,veiculo,data_inicio,data_entrega,valor_diaria,percentualComissao,0.0,null);
+
+
+            //renderer.render(new LocacaoViewData(errors,locacao));
 
 
 

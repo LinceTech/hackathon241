@@ -9,6 +9,7 @@ import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public interface LocacaoRepository {
     @RegisterBeanMapper(Locacao.class)
@@ -28,5 +29,10 @@ public interface LocacaoRepository {
     @UseFreemarkerEngine
     @SqlQuery("SELECT id, id_cliente, id_gerente, id_veiculo, data_inicio, data_entrega, valor_diaria, percentual_comissao, valor_total_pago, data_pagamento FROM locacoes ORDER BY ${campo}  ${sentido} OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
     List<Locacao> selectFilterPage(@Define("page") int page, @Define("count") int count, @Define("locacaoFiltro") LocacaoFiltro locacaoFiltro, @Define ("campo") String campo, @Define("sentido") String sentido);
+
+
+    @UseFreemarkerEngine
+    @SqlQuery("SELECT PercentualDeComissao FROM gerente where id = :gerente.id")
+    double getComissao(@Define("gerente") Gerentes gerente);
 
 }

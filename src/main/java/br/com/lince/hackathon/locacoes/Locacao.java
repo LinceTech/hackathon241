@@ -6,6 +6,7 @@ import br.com.lince.hackathon.veiculos.Veiculos;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Locacao {
     private int id;
@@ -35,6 +36,7 @@ public class Locacao {
         this.valor_total_pago = valor_total_pago;
         this.data_pagamento = data_pagamento;
     }
+
 
     public int getId() {
         return id;
