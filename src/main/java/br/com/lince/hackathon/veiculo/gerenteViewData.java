@@ -11,34 +11,34 @@ public class gerenteViewData {
     /**
      * Construtor utilizado para renderizar a página com a lista de foos.
      *
-     * @param veiculos     lista de foos
+     * @param gerentes     lista de foos
      * @param dateTime data e hora
      * @param page     número da pagina
      * @param pageSize número de itens da página atual
      * @param count    número total de foos
      */
     public gerenteViewData(
-            List<Veiculo> veiculos,
+            List<Gerente> gerentes,
             LocalDateTime dateTime,
             int page,
             int pageSize,
             int count
     ) {
-        this.veiculos = veiculos;
+        this.gerentes = gerentes;
         this.dateTime = dateTime;
         this.page = page;
         this.pageSize = pageSize;
         this.count = count;
         this.errors = null;
-        this.veiculo = null;
+        this.gerente = null;
     }
 
     /**
      * Construtor utilizado para renderizar a página com a lista de foos.
      *
      * @param errors   mapa contendo os errors que ocorreram no formulário
-     * @param veiculo      item a ser alimentado no formulário de cadastro/edição
-     * @param veiculos     lista de foos
+     * @param gerente      item a ser alimentado no formulário de cadastro/edição
+     * @param gerentes     lista de foos
      * @param dateTime data e hora
      * @param page     número da pagina
      * @param pageSize número de itens da página atual
@@ -46,23 +46,23 @@ public class gerenteViewData {
      */
     public gerenteViewData(
             HashMap<String, String> errors,
-            Veiculo veiculo, List<Veiculo> veiculos,
+            Gerente gerente, List<Gerente> gerentes,
             LocalDateTime dateTime,
             int page,
             int pageSize,
             int count
     ) {
-        this.veiculos = veiculos;
+        this.gerentes = gerentes;
         this.dateTime = dateTime;
         this.page = page;
         this.pageSize = pageSize;
         this.count = count;
         this.errors = errors;
-        this.veiculo = veiculo;
+        this.gerente = gerente;
     }
 
-    private final Veiculo veiculo;
-    private final List<Veiculo> veiculos;
+    private final Gerente gerente;
+    private final List<Gerente> gerentes;
     private final LocalDateTime dateTime;
     private final int page;
     private final int pageSize;
@@ -73,12 +73,12 @@ public class gerenteViewData {
         return errors;
     }
 
-    public Veiculo getFoo() {
-        return veiculo;
+    public Gerente getFoo() {
+        return gerente;
     }
 
-    public List<Veiculo> getGerentes() {
-        return veiculos;
+    public List<Gerente> getGerentes() {
+        return gerentes;
     }
 
     public LocalDateTime getDateTime() {

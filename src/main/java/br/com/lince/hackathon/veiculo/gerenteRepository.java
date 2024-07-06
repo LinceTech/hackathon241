@@ -23,10 +23,10 @@ public interface gerenteRepository {
      */
 
 
-    @RegisterBeanMapper(Veiculo.class)
+    @RegisterBeanMapper(Gerente.class)
     @UseFreemarkerEngine
     @SqlQuery("SELECT CDGERENTE, NOME, CPF, DDD, TELEFONE, EMAIL, CIDADE, ESTADO, PCCOMISSAO, DTCONTRATACAO, INDATIVO FROM GERENTE ORDER BY ${orderBy} OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
-    List<Veiculo> selectPage(@Define("page") int page, @Define("count") int count, @Define("orderBy") String orderBy);
+    List<Gerente> selectPage(@Define("page") int page, @Define("count") int count, @Define("orderBy") String orderBy);
 
     /**
      * Counts the number of rows in the foo table
@@ -43,10 +43,10 @@ public interface gerenteRepository {
      * @param bar valor para selecionar o foo correto
      * @return foo
      */
-    @RegisterBeanMapper(Veiculo.class)
+    @RegisterBeanMapper(Gerente.class)
     @UseFreemarkerEngine
     @SqlQuery("SELECT CDGERENTE, NOME, CPF, DDD, TELEFONE, EMAIL, CIDADE, ESTADO, PCCOMISSAO, DTCONTRATACAO, INDATIVO FROM GERENTE WHERE CDGERENTE = :cdgerente")
-    Veiculo findByBar(@Bind("cdgerente") int cdgerente);
+    Gerente findByBar(@Bind("cdgerente") int cdgerente);
 
     /**
      * Verifica se existe um foo com o {bar} informado
@@ -74,7 +74,7 @@ public interface gerenteRepository {
      */
     @UseFreemarkerEngine
     @SqlUpdate("SET IDENTITY_INSERT GERENTE ON INSERT INTO GERENTE(CDGERENTE, NOME, CPF, DDD, TELEFONE, EMAIL, CIDADE, ESTADO, PCCOMISSAO, DTCONTRATACAO, INDATIVO) VALUES (:gerente.cdgerente, :gerente.nome, :gerente.cpf, :gerente.ddd, :gerente.telefone, :gerente.email, :gerente.cidade, :gerente.estado, :gerente.pccomissao, :gerente.dtcontratacao, :gerente.indativo)")
-    void insert(@BindBean("gerente") Veiculo veiculo);
+    void insert(@BindBean("gerente") Gerente gerente);
 
     /**
      * Atualiza um foo na base de dados, conforme o valor de {bar} desse foo
@@ -83,5 +83,5 @@ public interface gerenteRepository {
      */
     @UseFreemarkerEngine
     @SqlUpdate("UPDATE GERENTE SET  NOME = :gerente.nome, DDD = :gerente.ddd, TELEFONE = :gerente.telefone, EMAIL = :gerente.email, CIDADE = :gerente.cidade, ESTADO = :gerente.estado, PCCOMISSAO = :gerente.pccomissao, DTCONTRATACAO = :gerente.dtcontratacao WHERE CDGERENTE = :gerente.cdgerente")
-    void update(@BindBean("gerente") Veiculo veiculo);
+    void update(@BindBean("gerente") Gerente gerente);
 }

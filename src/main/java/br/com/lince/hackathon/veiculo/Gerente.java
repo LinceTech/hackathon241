@@ -8,11 +8,11 @@ import java.time.LocalDate;
  * <br/>
  * Obs.: Em versões mais recentes do Java, essa classe seria criada como um Record.
  */
-public class Veiculo {
+public class Gerente {
     /**
      * Construtor vazio, necessário para uso com JDBI mapper
      */
-    public Veiculo() {
+    public Gerente() {
     }
 
     public int getIndativo() {
@@ -30,7 +30,7 @@ public class Veiculo {
      * @param nome valor para bas
      * @param cpf valor para boo
      */
-    public Veiculo(int cdgerente, String nome, String cpf, int telefone, int ddd, String email, String cidade, String estado, double pccomissao, LocalDate dtcontratacao, int indativo) {
+    public Gerente(int cdgerente, String nome, String cpf, int telefone, int ddd, String email, String cidade, String estado, double pccomissao, LocalDate dtcontratacao, int indativo) {
         this.cdgerente = cdgerente;
         this.cpf = cpf;
         this.nome = nome;

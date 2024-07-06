@@ -10,7 +10,7 @@
 <hr>
 
 <div id="formAndTable">
-    {{>veiculo/form veiculo}}
+    {{>gerente/form gerente}}
 
     <hr>
 
@@ -25,7 +25,7 @@
                      hx-target="#gerenteItemsTable"
                      hx-select="#gerenteItemsTable"
                      hx-swap="innerHTML"
-                     hx-get="veiculo?page={{previous}}">
+                     hx-get="gerente?page={{previous}}">
             {{/if}}
 
             <span style="height: 18px; vertical-align: center;">
@@ -39,7 +39,7 @@
                      hx-target="#gerenteItemsTable"
                      hx-select="#gerenteItemsTable"
                      hx-swap="innerHTML"
-                     hx-get="veiculo?page={{next}}">
+                     hx-get="gerente?page={{next}}">
             {{/if}}
         </div>
 
@@ -47,23 +47,23 @@
             <thead>
             <tr>
                 <th style="width: 40px; text-align: right;">Código</th>
-                <th style="width: 200px; text-align: left; cursor:pointer;">Nome <span style="cursor:pointer;" hx-target="#gerenteItemsTable" hx-select="#gerenteItemsTable"  hx-get="veiculo?page={{index}}&orderBy=NOME:ASC">^</span> <span style="cursor:pointer;" hx-target="#gerenteItemsTable" hx-select="#gerenteItemsTable"  hx-get="veiculo?page={{index}}&orderBy=NOME:DESC">v</span></th>
+                <th style="width: 200px; text-align: left; cursor:pointer;">Nome <span style="cursor:pointer;" hx-target="#gerenteItemsTable" hx-select="#gerenteItemsTable"  hx-get="gerente?page={{index}}&orderBy=NOME:ASC">^</span> <span style="cursor:pointer;" hx-target="#gerenteItemsTable" hx-select="#gerenteItemsTable"  hx-get="gerente?page={{index}}&orderBy=NOME:DESC">v</span></th>
                 <th style="width: 300px; text-align: left;">CPF</th>
                 <th style="width: 300px; text-align: left;">Telefone</th>
                 <th style="width: 300px; text-align: left;">E-mail</th>
-                <th style="width: 300px; text-align: left;  cursor:pointer;">Cidade <span style="cursor:pointer;" hx-target="#gerenteItemsTable" hx-select="#gerenteItemsTable"  hx-get="veiculo?page={{index}}&orderBy=CIDADE:ASC">^</span> <span style="cursor:pointer;" hx-target="#gerenteItemsTable" hx-select="#gerenteItemsTable"  hx-get="veiculo?page={{index}}&orderBy=CIDADE:DESC">v</span></th>
+                <th style="width: 300px; text-align: left;  cursor:pointer;">Cidade <span style="cursor:pointer;" hx-target="#gerenteItemsTable" hx-select="#gerenteItemsTable"  hx-get="gerente?page={{index}}&orderBy=CIDADE:ASC">^</span> <span style="cursor:pointer;" hx-target="#gerenteItemsTable" hx-select="#gerenteItemsTable"  hx-get="gerente?page={{index}}&orderBy=CIDADE:DESC">v</span></th>
                 <th style="width: 300px; text-align: left;">Estado</th>
                 <th style="width: 300px; text-align: left;">Percentual comissão</th>
                 <th style="width: 300px; text-align: left;  cursor:pointer;"
                     hx-target="#gerenteItemsTable"
-                    hx-select="#gerenteItemsTable" >Data contratação <span style="cursor:pointer;" hx-target="#gerenteItemsTable" hx-select="#gerenteItemsTable"  hx-get="veiculo?page={{index}}&orderBy=DTCONTRATACAO:ASC">^</span> <span style="cursor:pointer;" hx-target="#gerenteItemsTable" hx-select="#gerenteItemsTable"  hx-get="veiculo?page={{index}}&orderBy=DTCONTRATACAO:DESC">v</span></th>
+                    hx-select="#gerenteItemsTable" >Data contratação <span style="cursor:pointer;" hx-target="#gerenteItemsTable" hx-select="#gerenteItemsTable"  hx-get="gerente?page={{index}}&orderBy=DTCONTRATACAO:ASC">^</span> <span style="cursor:pointer;" hx-target="#gerenteItemsTable" hx-select="#gerenteItemsTable"  hx-get="gerente?page={{index}}&orderBy=DTCONTRATACAO:DESC">v</span></th>
                 <th style="width: 50px">Ação</th>
             </tr>
             </thead>
             <tbody>
-            {{#veiculos}}
-                {{>veiculo/row}}
-            {{/veiculos}}
+            {{#gerentes}}
+                {{>gerente/row}}
+            {{/gerentes}}
             </tbody>
         </table>
     </div>
