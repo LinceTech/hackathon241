@@ -82,6 +82,7 @@ public class Cliente {
     }
 
     public String getDtNascimentoFormat() throws ParseException {
+        if (dtNascimento == 0) return "";
         Date data = new SimpleDateFormat("yyyyMMdd").parse(String.valueOf(dtNascimento));
         return new SimpleDateFormat("yyyy-MM-dd").format(data);
     }
