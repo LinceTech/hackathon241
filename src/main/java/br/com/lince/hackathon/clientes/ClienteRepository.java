@@ -1,6 +1,7 @@
 package br.com.lince.hackathon.clientes;
 
 import br.com.lince.hackathon.foo.Foo;
+import br.com.lince.hackathon.gerentes.GerenteFiltro;
 import br.com.lince.hackathon.gerentes.Gerentes;
 import org.jdbi.v3.freemarker.UseFreemarkerEngine;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
@@ -37,8 +38,13 @@ public interface ClienteRepository {
     boolean findByEmail(@Bind("email") String email);
 
     @UseFreemarkerEngine
-    @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM clientes WHERE cpf = :cpf ), 1, 0)")
-    boolean findByCPF(@Bind("cpf") String cpf);
+    @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM clientes WHERE cpf = :cpf and id != :id), 1, 0)")
+    boolean findByCPF(@Bind("cpf") String cpf, @Bind("id") int id);
+
+    @UseFreemarkerEngine
+    @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM clientes WHERE cpf = :email and id != :id), 1, 0)")
+    boolean findByEmail(@Bind("email") String email, @Bind("id") int id);
+
 
     @UseFreemarkerEngine
     @SqlUpdate("DELETE FROM clientes WHERE id = :id")
@@ -61,6 +67,16 @@ public interface ClienteRepository {
 
     @RegisterBeanMapper(Cliente.class)
     @UseFreemarkerEngine
+    @SqlQuery("SELECT * FROM clientes where clientes.Nome like '%${clienteFiltro.nome}%' or clientes.Cidade like '%${clienteFiltro.cidade}%' or clientes.data_nascimento = '${clienteFiltro.data_nascimento}' ORDER BY ${coluna} OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
+    List<Cliente> selectFilterPage(@Define("page") int page, @Define("count") int count, @Define("clienteFiltro") ClienteFiltro clienteFiltro, @Define("coluna") String coluna);
+
+    @RegisterBeanMapper(Cliente.class)
+    @UseFreemarkerEngine
     @SqlQuery("SELECT * FROM clientes ORDER BY nome OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
     List<Cliente> selectPage(@Define("page") int page, @Define("count") int count);
+
+    @RegisterBeanMapper(Cliente.class)
+    @UseFreemarkerEngine
+    @SqlQuery("SELECT * FROM clientes WHERE clientes.nome like '%${clienteFiltro.nome}%' OR clientes.cidade like '%${clienteFiltro.cidade}%' or clientes.data_nascimento = '${clienteFiltro.data_nascimento}' ORDER BY id ")
+    int countFilter(@Define("clienteFiltro") ClienteFiltro clienteFiltro);
 }

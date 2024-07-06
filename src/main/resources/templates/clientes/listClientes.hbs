@@ -1,26 +1,58 @@
-<!DOCTYPE html>
-<html lang="pt">
 <head>
-    <title>Clientes</title>
     {{>head}}
-    <style>
-        table {
-            border-collapse: collapse;
-        }
-
-        td, th {
-            border: 1px solid #dddddd;
-        }
-
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-    </style>
 </head>
+<body>
+{{>navbar}}
 
-<div class="container">
+    <div id="filtroClientes">
+        <form id="filtroClientes">
+        <label>Nome
+            <input type="text" name="nome" value="{{clienteFiltro.nome}}">
+        </label>
+        <label>Cidade
+            <input type="text" name="cidade" value="{{clienteFiltro.cidade}}">
+        </label>
+        <label>Data de Nascimento
+            <input type="date" name="data_nascimento" value="{{clienteFiltro.data_nascimento}}">
+        </label>
+        <button hx-target="filtroClientes"
+                hx-post="clientesLista"
+                hx-trigger="submit, reset:afterSettle"
+        >Filtrar</button>
+        <label>Ordenar por:
+            <select id="opcoes" name="ordecao">
+                <option value="1">Nome</option>
+                <option value="2">Cidade</option>
+                <option value="3">Data de Nascimento</option>
+            </select>
+        </label>
+        </form>>
+    </div>
+
+<div class="container" id="paginaClientes">
     <h2>Clientes</h2>
-    <table class="table table-striped table-bordered" id="tableClientes">
+    <div style="display: inline-flex; padding-bottom: 12px;">
+        {{#if hasPrevious}}
+            <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
+                 alt="Página anterior"
+                 style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
+                 hx-target="paginaClientes"
+                 hx-post="clientesLista?page={{previous}}">
+        {{/if}}
+
+        <span style="height: 18px; vertical-align: center;">
+                    Pagina <b>{{page}}</b> de <b>{{totalPages}}</b>
+                </span>
+
+        {{#if next}}
+            <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
+                 alt="Próxima página"
+                 style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
+                 hx-target="paginaClientes"
+                 hx-post="clientesLista?page={{next}}">
+        {{/if}}
+    </div>
+    <table class="table table-striped table-bordered" id="tableClientes" style="width:auto">
         <thead class="thead-dark">
         <tr>
             <th scope="col">Nome</th>
@@ -49,19 +81,20 @@
                     <img src="https://img.icons8.com/?size=18&id=71201&format=png&color=000000"
                                  alt="Editar item"
                                  style="cursor: pointer"
-                                 hx-target="#gerentesLista"
+                                 hx-target="#tableClientes"
                                  hx-replace="outerHTML"
-                                 hx-get="clientes/edit?id={{id}}" />
+                                 hx-get="clientesLista/edit?id={{id}}" />
                     <img src="https://img.icons8.com/?size=18&id=67884&format=png&color=000000"
                          alt="Apagar item"
                          style="cursor: pointer"
                          hx-target="#tableClientes"
                          hx-select="#tableClientes"
                          hx-replace="outerHTML"
-                         hx-get="deleteCliente?id={{id}}" />
-                <td>
+                         hx-get="clientesLista/deleteCliente?id={{id}}" />
+                </td>
             </tr>
         {{/clientes}}
         </tbody>
     </table>
 </div>
+</body>

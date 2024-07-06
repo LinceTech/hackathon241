@@ -25,6 +25,7 @@ public class ClientesViewData {
     private  int count;
     private  int total;
     private  int pageSize;
+    private ClienteFiltro filtro;
 
     public ClientesViewData(
             List<Cliente> clientes,
@@ -60,6 +61,14 @@ public class ClientesViewData {
         this.count = count;
     }
 
+    public ClientesViewData(List<Cliente> clientes, int page, int pageSize, int count, ClienteFiltro filtro) {
+        this.clientes = clientes;
+        this.page = page;
+        this.pageSize = pageSize;
+        this.count = count;
+        this.filtro = filtro;
+    }
+
     public ClientesViewData(){}
 
     public HashMap<String, String> getErrors() {
@@ -67,6 +76,22 @@ public class ClientesViewData {
     }
     public int getPage() {
         return page + 1;
+    }
+
+    public int getTotalPages() {
+        return Double.valueOf(Math.ceil(((Integer.valueOf(count).doubleValue()) / pageSize))).intValue();
+    }
+
+    public boolean getHasPrevious() {
+        return page > 0;
+    }
+
+    public int getPrevious() {
+        return page - 1;
+    }
+
+    public int getNext() {
+        return getPage() < getTotalPages() ? page + 1 : 0;
     }
 
 

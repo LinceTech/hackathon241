@@ -1,4 +1,11 @@
 <script>
+
+    $(document).ready(() => {
+        $('#cep').mask('00000-000');
+        $('#cpf').mask('000.000.000-00');
+    });
+
+
     const getCep = (cep) => {
         fetch(`https://viacep.com.br/ws/${cep}/json/`)
                 .then(response => {
