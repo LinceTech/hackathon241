@@ -1,5 +1,11 @@
-<div class="modal-content">
-    <form hx-post="/hackathon/clientes/save" hx-target="#cliente_lista" id="clienteForm">
+<div class="modal-content" id="cliente_formulario">
+    <form
+            hx-post="/hackathon/clientes/save"
+            hx-target="#cliente_lista"
+            hx-target-500="#cliente_formulario"
+            hx-swap="outerHTML"
+            id="form_cliente_formulario"
+    >
         <div class="modal-header">
             {{#if id}}
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Altere Cliente</h1>
@@ -11,7 +17,16 @@
         <div class="modal-body">
             <input type="hidden" id="id" name="id" value="{{id}}">
             <div class="mb-3">
-                <label for="title" class="form-label">Nome</label>
+                <label for="title" class="form-label">
+                    Nome
+                    {{#with erros}}
+                        {{#if nomeErro}}
+                            <span class="error">
+                                {{nomeErro}}
+                            </span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
                         type="text"
                         class="form-control"
@@ -23,21 +38,39 @@
             </div>
 
             <div class="mb-3">
-                <label for="cpf" class="form-label">CPF</label>
+                <label for="cpf" class="form-label">
+                    CPF
+                    {{#with erros}}
+                        {{#if cpfErro}}
+                            <span class="error">
+                                {{cpfErro}}
+                            </span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
                         type="text"
                         class="form-control"
                         id="cpf"
                         name="cpf"
-                        maxlength="14"
-                        size="14"
+                        maxlength="11"
+                        size="11"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 11)"
                         value="{{cpf}}"
 
                 >
+
             </div>
 
             <div class="mb-3">
-                <label for="dataNascimento" class="form-label">Data</label>
+                <label for="dataNascimento" class="form-label">
+                    Data
+                    {{#with erros}}
+                        {{#if dataNascimentoErro}}
+                            <span class="error">&nbsp;{{dataNascimentoErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
                         type="date"
                         class="form-control"
@@ -48,41 +81,71 @@
             </div>
 
             <div class="mb-3">
-                <label for="telefone_completo" class="form-label">Telefone</label>
+                <label for="telefone_completo" class="form-label">
+                    Telefone
+                    {{#with erros}}
+                        {{#if telefoneErro}}
+                            <span class="error">&nbsp;{{telefoneErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <div class="input-group">
                     <span class="input-group-text">DDD</span>
                     <input
-                            type="number"
+                            type="text"
                             class="form-control"
                             id="ddd"
                             name="ddd"
                             placeholder="(XX)"
+                            size="2"
+                            maxlength="2"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 2)"
                             value="{{ddd}}"
                     >
                     <input
-                            type="tel"
+                            type="text"
                             class="form-control"
                             id="telefone"
                             name="telefone"
                             placeholder="XXXXX-XXXX"
+                            size="9"
+                            maxlength="9"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 9)"
                             value="{{telefone}}"
                     >
                 </div>
             </div>
 
             <div class="mb-3">
-                <label for="cep" class="form-label">CEP</label>
+                <label for="cep" class="form-label">
+                    CEP
+                    {{#with erros}}
+                        {{#if cepErro}}
+                            <span class="error">&nbsp;{{cepErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
-                        type="number"
+                        type="text"
                         class="form-control"
                         id="cep"
                         name="cep"
+                        size="20"
+                        maxlength="20"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 20)"
                         value="{{cep}}"
                 >
             </div>
 
             <div class="mb-3">
-                <label for="cidade" class="form-label">Cidade</label>
+                <label for="cidade" class="form-label">
+                    Cidade
+                    {{#with erros}}
+                        {{#if cidadeErro}}
+                            <span class="error">&nbsp;{{cidadeErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
                         type="text"
                         class="form-control"
@@ -93,9 +156,16 @@
             </div>
 
             <div class="mb-3">
-                <label for="estado" class="form-label">Estado</label>
+                <label for="estado" class="form-label">
+                    Estado
+                    {{#with erros}}
+                        {{#if estadoErro}}
+                            <span class="error">&nbsp;{{estadoErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <select id="estado" name="estado" class="form-select">
-                    <option value="Vazio"></option>
+                    <option value=" "></option>
                     <option value="SC" {{#if (eq estado "SC")}}selected{{/if}}>SC</option>
                     <option value="RS" {{#if (eq estado "RS")}}selected{{/if}}>RS</option>
                     <option value="PR" {{#if (eq estado "PR")}}selected{{/if}}>PR</option>
@@ -103,7 +173,14 @@
             </div>
 
             <div class="mb-3">
-                <label for="bairro" class="form-label">Bairro</label>
+                <label for="bairro" class="form-label">
+                    Bairro
+                    {{#with erros}}
+                        {{#if bairroErro}}
+                            <span class="error">&nbsp;{{bairroErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
                         type="text"
                         class="form-control"
@@ -114,7 +191,14 @@
             </div>
 
             <div class="mb-3">
-                <label for="rua" class="form-label">Rua</label>
+                <label for="rua" class="form-label">
+                    Rua
+                    {{#with erros}}
+                        {{#if ruaErro}}
+                            <span class="error">&nbsp;{{ruaErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
                         type="text"
                         class="form-control"
@@ -125,20 +209,37 @@
             </div>
 
             <div class="mb-3">
-                <label for="numero" class="form-label">Número</label>
+                <label for="numero" class="form-label">
+                    Número
+                    {{#with erros}}
+                        {{#if numeroErro}}
+                            <span class="error">&nbsp;{{numeroErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
-                        type="number"
+                        type="text"
                         class="form-control"
                         id="numero"
                         name="numero"
+                        size="10"
+                        maxlength="10"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 10)"
                         value="{{numero}}"
                 >
             </div>
 
             <div class="mb-3">
-                <label for="email" class="form-label">E-mail</label>
+                <label for="email" class="form-label">
+                    E-mail
+                    {{#with erros}}
+                        {{#if emailErro}}
+                            <span class="error">&nbsp;{{emailErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
-                        type="email"
+                        type="text"
                         class="form-control"
                         id="email"
                         name="email"
@@ -149,7 +250,16 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Salvar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
     </form>
+    <script>
+        var formulario = document.getElementById("form_cliente_formulario");
+
+        formulario.addEventListener("htmx:afterRequest", (event) => {
+            if (event?.detail?.xhr?.status == 200) {
+                $("#clienteModal").modal('hide');
+            }
+        })
+    </script>
 </div>

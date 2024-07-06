@@ -1,6 +1,5 @@
 package br.com.lince.hackathon.clientes;
 
-import br.com.lince.hackathon.gerentes.Gerentes;
 import org.jdbi.v3.freemarker.UseFreemarkerEngine;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -15,16 +14,19 @@ import java.util.List;
 public interface ClientesRepository {
     @RegisterBeanMapper(Clientes.class)
     @SqlQuery(
-            "SELECT * FROM CLIENTES C (NOLOCK)" +
-                    " ORDER BY C.nome ASC OFFSET (${pagina} * ${qtRegistros}) ROWS FETCH NEXT ${qtRegistros} ROWS ONLY"
+            "SELECT * FROM CLIENTES C (NOLOCK) \n" +
+                    "WHERE C.nome          LIKE CONCAT('%', :clienteFiltros.nome, '%') \n" +
+                    "AND C.cidade          LIKE CONCAT('%', :clienteFiltros.cidade, '%') \n" +
+                    "ORDER BY C.nome ASC \n" +
+                    "OFFSET (${pagina} * ${qtRegistros}) \n" +
+                    "ROWS FETCH NEXT ${qtRegistros} ROWS ONLY"
     )
     @UseFreemarkerEngine
     List<Clientes> consultaPaginacao(
             @Define("pagina") int pagina,
-            @Define("qtRegistros") int qtRegistros
+            @Define("qtRegistros") int qtRegistros,
+            @BindBean("clienteFiltros") ClientesFiltros clientesFiltros
     );
-
-
 
     @SqlUpdate(
             "INSERT INTO CLIENTES VALUES (" +
@@ -51,6 +53,7 @@ public interface ClientesRepository {
                     "telefone=:clientes.telefone," +
                     "email=:clientes.email," +
                     "cep=:clientes.cep," +
+                    "cpf=:clientes.cpf," +
                     "cidade=:clientes.cidade," +
                     "estado=:clientes.estado," +
                     "bairro=:clientes.bairro," +
@@ -71,5 +74,7 @@ public interface ClientesRepository {
     @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM CLIENTES WHERE id=:id), 1, 0)")
     boolean existeCliente(@Bind("id") Long id);
 
+    @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM CLIENTES WHERE cpf = :cpf AND id != :id), 1, 0)")
+    boolean existeCpf(@Bind("cpf") String cpf, @Bind("id") Long id);
 
 }

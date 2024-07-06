@@ -1,6 +1,7 @@
 package br.com.lince.hackathon.clientes;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 
 public class Clientes {
     private Long id;
@@ -10,12 +11,13 @@ public class Clientes {
     private int ddd;
     private long telefone;
     private String email;
-    private String cep;
+    private int cep;
     private String cidade;
     private String estado;
     private String bairro;
     private String rua;
-    private String numero;
+    private int numero;
+    private HashMap<String, String> erros;
 
     public Clientes() {
     }
@@ -26,14 +28,14 @@ public class Clientes {
             String cpf,
             LocalDate dataNascimento,
             int ddd,
-            long telefone,
+            int telefone,
             String email,
-            String cep,
+            int cep,
             String cidade,
             String estado,
             String bairro,
             String rua,
-            String numero
+            int numero
     ) {
         this.id = id;
         this.nome = nome;
@@ -106,13 +108,7 @@ public class Clientes {
         this.email = email;
     }
 
-    public String getCep() {
-        return cep;
-    }
 
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
 
     public String getCidade() {
         return cidade;
@@ -146,11 +142,27 @@ public class Clientes {
         this.rua = rua;
     }
 
-    public String getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
+    }
+
+    public int getCep() {
+        return cep;
+    }
+
+    public void setCep(int cep) {
+        this.cep = cep;
+    }
+
+    public HashMap<String, String> getErros() {
+        return erros;
+    }
+
+    public void setErros(HashMap<String, String> erros) {
+        this.erros = erros;
     }
 }

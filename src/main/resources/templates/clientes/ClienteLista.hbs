@@ -1,4 +1,73 @@
 <div class="container text-center" id="cliente_lista">
+    <form
+            hx-get="/hackathon/clientes/listar"
+            hx-target="#cliente_lista"
+    >
+        <div class="container d-flex gap-2">
+            <div class="mb-3 ">
+                <label for="nome" class="form-label">Nome</label>
+                <input
+                        placeholder="Informe o nome:"
+                        type="text"
+                        class="form-control"
+                        id="nome"
+                        name="nome"
+                        value="{{nome}}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="cidade" class="form-label">Cidade</label>
+                <input
+                        placeholder="Informe a cidade:"
+                        type="text"
+                        class="form-control"
+                        id="cidade"
+                        name="cidade"
+                        value="{{cidade}}"
+                >
+            </div>
+            <div class="mb-3 d-flex flex-column justify-content-end">
+                <div class="d-flex align-items-center gap-2">
+                    <button
+                            class="btn btn-primary"
+                            type="submit"
+                    >
+                        Consultar
+                    </button>
+                    <button
+                            class="btn btn-primary"
+                            type="reset"
+                            hx-get="/hackathon/clientes/listar?nome=&documento=&estado=&cidade=&proximaPagina=false&numeroPagina=0"
+                            hx-target="#cliente_lista"
+                            hx-trigger="click"
+                    >
+                        Limpar filtros
+                    </button>
+                    <button
+                            class="btn btn-primary"
+                            type="reset"
+                            hx-get="/hackathon/clientes/listar?nome=&documento=&estado=&cidade=&proximaPagina=false&numeroPagina={{numeroPagina}}"
+                    hx-target="#cliente_lista"
+                    hx-trigger="click"
+                    >
+                    <
+                    </button>
+                    <input type="hidden" name="numeroPagina" value="{{numeroPagina}}">
+                    <input type="hidden" name="proximaPagina" value="{{proximaPagina}}">
+                    <div class="h5">{{numeroPagina}}</div>
+                    <button
+                            class="btn btn-primary"
+                            type="reset"
+                            hx-get="/hackathon/clientes/listar?nome=&documento=&estado=&cidade=&proximaPagina=true&numeroPagina={{numeroPagina}}"
+                    hx-target="#cliente_lista"
+                    hx-trigger="click"
+                    >
+                    >
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
     <table class="table table-bordered">
         <thead class="thead-dark">
         <tr>

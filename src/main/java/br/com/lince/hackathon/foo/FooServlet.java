@@ -118,11 +118,11 @@ public class FooServlet extends HttpServlet {
             final var count = dao.count();
             final var foos = dao.selectPage(page, PAGE_SIZE);
 
-//            if (errors.isEmpty()) {
-//                renderer.render(new FooViewData(foos, now, page, PAGE_SIZE, count));
-//            } else {
-//                renderer.render(new FooViewData(errors, foo, foos, now, page, PAGE_SIZE, count));
-//            }
+            if (errors.isEmpty()) {
+                renderer.render(new FooViewData(foos, now, page, PAGE_SIZE, count));
+            } else {
+                renderer.render(new FooViewData(errors, foo, foos, now, page, PAGE_SIZE, count));
+            }
 
             return null;
         });
