@@ -65,6 +65,7 @@
             <input type="text" name="cep" id="cep" maxlength="9" size="9"
                    value="{{cep}}"
             >
+            <div id="erroCep"></div>
             {{#with errors}}
                 {{#if cepError}}
                     <span class="error">
@@ -76,7 +77,7 @@
 
         <div class="clientState">
             <label for="state">Estado</label>
-            <select name="state">{{#states}}
+            <select name="state" id="state">{{#states}}
                 <option value="{{uf}}">{{name}}</option>
             {{/states}}</select>
             {{#with errors}}
@@ -90,7 +91,7 @@
 
         <div class="clientCity">
             <label for="city">Cidade</label>
-            <input type="text" name="city" maxlength="100" size="100" value="{{city}}">
+            <input type="text" name="city" id="city" maxlength="100" size="100" value="{{city}}">
             {{#with errors}}
                 {{#if cityError}}
                     <span class="error">
@@ -102,7 +103,7 @@
 
         <div class="clientNeighborhood">
             <label for="neighborhood">Bairro</label>
-            <input type="text" name="neighborhood" maxlength="100" size="100" value="{{neighborhood}}">
+            <input type="text" name="neighborhood" id="neighborhood" maxlength="100" size="100" value="{{neighborhood}}">
             {{#with errors}}
                 {{#if neighborhoodError}}
                     <span class="error">
@@ -114,7 +115,7 @@
 
         <div class="clientStreet">
             <label for="street">Rua</label>
-            <input type="text" name="street" maxlength="100" size="100" value="{{street}}">
+            <input type="text" name="street" id="street" maxlength="100" size="100" value="{{street}}">
             {{#with errors}}
                 {{#if streetError}}
                     <span class="error">
@@ -145,6 +146,36 @@
     </div>
 
     <script>
+        async function buscaEndereco(cep){
+            var mensagemErro = document.getElementById('erroCep');
+            mensagemErro.innerHTML = "";
+            try {
+                var consultaCEp = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                var consultaCEPConvetida = await consultaCEp.json();
+                if(consultaCEPConvetida.erro){
+                    throw Error('CEP não existe!');
+                }
+                var cidade = document.getElementById('city');
+                var logradouro = document.getElementById('street');
+                var estado = document.getElementById('state');
+                var bairro = document.getElementById('neighborhood');
+
+                cidade.value = consultaCEPConvetida.localidade;
+                logradouro.value = consultaCEPConvetida.logradouro;
+                estado.value = consultaCEPConvetida.uf;
+                bairro.value = consultaCEPConvetida.bairro;
+
+                console.log(consultaCEPConvetida);
+                return consultaCEPConvetida;
+            }catch(erro){
+                mensagemErro.innerHTML = `<p style="color: red">CEP inválido. Tente Novamente!</p>`;
+                console.log(erro)
+            }
+        }
+
+        var cep = document.getElementById('cep');
+        cep.addEventListener("focusout", () => buscaEndereco(cep.value) )
+
         document.getElementById('cep').addEventListener('htmx:afterSwap', function(event) {
             var data = event.detail.elt;
             console.log(document.getElementById("cidade"));

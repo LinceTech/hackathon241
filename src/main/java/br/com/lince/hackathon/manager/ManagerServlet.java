@@ -56,6 +56,7 @@ public class ManagerServlet extends HttpServlet {
     }
 
     private void insertOrUpdateManager(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
 
         final var renderer = new TemplateRenderer<ManagerViewData>("manager/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
@@ -109,6 +110,9 @@ public class ManagerServlet extends HttpServlet {
             final var managers = dao.selectPage(page, PAGE_SIZE);
             final var states = Service.findStates("");
 
+            if (!errors.isEmpty()) {
+                throw new RuntimeException(errors.toString());
+            }
             if (errors.isEmpty()) {
                 renderer.render(new ManagerViewData(managers, now, states, page, PAGE_SIZE, count));
             } else {
@@ -117,6 +121,9 @@ public class ManagerServlet extends HttpServlet {
 
             return null;
         });
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
