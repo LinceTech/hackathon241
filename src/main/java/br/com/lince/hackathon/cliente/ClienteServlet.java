@@ -4,6 +4,8 @@ import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
 import br.com.lince.hackathon.time7.Time7Repository;
 import br.com.lince.hackathon.time7.ValidaCPF;
+import br.com.lince.hackathon.time7.ValidaEmail;
+import br.com.lince.hackathon.time7.ValidaTelefone;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -98,13 +100,13 @@ public class ClienteServlet extends HttpServlet {
         final long cpf         = NumberUtils.toLong(request.getParameter("cpf"), 0);
         final var dtNascimento = NumberUtils.toInt(request.getParameter("dtNascimento").replaceAll("-", ""), 0);
         final long telefone    = NumberUtils.toLong(request.getParameter("telefone"), 0);
-        final var email        = "";//request.getParameter("email");
-        final var cep          = 0;// NumberUtils.toInt(request.getParameter("cep"), 0);
-        final var cidade       = "";//request.getParameter("cidade");
-        final var estado       = "";//request.getParameter("estado");
-        final var bairro       = "";//request.getParameter("bairro");
-        final var rua          = "";//request.getParameter("rua");
-        final var numero       = 0;// NumberUtils.toInt(request.getParameter("numero"), 0);
+        final var email        = request.getParameter("email");
+        final var cep          = NumberUtils.toInt(request.getParameter("cep"), 0);
+        final var cidade       = request.getParameter("cidade");
+        final var estado       = request.getParameter("estado");
+        final var bairro       = request.getParameter("bairro");
+        final var rua          = request.getParameter("rua");
+        final var numero       = NumberUtils.toInt(request.getParameter("numero"), 0);
 
         final var cliente = new Cliente(id, nome, cpf, dtNascimento, telefone, email, cep, cidade, estado, bairro, rua, numero);
         final var errors = new HashMap<String, String>();
@@ -131,17 +133,49 @@ public class ClienteServlet extends HttpServlet {
 
         if (telefone == 0) {
             errors.put("telefoneError", "Não pode ser vazio");
+        } else if (!ValidaTelefone.validaFone(String.valueOf(telefone))){
+            errors.put("telefoneError", "Telefone inválido");
+        }
+
+        if (email.isBlank()) {
+            errors.put("emailError", "Não pode ser vazio");
+        } else if (!ValidaEmail.isValidEmail(email)){
+            errors.put("emailError", "Email inválido");
+        }
+
+        if (cep == 0) {
+            errors.put("cepError", "Não pode ser vazio");
+        }
+
+        if (cidade.isBlank()) {
+            errors.put("cidadeError", "Não pode ser vazio");
+        }
+
+        if (estado.isBlank()) {
+            errors.put("estadoError", "Não pode ser vazio");
+        }
+
+        if (bairro.isBlank()) {
+            errors.put("bairroError", "Não pode ser vazio");
+        }
+
+        if (rua.isBlank()) {
+            errors.put("ruaError", "Não pode ser vazio");
+        }
+
+        if (numero == 0) {
+            errors.put("numeroError", "Não pode ser vazio");
         }
 
         JDBIConnection.instance().withExtension(Time7Repository.class, dao -> {
             // Verificar se ocorreram erros no formulário
-//            if (errors.isEmpty()) {
-//                if (dao.existsCliente(id) && id != 0) {
-//                    dao.updateCliente(cliente);
-//                } else {
-//                    dao.insertCliente(cliente);
-//                }
-//            }
+            if (errors.isEmpty()) {
+                if (dao.existsCliente(id) && id != 0) {
+                    dao.updateCliente(cliente);
+                } else {
+                    dao.insertCliente(cliente);
+                }
+            }
 
             final var now = LocalDateTime.now();
             final var count = dao.count("Cliente");
