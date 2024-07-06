@@ -1,7 +1,7 @@
 <form id="clienteForm">
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">Nome:</span>
+            <span style="width: 150px; display: inline-block; text-align: right;">Nome:</span>
             <span>
                 <input type="text" name="nome" maxlength="60" size="60" value="{{nome}}">
                 {{#with errors}}
@@ -18,13 +18,12 @@
 
     <div style="padding-top: 8px;">
         <label>
-            <span style="width: 150px; display: inline-block; vertical-align: top;">CPF:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;text-align: right;">CPF:</span>
             <span>
                 <input 
-                          id="id"
+                          id="cpf"
                           type="text"
                           name="cpf"
-                          class="cpf"
                           maxlength="11" value={{cpf}}>
                 {{#with errors}}
                     {{#if cpfError}}
@@ -41,7 +40,7 @@
     <!-- DATA NASCIMENTO-->
     <div style="padding-top: 8px;">
         <label>
-            <span style="width: 150px; display: inline-block; vertical-align: top;">Data de nascimento:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;text-align: right;">Data de nascimento:</span>
             <span>
                 <input  type="text" name="dataNascimento" class="data" maxlength="10" size="10" value="{{dataNascimentoAlfa}}">
                 {{#with errors}}
@@ -59,12 +58,11 @@
     <!-- TELEFONE -->
     <div style="padding-top: 8px;">
         <label>
-            <span style="width: 150px; display: inline-block; vertical-align: top;">Telefone:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;text-align: right;">Telefone:</span>
             <span>
                 <input 
-                          id="id"
+                          id="telefone"
                           type="tel"
-                          class="telefone"
                           name="telefone"
                           maxlength="11" value={{telefone}}>
                 {{#with errors}}
@@ -82,7 +80,7 @@
     <!-- EMAIL -->
     <div style="padding-top: 8px;">
         <label>
-                <span style="width: 150px; display: inline-block;">E-mail:</span>
+                <span style="width: 150px; display: inline-block;text-align: right;">E-mail:</span>
                     <span>
                         <input type="text" name="email" maxlength="30" size="30" value="{{email}}">
                         {{#with errors}}
@@ -99,23 +97,21 @@
     <!-- CEP -->
     </div>    <div style="padding-top: 8px;">
         <label>
-            <span method="get" action="." style="width: 150px; display: inline-block; vertical-align: top;">CEP:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;text-align: right;">CEP:</span>
             <span>
-                <label>
-                    <input
-                              id="cep"
-                              type="text"
-                              pattern="\d{5}-\d{3}"/
-                              name="cep"
-                              class="cep"
-                              maxlength="10" value={{cep}}>
-                    {{#with errors}}
-                        {{#if cepError}}
-                            <span style="color: red; font-weight: bold;">
-                                CEP: {{cepError}}
-                            </span>
-                        {{/if}}
-                    {{/with}}
+                <input 
+                          id="cep"
+                          type="text"
+                          pattern="\d{5}-\d{3}"
+                          name="cep"
+                          maxlength="10" value={{cep}}>
+                {{#with errors}}
+                    {{#if cepError}}
+                        <span style="color: red; font-weight: bold;">
+                            CEP: {{cepError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
             </span>
             <br>
         </label>
@@ -124,10 +120,10 @@
     <!-- CIDADE -->
     <div style="padding-top: 8px;">
         <label>
-            <span style="width: 150px; display: inline-block; vertical-align: top;">Cidade:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;text-align: right;">Cidade:</span>
             <span>
                 <input 
-                          id="id"
+                          id="cidade"
                           type="text"
                           name="cidade"
                           maxlength="10" value={{cidade}}>
@@ -146,13 +142,12 @@
     <!-- ESTADO -->
     <div style="padding-top: 8px;">
         <label>
-            <span style="width: 150px; display: inline-block; vertical-align: top;">Estado:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;text-align: right;">Estado:</span>
             <span>
                 <input 
-                          id="id"
+                          id="estado"
                           type="text"
                           name="estado"
-                          class="estado"
                           maxlength="60" value={{estado}}>
                 {{#with errors}}
                     {{#if estadoError}}
@@ -169,10 +164,10 @@
     <!-- BAIRRO -->
     <div style="padding-top: 8px;">
         <label>
-            <span style="width: 150px; display: inline-block; vertical-align: top;">Bairro:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;text-align: right;">Bairro:</span>
             <span>
                 <input 
-                          id="id"
+                          id="bairro"
                           type="text"
                           name="bairro"
                           maxlength="60" value={{bairro}}>
@@ -191,10 +186,10 @@
     <!-- RUA -->
     <div style="padding-top: 8px;">
         <label>
-            <span style="width: 150px; display: inline-block; vertical-align: top;">Rua:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;text-align: right;">Rua:</span>
             <span>
-                <input 
-                          id="id"
+                <input
+                          id="rua"
                           type="text"
                           name="rua"
                           maxlength="60" value={{rua}}>
@@ -213,13 +208,12 @@
     <!-- NUMERO DA CASA -->
     <div style="padding-top: 8px;">
         <label>
-            <span style="width: 150px; display: inline-block; vertical-align: top;">Número:</span>
+            <span style="width: 150px; display: inline-block; vertical-align: top;text-align: right;">Número:</span>
             <span>
                 <input 
-                          id="id"
+                          id="numero"
                           type="text"
                           name="numero"
-                          class="numero"
                           maxlength="5" value={{numero}}>
                 {{#with errors}}
                     {{#if numeroError}}

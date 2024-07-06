@@ -2,6 +2,7 @@ package br.com.lince.hackathon.locacao;
 
 import br.com.lince.hackathon.Cliente.Cliente;
 import br.com.lince.hackathon.Cliente.ClienteRepository;
+import br.com.lince.hackathon.Utils.Funcoes;
 import br.com.lince.hackathon.gerente.Gerente;
 import br.com.lince.hackathon.gerente.GerenteRepository;
 import br.com.lince.hackathon.veiculo.Veiculo;
@@ -89,7 +90,7 @@ public class LocacaoServlet extends HttpServlet {
         final var id = NumberUtils.toInt(request.getParameter("id"), 0);
         final var clienteCpf = NumberUtils.toLong(request.getParameter("clienteCpf"), 0);
         final var gerenteCpf = NumberUtils.toLong(request.getParameter("gerenteCpf"), 0);
-        final var veiculoPlaca = request.getParameter("veiculoPlaca");
+        final var veiculoPlaca = request.getParameter("placaVeiculo");
         final var dataInicio = NumberUtils.toInt(request.getParameter("dataInicio"), 0);
         final var dataEntrega = NumberUtils.toInt(request.getParameter("dataEntrega"), 0);
         final var valorDiaria = NumberUtils.toDouble(request.getParameter("valorDiaria").replaceAll(",","."), 0);
@@ -136,6 +137,7 @@ public class LocacaoServlet extends HttpServlet {
         JDBIConnection.instance().withExtension(LocacaoRepository.class, dao -> {
             // Verificar se ocorreram erros no formulário
             if (errors.isEmpty()) {
+                System.out.println(id + " <> " + dao.exists(id));
                 if (dao.exists(id)) {
                     System.out.println("Passou 2");
                     dao.update(locacao);
@@ -164,7 +166,12 @@ public class LocacaoServlet extends HttpServlet {
         final var id = NumberUtils.toInt(request.getParameter("id"), 0);
         System.out.println("entrou form");
         JDBIConnection.instance().withExtension(LocacaoRepository.class, dao -> {
-            renderer.render(dao.findById(id));
+
+            Locacao g = dao.findById(id);
+            System.out.println(g.getClienteCpf());
+            System.out.println(g.getGerenteCpf());
+            System.out.println(g.getPlacaVeiculo());
+            renderer.render(g);
             return null;
         });
     }

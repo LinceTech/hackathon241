@@ -47,12 +47,52 @@ public class Locacao {
         this.id = id;
     }
 
-    public int getDataPagamento() {
-        return dataPagamento;
+    public long getClienteCpf() {
+        return clienteCpf;
     }
 
-    public void setDataPagamento(int dataPagamento) {
-        this.dataPagamento = dataPagamento;
+    public void setClienteCpf(long clienteCpf) {
+        this.clienteCpf = clienteCpf;
+    }
+
+    public long getGerenteCpf() {
+        return gerenteCpf;
+    }
+
+    public void setGerenteCpf(long gerenteCpf) {
+        this.gerenteCpf = gerenteCpf;
+    }
+
+    public String getPlacaVeiculo() {
+        return placaVeiculo;
+    }
+
+    public void setPlacaVeiculo(String placaVeiculo) {
+        this.placaVeiculo = placaVeiculo;
+    }
+
+    public int getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(int dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public int getDataEntrega() {
+        return dataEntrega;
+    }
+
+    public void setDataEntrega(int dataEntrega) {
+        this.dataEntrega = dataEntrega;
+    }
+
+    public double getValorDiaria() {
+        return valorDiaria;
+    }
+
+    public void setValorDiaria(double valorDiaria) {
+        this.valorDiaria = valorDiaria;
     }
 
     public double getPercentualComissao() {
@@ -71,52 +111,12 @@ public class Locacao {
         this.valorTotalPago = valorTotalPago;
     }
 
-    public double getValorDiaria() {
-        return valorDiaria;
+    public int getDataPagamento() {
+        return dataPagamento;
     }
 
-    public void setValorDiaria(double valorDiaria) {
-        this.valorDiaria = valorDiaria;
-    }
-
-    public int getDataEntrega() {
-        return dataEntrega;
-    }
-
-    public void setDataEntrega(int dataEntrega) {
-        this.dataEntrega = dataEntrega;
-    }
-
-    public int getDataInicio() {
-        return dataInicio;
-    }
-
-    public void setDataInicio(int dataInicio) {
-        this.dataInicio = dataInicio;
-    }
-
-    public String getVeiculo() {
-        return placaVeiculo;
-    }
-
-    public void setVeiculo(String veiculo) {
-        this.placaVeiculo = veiculo;
-    }
-
-    public long getGerente() {
-        return gerenteCpf;
-    }
-
-    public void setGerente(long gerente) {
-        this.gerenteCpf = gerente;
-    }
-
-    public long getCliente() {
-        return clienteCpf;
-    }
-
-    public void setCliente(long cliente) {
-        this.clienteCpf = cliente;
+    public void setDataPagamento(int dataPagamento) {
+        this.dataPagamento = dataPagamento;
     }
 
     @Override
@@ -124,7 +124,7 @@ public class Locacao {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Locacao locacao = (Locacao) o;
-        return id == locacao.id && dataInicio == locacao.dataInicio && dataEntrega == locacao.dataEntrega && valorDiaria == locacao.valorDiaria && percentualComissao == locacao.percentualComissao && valorTotalPago == locacao.valorTotalPago && dataPagamento == locacao.dataPagamento && Objects.equals(clienteCpf, locacao.clienteCpf) && Objects.equals(gerenteCpf, locacao.gerenteCpf) && Objects.equals(placaVeiculo, locacao.placaVeiculo);
+        return id == locacao.id && clienteCpf == locacao.clienteCpf && gerenteCpf == locacao.gerenteCpf && dataInicio == locacao.dataInicio && dataEntrega == locacao.dataEntrega && Double.compare(valorDiaria, locacao.valorDiaria) == 0 && Double.compare(percentualComissao, locacao.percentualComissao) == 0 && Double.compare(valorTotalPago, locacao.valorTotalPago) == 0 && dataPagamento == locacao.dataPagamento && Objects.equals(placaVeiculo, locacao.placaVeiculo);
     }
 
     @Override

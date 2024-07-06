@@ -1,7 +1,8 @@
 <form id="locacaoForm">
+    <input type="hidden" name="id" value="{{id}}">
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">Data Inicio:</span>
+            <span style="width: 150px; display: inline-block;text-align: right;">Data Inicio:</span>
             <span>
                 <input type="text" name="dataInicio" maxlength="14" size="14" value="{{dataInicio}}">
                 {{#with errors}}
@@ -17,7 +18,7 @@
     </div>
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">Data Entrega:</span>
+            <span style="width: 150px; display: inline-block;text-align: right;">Data Entrega:</span>
             <span>
                 <input type="text" name="dataEntrega" maxlength="14" size="14" value="{{dataEntrega}}">
                 {{#with errors}}
@@ -33,7 +34,7 @@
     </div>
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">Valor Diaria:</span>
+            <span style="width: 150px; display: inline-block;text-align: right;">Valor Diaria:</span>
             <span>
                 <input type="text" name="valorDiaria" maxlength="14" size="14" value="{{valorDiaria}}">
                 {{#with errors}}
@@ -49,7 +50,7 @@
     </div>
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">Percentual Comissão:</span>
+            <span style="width: 150px; display: inline-block;text-align: right;">Percentual Comissão:</span>
             <span>
                 <input type="text" name="percentualComissao" maxlength="14" size="14" value="{{percentualComissao}}">
                 {{#with errors}}
@@ -65,7 +66,7 @@
     </div>
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">Valor Total Pago:</span>
+            <span style="width: 150px; display: inline-block;text-align: right;">Valor Total Pago:</span>
             <span>
                 <input type="text" name="valorTotalPago" maxlength="14" size="14" value="{{valorTotalPago}}">
                 {{#with errors}}
@@ -81,7 +82,7 @@
     </div>
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">Data Pagamento:</span>
+            <span style="width: 150px; display: inline-block;text-align: right;">Data Pagamento:</span>
             <span>
                 <input type="text" name="dataPagamento" maxlength="14" size="14" value="{{dataPagamento}}">
                 {{#with errors}}
@@ -97,7 +98,7 @@
     </div>
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">Gerente CPF:</span>
+            <span style="width: 150px; display: inline-block;text-align: right;">Gerente CPF:</span>
             <span>
                 <input type="text" name="gerenteCpf" maxlength="14" size="14" value="{{gerenteCpf}}">
                 {{#with errors}}
@@ -113,7 +114,7 @@
     </div>
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">Cliente CPF:</span>
+            <span style="width: 150px; display: inline-block;text-align: right;">Cliente CPF:</span>
             <span>
                 <input type="text" name="clienteCpf" maxlength="14" size="14" value="{{clienteCpf}}">
                 {{#with errors}}
@@ -129,9 +130,9 @@
     </div>
     <div>
         <label>
-            <span style="width: 150px; display: inline-block;">Placa Veiculo:</span>
+            <span style="width: 150px; display: inline-block;text-align: right;">Placa Veiculo:</span>
             <span>
-                <input type="text" name="veiculoPlaca" maxlength="14" size="14" value="{{veiculoPlaca}}">
+                <input type="text" name="placaVeiculo" maxlength="14" size="14" value="{{placaVeiculo}}">
                 {{#with errors}}
                     {{#if veiculoPlacaError}}
                         <span class="error">
