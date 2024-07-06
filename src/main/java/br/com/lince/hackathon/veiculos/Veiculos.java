@@ -14,11 +14,8 @@ public class Veiculos {
     private int anoFabricacao;
     private HashMap<String, String> erros;
 
-
-
     public Veiculos() {
     }
-
 
     public Veiculos(
             Long id,
@@ -75,4 +72,19 @@ public class Veiculos {
     public HashMap<String, String> getErros() {return erros;}
     public void setErros(HashMap<String, String> erros) { this.erros = erros;}
 
+    @Override
+    public String toString() {
+        return "Veiculos{" +
+                "id=" + id +
+                ", marca='" + marca + '\'' +
+                ", modelo='" + modelo + '\'' +
+                ", placa='" + placa + '\'' +
+                ", cor='" + cor + '\'' +
+                ", custoDiaria=" + custoDiaria +
+                ", descricaoPromocional='" + descricaoPromocional + '\'' +
+                ", tipoCombustivel='" + tipoCombustivel + '\'' +
+                ", anoFabricacao=" + anoFabricacao +
+                ", erros=" + erros +
+                '}';
+    }
 }

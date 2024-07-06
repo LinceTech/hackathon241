@@ -97,7 +97,7 @@ public class VeiculosServlet extends HttpServlet {
         String modelo = "";
         String placa = "";
         String cor = "";
-        double custoDiaria = 0.0;
+        double custoDiaria = 0;
         String descricaoPromocional = "";
         String tipoCombustivel = "";
         int anoFabricacao = 0;
@@ -117,9 +117,11 @@ public class VeiculosServlet extends HttpServlet {
         if (request.getParameter("cor") != null) {
             cor = request.getParameter("cor");
         }
+
         if (request.getParameter("custoDiaria") != null) {
             custoDiaria = NumberUtils.toDouble(request.getParameter("custoDiaria").replace(",", "."));
         }
+
         if (request.getParameter("descricaoPromocional") != null) {
             descricaoPromocional = request.getParameter("descricaoPromocional");
         }
@@ -141,6 +143,8 @@ public class VeiculosServlet extends HttpServlet {
                 tipoCombustivel,
                 anoFabricacao
         );
+
+        System.out.println(veiculo.toString());
 
         if (veiculo.getMarca().isBlank()) {
             erros.put("marcaErro", "Informe a marca");

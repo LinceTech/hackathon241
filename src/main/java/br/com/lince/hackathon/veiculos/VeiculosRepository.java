@@ -54,10 +54,10 @@ public interface VeiculosRepository {
                     "modelo=:modelo," +
                     "placa=:placa," +
                     "cor=:cor," +
-                    "ano_fabricacao=:ano_fabricacao," +
-                    "custo_diaria=:custo_diaria," +
-                    "descricao_promocional=:descricao_promocional," +
-                    "tipo_combustivel=:tipo_combustivel " +
+                    "custo_diaria=:custoDiaria," +
+                    "descricao_promocional=:descricaoPromocional," +
+                    "ano_fabricacao=:anoFabricacao," +
+                    "tipo_combustivel=:tipoCombustivel " +
                     "WHERE id=:id"
     )
     void atualizaVeiculo(@BindBean("veiculos") Veiculos veiculos);
