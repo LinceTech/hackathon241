@@ -1,7 +1,11 @@
-package br.com.lince.hackathon.time7;
+package br.com.lince.hackathon.gerente;
 
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
+import br.com.lince.hackathon.time7.Time7Repository;
+import br.com.lince.hackathon.time7.ValidaCPF;
+import br.com.lince.hackathon.time7.ValidaEmail;
+import br.com.lince.hackathon.time7.ValidaTelefone;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
 
 import javax.servlet.annotation.WebServlet;

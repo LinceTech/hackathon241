@@ -1,7 +1,9 @@
-package br.com.lince.hackathon.time7;
+package br.com.lince.hackathon.cliente;
 
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
+import br.com.lince.hackathon.time7.Time7Repository;
+import br.com.lince.hackathon.time7.ValidaCPF;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -115,7 +117,7 @@ public class ClienteServlet extends HttpServlet {
 
         if (cpf == 0) {
             errors.put("cpfError", "Não pode ser vazio");
-        } else if (!ValidaCPF.isCPF(String.format("%11d",cpf))) {
+        } else if (!ValidaCPF.isCPF(String.format("%011d",cpf))) {
             errors.put("cpfError", "CPF inválido");
         }
 
