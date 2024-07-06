@@ -10,9 +10,12 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Locacao {
     private int id;
-    private Cliente id_cliente;
-    private Gerentes id_gerente;
-    private Veiculos id_veiculo;
+    private Cliente cliente;
+    private int id_cliente;
+    private int id_gerente;
+    private Gerentes gerente;
+    private int id_veiculo;
+    private Veiculos veiculo;
     private LocalDate data_inicio;
     private LocalDate data_entrega;
     private double valor_diaria;
@@ -23,7 +26,7 @@ public class Locacao {
 
     public Locacao() {}
 
-    public Locacao(int id, Cliente id_cliente, Gerentes id_gerente, Veiculos id_veiculo, LocalDate data_inicio, LocalDate data_entrega, double valor_diaria, double percentual_diaria, double percentual_comissao, double valor_total_pago, LocalDate data_pagamento) {
+    public Locacao(int id, int id_cliente, int id_gerente, int id_veiculo, LocalDate data_inicio, LocalDate data_entrega, double valor_diaria, double percentual_diaria, double percentual_comissao, double valor_total_pago, LocalDate data_pagamento) {
         this.id = id;
         this.id_cliente = id_cliente;
         this.id_gerente = id_gerente;
@@ -44,30 +47,6 @@ public class Locacao {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Cliente getId_cliente() {
-        return id_cliente;
-    }
-
-    public void setId_cliente(Cliente id_cliente) {
-        this.id_cliente = id_cliente;
-    }
-
-    public Gerentes getId_gerente() {
-        return id_gerente;
-    }
-
-    public void setId_gerente(Gerentes id_gerente) {
-        this.id_gerente = id_gerente;
-    }
-
-    public Veiculos getId_veiculo() {
-        return id_veiculo;
-    }
-
-    public void setId_veiculo(Veiculos id_veiculo) {
-        this.id_veiculo = id_veiculo;
     }
 
     public LocalDate getData_inicio() {
@@ -124,5 +103,53 @@ public class Locacao {
 
     public void setData_pagamento(LocalDate data_pagamento) {
         this.data_pagamento = data_pagamento;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public int getId_cliente() {
+        return id_cliente;
+    }
+
+    public void setId_cliente(int id_cliente) {
+        this.id_cliente = id_cliente;
+    }
+
+    public int getId_gerente() {
+        return id_gerente;
+    }
+
+    public void setId_gerente(int id_gerente) {
+        this.id_gerente = id_gerente;
+    }
+
+    public Gerentes getGerente() {
+        return gerente;
+    }
+
+    public void setGerente(Gerentes gerente) {
+        this.gerente = gerente;
+    }
+
+    public int getId_veiculo() {
+        return id_veiculo;
+    }
+
+    public void setId_veiculo(int id_veiculo) {
+        this.id_veiculo = id_veiculo;
+    }
+
+    public Veiculos getVeiculo() {
+        return veiculo;
+    }
+
+    public void setVeiculo(Veiculos veiculo) {
+        this.veiculo = veiculo;
     }
 }
