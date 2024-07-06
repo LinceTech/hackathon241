@@ -10,7 +10,7 @@
 <hr>
 
 <div id="formAndTable">
-    {{>gerente/form gerente}}
+    {{>veiculo/form veiculo}}
 
     <hr>
 
@@ -25,7 +25,7 @@
                      hx-target="#gerenteItemsTable"
                      hx-select="#gerenteItemsTable"
                      hx-swap="innerHTML"
-                     hx-get="gerente?page={{previous}}&pageSize={{pageSize}}">
+                     hx-get="veiculo?page={{previous}}&pageSize={{pageSize}}">
             {{/if}}
 
             <span style="height: 18px; vertical-align: center;">
@@ -40,7 +40,7 @@
                      hx-target="#gerenteItemsTable"
                      hx-select="#gerenteItemsTable"
                      hx-swap="innerHTML"
-                     hx-get="gerente?page={{next}}&pageSize={{pageSize}}">
+                     hx-get="veiculo?page={{next}}&pageSize={{pageSize}}">
             {{/if}}
         </div>
 
@@ -60,9 +60,9 @@
             </tr>
             </thead>
             <tbody>
-            {{#gerentes}}
-                {{>gerente/row}}
-            {{/gerentes}}
+            {{#veiculos}}
+                {{>veiculo/row}}
+            {{/veiculos}}
             </tbody>
         </table>
     </div>
