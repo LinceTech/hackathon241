@@ -1,0 +1,26 @@
+<script>
+    const getCep = (cep) => {
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Erro ao executar a requisição: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Resposta da API ViaCEP:');
+                    console.log(data);
+
+                    // Aqui você pode manipular os dados do endereço, por exemplo:
+
+                    $("#rua").val(data.logradouro)
+                    $("#bairro").val(data.bairro)
+                    $("#cidade").val(data.localidade)
+                    $("#estado").val(data.uf)
+                })
+                .catch(error => {
+                    console.error('Erro ao fazer a requisição:', error);
+                })
+    }
+
+</script>
