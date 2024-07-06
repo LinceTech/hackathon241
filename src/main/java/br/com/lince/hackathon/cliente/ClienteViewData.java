@@ -88,6 +88,10 @@ public class ClienteViewData {
         return page + 1;
     }
 
+    public int getPageSize() {
+        return pageSize;
+    }
+
     public int getCount() {
         return count;
     }

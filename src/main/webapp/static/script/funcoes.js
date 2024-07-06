@@ -37,3 +37,7 @@ function buscarCEP() {
             console.error('Erro na requisição:', error);
         });
 }
+
+$(document).ready(function(){
+    $("#tabelaClientes").tablesorter();
+});
