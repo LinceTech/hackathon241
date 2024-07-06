@@ -1,5 +1,4 @@
-{{>menu}}
-<div id="formAndTable">
+<div id="formAndTable" style="padding:20px;">
 
     {{>client/listClient client}}
 
@@ -32,6 +31,14 @@
             {{/if}}
         </div>
     </div>
+
+    <button style="margin-top: 25px;" hx-target="#formAndTable"
+            hx-swap="outerHTML"
+            hx-get="clientes/cadastro">
+        <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastra cliente">
+        &nbsp;
+        Cadastrar cliente
+    </button>
 </div>
 </div>
 </body>

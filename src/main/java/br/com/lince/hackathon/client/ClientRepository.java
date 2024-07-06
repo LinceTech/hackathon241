@@ -50,11 +50,13 @@ public interface ClientRepository {
 
 
     @UseFreemarkerEngine
-    @SqlUpdate("UPDATE tb_clientes SET nome = :client.name, cpf = :client.cpf, data_nascimento = :client.data_nascimento," +
+    @SqlUpdate("UPDATE tb_clientes SET nome = :client.nome," +
+            " cpf = :client.cpf," +
+            " data_nascimento = :client.data_nascimento," +
             " telefone = :client.telefone, " +
             " email = :client.email, " +
             " cep = :client.cep, " +
-            " cidade = :client.cep, " +
+            " cidade = :client.cidade, " +
             " estado = :client.estado, " +
             " bairro = :client.bairro, " +
             " rua = :client.rua, " +

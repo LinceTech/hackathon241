@@ -10,14 +10,15 @@
     <td>{{rua}}</td>
     <td>{{cep}}</td>
     <td>{{numero}}</td>
-    <td style="width: 50px">
+    <td style="text-align: center;">
         <img src="https://img.icons8.com/?size=18&id=71201&format=png&color=000000"
              alt="Editar item"
              style="cursor: pointer"
              hx-target="#formAndTable"
              hx-replace="innerHTML"
              hx-get="clientes/edit?id={{id}}">
-
+    </td>
+    <td style="text-align: center;">
         <img src="https://img.icons8.com/?size=18&id=67884&format=png&color=000000"
              alt="Apagar item"
              style="cursor: pointer"
@@ -25,6 +26,6 @@
              hx-select="#formAndTable"
              hx-replace="innerHTML"
              hx-get="clientes/delete?id={{id}}"
-            hx-include="[name='pageClient']">
+        hx-include="[name='pageClient']">
     </td>
 </tr>

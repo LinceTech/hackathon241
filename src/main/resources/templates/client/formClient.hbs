@@ -1,74 +1,201 @@
-<div id="divFormularioClient" class="container mt-5" style="margin-top: 30px !important;width: 800px;">
-    <h2>Cadastro de Clientes</h2>
-    <form id="formClient" method="post">
-        <div class="mb-3">
-            <label for="id" class="form-label">ID</label>
-            <input type="text" class="form-control" id="id" name="id" required value="{{id}}">
-        </div>
-        <div class="mb-3">
-            <label for="nome" class="form-label">Nome</label>
-            <input type="text" class="form-control" id="nome" name="nome" required value="{{nome}}">
-        </div>
-        <div class="mb-3">
-            <label for="cpf" class="form-label">CPF</label>
-            <input type="text" class="form-control" id="cpf" name="cpf" required value="{{cpf}}">
-        </div>
-        <div class="mb-3">
-            <label for="data_nascimento" class="form-label">Data de Nascimento</label>
-            <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required value="{{data_nascimento}}">
-        </div>
-        <div class="mb-3">
-            <label for="telefone" class="form-label">Telefone</label>
-            <input type="tel" class="form-control" id="telefone" name="telefone" required value="{{telefone}}">
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">E-mail</label>
-            <input type="email" class="form-control" id="email" name="email" required value="{{email}}">
-        </div>
-        <div class="mb-3">
-            <label for="cep" class="form-label">CEP</label>
-            <input type="text" class="form-control" id="cep" name="cep" required value="{{cep}}">
-        </div>
-        <div class="mb-3">
-            <label for="cidade" class="form-label">Cidade</label>
-            <input type="text" class="form-control" id="cidade" name="cidade" required value="{{cidade}}">
-        </div>
-        <div class="mb-3">
-            <label for="estado" class="form-label">UF</label>
-            <input type="text" class="form-control" id="estado" name="estado" required value="{{estado}}">
-        </div>
-        <div class="mb-3">
-            <label for="bairro" class="form-label">Bairro</label>
-            <input type="text" class="form-control" id="bairro" name="bairro" required value="{{bairro}}">
-        </div>
-        <div class="mb-3">
-            <label for="rua" class="form-label">Rua</label>
-            <input type="text" class="form-control" id="rua" name="rua" required value="{{rua}}">
-        </div>
-        <div class="mb-3">
-            <label for="numero" class="form-label">Número</label>
-            <input type="text" class="form-control" id="numero" name="numero" required value="{{numero}}">
-        </div>
-        <button hx-target="#formClient"
-                hx-select="#formClient"
-                hx-swap="outerHTML"
-                hx-post="clientes/upsert?{{id}}"
-                style="display: inline-flex">
-            <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
-            {{#if id}}
-                Atualizar
-            {{^}}
-                Cadastrar
-            {{/if}}</button>
-        {{#if id}}
-            <button hx-target="#divGeral"
-                    hx-swap="outerHTML"
-                    hx-get="clientes/"
-                    style="display: inline-flex">
-                <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Atualizar item">
-                &nbsp;
-                Cancelar
-            </button>
-        {{/if}}
-    </form>
+<div class="content" id="content">
+    <div id="divFormularioClient" class="container"
+         style="flex-direction: row;flex-wrap: wrap;width:150vh;align-content: flex-start;">
+        <h2 style="width: 100%;">Cadastro de Clientes</h2>
+        <form id="formClient" method="post" style="width: 80%;">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id" class="form-label">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" required value="{{id}}">
+                </div>
+                <div class="form-group">
+                    <label for="cpf" class="form-label">CPF</label>
+                    <input type="text" class="form-control" id="cpf" name="cpf" required value="{{cpf}}"
+                           placeholder="111.111.111-11">
+                    <div class="invalid-feedback" id="cpfError">CPF inválido.</div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="nome" name="nome" required value="{{nome}}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="data_nascimento" class="form-label">Data de Nascimento</label>
+                    <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required
+                           value="{{data_nascimento}}">
+                </div>
+                <div class="form-group">
+                    <label for="telefone" class="form-label">Telefone</label>
+                    <input type="tel" class="form-control" id="telefone" name="telefone" required
+                           value="{{telefone}}" placeholder="(99) 99999-9999">
+                    <div class="invalid-feedback" id="telefoneError">Telefone inválido.</div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email" required value="{{email}}">
+                    <div class="invalid-feedback" id="emailError">E-mail inválido.</div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="cidade" class="form-label">Cidade</label>
+                    <input type="text" class="form-control" id="cidade" name="cidade" required value="{{cidade}}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="estado" class="form-label">UF</label>
+                    <input type="text" class="form-control" id="estado" name="estado" required value="{{estado}}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="bairro" class="form-label">Bairro</label>
+                    <input type="text" class="form-control" id="bairro" name="bairro" required value="{{bairro}}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="rua" class="form-label">Rua</label>
+                    <input type="text" class="form-control" id="rua" name="rua" required value="{{rua}}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="cep" class="form-label">CEP</label>
+                    <input type="text" class="form-control" id="cep" name="cep" required value="{{cep}}"
+                           placeholder="12345-678">
+                    <div class="invalid-feedback" id="cepError">CEP inválido.</div>
+                </div>
+                <div class="form-group">
+                    <label for="numero" class="form-label">Número</label>
+                    <input type="text" class="form-control" id="numero" name="numero" required value="{{numero}}">
+                </div>
+            </div>
+            <input type="hidden" class="form-control" id="comMenu" name="comMenu" required value="1">
+            <div class="form-row">
+                <div class="form-group">
+                    <button hx-target-error="#errors"
+                            hx-target="#content"
+                            hx-swap="outerHTML"
+                            hx-post="clientes/upsert?{{id}}">
+                        <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000"
+                             alt="Cadastrar item">
+                        {{#if id}}
+                            Atualizar
+                        {{^}}
+                            Cadastrar
+                        {{/if}}
+                    </button>
+                </div>
+                <div class="form-group">
+                    <button hx-target="#content"
+                            hx-swap="outerHTML"
+                            hx-get="clientes?comMenu=1">
+                        <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000"
+                             alt="Atualizar item">
+                        &nbsp;
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+            <script>
+                $(document).ready(function () {
+                    // Máscaras para os campos
+                    $('#cpf').mask('000.000.000-00');
+                    $('#telefone').mask('(00) 00000-0000');
+                    $('#cep').mask('00000-000');
+
+                    // Função de validação do CPF
+                    function validateCPF(cpf) {
+                        cpf = cpf.replace(/[^\d]+/g, '');
+                        if (cpf.length !== 11) return false;
+                        if (/^(\d)\1+$/.test(cpf)) return false;
+                        let sum = 0;
+                        let remainder;
+
+                        for (let i = 1; i <= 9; i++) {
+                            sum += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+                        }
+
+                        remainder = (sum * 10) % 11;
+                        if (remainder === 10 || remainder === 11) remainder = 0;
+                        if (remainder !== parseInt(cpf.charAt(9))) return false;
+
+                        sum = 0;
+                        for (let i = 1; i <= 10; i++) {
+                            sum += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+                        }
+
+                        remainder = (sum * 10) % 11;
+                        if (remainder === 10 || remainder === 11) remainder = 0;
+                        if (remainder !== parseInt(cpf.charAt(10))) return false;
+
+                        return true;
+                    }
+
+                    // Função de validação do formulário
+                    $('#clientForm').on('submit', function (event) {
+                        let isValid = true;
+
+                        // Validar CPF
+                        if (!validateCPF($('#cpf').val())) {
+                            $('#cpf').addClass('is-invalid');
+                            $('#cpfError').show();
+                            isValid = false;
+                        } else {
+                            $('#cpf').removeClass('is-invalid');
+                            $('#cpfError').hide();
+                        }
+
+                        // Validar Telefone
+                        const phonePattern = /^\(\d{2}\) \d{5}-\d{4}$/;
+                        if (!phonePattern.test($('#telefone').val())) {
+                            $('#telefone').addClass('is-invalid');
+                            $('#telefoneError').show();
+                            isValid = false;
+                        } else {
+                            $('#telefone').removeClass('is-invalid');
+                            $('#telefoneError').hide();
+                        }
+
+                        // Validar E-mail
+                        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailPattern.test($('#email').val())) {
+                            $('#email').addClass('is-invalid');
+                            $('#emailError').show();
+                            isValid = false;
+                        } else {
+                            $('#email').removeClass('is-invalid');
+                            $('#emailError').hide();
+                        }
+
+                        // Validar CEP
+                        const cepPattern = /^\d{5}-\d{3}$/;
+                        if (!cepPattern.test($('#cep').val())) {
+                            $('#cep').addClass('is-invalid');
+                            $('#cepError').show();
+                            isValid = false;
+                        } else {
+                            $('#cep').removeClass('is-invalid');
+                            $('#cepError').hide();
+                        }
+
+                        // Se algum campo for inválido, evita o envio do formulário
+                        if (!isValid) {
+                            event.preventDefault();
+                        }
+                    });
+                });
+            </script>
+        </form>
+    </div>
+</div>
+
+<div id="errors">
 </div>

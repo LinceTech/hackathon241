@@ -31,6 +31,9 @@ public class GerentesServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
 
+        System.out.println("request == "+request);
+        System.out.println("requestPath == "+requestPath);
+
         switch (requestPath) {
             case "":
             case "/":
@@ -42,7 +45,7 @@ public class GerentesServlet extends HttpServlet {
                 break;
 
             case "/delete":
-//                deleteGerentes(request, response);
+                deleteGerentes(request, response);
                 break;
 
             default:
@@ -67,7 +70,6 @@ public class GerentesServlet extends HttpServlet {
      * Trata a requisição para retorna a página de gerentes carregada com todos os dados
      */
     private void loadFullPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         final var renderer = new TemplateRenderer<GerentesViewData>("cadastros/gerentes/pageGerentes", response);
         final var page = NumberUtils.toInt(request.getParameter("cadastros/gerentes/pageGerentes"), 0);
 
@@ -110,8 +112,6 @@ public class GerentesServlet extends HttpServlet {
             errors.put("nomeError", "Nome não pode ser maior que 255 caracteres");
         }
 
-        System.out.println("gerente == "+gerente);
-
         JDBIConnection.instance().withExtension(GerentesRepository.class, dao -> {
             // Verificar se ocorreram erros no formulário
             if (errors.isEmpty()) {
@@ -152,11 +152,12 @@ public class GerentesServlet extends HttpServlet {
     /*
      * Trata a requisição de exclusão de foos
      */
-    private void deleteFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var bar = Integer.parseInt(request.getParameter("bar"));
+    private void deleteGerentes(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("request.getParameter(\"id\") delete == "+request.getParameter("id"));
+        final var id = Integer.parseInt(request.getParameter("id"));
 
-        JDBIConnection.instance().withExtension(FooRepository.class, dao -> {
-            dao.delete(bar);
+        JDBIConnection.instance().withExtension(GerentesRepository.class, dao -> {
+            dao.delete(id);
             loadFullPage(request, response);
             return null;
         });
