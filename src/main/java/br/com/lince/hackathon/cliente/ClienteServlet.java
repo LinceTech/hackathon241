@@ -144,6 +144,10 @@ public class ClienteServlet extends HttpServlet {
             errors.put("emailError", "E-mail não pode ser maior que 100 caracteres");
         }
 
+        if (!Validacao.isEmail(ds_email)) {
+            errors.put("emailError", "E-mail inválido!");
+        }
+
         if(nr_cep.isBlank()){
             errors.put("cepError", "C.E.P não pode ser vazio");
         } else if (nr_cep.length() > 100) {

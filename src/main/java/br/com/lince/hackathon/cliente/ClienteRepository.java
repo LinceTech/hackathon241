@@ -10,7 +10,6 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 import java.util.List;
-
 /**
  * Métodos para manipulação dos associados a Foo no banco de dados
  */
@@ -85,7 +84,6 @@ public interface ClienteRepository {
      *
      * @param cliente foo a ser cadastrado
      */
-
     @UseFreemarkerEngine
     @SqlUpdate("UPDATE cliente SET nr_telefone = :cliente.nr_telefone , ds_email = :cliente.ds_email , nr_cep = :cliente.nr_cep, nm_cidade = :cliente.nm_cidade, nm_estado = :cliente.nm_estado, nm_bairro = :cliente.nm_bairro, nm_rua = :cliente.nm_rua, nr_residencia = :cliente.nr_residencia WHERE nr_cpf = :cliente.nr_cpf")
     void update(@BindBean("cliente") Cliente cliente);

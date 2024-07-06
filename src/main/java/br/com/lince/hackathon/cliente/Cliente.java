@@ -16,8 +16,6 @@ public class Cliente {
     private String nm_cidade;
     private String nm_rua;
     private int nr_residencia;
-    private int ordenar;
-
 
     public Cliente() {
     }
