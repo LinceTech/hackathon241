@@ -3,6 +3,9 @@ $(function(){
         $('#nr_cpf, .formataCpf').mask('000.000.000-00')
         $('#nr_telefone, .formataTel').mask('(00) 00000-0000')
         $('#pc_comissao, .formataCom').mask('00.00')
+        $('#dt_contratacao, .formataData').mask('99/99/9999', {
+            placeholder: 'DD/MM/AAAA'
+        });
     }
 })
 

@@ -3,7 +3,9 @@ package br.com.lince.hackathon.utils;
 import br.com.lince.hackathon.cliente.ClienteServlet;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public class Validacao {
@@ -22,9 +24,15 @@ public class Validacao {
         // Remove caracteres não numéricos
         cpf = cpf.replaceAll("[^0-9]", "");
 
-        // Verifica se o CPF tem 11 dígitos
-        if (cpf.length() != 11)
+        if (cpf.equals("00000000000") ||
+                cpf.equals("11111111111") ||
+                cpf.equals("22222222222") || cpf.equals("33333333333") ||
+                cpf.equals("44444444444") || cpf.equals("55555555555") ||
+                cpf.equals("66666666666") || cpf.equals("77777777777") ||
+                cpf.equals("88888888888") || cpf.equals("99999999999") ||
+                (cpf.length() != 11)) {
             return false;
+        }
 
         // Calcula o primeiro dígito verificador
         int soma = 0;
@@ -54,6 +62,28 @@ public class Validacao {
 
         // CPF válido
         return true;
+    }
+
+    public static boolean isNull(Object obj){
+        return Objects.isNull(obj);
+    }
+
+    public static String formataCpf(String cpf) {
+        return  cpf.substring(0, 3) + "." +
+                cpf.substring(3, 6) + "." +
+                cpf.substring(6, 9) + "-" +
+                cpf.substring(9);
+    }
+
+    public static String formataData(LocalDate data) {
+        return data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    public static String formataTelefone(String telefone) {
+        return "(" + telefone.substring(0, 2) + ") " +
+                telefone.substring(2, 3) + " " +
+                telefone.substring(3, 7) + "-" +
+                telefone.substring(7);
     }
 
 }
