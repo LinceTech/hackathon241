@@ -34,7 +34,7 @@ public interface Time7Repository {
 
     @RegisterBeanMapper(Gerente.class)
     @UseFreemarkerEngine
-    @SqlQuery("SELECT * " +
+    @SqlQuery("SELECT *, FORMAT(CONVERT(datetime, CONVERT(varchar(8), DtNascimento), 112), 'yyyy-MM-dd') as DataNasc " +
               "FROM Gerente WHERE Id = :id")
     Gerente findByIdGerente(@Bind("id") int id);
 
@@ -50,7 +50,7 @@ public interface Time7Repository {
 
 
     @UseFreemarkerEngine
-    @SqlUpdate("INSERT INTO Gerente(Nome, CPF,DtNascimento Telefone, Email, Cidade, Estado, Comissao, DtContrata) " +
+    @SqlUpdate("INSERT INTO Gerente(Nome, CPF, DtNascimento, Telefone, Email, Cidade, Estado, Comissao, DtContrata) " +
                "VALUES (:gerente.nome       , " +
                        ":gerente.cpf        , " +
                        ":gerente.dtNascimento , " +
@@ -65,16 +65,16 @@ public interface Time7Repository {
 
     @UseFreemarkerEngine
     @SqlUpdate("UPDATE Gerente SET " +
-                                   "Nome       = :gerente.nome      ," +
-                                   "CPF        = :gerente.cpf       ," +
-                                   "DtNascimento = :gerente.dtNascimento       ," +
-                                   "Telefone   = :gerente.telefone  ," +
-                                   "Email      = :gerente.email     ," +
-                                   "Cidade     = :gerente.cidade    ," +
-                                   "Estado     = :gerente.estado    ," +
-                                   "Comissao   = :gerente.comissao  ," +
-                                   "DtContrata = :gerente.dtContrata " +
-                                   "WHERE Id   = :gerente.id         ")
+                                   "Nome         = :gerente.nome         ," +
+                                   "CPF          = :gerente.cpf          ," +
+                                   "DtNascimento = :gerente.dtNascimento ," +
+                                   "Telefone     = :gerente.telefone     ," +
+                                   "Email        = :gerente.email        ," +
+                                   "Cidade       = :gerente.cidade       ," +
+                                   "Estado       = :gerente.estado       ," +
+                                   "Comissao     = :gerente.comissao     ," +
+                                   "DtContrata   = :gerente.dtContrata    " +
+                                   "WHERE Id     = :gerente.id            ")
     void updateGerente(@BindBean("gerente") Gerente gerente);
 
 

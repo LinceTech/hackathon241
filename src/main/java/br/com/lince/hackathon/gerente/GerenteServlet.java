@@ -132,9 +132,10 @@ public class GerenteServlet extends HttpServlet {
 
         if (cpf == 0) {
             errors.put("cpfError", "Não pode ser vazio");
-        } else if (!ValidaCPF.isCPF(String.format("%11d",cpf))) {
-            errors.put("cpfError", "CPF inválido");
         }
+//        else if (!ValidaCPF.isCPF(String.format("%11d",cpf))) {
+//            errors.put("cpfError", "CPF inválido");
+//        }
 
         if (dtNascimento == 0) {
             errors.put("dtNascimentoError", "Não pode ser vazio");
@@ -158,6 +159,12 @@ public class GerenteServlet extends HttpServlet {
 
         if (cep == 0) {
             errors.put("cepError", "Não pode ser vazio");
+        }
+
+        if (comissao == 0) {
+            errors.put("comissaoError", "Não pode ser vazio");
+        }else if(comissao > 25){
+            errors.put("comissaoError", "Comissão não pode ser maior que 25%");
         }
 
 
