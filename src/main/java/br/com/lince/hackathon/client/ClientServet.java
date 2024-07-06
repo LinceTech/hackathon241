@@ -26,7 +26,7 @@ public class ClientServet extends HttpServlet {
     /*
      * O número de itens na paginação desta tela
      */
-    private static final int PAGE_SIZE = 20;
+    private static final int PAGE_SIZE = 5;
 
     /*
      * Logger padrão do servlet
@@ -45,6 +45,9 @@ public class ClientServet extends HttpServlet {
             case "/edit":
                 loadFormEditFoo(request, response);
                 break;
+            case "/delete":
+                deleteClient(request, response);
+                break;
             default:
                 response.getWriter().write("Not found : " + requestPath);
         }
@@ -55,7 +58,7 @@ public class ClientServet extends HttpServlet {
         final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
 
         if (requestPath.isBlank()) {
-            //GET
+            loadFullPage(request, response);
         } else if (requestPath.equals("/upsert")) {
             insertOrUpdateClient(request, response);
         } else {
@@ -80,11 +83,23 @@ public class ClientServet extends HttpServlet {
     }
 
     private void loadFormEditFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<Foo>("client/form", response);
+        final var renderer = new TemplateRenderer<ClientEdit>("client/form", response);
         final var id = NumberUtils.toInt(request.getParameter("id"), 0);
 
         JDBIConnection.instance().withExtension(ClientRepository.class, dao -> {
-            renderer.render(dao.findById(id));
+            final var client = dao.findById(id);
+            final var states = Service.findStates(client.getState());
+            renderer.render(new ClientEdit(client, states));
+            return null;
+        });
+    }
+
+    private void deleteClient(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var id = Integer.parseInt(request.getParameter("id"));
+
+        JDBIConnection.instance().withExtension(ClientRepository.class, dao -> {
+            dao.delete(id);
+            loadFullPage(request, response);
             return null;
         });
     }
@@ -170,7 +185,7 @@ public class ClientServet extends HttpServlet {
             final var now = LocalDateTime.now();
             final var count = dao.count();
             final var clients = dao.selectPage(page, PAGE_SIZE);
-            final var states = Service.findStates();
+            final var states = Service.findStates("");
 
             if (errors.isEmpty()) {
                 renderer.render(new ClientViewData(clients, now, states, page, PAGE_SIZE, count));

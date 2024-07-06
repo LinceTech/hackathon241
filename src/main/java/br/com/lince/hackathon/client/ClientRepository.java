@@ -26,12 +26,12 @@ public interface ClientRepository {
     @RegisterBeanMapper(Client.class)
     @UseFreemarkerEngine
     @SqlQuery("SELECT id, name, cpf, birth_date, phone, email, cep, city, state, neighborhood, street, number FROM client WHERE cpf = :cpf")
-    Foo findByCpf(@Bind("cpf") String cpf);
+    Client findByCpf(@Bind("cpf") String cpf);
 
     @RegisterBeanMapper(Client.class)
     @UseFreemarkerEngine
     @SqlQuery("SELECT id, name, cpf, birth_date, phone, email, cep, city, state, neighborhood, street, number FROM client WHERE id = :id")
-    Foo findById(@Bind("id") Integer id);
+    Client findById(@Bind("id") Integer id);
 
     @UseFreemarkerEngine
     @SqlQuery("SELECT IIF(EXISTS(SELECT 1 FROM client WHERE cpf = :cpf), 1, 0)")
@@ -44,15 +44,19 @@ public interface ClientRepository {
 
     @UseFreemarkerEngine
     @SqlUpdate("UPDATE client SET name = :client.name, " +
-            "birth_date = :client.birth_date" +
-            "phone = :client.phone" +
-            "email = :client.email" +
-            "cep = :client.cep" +
-            "city = :client.city" +
-            "state = :client.state" +
-            "neighborhood = :client.neighborhood" +
-            "street = :client.street" +
-            "number = :client.number" +
-            " WHERE cpf = :client.cpf")
+            "birth_date = :client.birth_date, " +
+            "phone = :client.phone, " +
+            "email = :client.email, " +
+            "cep = :client.cep, " +
+            "city = :client.city, " +
+            "state = :client.state, " +
+            "neighborhood = :client.neighborhood, " +
+            "street = :client.street, " +
+            "number = :client.number " +
+            " WHERE cpf = :client.cpf ")
     void update(@BindBean("client") Client client);
+
+    @UseFreemarkerEngine
+    @SqlUpdate("DELETE FROM client WHERE ID = :id")
+    void delete(@Bind("id") int id);
 }
