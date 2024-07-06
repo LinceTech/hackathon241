@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @WebServlet("/gerentes/*")
 public class GerentesServlet extends HttpServlet {
@@ -175,6 +177,8 @@ public class GerentesServlet extends HttpServlet {
         }
         if (gerente.getPercentualComissao() == 0) {
             erros.put("percentualComissaoErro", "Informe o percentual de comissão");
+        }else if(percentualComissao > 25.0){
+            erros.put("percentualComissaoErro", "O percentual de comissão não pode ser maior que 25%");
         }
         if (dataContratacaoReq.isBlank()) {
             erros.put("dataContratacaoErro", "Informe data de contratacao");
