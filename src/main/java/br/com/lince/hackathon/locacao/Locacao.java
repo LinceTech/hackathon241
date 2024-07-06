@@ -12,10 +12,6 @@ public class Locacao {
     public LocalDate dataIncio;
     public LocalDate dataEntrega;
     public BigDecimal valorDiaria;
-    public double percentualGerente;
-    public BigDecimal valorTotal;
-    public LocalDate dataPagamento;
-    public int devolvido;
 
     public Locacao() {
     }
@@ -26,11 +22,7 @@ public class Locacao {
             Long idVeiculo,
             LocalDate dataIncio,
             LocalDate dataEntrega,
-            BigDecimal valorDiaria,
-            double percentualGerente,
-            BigDecimal valorTotal,
-            LocalDate dataPagamento,
-            int devolvido
+            BigDecimal valorDiaria
     ) {
         this.idCliente = idCliente;
         this.idGerente = idGerente;
@@ -38,10 +30,6 @@ public class Locacao {
         this.dataIncio = dataIncio;
         this.dataEntrega = dataEntrega;
         this.valorDiaria = valorDiaria;
-        this.percentualGerente = percentualGerente;
-        this.valorTotal = valorTotal;
-        this.dataPagamento = dataPagamento;
-        this.devolvido = devolvido;
     }
 
     public Long getIdCliente() {
@@ -90,37 +78,5 @@ public class Locacao {
 
     public void setValorDiaria(BigDecimal valorDiaria) {
         this.valorDiaria = valorDiaria;
-    }
-
-    public double getPercentualGerente() {
-        return percentualGerente;
-    }
-
-    public void setPercentualGerente(double percentualGerente) {
-        this.percentualGerente = percentualGerente;
-    }
-
-    public BigDecimal getValorTotal() {
-        return valorTotal;
-    }
-
-    public void setValorTotal(BigDecimal valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
-    public LocalDate getDataPagamento() {
-        return dataPagamento;
-    }
-
-    public void setDataPagamento(LocalDate dataPagamento) {
-        this.dataPagamento = dataPagamento;
-    }
-
-    public int isDevolvido() {
-        return devolvido;
-    }
-
-    public void setDevolvido(int devolvido) {
-        this.devolvido = devolvido;
     }
 }

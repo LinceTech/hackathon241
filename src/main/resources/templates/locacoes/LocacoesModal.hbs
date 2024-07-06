@@ -43,28 +43,21 @@
                     {{/each}}
                 </select>
             </div>
-            <div class="mb-3 form-group">
-                <label for="modeloVeiculo" class="form-label">
-                    Modelo do veiculo
+            <div class="mb-3">
+                <label for="gerente" class="form-label">
+                    Veiculo
                     {{#with erros}}
-                        {{#if modeloVeiculoErro}}
-                            <span class="error">&nbsp;{{modeloVeiculoErro}}</span>
+                        {{#if gerenteErro}}
+                            <span class="error">&nbsp;{{gerenteErro}}</span>
                         {{/if}}
                     {{/with}}
                 </label>
-                <input
-                        type="text"
-                        class="form-control"
-                        id="modeloVeiculo"
-                        name="modeloVeiculo"
-                        placeholder="Nome do modeloVeiculo"
-                        value="{{modeloVeiculo}}"
-                        list="list-modeloVeiculo"
-                >
-                <datalist id="list-modeloVeiculo">
-                    <option>TESTE 3</option>
-                    <option>TESTE 4</option>
-                </datalist>
+                <select id="veiculo" name="veiculo" class="form-select">
+                    <option value="">Selecione um veiculo</option>
+                    {{#each veiculos}}
+                        <option value="{{id}}">{{marca}} = {{modelo}}</option>
+                    {{/each}}
+                </select>
             </div>
             <div class="mb-3 d-flex gap-2">
                 <div>
@@ -103,25 +96,25 @@
                             value="{{dataEntrega}}"
                     >
                 </div>
-                <div class="mb-3">
-                    <label for="valorDiaria" class="form-label">
-                        Telefone
-                        {{#with erros}}
-                            {{#if valorDiariaErro}}
-                                <span class="error">&nbsp;{{valorDiariaErro}}</span>
-                            {{/if}}
-                        {{/with}}
-                    </label>
-                    <input
-                            type=tel
-                            class="form-control"
-                            placeholder="Informe o valorDiaria"
-                            id="valorDiaria"
-                            name="valorDiaria"
-                            value="{{valorDiaria}}"
-                            maxlength="9"
-                    >
-                </div>
+            </div>
+            <div class="mb-3">
+                <label for="valorDiaria" class="form-label">
+                    Valor diário
+                    {{#with erros}}
+                        {{#if valorDiariaErro}}
+                            <span class="error">&nbsp;{{valorDiariaErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
+                <input
+                        type=tel
+                        class="form-control"
+                        placeholder="Informe o valorDiaria"
+                        id="valorDiaria"
+                        name="valorDiaria"
+                        value="{{valorDiaria}}"
+                        maxlength="9"
+                >
             </div>
         </div>
         <div class="modal-footer">
