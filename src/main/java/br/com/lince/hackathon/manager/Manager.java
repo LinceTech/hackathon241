@@ -1,8 +1,10 @@
 package br.com.lince.hackathon.manager;
 
+import br.com.lince.hackathon.foo.Foo;
 import br.com.lince.hackathon.util.Service;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Manager {
     private int id;
@@ -124,6 +126,23 @@ public class Manager {
     }
 
     public Manager() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Manager manager = (Manager) o;
+        return id == manager.id && Objects.equals(this.cpf, manager.cpf);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, cpf);
     }
 
     public boolean validateCommission(double commission_percentage) {

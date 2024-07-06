@@ -1,4 +1,4 @@
-<form id="clientForm">
+´<form id="clientForm">
     <div class="clientMain">
         <div class="clientName">
             <label for="name">Nome</label>
@@ -76,7 +76,7 @@
 
         <div class="clientState">
             <label for="state">Estado</label>
-            <select name="state">{{#states}}
+            <select name="state" id="state">{{#states}}
                 <option value="{{uf}}" {{#selected}}selected{{/selected}}>{{name}}</option>
             {{/states}}</select>
             {{#with errors}}
@@ -160,4 +160,42 @@
             {{/if}}
         </div>
     </div>
+
+    <script>
+        async function buscaEndereco(cep){
+            var mensagemErro = document.getElementById('erroCep');
+            mensagemErro.innerHTML = "";
+            try {
+                var consultaCEp = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                var consultaCEPConvetida = await consultaCEp.json();
+                if(consultaCEPConvetida.erro){
+                    throw Error('CEP não existe!');
+                }
+                var cidade = document.getElementById('city');
+                var logradouro = document.getElementById('street');
+                var estado = document.getElementById('state');
+                var bairro = document.getElementById('neighborhood');
+
+                cidade.value = consultaCEPConvetida.localidade;
+                logradouro.value = consultaCEPConvetida.logradouro;
+                estado.value = consultaCEPConvetida.uf;
+                bairro.value = consultaCEPConvetida.bairro;
+
+                console.log(consultaCEPConvetida);
+                return consultaCEPConvetida;
+            }catch(erro){
+                mensagemErro.innerHTML = `<p style="color: red">CEP inválido. Tente Novamente!</p>`;
+                console.log(erro)
+            }
+        }
+
+        var cep = document.getElementById('cep');
+        cep.addEventListener("focusout", () => buscaEndereco(cep.value) )
+
+        document.getElementById('cep').addEventListener('htmx:afterSwap', function(event) {
+        var data = event.detail.elt;
+        console.log(document.getElementById("cidade"));
+        });
+    </script>
+
 </form>

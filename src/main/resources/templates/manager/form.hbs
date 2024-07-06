@@ -110,57 +110,27 @@
             {{/with}}
         </div>
 
-<!--        <div class="managerCpf">-->
-<!--            <label for="cpf">CPF</label>-->
-<!--            <input type="text" name="cpf" maxlength="11" size="11" value="{{cpf}}">-->
-<!--        </div>-->
-
-<!--        <div class="managerBirthDate">-->
-<!--            <label for="date_birth">Data de nascimento</label>-->
-<!--            <input type="date" name="date_birth" mask="00/00/0000" value="{{date_birth}}">-->
-<!--        </div>-->
-
-<!--        <div class="managerPhone">-->
-<!--            <label for="phone">Telefone</label>-->
-<!--            <input type="text" name="phone" maxlength="14" size="14" value="{{phone}}">-->
-<!--        </div>-->
-
-<!--        <div class="managerEmail">-->
-<!--            <label for="email">E-mail</label>-->
-<!--            <input type="text" name="email" maxlength="100" size="100" value="{{email}}">-->
-<!--        </div>-->
-
-<!--        <div class="managerState">-->
-<!--            <label for="state">Estado</label>-->
-<!--            <select name="state">-->
-<!--                <option value="RJ">Rio de Janeiro</option>-->
-<!--            </select>-->
-<!--        </div>-->
-
-<!--        <div class="managerCity">-->
-<!--            <label for="city">Cidade</label>-->
-<!--            <input type="text" name="city" maxlength="100" size="100" value="{{city}}">-->
-
-<!--        </div>-->
-
-<!--        <div class="managerCommissionPercentage">-->
-<!--            <label for="commission_percentage">Percentual de comissão</label>-->
-<!--            <input type="text" name="commission_percentage" maxlength="100" size="100" value="{{commission_percentage}}">-->
-<!--        </div>-->
-
-<!--        <div>-->
-<!--            <label for="hiring_date">Data de contratação</label>-->
-<!--            <input type="date" name="hiring_date" value="{{hiring_date}}">-->
-<!--        </div>-->
-
         <button hx-target="#managerItemsTable"
                 hx-select="#managerItemsTable"
                 hx-swap="outerHTML"
-                hx-post="manager/upsert">
-            Cadastrar
+                hx-post="manager/upsert"
+                hx-include="[name='page']"
+                style="display: inline-flex">
+            <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
+            &nbsp;
+            {{#if manager.id}}
+                Atualizar
+            {{^}}
+                Cadastrar
+            {{/if}}
         </button>
+        {{#if manager.id}}
+            <button hx-target="#managerForm"
+                    hx-select="#managerForm"
+                    hx-swap="outerHTML"
+                    hx-post="manager/edit">
+                Cancelar
+            </button>
+        {{/if}}
     </div>
 </form>
-<script>
-
-</script>

@@ -101,6 +101,7 @@ public class Service {
     public static List<State> findStates(String uf){
         List<State> states = new ArrayList<>();
 
+        states.add(new State("", "", false));
         states.add(new State("AC", "Acre", (uf.equals("AC"))));
         states.add(new State("AL", "Alagoas", (uf.equals("AL"))));
         states.add(new State("AP", "Amapá", (uf.equals("AP"))));
