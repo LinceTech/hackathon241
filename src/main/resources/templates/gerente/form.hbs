@@ -177,8 +177,7 @@
         </label>
     </div>
 
-
-    <br>
+<br>
     <button hx-target="#formAndTable"
             hx-select="#formAndTable"
             hx-swap="outerHTML"
@@ -204,4 +203,82 @@
             Cancelar
         </button>
     {{/if}}
+
+    <hr>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Nome:</span>
+            <span>
+                <input type="text" id="tNome" name="tNome" maxlength="60" size="60" value="">
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">CPF:</span>
+            <span>
+                <input type="text" id="tCpf" name="tCpf" size="14" maxlength="14" value="">
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Cidade:</span>
+            <span>
+                <input type="text" id="tCidade" name="tCidade" size="60" maxlength="60" value="">
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Estado:</span>
+            <span>
+                <select id="tEstado" name="tEstado">
+                  <option value="">&nbsp</option>
+                  <option value="AC">AC</option>
+                  <option value="AL">AL</option>
+                  <option value="AP">AP</option>
+                  <option value="AM">AM</option>
+                  <option value="BA">BA</option>
+                  <option value="CE">CE</option>
+                  <option value="DF">DF</option>
+                  <option value="ES">ES</option>
+                  <option value="GO">GO</option>
+                  <option value="MA">MA</option>
+                  <option value="MT">MT</option>
+                  <option value="MS">MS</option>
+                  <option value="MG">MG</option>
+                  <option value="PA">PA</option>
+                  <option value="PB">PB</option>
+                  <option value="PR">PR</option>
+                  <option value="PE">PE</option>
+                  <option value="PI">PI</option>
+                  <option value="RJ">RJ</option>
+                  <option value="RN">RN</option>
+                  <option value="RS">RS</option>
+                  <option value="RO">RO</option>
+                  <option value="RR">RR</option>
+                  <option value="SC">SC</option>
+                  <option value="SP">SP</option>
+                  <option value="SE">SE</option>
+                </select>
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <button hx-target="#formAndTable"
+            hx-select="#formAndTable"
+            hx-swap="outerHTML"
+            hx-post="gerente"
+            hx-include="[name='page']"
+            style="display: inline-flex">
+        <img src="https://img.icons8.com/?size=14&id=18761&format=png&color=000000" alt="Buscar">
+        &nbsp;
+            Buscar
+    </button>
 </form>

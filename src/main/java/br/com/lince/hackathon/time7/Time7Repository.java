@@ -25,6 +25,19 @@ public interface Time7Repository {
 
 
     // GERENTE
+    @UseFreemarkerEngine
+    @SqlQuery("SELECT COUNT(*) FROM ${tabela}                   " +
+              "    WHERE nome LIKE '${nome}%'                   " +
+              "      AND CAST(cpf as varchar) LIKE '${cpf}%'    " +
+              "      AND cidade LIKE '${cidade}%'               " +
+              "      AND estado LIKE '${estado}%'               " )
+    int countGerente(@Define("tabela") String tabela,
+                     @Define("nome") String nome,
+                     @Define("cpf") String cpf,
+                     @Define("cidade") String cidade,
+                     @Define("estado") String estado);
+
+
     @RegisterBeanMapper(Gerente.class)
     @UseFreemarkerEngine
     @SqlQuery("SELECT * " +
@@ -35,6 +48,22 @@ public interface Time7Repository {
     @UseFreemarkerEngine
     @SqlQuery("SELECT * FROM Gerente ORDER BY Nome")
     List<Gerente> selectGerentes();
+
+    @RegisterBeanMapper(Gerente.class)
+    @UseFreemarkerEngine
+    @SqlQuery("   SELECT *                                      " +
+              "     FROM Gerente                                " +
+              "    WHERE nome LIKE '${nome}%'                   " +
+              "      AND CAST(cpf as varchar) LIKE '${cpf}%'    " +
+              "      AND cidade LIKE '${cidade}%'               " +
+              "      AND estado LIKE '${estado}%'               " +
+              " ORDER BY Id OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
+    List<Gerente> selectPageGerenteFiltro(@Define("page") int page,
+                                          @Define("count") int count,
+                                          @Define("nome") String nome,
+                                          @Define("cpf") String cpf,
+                                          @Define("cidade") String cidade,
+                                          @Define("estado") String estado);
 
 
     @RegisterBeanMapper(Gerente.class)
@@ -91,11 +120,6 @@ public interface Time7Repository {
     @SqlQuery("SELECT * " +
             "FROM Cliente ORDER BY Id OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
     List<Cliente> selectPageCliente(@Define("page") int page, @Define("count") int count);
-
-    @RegisterBeanMapper(Cliente.class)
-    @UseFreemarkerEngine
-    @SqlQuery("SELECT * FROM Cliente ORDER BY Nome")
-    List<Cliente> selectClientes();
 
 
     @RegisterBeanMapper(Cliente.class)
@@ -155,11 +179,6 @@ public interface Time7Repository {
     @SqlQuery("SELECT * " +
             "FROM Veiculo ORDER BY Id OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
     List<Veiculo> selectPageVeiculo(@Define("page") int page, @Define("count") int count);
-
-    @RegisterBeanMapper(Veiculo.class)
-    @UseFreemarkerEngine
-    @SqlQuery("SELECT * FROM Veiculo ORDER BY Marca, Modelo, Placa")
-    List<Veiculo> selectVeiculos();
 
 
     @RegisterBeanMapper(Veiculo.class)

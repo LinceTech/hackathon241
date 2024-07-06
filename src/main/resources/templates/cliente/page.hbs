@@ -43,11 +43,13 @@
             {{/if}}
         </div>
 
-        <table>
+        <table id="tabela" class="tablesorter">
             <thead>
             <tr>
-                <th style="width: 40px; text-align: right;">Cliente</th>
+                <th style="width: 40px; text-align: right;">Id</th>
                 <th style="width: 200px; text-align: left;">Nome</th>
+                <th style="width: 200px; text-align: left;">Cidade</th>
+                <th style="width: 200px; text-align: left;">Data Nascimento</th>
                 <th style="width: 50px">Ação</th>
             </tr>
             </thead>
@@ -61,4 +63,10 @@
 </div>
 
 </body>
+
+<script>
+    $(document).ready(function(){
+        $("#tabela").tablesorter();
+    });
+</script>
 </html>

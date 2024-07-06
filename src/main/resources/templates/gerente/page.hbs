@@ -43,11 +43,16 @@
             {{/if}}
         </div>
 
-        <table>
+        <table id="tabela" class="tablesorter">
             <thead>
             <tr>
-                <th style="width: 40px; text-align: right;">gerente</th>
+                <th style="width: 40px; text-align: right;">Id</th>
                 <th style="width: 200px; text-align: left;">Nome</th>
+                <th style="width: 200px; text-align: left;">Email</th>
+                <th style="width: 200px; text-align: left;">Cidade</th>
+                <th style="width: 200px; text-align: left;">Estado</th>
+                <th style="width: 200px; text-align: left;">Comissão</th>
+                <th style="width: 200px; text-align: left;">Data Contratação</th>
                 <th style="width: 50px">Ação</th>
             </tr>
             </thead>
@@ -61,4 +66,11 @@
 </div>
 
 </body>
+
+<script>
+    $(document).ready(function(){
+        $("#tabela").tablesorter();
+    });
+</script>
+
 </html>
