@@ -1,16 +1,20 @@
-<form hx-post="gerentesLista/filtro" hx-trigger="submit, reset:afterSettle" hx-target="#listaGerente">
+<form hx-post="locacaoLista/filtro" hx-trigger="submit, reset:afterSettle" hx-target="#listaLocacao">
     <div>
-        <label>Nome
+        <label>Placa
             <input type="text" name="nome" value="{{gerenteFiltro.nome}}">
         </label>
-        <label>Documento
+        <label>Cliente
             <input type="text" name="cpf" value="{{gerenteFiltro.cpf}}">
         </label>
-        <label>Cidade
+        <label>Gerente
             <input type="text" name="cidade" value="{{gerenteFiltro.cidade}}">
         </label>
-        <label>Estado
-            <input type="text" name="estado" value="{{gerenteFiltro.estado}}">
+        <label>Situação
+            <select name="situacao">
+                <option value=""></option>
+                <option value="1">Em andamento</option>
+                <option value="2">Finalizada</option>
+            </select>
         </label>
     </div>
     <button>Filtrar</button>
@@ -24,8 +28,8 @@
                     <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
                          alt="Página anterior"
                          style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
-                         hx-target="#listaGerente"
-                         hx-post="gerentesLista/page?page={{previous}}">
+                         hx-target="#listaLocacao"
+                         hx-post="locacaoLista/page?page={{previous}}">
                 {{/if}}
 
                 <span style="height: 18px; vertical-align: center;">
@@ -36,28 +40,29 @@
                     <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
                          alt="Próxima página"
                          style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
-                         hx-target="#listaGerente"
-                         hx-post="gerentesLista/page?page={{next}}">
+                         hx-target="#listaLocacao"
+                         hx-post="locacaoLista/page?page={{next}}">
                 {{/if}}
             </div>
 
             <table>
                 <thead>
                 <tr>
-                    <th style="text-align: left; cursor:pointer;" hx-get="gerentesLista/ordenar?page={{page}}&sentido={{sentido}}&campo=nome" hx-trigger="click">Nome</th>
-                    <th style="text-align: left;">Telefone</th>
-                    <th style="text-align: left;">CPF</th>
-                    <th style="text-align: left;">E-mail</th>
-                    <th style="text-align: left; cursor:pointer;" hx-get="gerentesLista/ordenar?page={{page}}&sentido={{sentido}}&campo=cidade" hx-trigger="click">Cidade</th>
-                    <th style="text-align: left;">Estado</th>
-                    <th style="text-align: right;">Percentual de Comissão</th>
-                    <th style="text-align: left; cursor:pointer;" hx-get="gerentesLista/ordenar?page={{page}}&sentido={{sentido}}&campo=DataDeContratacao" hx-trigger="click">Data de Contratação</th>
+                    <th style="text-align: left;">Cliente</th>
+                    <th style="text-align: left;">Gerente</th>
+                    <th style="text-align: left;">Veiculo</th>
+                    <th style="text-align: left; cursor:pointer;" hx-get="gerentesLista/ordenar?page={{page}}&sentido={{sentido}}&campo=data_inicio" hx-trigger="click">Data inicio</th>
+                    <th style="text-align: left; cursor:pointer;" hx-get="gerentesLista/ordenar?page={{page}}&sentido={{sentido}}&campo=data_entrega" hx-trigger="click">Data entrega</th>
+                    <th style="text-align: left;">Valor diária</th>
+                    <th style="text-align: left;">Comissão</th>
+                    <th style="text-align: left;">Total</th>
+                    <th style="text-align: left;">Data pagamento</th>
                 </tr>
                 </thead>
                 <tbody>
-                {{#gerentes}}
-                    {{>gerentes/gerentesLinha}}
-                {{/gerentes}}
+                {{#locacao}}
+                    {{>locacao/locacaoLinha}}
+                {{/locacao}}
                 </tbody>
             </table>
         </div>
