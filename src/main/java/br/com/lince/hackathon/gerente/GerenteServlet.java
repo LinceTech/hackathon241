@@ -14,8 +14,10 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -27,14 +29,6 @@ import static br.com.lince.hackathon.utils.Validacao.isMaior18;
  */
 @WebServlet("/gerente/*")
 public class GerenteServlet extends HttpServlet {
-    /*
-     * O número de itens na paginação desta tela
-     */
-    private static final int PAGE_SIZE = 15;
-
-    /*
-     * Logger padrão do servlet
-     */
     private static final Logger logger = Logger.getLogger(GerenteServlet.class.getName());
 
     @Override
@@ -93,28 +87,70 @@ public class GerenteServlet extends HttpServlet {
      * Trata a requisição para inserir ou atualizar um gerente, e retorna página atualizada
      */
     private void insertOrUpdateGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var nr_cpf = request.getParameter("nr_cpf");
+        final var nr_cpf = request.getParameter("nr_cpf").replace(".", "").replace("-", "").trim();
         final var nm_gerente = request.getParameter("nm_gerente");
         final var ds_email = request.getParameter("ds_email");
         final var nm_cidade = request.getParameter("nm_cidade");
         final var nm_estado = request.getParameter("nm_estado");
-        final var nr_telefone = NumberUtils.toLong(request.getParameter("nr_telefone"), 0);
-        final var dt_contratacao = LocalDate.parse(request.getParameter("dt_contratacao"), DateTimeFormatter.ISO_DATE);
-        final var dt_nascimento = LocalDate.parse(request.getParameter("dt_nascimento"), DateTimeFormatter.ISO_DATE);
+        final var nr_telefone = NumberUtils.toLong(request.getParameter("nr_telefone").replace("(", "").replace(")", "").replace("-", "").trim(), 0);
         final var pc_comissao = NumberUtils.toDouble(request.getParameter("pc_comissao"), 0.0);
+        final Map<String, Object> errors = new HashMap<>();
+
+        if (nr_cpf.isBlank()) {
+            errors.put("nr_cpfError", "CPF deve ser preenchido!");
+        }
+        if (nm_gerente.isBlank()) {
+            errors.put("nm_gerenteError", "Nome deve ser preenchido!");
+        }
+        if (ds_email.isEmpty()) {
+            errors.put("ds_emailError", "E-mail deve ser preenchido!");
+        }
+        if (nm_cidade.isEmpty()) {
+            errors.put("nm_cidadeError", "Nome da cidade deve ser preenchido!");
+        }
+        if (nm_estado.isEmpty()) {
+            errors.put("nm_estadoError", "Nome do estado deve ser preenchido!");
+        }
+        if (nr_telefone == 0) {
+            errors.put("nr_telefoneError", "Nº de telefone deve ser preenchido!");
+        }
+        if (pc_comissao == 0) {
+            errors.put("pc_comissaoError", "% de comissão deve ser preenchida!");
+        }
+
+
+        LocalDate dt_contratacao = null;
+        try {
+            dt_contratacao = LocalDate.parse(request.getParameter("dt_contratacao"), DateTimeFormatter.ISO_DATE);
+        } catch (DateTimeParseException e) {
+            errors.put("dt_contratacaoError", "Data contratação inválido!");
+        }
+
+        LocalDate dt_nascimento = null;
+        try {
+            dt_nascimento = LocalDate.parse(request.getParameter("dt_nascimento"), DateTimeFormatter.ISO_DATE);
+        } catch (DateTimeParseException e) {
+            errors.put("dt_nascimentoError", "Data nascimento inválido!");
+        }
+
         final var renderer = new TemplateRenderer<GerenteViewData>("gerente/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
         final var pageSize = NumberUtils.toInt(request.getParameter("pageSize"), 15);
-        final var errors = new HashMap<String, String>();
 
+        System.out.println("nr_cpf ->>" + nr_cpf);
         if (!Validacao.isCpf(nr_cpf)) {
-            errors.put("cpfError", "CPF inválido!");
+            System.out.println("ENTROUUU");
+            errors.put("nr_cpfError", "CPF inválido!");
         }
 
         //Email é validado a partir do field email do HTML
 
-        if (!Validacao.isMaior18(dt_nascimento)) {
-            errors.put("dt_nascimentoError", "A idade não pode ser inferior a 18 anos!");
+        try {
+            if (!Validacao.isMaior18(dt_nascimento)) {
+                errors.put("dt_nascimentoError", "A idade não pode ser inferior a 18 anos!");
+            }
+        } catch (NullPointerException e) {
+            errors.put("dt_nascimentoError", "Necessário preencher a data de nascimento");
         }
 
         //Campos obrigatórios via required no HTML
@@ -128,12 +164,9 @@ public class GerenteServlet extends HttpServlet {
         JDBIConnection.instance().withExtension(GerenteRepository.class, dao -> {
             // Verificar se ocorreram erros no formulário
             if (errors.isEmpty()) {
-                System.out.println("Linha 124");
                 if (dao.exists(gerente.getNr_cpf())) {
-                    System.out.println("Linha 126");
                     dao.update(gerente);
                 } else {
-                    System.out.println("Linha 129");
                     dao.insert(gerente);
                 }
             }
@@ -145,7 +178,7 @@ public class GerenteServlet extends HttpServlet {
             if (errors.isEmpty()) {
                 renderer.render(new GerenteViewData(gerentes, now, page, pageSize, count));
             } else {
-                renderer.render(new GerenteViewData(errors, gerente, gerentes, now, page, pageSize, count));
+                renderer.render(new GerenteViewData((HashMap) errors, gerente, gerentes, now, page, pageSize, count));
             }
 
             return null;
@@ -178,16 +211,10 @@ public class GerenteServlet extends HttpServlet {
     }
 
     private String isPathNull(HttpServletRequest request) {
-        if (!isNull(request.getPathInfo())) {
+        if (!Validacao.isNull(request.getPathInfo())) {
             return request.getPathInfo();
         }
 
         return "";
     }
-
-    private boolean isNull(Object obj){
-        return Objects.isNull(obj);
-    }
-
-
 }

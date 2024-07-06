@@ -5,9 +5,9 @@
             <span>
                 <input type="text" required name="nm_gerente" maxlength="100" size="50" value="{{nm_gerente}}">
                 {{#with errors}}
-                    {{#if basError}}
+                    {{#if nm_gerenteError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            Gerente: {{nm_gerenteError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -19,9 +19,9 @@
             <span>
                 <input type="text" required id="nr_cpf" name="nr_cpf" maxlength="11" size="11" value="{{nr_cpf}}">
                 {{#with errors}}
-                    {{#if basError}}
+                    {{#if nr_cpfError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            Cpf: {{nr_cpfError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -33,9 +33,9 @@
             <span>
                 <input type="date" required name="dt_contratacao" maxlength="10" size="10" value="{{dt_contratacao}}">
                 {{#with errors}}
-                    {{#if basError}}
+                    {{#if dt_contratacaoError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            Data contratação: {{dt_contratacaoError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -47,9 +47,9 @@
             <span>
                 <input type="date" required name="dt_nascimento" maxlength="10" size="10" value="{{dt_nascimento}}">
                 {{#with errors}}
-                    {{#if basError}}
+                    {{#if dt_nascimentoError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            Data nascimento: {{dt_nascimentoError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -59,11 +59,11 @@
         <label>
             <span style="width: 150px; display: inline-block;margin-top:10px;text-align:end;">Telefone:</span>
             <span>
-                <input type="text" required id="nr_telefone" name="nr_telefone" maxlength="11" size="11" value="{{nr_telefone}}">
+                <input type="text" required id="nr_telefone" name="nr_telefone" maxlength="11" size="11" value="{{nr_telefone_tel}}">
                 {{#with errors}}
-                    {{#if basError}}
+                    {{#if nr_telefoneError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            Telefone: {{nr_telefoneError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -75,9 +75,9 @@
             <span>
                 <input type="email" required name="ds_email" maxlength="100" size="50" value="{{ds_email}}">
                 {{#with errors}}
-                    {{#if basError}}
+                    {{#if ds_emailError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            E-mail: {{ds_emailError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -89,9 +89,9 @@
             <span>
                 <input type="text" required name="nm_cidade" maxlength="100" size="50" value="{{nm_cidade}}">
                 {{#with errors}}
-                    {{#if basError}}
+                    {{#if nm_cidadeError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            Cidade: {{nm_cidadeError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -107,9 +107,9 @@
                 </select>
 
                 {{#with errors}}
-                    {{#if basError}}
+                    {{#if nm_estadoError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            Estado: {{nm_estadoError}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -121,9 +121,9 @@
             <span>
                 <input type="text" required id="pc_comissao" name="pc_comissao" maxlength="5" size="5" value="{{pc_comissao}}">
                 {{#with errors}}
-                    {{#if basError}}
+                    {{#if pc_comissaoError}}
                         <span class="error">
-                            Bas: {{basError}}
+                            % Comissão: {{pc_comissaoError}}
                         </span>
                     {{/if}}
                 {{/with}}
