@@ -7,7 +7,7 @@
         <div class="p-2">
             <button
                     class="btn btn-primary"
-                    hx-get="/hackathon/veiculos/"
+                    hx-get="/hackathon/veiculos/new"
                     hx-target="#mustache_modal"
                     hx-trigger="click"
                     data-bs-toggle="modal"
@@ -20,7 +20,7 @@
     {{>veiculos/VeiculosLista}}
     <div
             class="modal fade"
-            id="gerenteModal"
+            id="veiculosModal"
             tabindex="-1"
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"

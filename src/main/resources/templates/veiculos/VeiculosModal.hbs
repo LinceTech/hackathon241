@@ -1,116 +1,178 @@
-<div class="modal-content">
-    <form hx-post="/hackathon/veiculos/save" hx-target="#veiculos_lista" id="veiculosForm">
+<div class="modal-content" id="veiculo_formulario">
+    <form
+            hx-post="/hackathon/veiculos/save"
+            hx-target="#veiculos_lista"
+            hx-target-500="#veiculo_formulario"
+            hx-swap="outerHTML"
+            id="form_veiculo_formulario"
+    >
         <div class="modal-header">
             {{#if id}}
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Alterar Gerente</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Alterar veiculo</h1>
             {{else}}
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastrar Gerente</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastrar veiculo</h1>
             {{/if}}
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <input type="hidden" id="id" name="id" value="{{id}}">
             <div class="mb-3">
-                <label for="title" class="form-label">Nome</label>
+                <label for="title" class="form-label">
+                    Marca
+                    {{#with erros}}
+                        {{#if marcaErro}}
+                            <span class="error">&nbsp;{{marcaErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
                         type="text"
                         class="form-control"
-                        id="nome"
-                        name="nome"
-                        placeholder="Nome do gerente"
-                        value="{{nome}}"
+                        id="marca"
+                        name="marca"
+                        placeholder="Marca do veiculo"
+                        value="{{marca}}"
                 >
             </div>
 
             <div class="mb-3">
-                <label for="cpf" class="form-label">CPF</label>
+                <label for="modelo" class="form-label">
+                    Modelo
+                    {{#with erros}}
+                        {{#if modeloErro}}
+                            <span class="error">&nbsp;{{modeloErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
-                        placeholder="Informe o CPF"
+                        placeholder="Informe o modelo"
                         type="text"
                         class="form-control"
-                        id="cpf"
-                        name="cpf"
-                        value="{{cpf}}"
+                        id="modelo"
+                        name="modelo"
+                        value="{{modelo}}"
                 >
             </div>
             <div class="mb-3">
-                <label for="ddd" class="form-label">DDD</label>
+                <label for="placa" class="form-label">
+                    Placa
+                    {{#with erros}}
+                        {{#if placaErro}}
+                            <span class="error">&nbsp;{{placaErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
-                        type="number"
+                        type="text"
                         class="form-control"
-                        placeholder="Informe o DDD"
-                        id="ddd"
-                        name="ddd"
-                        value="{{ddd}}"
+                        placeholder="Informe a placa"
+                        id="placa"
+                        name="placa"
+                        value="{{placa}}"
                 >
             </div>
             <div class="mb-3">
-                <label for="telefone" class="form-label">Telefone</label>
+                <label for="cor" class="form-label">
+                    Cor
+                    {{#with erros}}
+                        {{#if corErro}}
+                            <span class="error">&nbsp;{{corErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
                         type=tel
                         class="form-control"
-                        placeholder="Informe o telefone"
-                        id="telefone"
-                        name="telefone"
-                        value="{{telefone}}"
+                        placeholder="Informe a cor"
+                        id="cor"
+                        name="cor"
+                        value="{{cor}}"
                 >
             </div>
             <div class="mb-3">
-                <label for="email" class="form-label">E-mail</label>
-                <input
-                        type="email"
-                        class="form-control"
-                        id="email"
-                        name="email"
-                        placeholder="Informe seu e-mail"
-                        value="{{email}}"
-                >
-            </div>
-            <div class="mb-3">
-                <label for="cidade" class="form-label">Cidade</label>
+                <label for="custodiaria" class="form-label">
+                    Custo diaria
+                    {{#with erros}}
+                        {{#if custodiariaErro}}
+                            <span class="error">&nbsp;{{custodiariaErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
                         type="text"
                         class="form-control"
-                        placeholder="Informe a cidade"
-                        id="cidade"
-                        name="cidade"
-                        value="{{cidade}}"
+                        id="custodiaria"
+                        name="custodiaria"
+                        placeholder="Informe o custo"
+                        value="{{custodiaria}}"
                 >
             </div>
             <div class="mb-3">
-                <label for="estado" class="form-label">Estado</label>
-                <select name="estado">
+                <label for="descricaopromocional" class="form-label">
+                    Descrição promocional
+                    {{#with erros}}
+                        {{#if descricaopromocionalErro}}
+                            <span class="error">&nbsp;{{descricaopromocionalErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
+                <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Informe a descrição"
+                        id="descricaopromocional"
+                        name="descricaopromocional"
+                        value="{{descricaopromocional}}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="tipocombustivel" class="form-label">
+                    Tipo combustivel
+                    {{#with erros}}
+                        {{#if tipocombustivelErro}}
+                            <span class="error">&nbsp;{{tipocombustivelErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
+                <select name="tipocombustivel" class="form-select">
                     <option value="Vazio"></option>
-                    <option {{#eq estado "SC"}} selected {{/eq}} value="SC">SC</option>
-                    <option {{#eq estado "RS"}} selected {{/eq}} value="RS">RS</option>
-                    <option {{#eq estado "PR"}} selected {{/eq}} value="PR">PR</option>
+                    <option {{#eq tipocombustivel "Alcool"}} selected {{/eq}} value="alcool">Álcool</option>
+                    <option {{#eq tipocombustivel "Gasolina"}} selected {{/eq}} value="gasolina">Gasolina</option>
+                    <option {{#eq tipocombustivel "GNV"}} selected {{/eq}} value="GNV">GNV</option>
+                    <option {{#eq tipocombustivel "Eletrico"}} selected {{/eq}} value="eletrico">Eletrico</option>
                 </select>
             </div>
             <div class="mb-3">
-                <label for="rua" class="form-label">Percentual de comissão (%)</label>
+                <label for="anofabricacao" class="form-label">
+                    Ano fabricação
+                    {{#with erros}}
+                        {{#if anofabricacaoErro}}
+                            <span class="error">&nbsp;{{anofabricacaoErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
-                        placeholder="Informe o percentual de comissão"
+                        placeholder="Informe o ano"
                         type="text"
                         class="form-control"
-                        id="percentualComissao"
-                        name="percentualComissao"
-                        value="{{percentualComissao}}"
-                >
-            </div>
-            <div class="mb-3">
-                <label for="rua" class="form-label">Data contratação</label>
-                <input
-                        type="date"
-                        class="form-control"
-                        id="dataContratacao"
-                        name="dataContratacao"
-                        value="{{dataContratacao}}"
+                        id="anofabricacao"
+                        name="anofabricacao"
+                        value="{{anofabricacao}}"
                 >
             </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Salvar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
     </form>
+    <script>
+        var formulario = document.getElementById("form_veiculo_formulario");
+
+        formulario.addEventListener("htmx:afterRequest", (event) => {
+            if (event?.detail?.xhr?.status == 200) {
+                $("#veiculosModal").modal('hide');
+            }
+        })
+    </script>
 </div>
