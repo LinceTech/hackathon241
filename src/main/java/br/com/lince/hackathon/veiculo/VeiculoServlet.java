@@ -1,7 +1,8 @@
-package br.com.lince.hackathon.time7;
+package br.com.lince.hackathon.veiculo;
 
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
+import br.com.lince.hackathon.time7.Time7Repository;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -138,13 +139,13 @@ public class VeiculoServlet extends HttpServlet {
 
         JDBIConnection.instance().withExtension(Time7Repository.class, dao -> {
             // Verificar se ocorreram erros no formulário
-//            if (errors.isEmpty()) {
-//                if (dao.existsVeiculo(id) && id != 0) {
-//                    dao.updateVeiculo(veiculo);
-//                } else {
-//                    dao.insertVeiculo(veiculo);
-//                }
-//            }
+            if (errors.isEmpty()) {
+                if (dao.existsVeiculo(id) && id != 0) {
+                    dao.updateVeiculo(veiculo);
+                } else {
+                    dao.insertVeiculo(veiculo);
+                }
+            }
 
             final var now = LocalDateTime.now();
             final var count = dao.count("Veiculo");

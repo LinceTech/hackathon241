@@ -1,4 +1,4 @@
-package br.com.lince.hackathon.time7;
+package br.com.lince.hackathon.locacao;
 
 import java.util.Objects;
 

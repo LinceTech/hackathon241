@@ -1,6 +1,4 @@
-package br.com.lince.hackathon.time7;
-
-import br.com.lince.hackathon.foo.Foo;
+package br.com.lince.hackathon.veiculo;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;

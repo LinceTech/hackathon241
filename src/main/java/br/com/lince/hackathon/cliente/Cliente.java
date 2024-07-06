@@ -1,4 +1,4 @@
-package br.com.lince.hackathon.time7;
+package br.com.lince.hackathon.cliente;
 
 import java.util.Objects;
 
@@ -64,6 +64,10 @@ public class Cliente {
 
     public long getCpf() {
         return cpf;
+    }
+
+    public String getCpfFormat() {
+        return String.format("%011d",cpf);
     }
 
     public void setCpf(long cpf) {

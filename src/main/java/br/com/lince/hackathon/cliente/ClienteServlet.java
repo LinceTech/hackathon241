@@ -1,7 +1,9 @@
-package br.com.lince.hackathon.time7;
+package br.com.lince.hackathon.cliente;
 
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
+import br.com.lince.hackathon.time7.Time7Repository;
+import br.com.lince.hackathon.time7.ValidaCPF;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -15,10 +17,10 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 
 /**
- * Servlet que responde a todas as ações relacionadas ao gerenciamento de gerentes
+ * Servlet que responde a todas as ações relacionadas ao gerenciamento de clientes
  */
-@WebServlet("/gerente/*")
-public class GerenteServlet extends HttpServlet {
+@WebServlet("/cliente/*")
+public class ClienteServlet extends HttpServlet {
     /*
      * O número de itens na paginação desta tela
      */
@@ -28,7 +30,7 @@ public class GerenteServlet extends HttpServlet {
     /*
      * Logger padrão do servlet
      */
-    private static final Logger logger = Logger.getLogger(GerenteServlet.class.getName());
+    private static final Logger logger = Logger.getLogger(ClienteServlet.class.getName());
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -67,59 +69,46 @@ public class GerenteServlet extends HttpServlet {
     }
 
     /*
-     * Trata a requisição para retorna a página de gerentes carregada com todos os dados
+     * Trata a requisição para retorna a página de clientes carregada com todos os dados
      */
     private void loadFullPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<GerenteViewData>("gerente/page", response);
+        final var renderer = new TemplateRenderer<ClienteViewData>("cliente/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
 
         JDBIConnection.instance().withExtension(Time7Repository.class, dao -> {
             final var now = LocalDateTime.now();
-            final var count = dao.count("Gerente");
-            final var gerentes = dao.selectPageGerente(page, PAGE_SIZE);
+            final var count = dao.count("Cliente");
+            final var clientes = dao.selectPageCliente(page, PAGE_SIZE);
 
-            renderer.render(new GerenteViewData(gerentes, now, page, PAGE_SIZE, count));
+            renderer.render(new ClienteViewData(clientes, now, page, PAGE_SIZE, count));
 
             return null;
         });
     }
 
     /*
-     * Trata a requisição para inserir ou atualizar um gerente, e retorna página atualizada
+     * Trata a requisição para inserir ou atualizar um cliente, e retorna página atualizada
      */
     private void insertOrUpdate(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<GerenteViewData>("gerente/page", response);
+        final var renderer = new TemplateRenderer<ClienteViewData>("cliente/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
 
-        //--request dos valores no formulario
-        System.out.println(" ------- request dos valores na tela -------");
         final var id           = NumberUtils.toInt(request.getParameter("id"), 0);
-        System.out.println("Id : " + id);
         final var nome         = request.getParameter("nome");
-        System.out.println("nome : " + nome);
         final long cpf         = NumberUtils.toLong(request.getParameter("cpf"), 0);
-        System.out.println("cpf : " + cpf);
-        final var dtNascimento   = NumberUtils.toInt(request.getParameter("dtNascimento").replaceAll("-", ""), 0);
-        System.out.println("dtNascimento : " + dtNascimento);
+        final var dtNascimento = NumberUtils.toInt(request.getParameter("dtNascimento").replaceAll("-", ""), 0);
         final long telefone    = NumberUtils.toLong(request.getParameter("telefone"), 0);
-        System.out.println("telefone : " + telefone);
-        final var email        = request.getParameter("email");
-        System.out.println("email : " + email);
-        final var cep          = NumberUtils.toInt(request.getParameter("cep"), 0);
-        System.out.println("cep : " + cep);
-        final var cidade       = request.getParameter("cidade");
-        System.out.println("cidade : " + cidade);
-        final var estado       = request.getParameter("estado");
-        System.out.println("estado : " + estado);
-        final var comissao     = NumberUtils.toFloat(request.getParameter("comissao"), 0);
-        System.out.println("comissao : " + comissao);
-        final var dtcontratacao   = NumberUtils.toInt(request.getParameter("dtcontratacao").replaceAll("-", ""), 0);
-        System.out.println("dtcontratacao : " + dtcontratacao);
+        final var email        = "";//request.getParameter("email");
+        final var cep          = 0;// NumberUtils.toInt(request.getParameter("cep"), 0);
+        final var cidade       = "";//request.getParameter("cidade");
+        final var estado       = "";//request.getParameter("estado");
+        final var bairro       = "";//request.getParameter("bairro");
+        final var rua          = "";//request.getParameter("rua");
+        final var numero       = 0;// NumberUtils.toInt(request.getParameter("numero"), 0);
 
-        final var gerente = new Gerente(id, nome, cpf, dtNascimento, telefone, email, cep, cidade, estado, comissao, dtcontratacao);
+        final var cliente = new Cliente(id, nome, cpf, dtNascimento, telefone, email, cep, cidade, estado, bairro, rua, numero);
         final var errors = new HashMap<String, String>();
 
-        //--validações
         if (nome.isBlank()) {
             errors.put("nomeError", "Não pode ser vazio");
         } else if (nome.length() > 60) {
@@ -128,10 +117,9 @@ public class GerenteServlet extends HttpServlet {
 
         if (cpf == 0) {
             errors.put("cpfError", "Não pode ser vazio");
+        } else if (!ValidaCPF.isCPF(String.format("%011d",cpf))) {
+            errors.put("cpfError", "CPF inválido");
         }
-//        else if (!ValidaCPF.isCPF(String.format("%11d",cpf))) {
-//            errors.put("cpfError", "CPF inválido");
-//        }
 
         if (dtNascimento == 0) {
             errors.put("dtNascimentoError", "Não pode ser vazio");
@@ -143,45 +131,26 @@ public class GerenteServlet extends HttpServlet {
 
         if (telefone == 0) {
             errors.put("telefoneError", "Não pode ser vazio");
-        } else if (!ValidaTelefone.validaFone(String.valueOf(telefone))){
-            errors.put("telefoneError", "Telefone invalido");
         }
-
-        if (email.isBlank()) {
-            errors.put("emailError", "Não pode ser vazio");
-        } else if (!ValidaEmail.isValidEmail(email)){
-            errors.put("emailError", "Email invalido");
-        }
-
-        if (cep == 0) {
-            errors.put("cepError", "Não pode ser vazio");
-        }
-
-        if (comissao == 0) {
-            errors.put("comissaoError", "Não pode ser vazio");
-        }else if(comissao > 25){
-            errors.put("comissaoError", "Comissão não pode ser maior que 25%");
-        }
-
 
         JDBIConnection.instance().withExtension(Time7Repository.class, dao -> {
             // Verificar se ocorreram erros no formulário
-            if (errors.isEmpty()) {
-                if (dao.existsGerente(id) && id != 0) {
-                    dao.updateGerente(gerente);
-                } else {
-                    dao.insertGerente(gerente);
-                }
-            }
+//            if (errors.isEmpty()) {
+//                if (dao.existsCliente(id) && id != 0) {
+//                    dao.updateCliente(cliente);
+//                } else {
+//                    dao.insertCliente(cliente);
+//                }
+//            }
 
             final var now = LocalDateTime.now();
-            final var count = dao.count("Gerente");
-            final var gerentes = dao.selectPageGerente(page, PAGE_SIZE);
+            final var count = dao.count("Cliente");
+            final var clientes = dao.selectPageCliente(page, PAGE_SIZE);
 
             if (errors.isEmpty()) {
-                renderer.render(new GerenteViewData(gerentes, now, page, PAGE_SIZE, count));
+                renderer.render(new ClienteViewData(clientes, now, page, PAGE_SIZE, count));
             } else {
-                renderer.render(new GerenteViewData(errors, gerente, gerentes, now, page, PAGE_SIZE, count));
+                renderer.render(new ClienteViewData(errors, cliente, clientes, now, page, PAGE_SIZE, count));
             }
 
             return null;
@@ -189,26 +158,26 @@ public class GerenteServlet extends HttpServlet {
     }
 
     /*
-     * Trata a requisição para alimentar o formulário de cadastro ou edição de gerentes
+     * Trata a requisição para alimentar o formulário de cadastro ou edição de clientes
      */
     private void loadFormEdit(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<Gerente>("gerente/form", response);
+        final var renderer = new TemplateRenderer<Cliente>("cliente/form", response);
         final var id = NumberUtils.toInt(request.getParameter("id"), 0);
 
         JDBIConnection.instance().withExtension(Time7Repository.class, dao -> {
-            renderer.render(dao.findByIdGerente(id));
+            renderer.render(dao.findByIdCliente(id));
             return null;
         });
     }
 
     /*
-     * Trata a requisição de exclusão de gerentes
+     * Trata a requisição de exclusão de clientes
      */
     private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var id = Integer.parseInt(request.getParameter("id"));
 
         JDBIConnection.instance().withExtension(Time7Repository.class, dao -> {
-            dao.deleteGerente(id);
+            dao.deleteCliente(id);
             loadFullPage(request, response);
             return null;
         });

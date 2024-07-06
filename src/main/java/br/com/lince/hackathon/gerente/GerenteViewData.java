@@ -1,71 +1,69 @@
-package br.com.lince.hackathon.time7;
-
-import br.com.lince.hackathon.foo.Foo;
+package br.com.lince.hackathon.gerente;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * Classe utilizada para agregar todos os dados necessários para alimentar o template cliente/page
+ * Classe utilizada para agregar todos os dados necessários para alimentar o template gerente/page
  */
-public class ClienteViewData {
+public class GerenteViewData {
 
     /**
      * Construtor utilizado para renderizar a página com a lista de foos.
      *
-     * @param clientes lista de clientes
+     * @param gerentes lista de gerentes
      * @param dateTime data e hora
      * @param page     número da pagina
      * @param pageSize número de itens da página atual
      * @param count    número total de foos
      */
-    public ClienteViewData(
-            List<Cliente> clientes,
+    public GerenteViewData(
+            List<Gerente> gerentes,
             LocalDateTime dateTime,
             int page,
             int pageSize,
             int count
     ) {
-        this.clientes = clientes;
+        this.gerentes = gerentes;
         this.dateTime = dateTime;
         this.page = page;
         this.pageSize = pageSize;
         this.count = count;
         this.errors = null;
-        this.cliente = null;
+        this.gerente = null;
     }
 
     /**
      * Construtor utilizado para renderizar a página com a lista de foos.
      *
      * @param errors   mapa contendo os errors que ocorreram no formulário
-     * @param cliente  item a ser alimentado no formulário de cadastro/edição
-     * @param clientes lista de clientes
+     * @param gerente  item a ser alimentado no formulário de cadastro/edição
+     * @param gerentes lista de gerentes
      * @param dateTime data e hora
      * @param page     número da pagina
      * @param pageSize número de itens da página atual
      * @param count    número total de foos
      */
-    public ClienteViewData(
+    public GerenteViewData(
             HashMap<String, String> errors,
-            Cliente cliente, List<Cliente> clientes,
+            Gerente gerente, List<Gerente> gerentes,
             LocalDateTime dateTime,
             int page,
             int pageSize,
             int count
     ) {
-        this.clientes = clientes;
+        this.gerentes = gerentes;
         this.dateTime = dateTime;
         this.page = page;
         this.pageSize = pageSize;
         this.count = count;
         this.errors = errors;
-        this.cliente = cliente;
+        this.gerente = gerente;
     }
 
-    private final Cliente cliente;
-    private final List<Cliente> clientes;
+    private final Gerente gerente;
+    private final List<Gerente> gerentes;
     private final LocalDateTime dateTime;
     private final int page;
     private final int pageSize;
@@ -76,12 +74,12 @@ public class ClienteViewData {
         return errors;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Gerente getGerente() {
+        return gerente;
     }
 
-    public List<Cliente> getClientes() {
-        return clientes;
+    public List<Gerente> getGerentes() {
+        return gerentes;
     }
 
     public LocalDateTime getDateTime() {
