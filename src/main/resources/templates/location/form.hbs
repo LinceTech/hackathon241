@@ -1,0 +1,135 @@
+<form id="locationForm">
+    <div class="locationMain">
+        <div class="locationClient">
+            <label for="name">Cliente</label>
+            <input type="text" name="client" maxlength="100" size="100" value="{{location.client}}">
+            {{#with errors}}
+                {{#if clientError}}
+                    <span class="error">
+                            Cliente: {{clientError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="locationManager">
+            <label for="manager">Gerente</label>
+            <input type="text" name="manager" maxlength="11" size="11" value="{{location.manager}}">
+            {{#with errors}}
+                {{#if managerError}}
+                    <span class="error">
+                            Gerente: {{managerError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="locationVehicle">
+            <label for="vehicle">Veículo</label>
+            <select name="vehicle" id="vehicle">{
+                <option value="5" >Carro 5</option>
+            </select>
+            {{#with errors}}
+                {{#if vehicleError}}
+                    <span class="error">
+                            Veículo: {{vehicleError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="locationInitialDate">
+            <label for="initialDate">Data</label>
+            <input type="date" name="initialDate" maxlength="14" size="14" value="{{location.initialDate}}">
+            <label for="finalDate">à</label>
+            <input type="date" name="finalDate" maxlength="14" size="14" value="{{location.finalDate}}">
+
+            {{#with errors}}
+                {{#if intialDateError}}
+                    <span class="error">
+                            Data inicial: {{intialDateError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+            {{#with errors}}
+                {{#if finalDateError}}
+                    <span class="error">
+                            Data final: {{finalDateError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="locationDayValue">
+            <label for="dayValue">Diária</label>
+            <input type="text" name="dayValue" maxlength="11" size="11" value="{{location.dayValue}}">
+            {{#with errors}}
+                {{#if dayValueError}}
+                    <span class="error">
+                            Diária: {{dayValueError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="locationCommission">
+            <label for="commission">Percentual de comissão</label>
+            <input type="text" name="commission" maxlength="11" size="11" value="{{location.commission}}">
+            {{#with errors}}
+                {{#if commissionError}}
+                    <span class="error">
+                            Comissão: {{commissionError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="locationTotalValue">
+            <label for="totalValue">Valor total</label>
+            <input type="text" name="totalValue" maxlength="11" size="11" value="{{location.totalValue}}">
+            {{#with errors}}
+                {{#if totalValueError}}
+                    <span class="error">
+                            Valor total: {{totalValueError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="locationDatePay">
+            <label for="datePay">Data de pagamento</label>
+            <input type="date" name="datePay" maxlength="11" size="11" value="{{location.datePay}}">
+            {{#with errors}}
+                {{#if datePayError}}
+                    <span class="error">
+                            Data de pagamento: {{datePayError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div>
+            <button hx-target="#formAndTable"
+                    hx-select="#formAndTable"
+                    hx-swap="outerHTML"
+                    hx-post="location/upsert"
+            >
+                {{#if location.id}}
+                    Atualizar
+                {{^}}
+                    Cadastrar
+                {{/if}}
+            </button>
+                {{#if location.id}}
+                    <button hx-target="#locationForm"
+                        hx-select="#locationForm"
+                        hx-swap="outerHTML"
+                        hx-get="location/"
+                        style="display: inline-flex"
+                >
+                    Cancelar
+                </button>
+            {{/if}}
+        </div>
+    </div>
+</form>
