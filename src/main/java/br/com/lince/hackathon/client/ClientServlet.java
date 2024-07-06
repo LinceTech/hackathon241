@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Logger;
 
 @WebServlet("/clientes/*")
@@ -33,6 +34,10 @@ public class ClientServlet extends HttpServlet {
             case "":
             case "/":
                 loadFullPage(request, response);
+                break;
+
+            case "/find":
+                loadFindClient(request, response);
                 break;
 
             case "/cadastro":
@@ -60,16 +65,62 @@ public class ClientServlet extends HttpServlet {
             loadFullPage(request, response);
         } else if (requestPath.equals("/upsert")) {
             insertOrUpdateFoo(request, response);
+        } else if (requestPath.equals("/find")) {
+            loadFindClient(request, response);
         } else {
             response.getWriter().write("Not found : " + requestPath);
         }
     }
 
+    private void loadFindClient(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderMenu = new TemplateRenderer<ClientViewData>("menu", response);
+        final var renderer = new TemplateRenderer<ClientViewData>("client/pageClient", response);
+        final var comMenu = NumberUtils.toInt(request.getParameter("comMenu"), 0);
+        final var tema = NumberUtils.toInt(request.getParameter("tema"), 0);
+        final var page = NumberUtils.toInt(request.getParameter("pageClient"), 0);
+
+        final var id_filtro = NumberUtils.toInt(request.getParameter("id_filtro"), 0);
+        final var cpf_filtro = request.getParameter("cpf_filtro");
+        String nome_Filtro = request.getParameter("nome_filtro");
+
+        String query = "where 1=1";
+
+        if (id_filtro != 0) {
+            query +=  "AND id = "+id_filtro;
+        }
+
+        if (nome_Filtro != null && !nome_Filtro.isEmpty()) {
+            query +=  " AND nome LIKE '%"+nome_Filtro+"%'";
+        }
+
+        if (cpf_filtro != null && !cpf_filtro.isEmpty()) {
+            query +=  " AND cpf = "+cpf_filtro;
+        }
+        String finalNome_Filtro = nome_Filtro;
+        System.out.println("teste ? ???"+query);
+        String finalQuery = query;
+
+        JDBIConnection.instance().withExtension(ClientRepository.class, dao -> {
+            final var now = LocalDateTime.now();
+            final var count = dao.countClient();
+//            final var clients = dao.selectPageClient(page, PAGE_SIZE);
+            final var clients = dao.findClientBy(finalQuery);
+
+            renderer.render(new ClientViewData(clients, now, page, PAGE_SIZE, count));
+            if(tema == 1){
+                final var renderTemaEscuro = new TemplateRenderer<ClientViewData>("temaEscuro", response);
+                renderTemaEscuro.render(new ClientViewData(clients, now, page, PAGE_SIZE, count));
+            }
+
+            return null;
+        });
+    }
+
     private void loadFullPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderMenu = new TemplateRenderer<ClientViewData>("menu", response);
         final var renderer = new TemplateRenderer<ClientViewData>("client/pageClient", response);
-
         final var comMenu = NumberUtils.toInt(request.getParameter("comMenu"), 0);
+        final var tema = NumberUtils.toInt(request.getParameter("tema"), 0);
         final var page = NumberUtils.toInt(request.getParameter("pageClient"), 0);
 
         JDBIConnection.instance().withExtension(ClientRepository.class, dao -> {
@@ -81,6 +132,10 @@ public class ClientServlet extends HttpServlet {
                 renderMenu.render(new ClientViewData(clients, now, page, PAGE_SIZE, count));
             }
             renderer.render(new ClientViewData(clients, now, page, PAGE_SIZE, count));
+            if(tema == 1){
+                final var renderTemaEscuro = new TemplateRenderer<ClientViewData>("temaEscuro", response);
+                renderTemaEscuro.render(new ClientViewData(clients, now, page, PAGE_SIZE, count));
+            }
 
             return null;
         });
@@ -88,6 +143,7 @@ public class ClientServlet extends HttpServlet {
 
     private void carregaCadastro(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<ClientViewData>("client/formClient", response);
+        final var tema = NumberUtils.toInt(request.getParameter("tema"), 0);
         final var page = NumberUtils.toInt(request.getParameter("pageClient"), 0);
 
         JDBIConnection.instance().withExtension(ClientRepository.class, dao -> {
@@ -96,6 +152,11 @@ public class ClientServlet extends HttpServlet {
             final var clients = dao.selectPageClient(page, PAGE_SIZE);
 
             renderer.render(new ClientViewData(clients, now, page, PAGE_SIZE, count));
+
+            if(tema == 1){
+                final var renderTemaEscuro = new TemplateRenderer<ClientViewData>("temaEscuro", response);
+                renderTemaEscuro.render(new ClientViewData(clients, now, page, PAGE_SIZE, count));
+            }
             return null;
         });
     }
@@ -103,6 +164,7 @@ public class ClientServlet extends HttpServlet {
     /*ATUALIZA VALORES*/
     private void insertOrUpdateFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<ClientViewData>("client/pageClient", response);
+        final var tema = NumberUtils.toInt(request.getParameter("tema"), 0);
         final var page = NumberUtils.toInt(request.getParameter("pageClient"), 0);
         int id = 0;
         try {
@@ -178,9 +240,9 @@ public class ClientServlet extends HttpServlet {
             errors.put("cidade", "Não pode ser maior que 255 caracteres");
         }
         //estado
-        if (telefone.isBlank()) {
+        if (estado.isBlank()) {
             errors.put("estado", "Não pode ser vazio");
-        } else if (cpf.length() > 2) {
+        } else if (estado.length() > 2) {
             errors.put("estado", "Não pode ser maior que 2 caracteres");
         }
         //bairro
@@ -220,6 +282,10 @@ public class ClientServlet extends HttpServlet {
 
             if (errors.isEmpty()) {
                 renderer.render(new ClientViewData(clientes, now, page, PAGE_SIZE, count));
+                if(tema == 1){
+                    final var renderTemaEscuro = new TemplateRenderer<ClientViewData>("temaEscuro", response);
+                    renderTemaEscuro.render(new ClientViewData(clientes, now, page, PAGE_SIZE, count));
+                }
             } else {
 //                renderer.render(new ClientViewData(errors, client, clientes, now, page, PAGE_SIZE, count));
                 final var error = new TemplateRenderer<ClientViewData>("client/error", response);
@@ -227,7 +293,10 @@ public class ClientServlet extends HttpServlet {
                 response.setHeader("HX-Reswap", "innerHTML");
 
                 error.render(new ClientViewData(errors, client, clientes, now, page, PAGE_SIZE, count));
-//                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Ocorreu um erro interno no servidor.");
+                if(tema == 1){
+                    final var renderTemaEscuro = new TemplateRenderer<ClientViewData>("temaEscuro", response);
+                    renderTemaEscuro.render(new ClientViewData(clientes, now, page, PAGE_SIZE, count));
+                }
             }
 
             return null;

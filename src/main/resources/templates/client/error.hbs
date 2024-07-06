@@ -1,4 +1,4 @@
-<dialog id="errorDiv" style="display:flex;flex-direction: column;">
+<dialog id="errorDiv" style="display:flex;flex-direction: column; top: 100px;">
     <h2>Error</h2>
 
     {{#each errors}}
@@ -16,8 +16,10 @@
         $('#errorDiv').fadeOut(200, function() {
             $(this).remove();
         });
-    });
 
+        $('#content').css('opacity', '1').css('pointer-events', 'all');
+    });
+    $('#content').css('opacity', '0.3').css('pointer-events', 'none');
 </script>
 
 <style>

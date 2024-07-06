@@ -144,6 +144,10 @@
         button.dark-mode:hover {
             background-color: #003a75;
         }
+
+        td.dark-mode, th.dark-mode, p.dark-mode, a.dark-mode{
+            color:white !important;
+        }
     </style>
 </head>
 <body style="display:flex;"
@@ -152,13 +156,17 @@
     <div class="sidebar">
         <h2>Menu</h2>
         <ul>
-            <li><a href=""><img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Home">Home</a></li>
+            <li><a href="" onclick="toggleTheme()"><img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Home">Home</a></li>
             <li><a href="clientes"><img src="https://img.icons8.com/?size=14&id=15566&format=png&color=000000" alt="Relatórios">Clientes</a></li>
             <li><a href="gerentes"><img src="https://img.icons8.com/?size=14&id=15566&format=png&color=000000" alt="Relatórios">Gerentes</a></li>
+            <li><a href="veiculos"><img src="https://img.icons8.com/?size=14&id=15566&format=png&color=000000" alt="Relatórios">Veiculos</a></li>
             <li><a onclick="toggleTheme()"><img src="https://img.icons8.com/?size=14&id=778&format=png&color=000000" alt="Configurações">Modo Escuro</a></li>
         </ul>
     </div>
 </div>
+
+<input type="hidden" id="tema" name="tema" required value="0">
+
 <!--<button onclick="toggleTheme()">Mudar Tema</button>-->
 <script>
     function toggleTheme() {
@@ -173,7 +181,21 @@
 
         const buttons = document.querySelectorAll('button');
         buttons.forEach(button => button.classList.toggle('dark-mode'));
+
+        const td = document.querySelectorAll('td');
+        td.forEach(td => td.classList.toggle('dark-mode'));
+
+        const th = document.querySelectorAll('th');
+        th.forEach(td => td.classList.toggle('dark-mode'));
+
+        const p = document.querySelectorAll('p');
+        p.forEach(p => p.classList.toggle('dark-mode'));
+
+        const a = document.querySelectorAll('a');
+        a.forEach(a => a.classList.toggle('dark-mode'));
     }
+$('#hidden').val(1);
+
 </script>
 <!--</body>-->
 <!--</html>-->

@@ -1,0 +1,45 @@
+<div id="formAndTable" style="padding:20px;">
+
+    {{>veiculos/listVeiculos veiculos}}
+
+    <div id="veiculoItemsTable">
+        <input type="hidden" name="page" value="{{index}}">
+
+        <div style="display: inline-flex; padding-bottom: 12px;">
+            {{#if hasPrevious}}
+                <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
+                     alt="Página anterior"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
+                     hx-target="#veiculoItemsTable"
+                     hx-select="#veiculoItemsTable"
+                     hx-swap="innerHTML"
+                     hx-get="veiculo?page={{previous}}">
+            {{/if}}
+
+            <span style="height: 18px; vertical-align: center;">
+                Página <b>{{page}}</b> de <b>{{totalPages}}</b>
+            </span>
+
+            {{#if next}}
+                <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
+                     alt="Próxima página"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
+                     hx-target="#veiculoItemsTable"
+                     hx-select="#veiculoItemsTable"
+                     hx-swap="innerHTML"
+                     hx-get="veiculo?page={{next}}">
+            {{/if}}
+        </div>
+    </div>
+
+    <button style="margin-top: 25px;" hx-target="#formAndTable"
+            hx-swap="outerHTML"
+            hx-get="veiculos/cadastro">
+        <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastra veículo">
+        &nbsp;
+        Cadastrar veículo
+    </button>
+</div>
+</div>
+</body>
+</html>

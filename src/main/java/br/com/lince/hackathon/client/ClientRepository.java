@@ -1,6 +1,5 @@
 package br.com.lince.hackathon.client;
 
-import br.com.lince.hackathon.client.Client;
 import org.jdbi.v3.freemarker.UseFreemarkerEngine;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -31,6 +30,16 @@ public interface ClientRepository {
     @UseFreemarkerEngine
     @SqlQuery("SELECT id, nome, cpf, data_nascimento, telefone, email, cep, cidade, estado, bairro, rua, numero FROM tb_clientes WHERE id = :id")
     Client findClientById(@Bind("id") int id);
+
+//    @RegisterBeanMapper(Client.class)
+//    @UseFreemarkerEngine
+//    @SqlQuery("SELECT id, nome, cpf, data_nascimento, telefone, email, cep, cidade, estado, bairro, rua, numero FROM tb_clientes WHERE (:id = 0 OR id = :id) AND (:cpf IS NULL OR cpf = :cpf) AND (:nome IS NULL OR nome LIKE :nome)")
+//    Client findClientBy(@Bind("id") int id, @Bind("nome") String nome, @Bind("cpf") String cpf);
+
+    @RegisterBeanMapper(Client.class)
+    @UseFreemarkerEngine
+    @SqlQuery("SELECT id, nome, cpf, data_nascimento, telefone, email, cep, cidade, estado, bairro, rua, numero FROM tb_clientes ${query}")
+    List<Client> findClientBy(@Define("query") String query);
 
 
     @UseFreemarkerEngine

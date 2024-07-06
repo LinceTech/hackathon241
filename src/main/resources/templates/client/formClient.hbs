@@ -6,7 +6,7 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="id" class="form-label">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" required value="{{id}}">
+                    <input disabled type="text" class="form-control" id="id" name="id" required value="{{id}}">
                 </div>
                 <div class="form-group">
                     <label for="cpf" class="form-label">CPF</label>
@@ -83,7 +83,7 @@
                     <button hx-target-error="#errors"
                             hx-target="#content"
                             hx-swap="outerHTML"
-                            hx-post="clientes/upsert?{{id}}">
+                            hx-post="clientes/upsert?id={{id}}">
                         <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000"
                              alt="Cadastrar item">
                         {{#if id}}

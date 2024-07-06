@@ -1,44 +1,68 @@
 <div id="formAndTable" style="padding:20px;">
-
-    {{>client/listClient client}}
-
-    <div id="clientItemsTable">
-        <input type="hidden" name="page" value="{{index}}">
-
-        <div style="display: inline-flex; padding-bottom: 12px;">
-            {{#if hasPrevious}}
-                <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
-                     alt="Página anterior"
-                     style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
-                     hx-target="#clientItemsTable"
-                     hx-select="#clientItemsTable"
-                     hx-swap="innerHTML"
-                     hx-get="client?page={{previous}}">
-            {{/if}}
-
-            <span style="height: 18px; vertical-align: center;">
-                Página <b>{{page}}</b> de <b>{{totalPages}}</b>
-            </span>
-
-            {{#if next}}
-                <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
-                     alt="Próxima página"
-                     style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
-                     hx-target="#clientItemsTable"
-                     hx-select="#clientItemsTable"
-                     hx-swap="innerHTML"
-                     hx-get="client?page={{next}}">
-            {{/if}}
+    <form>
+        <div class="form-row">
+            <button style="margin-top: 30px;height: 45px;" hx-target="#formAndTable"
+                    hx-swap="outerHTML"
+                    hx-post="clientes/find">
+                <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Pesquisar">
+                &nbsp;
+                Pesquisar
+            </button>
+            <div class="form-group">
+                <label for="id" class="form-label">ID</label>
+                <input type="text" class="form-control" id="id_filtro" name="id_filtro" required>
+            </div>
+            <div class="form-group">
+                <label for="cpf" class="form-label">CPF</label>
+                <input type="text" class="form-control" id="cpf_filtro" name="cpf_filtro" required>
+            </div>
+            <div class="form-group">
+                <label for="cpf" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="nome_filtro" name="nome_filtro" required>
+            </div>
         </div>
-    </div>
+    </form>
 
-    <button style="margin-top: 25px;" hx-target="#formAndTable"
-            hx-swap="outerHTML"
-            hx-get="clientes/cadastro">
-        <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastra cliente">
-        &nbsp;
-        Cadastrar cliente
-    </button>
+        {{>client/listClient client}}
+
+        <div id="clientItemsTable">
+            <input type="hidden" name="page" value="{{index}}">
+
+            <div style="display: inline-flex; padding-bottom: 12px;">
+                {{#if hasPrevious}}
+                    <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
+                         alt="Página anterior"
+                         style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
+                         hx-target="#clientItemsTable"
+                         hx-select="#clientItemsTable"
+                         hx-swap="innerHTML"
+                         hx-get="client?page={{previous}}">
+                {{/if}}
+
+                <span style="height: 18px; vertical-align: center;">
+                    Página <b>{{page}}</b> de <b>{{totalPages}}</b>
+                </span>
+
+                {{#if next}}
+                    <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
+                         alt="Próxima página"
+                         style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
+                         hx-target="#clientItemsTable"
+                         hx-select="#clientItemsTable"
+                         hx-swap="innerHTML"
+                         hx-get="client?page={{next}}">
+                {{/if}}
+            </div>
+        </div>
+
+        <button style="margin-top: 25px;" hx-target="#formAndTable"
+                hx-swap="outerHTML"
+                hx-get="clientes/cadastro">
+            <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastra cliente">
+            &nbsp;
+            Cadastrar cliente
+        </button>
+    </div>
 </div>
 </div>
 </body>
