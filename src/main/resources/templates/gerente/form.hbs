@@ -8,16 +8,16 @@
     <input type="hidden" name="ES_TADO" value="{{estado}}">
     <input type="hidden" name="PC_COMISSAO" value="{{pccomissao}}">
     <input type="hidden" name="DT_CONTRATACAO" value="{{dtcontratacao}}">
-
+<div class="inputs1">
     <div>
         <label>
-            <span style="width: 50px; display: inline-block;">CDGERENTE:</span>
+            <span style="width: 50px; display: inline-block;">Código:</span>
             <span>
-                <input type="text" name="CDGERENTE" maxlength="60" size="60" value="{{cdgerente}}">
+                <input type="text" name="CDGERENTE" maxlength="20" size="20" value="{{cdgerente}}">
                 {{#with errors}}
-                    {{#if gerenteError}}
+                    {{#if erroCDGERENTE}}
                         <span class="error">
-                            CDGERENTE: {{Error}}
+                            {{erroCDGERENTE}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -28,13 +28,13 @@
 
     <div>
         <label>
-            <span style="width: 50px; display: inline-block;">NOME:</span>
+            <span style="width: 50px; display: inline-block;">Nome:</span>
             <span>
-                <input type="text" name="NOME" maxlength="60" size="60" value="{{nome}}">
+                <input type="text" name="NOME" maxlength="200" size="200" value="{{nome}}">
                 {{#with errors}}
-                    {{#if gerenteError}}
+                    {{#if erroNOME}}
                         <span class="error">
-                            NOME: {{Error}}
+                            {{erroNOME}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -47,11 +47,11 @@
         <label>
             <span style="width: 50px; display: inline-block;">CPF:</span>
             <span>
-                <input type="text" name="CPF" maxlength="60" size="60" value="{{cpf}}">
+                <input type="text" name="CPF" maxlength="20" size="20" value="{{cpf}}">
                 {{#with errors}}
-                    {{#if gerenteError}}
+                    {{#if erroCPF}}
                         <span class="error">
-                            CPF: {{Error}}
+                            {{erroCPF}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -66,9 +66,9 @@
             <span>
                 <input type="text" name="DDD" maxlength="60" size="60" value="{{ddd}}">
                 {{#with errors}}
-                    {{#if gerenteError}}
+                    {{#if erroDDD}}
                         <span class="error">
-                            DDD: {{Error}}
+                            {{erroDDD}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -83,9 +83,9 @@
             <span>
                 <input type="text" name="TELEFONE" maxlength="60" size="60" value="{{telefone}}">
                 {{#with errors}}
-                    {{#if gerenteError}}
+                    {{#if erroTELEFONE}}
                         <span class="error">
-                            NOME: {{Error}}
+                            {{erroTELEFONE}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -100,9 +100,9 @@
             <span>
                 <input type="text" name="EMAIL" maxlength="60" size="60" value="{{email}}">
                 {{#with errors}}
-                    {{#if gerenteError}}
+                    {{#if erroEMAIL}}
                         <span class="error">
-                            EMAIL: {{Error}}
+                            {{erroEMAIL}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -110,16 +110,17 @@
             <br>
         </label>
     </div>
-
+</div>
+    <div class="inputs2">
     <div>
         <label>
             <span style="width: 50px; display: inline-block;">CIDADE:</span>
             <span>
                 <input type="text" name="CIDADE" maxlength="60" size="60" value="{{cidade}}">
                 {{#with errors}}
-                    {{#if gerenteError}}
+                    {{#if erroCIDADE}}
                         <span class="error">
-                            CIDADE: {{gerenteError}}
+                            {{erroCIDADE}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -134,9 +135,9 @@
             <span>
                 <input type="text" name="ESTADO" maxlength="60" size="60" value="{{estado}}">
                 {{#with errors}}
-                    {{#if gerenteError}}
+                    {{#if erroESTADO}}
                         <span class="error">
-                            Estado: {{gerenteError}}
+                            {{erroESTADO}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -151,9 +152,9 @@
             <span>
                 <input type="text" name="PCCOMISSAO" maxlength="60" size="60" value="{{pccomissao}}">
                 {{#with errors}}
-                    {{#if gerenteError}}
+                    {{#if erroPCCOMISSAO}}
                         <span class="error">
-                            Comissão: {{gerenteError}}
+                            {{erroPCCOMISSAO}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -164,13 +165,13 @@
 
     <div>
         <label>
-            <span style="width: 50px; display: inline-block;">Data contratação:</span>
+            <span style="width: 150px; display: inline-block;">Data contratação:</span>
             <span>
                 <input type="text" name="DTCONTRATACAO" maxlength="60" size="60" value="{{dtcontratacao}}">
                 {{#with errors}}
-                    {{#if gerenteError}}
+                    {{#if erroDTCONTRATACAO}}
                         <span class="error">
-                            Data: {{gerenteError}}
+                            {{erroDTCONTRATACAO}}
                         </span>
                     {{/if}}
                 {{/with}}
@@ -178,6 +179,7 @@
             <br>
         </label>
     </div>
+</div>
 
     <br>
     <button hx-target="#formAndTable"
@@ -194,7 +196,7 @@
             Cadastrar
         {{/if}}
     </button>
-    {{#if bar}}
+    {{#if cdgerente}}
         <button hx-target="#gerenteForm"
                 hx-select="#gerenteForm"
                 hx-swap="outerHTML"

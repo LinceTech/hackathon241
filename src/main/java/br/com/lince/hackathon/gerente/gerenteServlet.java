@@ -111,67 +111,73 @@ public class gerenteServlet extends HttpServlet {
         final var estado = request.getParameter("ESTADO");
         final var indativo = 1;
         final var pccomissao = NumberUtils.toDouble(request.getParameter("PCCOMISSAO"), 0.0);
-        final var dtcontratacao = LocalDate.parse(request.getParameter("DTCONTRATACAO"), DateTimeFormatter.ISO_LOCAL_DATE);
+        final var dtcontratacao = LocalDate.parse((request.getParameter("DTCONTRATACAO").isEmpty() ? LocalDate.now().toString() : request.getParameter("DTCONTRATACAO")), DateTimeFormatter.ISO_LOCAL_DATE);
         final var gerente = new Gerente(cdgerente, nome, cpf, telefone, ddd, email, cidade, estado, pccomissao, dtcontratacao, indativo);
         final var errors = new HashMap<String, String>();
 
         if (cdgerente == 0) {
-            errors.put("Código do gerente", "Não pode ser vazio");
+            errors.put("erroCDGERENTE", "Não pode ser vazio");
         } else if (cdgerente > 999999999) {
-            errors.put("Código do gerente", "Não pode ser maior que 9 caracteres");
+            errors.put("erroCDGERENTE", "Não pode ser maior que 9 caracteres");
         }
 
         if (nome.isBlank()) {
-            errors.put("Nome do gerente", "Não pode ser vazio");
+            errors.put("erroNOME", "Não pode ser vazio");
         } else if (nome.length() > 100) {
-            errors.put("Nome do gerente", "Não pode ser maior que 100 caracteres");
+            errors.put("erroNOME", "Não pode ser maior que 100 caracteres");
         }
 
         if (cpf.isBlank()) {
-            errors.put("CPF", "Não pode ser vazio");
+            errors.put("erroCPF", "Não pode ser vazio");
         } else if (cpf.length() > 14) {
-            errors.put("CPF", "Não pode ser maior que 11 caracteres");
-//      } else {
-////            if(!validarCPF(cpf)){
-////                errors.put("CPF", "Inserção inválida");
-////            }
-       }
-
+            errors.put("erroCPF", "Não pode ser maior que 11 caracteres");
+        }
 
         if (telefone == 0) {
-            errors.put("Telefone", "Não pode ser vazio");
+            errors.put("erroTELEFONE", "Não pode ser vazio");
         } else if (telefone > 999999999) {
-            errors.put("Telefone", "Não pode ser maior que 9 caracteres");
+            errors.put("erroTELEFONE", "Não pode ser maior que 9 caracteres");
+        }
+
+        if (ddd == 0) {
+            errors.put("erroDDD", "Não pode ser vazio");
+        } else if (ddd > 999) {
+            errors.put("erroDDD", "Não pode ser maior que 5 caracteres");
         }
 
         if (email.isBlank()) {
-            errors.put("E-mail", "Não pode ser vazio");
+            errors.put("erroEMAIL", "Não pode ser vazio");
         } else if (email.length() > 100) {
-            errors.put("E-mail", "Não pode ser maior que 100 caracteres");
+            errors.put("erroEMAIL", "Não pode ser maior que 100 caracteres");
         }
 
         if (cidade.isBlank()) {
-            errors.put("Cidade", "Não pode ser vazio");
+            errors.put("erroCIDADE", "Não pode ser vazio");
         } else if (cidade.length() > 100) {
-            errors.put("Cidade", "Não pode ser maior que 100 caracteres");
+            errors.put("erroCIDADE", "Não pode ser maior que 100 caracteres");
         }
 
         if (estado.isBlank()) {
-            errors.put("Estado", "Não pode ser vazio");
+            errors.put("erroESTADO", "Não pode ser vazio");
         } else if (estado.length() > 100) {
-            errors.put("Estado", "Não pode ser maior que 100 caracteres");
+            errors.put("erroESTADO", "Não pode ser maior que 100 caracteres");
         }
 
         if (pccomissao == 0) {
-            errors.put("Comissão", "Não pode ser vazio");
+            errors.put("erroPCCOMISSAO", "Não pode ser vazio");
         } else if (pccomissao > 999999999) {
-            errors.put("Comissão", "Não pode ser maior que 9 caracteres");
+            errors.put("erroPCCOMISSAO", "Não pode ser maior que 9 caracteres");
         }
 
         if (dtcontratacao == null) {
-            errors.put("Data", "Não pode ser vazio");
+            errors.put("erroDTCONTRATACAO", "Não pode ser vazio");
+        } else {
+            if(request.getParameter("DTCONTRATACAO").isEmpty()) {
+                errors.put("erroDTCONTRATACAO", "Não pode ser vazio");
+            }
         }
-        log(errors.toString());
+        log("erro ->"+errors);
+
         JDBIConnection.instance().withExtension(gerenteRepository.class, dao -> {
             // Verificar se ocorreram erros no formulário
             if (errors.isEmpty()) {
