@@ -1,5 +1,6 @@
 package br.com.lince.hackathon.locacao;
 
+import br.com.lince.hackathon.client.ClientViewData;
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
@@ -40,7 +41,6 @@ public class LocacaoesServlet extends HttpServlet {
                 break;
 
             case "/edit":
-                System.out.println("Cadastrar");
                 loadFormEditGerentes(request, response);
                 break;
 
@@ -60,11 +60,11 @@ public class LocacaoesServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
-
         if (requestPath.isBlank()) {
             loadFullPage(request, response);
         } else if (requestPath.equals("/upsert")) {
-            insertOrUpdateGerentes(request, response);
+            System.out.println("entrou aqui");
+            insertOrUpdateLocacoes(request, response);
         } else {
             response.getWriter().write("Not found : " + requestPath);
         }
@@ -81,7 +81,11 @@ public class LocacaoesServlet extends HttpServlet {
             final var now = LocalDateTime.now();
             final var count = dao.count();
             final var locacaos = dao.selectPage(page, PAGE_SIZE);
-
+            final var renderMenu = new TemplateRenderer<LocacoesViewData>("menu", response);
+            final var comMenu = NumberUtils.toInt(request.getParameter("comMenu"), 0);
+            if (comMenu == 0) {
+                renderMenu.render(new LocacoesViewData(locacaos, now, page, PAGE_SIZE, count));
+            }
             renderer.render(new LocacoesViewData(locacaos, now, page, PAGE_SIZE, count));
 
             return null;
@@ -91,10 +95,10 @@ public class LocacaoesServlet extends HttpServlet {
     /*
      * Trata a requisição para inserir ou atualizar uma locacao, e retorna página atualizada
      */
-    private void insertOrUpdateGerentes(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void insertOrUpdateLocacoes(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<LocacoesViewData>("cadastros/locacoes/pageLocacoes", response);
         final var page = NumberUtils.toInt(request.getParameter("cadastros/locacoes/pageLocacoes"), 0);
-
+        System.out.println("entrou aqui ---- 2");
         final var id = NumberUtils.toInt(request.getParameter("id"), 0);
         final var cliente = NumberUtils.toInt(request.getParameter("cliente"), 0);
         final var gerenteResponsavel = NumberUtils.toInt(request.getParameter("gerenteResponsavel"), 0);

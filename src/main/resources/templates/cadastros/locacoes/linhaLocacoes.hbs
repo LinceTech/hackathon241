@@ -1,29 +1,30 @@
-<tr id="listaGerente{{id}}">
-    <td style="width: 40px; text-align: right;">{{nome}}</td>
-    <td style="width: 200px; text-align: left;">{{cpf}}</td>
-    <td style="width: 300px; text-align: left;">{{telefone}}</td>
-    <td style="width: 300px; text-align: left;">{{email}}</td>
-    <td style="width: 300px; text-align: left;">{{cidade}}</td>
-    <td style="width: 300px; text-align: left;">{{estado}}</td>
-    <td style="width: 300px; text-align: left;">{{percentualComissao}}</td>
-    <td style="width: 300px; text-align: left;">{{dataContratacao}}</td>
+<tr id="listaLocacao{{id}}">
+    <td style="width: 40px; text-align: right;">{{cliente}}</td>
+    <td style="width: 200px; text-align: left;">{{gerenteResponsavel}}</td>
+    <td style="width: 300px; text-align: left;">{{veiculo}}</td>
+    <td style="width: 300px; text-align: left;">{{dataInicio}}</td>
+    <td style="width: 300px; text-align: left;">{{dataEntregaVeiculo}}</td>
+    <td style="width: 300px; text-align: left;">{{valorDiaria}}</td>
+    <td style="width: 300px; text-align: left;">{{percentualComissaoGerente}}</td>
+    <td style="width: 300px; text-align: left;">{{valorTotalPago}}</td>
+    <td style="width: 300px; text-align: left;">{{dataPagamento}}</td>
     <td style="width: 50px">
         <img src="https://img.icons8.com/?size=18&id=71201&format=png&color=000000"
              alt="Editar item"
              style="cursor: pointer"
-             hx-target="#ListaGer"
+             hx-target="#listaLoca"
              hx-replace="innerHTML"
-             hx-get="gerentes/edit?id={{id}}"
+             hx-get="locacao/edit?id={{id}}"
         >
     </td>
     <td style="width: 50px">
         <img src="https://img.icons8.com/?size=18&id=67884&format=png&color=000000"
              alt="Apagar item"
              style="cursor: pointer"
-             hx-target="#ListaGer"
-             hx-select="#ListaGer"
+             hx-target="#listaLoca"
+             hx-select="#listaLoca"
              hx-replace="innerHTML"
-             hx-get="gerentes/delete?id={{id}}"
+             hx-get="locacao/delete?id={{id}}"
         >
     </td>
 </tr>

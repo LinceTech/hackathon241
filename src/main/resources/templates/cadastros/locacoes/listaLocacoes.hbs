@@ -1,33 +1,33 @@
-<button
-    hx-target="#ListaGer"
-    hx-swap="outerHTML"
-    hx-get="gerentes/cadastrar"
-    style="display: inline-flex">
-    Cadastrar Gerentes
-</button>
-
-<form id="formListaGerentes">
-    <div class="listaGerentes mt-4">
-        <h2>Lista de Gerentes Cadastrados</h2>
+<form id="formListaLocacoes">
+    <div class="listaLocacoes mt-4">
+        <h2>Lista de Locações</h2>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">CPF</th>
-                    <th scope="col">Telefone</th>
-                    <th scope="col">E-mail</th>
-                    <th scope="col">Cidade</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Percentual de Comissão</th>
-                    <th scope="col">Data de contratação</th>
-                    <th scope="col">Ação</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Gerente Resposável</th>
+                    <th scope="col">Veículo</th>
+                    <th scope="col">Data início</th>
+                    <th scope="col">Data entrega</th>
+                    <th scope="col">Valor Diario</th>
+                    <th scope="col">Percentual comissão gerente</th>
+                    <th scope="col">Valor Total Pago</th>
+                    <th scope="col">Data Pagamento</th>
                 </tr>
             </thead>
             <tbody>
-            {{#gerentes}}
-                {{>cadastros/gerentes/linhaGerente gerentes}}
-            {{/gerentes}}
+            {{#locacoes}}
+                {{>cadastros/locacoes/linhalocacoes locacoes}}
+            {{/locacoes}}
             </tbody>
         </table>
     </div>
 </form>
+
+<button
+        hx-target="#ListaLoc"
+        hx-swap="outerHTML"
+        hx-get="locacao/edit?comMenu=1"
+        style="display: inline-flex">
+    Cadastrar Locações
+</button>
