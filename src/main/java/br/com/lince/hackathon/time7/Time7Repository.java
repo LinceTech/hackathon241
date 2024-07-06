@@ -34,8 +34,7 @@ public interface Time7Repository {
 
     @RegisterBeanMapper(Gerente.class)
     @UseFreemarkerEngine
-    @SqlQuery("SELECT *, FORMAT(CONVERT(datetime, CONVERT(varchar(8), DtNascimento), 112), 'yyyy-MM-dd') as DataNasc " +
-              "FROM Gerente WHERE Id = :id")
+    @SqlQuery("SELECT * FROM Gerente WHERE Id = :id")
     Gerente findByIdGerente(@Bind("id") int id);
 
 
