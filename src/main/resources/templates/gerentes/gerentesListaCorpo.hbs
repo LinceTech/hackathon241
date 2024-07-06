@@ -25,7 +25,7 @@
                          alt="Página anterior"
                          style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
                          hx-target="#listaGerente"
-                         hx-post="gerentesLista?page={{previous}}">
+                         hx-post="gerentesLista/page?page={{previous}}">
                 {{/if}}
 
                 <span style="height: 18px; vertical-align: center;">
@@ -37,21 +37,21 @@
                          alt="Próxima página"
                          style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
                          hx-target="#listaGerente"
-                         hx-post="gerentesLista?page={{next}}">
+                         hx-post="gerentesLista/page?page={{next}}">
                 {{/if}}
             </div>
 
             <table>
                 <thead>
                 <tr>
-                    <th style="text-align: left;">Nome</th>
+                    <th style="text-align: left; cursor:pointer;" hx-get="gerentesLista/ordenar?page={{page}}&sentido={{sentido}}&campo=nome" hx-trigger="click">Nome</th>
                     <th style="text-align: left;">Telefone</th>
                     <th style="text-align: left;">CPF</th>
                     <th style="text-align: left;">E-mail</th>
-                    <th style="text-align: left;">Cidade</th>
+                    <th style="text-align: left; cursor:pointer;" hx-get="gerentesLista/ordenar?page={{page}}&sentido={{sentido}}&campo=cidade" hx-trigger="click">Cidade</th>
                     <th style="text-align: left;">Estado</th>
                     <th style="text-align: right;">Percentual de Comissão</th>
-                    <th style="text-align: left;">Data de Contratação</th>
+                    <th style="text-align: left; cursor:pointer;" hx-get="gerentesLista/ordenar?page={{page}}&sentido={{sentido}}&campo=DataDeContratacao" hx-trigger="click">Data de Contratação</th>
                 </tr>
                 </thead>
                 <tbody>

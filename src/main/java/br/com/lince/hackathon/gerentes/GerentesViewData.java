@@ -8,6 +8,8 @@ public class GerentesViewData {
     int page;
     int pageSize;
     int count;
+    String campo = "nome";
+    String sentido = "ASC";
     GerenteFiltro gerenteFiltro;
 
     public GerentesViewData(List<Gerentes> gerentes, int page, int pageSize, int count) {
@@ -25,6 +27,16 @@ public class GerentesViewData {
         this.gerenteFiltro = gerenteFiltro;
     }
 
+    public GerentesViewData(List<Gerentes> gerentes, int page, int pageSize, int count, GerenteFiltro gerenteFiltro, String campo, String sentido) {
+        this.gerentes = gerentes;
+        this.page = page;
+        this.pageSize = pageSize;
+        this.count = count;
+        this.gerenteFiltro = gerenteFiltro;
+        this.campo = campo;
+        this.sentido = sentido;
+    }
+
     public List<Gerentes> getGerentes() {
         return gerentes;
     }
@@ -37,7 +49,7 @@ public class GerentesViewData {
     }
 
     public int getPage() {
-        return page + 1;
+        return page+1;
     }
 
     public int getCount() {
@@ -66,5 +78,13 @@ public class GerentesViewData {
 
     public void setGerenteFiltro(GerenteFiltro gerenteFiltro) {
         this.gerenteFiltro = gerenteFiltro;
+    }
+
+    public String getCampo() {
+        return campo;
+    }
+
+    public String getSentido() {
+        return sentido.equalsIgnoreCase("ASC") ? "DESC" : "ASC";
     }
 }
