@@ -1,10 +1,12 @@
+
+{{>head}}
 <tr id="clienteItem{{bar}}">
     <td style="text-align: left;">{{nm_cliente}}</td>
-    <td style="text-align: left;">{{nr_cpf}}</td>
-    <td style="text-align: left;">{{dt_nascimento}}</td>
-    <td style="text-align: left;">{{nr_telefone}}</td>
+    <td style="text-align: left;" class="cliente_cpf">{{nr_cpf}}</td>
+    <td style="text-align: left;" class="cliente_nasc">{{dt_nascimento}}</td>
+    <td style="text-align: left;" class="cliente_telef">{{nr_telefone}}</td>
     <td style="text-align: left;">{{ds_email}}</td>
-    <td style="text-align: left;">{{nr_cep}}</td>
+    <td style="text-align: left;" class="cliente_cep">{{nr_cep}}</td>
     <td style="text-align: left;">{{nm_cidade}}</td>
     <td style="text-align: left;">{{nm_estado}}</td>
     <td style="text-align: left;">{{nm_bairro}}</td>

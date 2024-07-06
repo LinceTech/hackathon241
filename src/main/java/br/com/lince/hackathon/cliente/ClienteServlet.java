@@ -91,7 +91,7 @@ public class ClienteServlet extends HttpServlet {
     private void insertOrUpdateCliente(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<ClienteViewData>("cliente/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
-        final var dt_nascimento = LocalDate.parse(request.getParameter("dt_nascimento"), DateTimeFormatter.ISO_DATE);
+        LocalDate dt_nascimento = null;
         final var nr_telefone = NumberUtils.toLong(request.getParameter("nr_telefone"), 0);
         final var nr_residencia = NumberUtils.toInt(request.getParameter("nr_residencia"));
         final var ds_email = request.getParameter("ds_email");
@@ -103,10 +103,22 @@ public class ClienteServlet extends HttpServlet {
         final var nr_cep = request.getParameter("nr_cep");
         final var nr_cpf = request.getParameter("nr_cpf");
 
+        final var errors = new HashMap<String, String>();
+
+        if(request.getParameter("dt_nascimento") != null) {
+            if (request.getParameter("dt_nascimento").isBlank() == false) {
+                dt_nascimento = LocalDate.parse(request.getParameter("dt_nascimento"), DateTimeFormatter.ISO_DATE);
+                if (!isMaior18(dt_nascimento)) {
+                    errors.put("dt_nascimentoError", "A idade não pode ser inferior a 18 anos!");
+                }
+            } else {
+                errors.put("dt_nascimentoError", "Data não pode ser vazia");
+            }
+        } else {
+            errors.put("dt_nascimentoError", "Data não pode ser vazia");
+        }
 
         final var cliente_insert = new Cliente(nm_cliente, nr_cpf, dt_nascimento, nr_telefone, ds_email, nm_bairro, nr_cep, nm_cidade, nm_estado, nr_residencia, nm_rua);
-
-        final var errors = new HashMap<String, String>();
 
         if (nm_cliente.isBlank()) {
             errors.put("nomeError", "Nome não pode ser vazio");
@@ -160,9 +172,7 @@ public class ClienteServlet extends HttpServlet {
         /*
         if (dt_nascimento.equals(LocalDate.MIN)) {
             errors.put("dt_nascimentoError", "A data de nascimento não pode ser vazio!");
-        } else */if (!Validacao.isMaior18(dt_nascimento)) {
-            errors.put("dt_nascimentoError", "A idade não pode ser inferior a 18 anos!");
-        }
+        } else */
 
         JDBIConnection.instance().withExtension(ClienteRepository.class, cliente -> {
             if (errors.isEmpty()) {
