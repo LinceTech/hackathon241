@@ -18,72 +18,9 @@
     </style>
 </head>
 <body>
-    <a href="/hackathon"><div><img src="https://img.icons8.com/?size=18&amp;id=100033&amp;format=png&amp;color=000000" alt="Voltar" style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"></div></a>
-    <div>
-        <label>Nome
-            <input type="text" name="nome">
-        </label>
-        <label>Documento
-            <input type="text" name="cpf">
-        </label>
-        <label>Cidade
-            <input type="text" name="cidade">
-        </label>
-        <label>Estado
-            <input type="text" name="estado">
-        </label>
-    </div>
-    <br>
-    <div id="gerentesTable">
-        <div id="gerentesPagina">
-            <input type="hidden" name="page" value="{{index}}">
-
-            <div style="display: inline-flex; padding-bottom: 12px;">
-                {{#if hasPrevious}}
-                    <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
-                         alt="Página anterior"
-                         style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
-                         hx-target="#gerentesPagina"
-                         hx-select="#gerentesPagina"
-                         hx-swap="innerHTML"
-                         hx-get="gerentesLista?page={{previous}}">
-                {{/if}}
-
-                <span style="height: 18px; vertical-align: center;">
-                    Pagina <b>{{page}}</b> de <b>{{totalPages}}</b>
-                </span>
-
-                {{#if next}}
-                    <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
-                         alt="Próxima página"
-                         style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
-                         hx-target="#gerentesPagina"
-                         hx-select="#gerentesPagina"
-                         hx-swap="innerHTML"
-                         hx-get="gerentesLista?page={{next}}">
-                {{/if}}
-            </div>
-
-            <table>
-                <thead>
-                <tr>
-                    <th style="text-align: left;">Nome</th>
-                    <th style="text-align: left;">Telefone</th>
-                    <th style="text-align: left;">CPF</th>
-                    <th style="text-align: left;">E-mail</th>
-                    <th style="text-align: left;">Cidade</th>
-                    <th style="text-align: left;">Estado</th>
-                    <th style="text-align: right;">Percentual de Comissão</th>
-                    <th style="text-align: left;">Data de Contratação</th>
-                </tr>
-                </thead>
-                <tbody>
-                {{#gerentes}}
-                    {{>gerentes/gerentesLinha}}
-                {{/gerentes}}
-                </tbody>
-            </table>
-        </div>
+    <div id="listaGerente">
+        {{>navbar}}
+        {{>gerentes/gerentesListaCorpo}}
     </div>
 </body>
 </html>

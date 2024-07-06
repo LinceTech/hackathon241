@@ -186,13 +186,13 @@ public class ClienteServlet  extends HttpServlet {
                     dao.update(cliente);
                 }
             }else{
-                if(cpf){
+//                if(cpf){
                     dao.insert(cliente);
                     success.put("message", "Cliente criado com sucesso");
-                }else {
-                    errors.put("cpfErro","CPF não pode ser igual");
-                    renderer.render(new ClientesViewData(errors, cliente));
-                }
+//                }else {
+//                    errors.put("cpfErro","CPF não pode ser igual");
+//                    renderer.render(new ClientesViewData(errors, cliente));
+//                }
             }
         }else {
             renderer.render(new ClientesViewData(errors, cliente));
