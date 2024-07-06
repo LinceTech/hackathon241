@@ -1,6 +1,6 @@
 package br.com.lince.hackathon.gerente;
 
-import br.com.lince.hackathon.foo.Foo;
+import br.com.lince.hackathon.gerente.Gerente;
 import org.jdbi.v3.freemarker.UseFreemarkerEngine;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
