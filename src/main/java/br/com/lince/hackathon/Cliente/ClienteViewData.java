@@ -1,7 +1,5 @@
 package br.com.lince.hackathon.Cliente;
 
-import br.com.lince.hackathon.foo.Foo;
-
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -22,8 +20,6 @@ public class ClienteViewData {
         this.errors = null;
         this.cliente = null;
     }
-
-
 
     public ClienteViewData(
             HashMap<String, String> errors,

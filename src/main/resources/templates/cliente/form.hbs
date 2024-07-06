@@ -44,8 +44,9 @@
             <span>
                 <input 
                           id="id"
-                          type="text"
+                          type="date"
                           name="dataNascimento"
+
                           maxlength="10" value={{dataNascimento}}>
                 {{#with errors}}
                     {{#if dataNascimentoError}}
@@ -253,12 +254,12 @@
         <button hx-target="#clienteForm"
                 hx-select="#clienteForm"
                 hx-swap="outerHTML"
-                hx-post="cliente/upsert"
+                hx-get="cliente/edit"
                 hx-include="[name='page']"
                 style="display: inline-flex">
             <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar item">
             &nbsp;
-            Cadastrar
+            Cancelar
         </button>
     {{/if}}
 </form>

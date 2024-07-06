@@ -1,9 +1,5 @@
 package br.com.lince.hackathon.Cliente;
 
-import br.com.lince.hackathon.Cliente.Cliente;
-import br.com.lince.hackathon.Cliente.ClienteRepository;
-import br.com.lince.hackathon.Cliente.ClienteServlet;
-import br.com.lince.hackathon.Cliente.ClienteViewData;
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
@@ -83,10 +79,9 @@ public class ClienteServlet extends HttpServlet {
         final var renderer = new TemplateRenderer<ClienteViewData>("cliente/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
 
-        System.out.println("insertOrUpdateCliente");
         final var nome = request.getParameter("nome");
         final var cpf = NumberUtils.toInt(request.getParameter("cpf"));
-        final var dataNascimento = 20240101;
+        final var dataNascimento = Funcoes.inverteData(request.getParameter("dataNascimento"));
         final var telefone = NumberUtils.toInt(request.getParameter("telefone").replaceAll("-", "").replaceAll(" ", ""));
         final var email = request.getParameter("email");
         final var cep = NumberUtils.toInt(request.getParameter("cep").replaceAll("-", ""));
@@ -130,7 +125,7 @@ public class ClienteServlet extends HttpServlet {
         }
 
         if (estado.isBlank()) {
-            errors.put("cidadeError", "Cidade não pode ser vazio");
+            errors.put("estadoError", "Cidade não pode ser vazio");
         }
 
         if (bairro.isBlank()) {
@@ -195,5 +190,4 @@ public class ClienteServlet extends HttpServlet {
             return null;
         });
     }
-
 }
