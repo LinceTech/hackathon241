@@ -39,4 +39,9 @@ public interface GerenteRepository {
     @UseFreemarkerEngine
     @SqlQuery("SELECT COUNT(*) FROM gerente where gerente.Nome like '%${gerenteFiltro.nome}%' and gerente.CPF like '%${gerenteFiltro.cpf}%' and gerente.Cidade like '%${gerenteFiltro.cidade}%' and gerente.Estado like '%${gerenteFiltro.estado}%'")
     int countFilter(@Define("gerenteFiltro") GerenteFiltro gerenteFiltro);
+
+    @RegisterBeanMapper(Gerentes.class)
+    @UseFreemarkerEngine
+    @SqlQuery("SELECT id, Nome, CPF, Telefone, Email, Cidade, Estado, PercentualDeComissao, DataDeContratacao FROM gerente WHERE id=:id")
+    Gerentes selectByID(@Define("id") int id);
 }

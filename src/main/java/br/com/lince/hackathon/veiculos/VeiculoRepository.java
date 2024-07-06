@@ -38,4 +38,9 @@ public interface VeiculoRepository {
     @UseFreemarkerEngine
     @SqlQuery("SELECT COUNT(*) FROM veiculo where veiculo.Marca like '%${veiculoFiltro.marca}%' and veiculo.Modelo like '%${veiculoFiltro.modelo}%' and veiculo.AnoDeFabricacao like '%${veiculoFiltro.anoDeFabricacao}%' and veiculo.cor like '%${veiculoFiltro.cor}%' and veiculo.placa like '%${veiculoFiltro.placa}%' and veiculo.TipoDeCombustivel like '%${veiculoFiltro.tipoDeCombustivel}%'")
     int countFilter(@Define("veiculoFiltro") VeiculoFiltro veiculoFiltro);
+
+    @RegisterBeanMapper(Veiculos.class)
+    @UseFreemarkerEngine
+    @SqlQuery("SELECT id, Marca, Modelo, Placa, Cor, AnoDeFabricacao, CustoDeDiaria, DescricaoPromocional, TipoDeCombustivel FROM veiculo WHERE id=:id")
+    Veiculos findByID(@Define("id") int id);
 }

@@ -105,12 +105,12 @@ public class LocacaoListaServlet extends HttpServlet {
     private void loadListaLocacoes(String template, HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<LocacaoViewData>(template, response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
-//        final var nome = request.getParameter("nome");
-//        final var cpf = request.getParameter("cpf");
-//        final var cidade = request.getParameter("cidade");
-//        final var estado = request.getParameter("estado");
-//        final var LocacaoFiltro = new LocacaoFiltro(nome, cpf, cidade, estado);
-        var LocacaoFiltro = new LocacaoFiltro(null, null, null, null);
+        final var placa = request.getParameter("placa");
+        final var cliente = request.getParameter("cliente");
+        final var gerente = request.getParameter("gerente");
+        var situacao = request.getParameter("situacao");
+        situacao = situacao.equals("1") ? "=" : "<>";
+        final var LocacaoFiltro = new LocacaoFiltro(placa, cliente, gerente, situacao);
 
         JDBIConnection.instance().withExtension(LocacaoRepository.class, dao -> {
             final var count = dao.countFilter(LocacaoFiltro);
