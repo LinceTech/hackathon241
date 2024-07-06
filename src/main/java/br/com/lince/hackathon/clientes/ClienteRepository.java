@@ -1,6 +1,7 @@
 package br.com.lince.hackathon.clientes;
 
 import br.com.lince.hackathon.foo.Foo;
+import br.com.lince.hackathon.gerentes.Gerentes;
 import org.jdbi.v3.freemarker.UseFreemarkerEngine;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -57,4 +58,9 @@ public interface ClienteRepository {
             "estado = :cliente.estado, bairro = :cliente.bairro, rua = :cliente.rua, numero = :cliente.numero " +
             "WHERE id = :cliente.id")
     void update(@BindBean("cliente") Cliente cliente);
+
+    @RegisterBeanMapper(Cliente.class)
+    @UseFreemarkerEngine
+    @SqlQuery("SELECT * FROM clientes ORDER BY nome OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
+    List<Cliente> selectPage(@Define("page") int page, @Define("count") int count);
 }

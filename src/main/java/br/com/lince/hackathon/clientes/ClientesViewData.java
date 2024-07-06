@@ -1,6 +1,8 @@
 package br.com.lince.hackathon.clientes;
 
 
+import br.com.lince.hackathon.gerentes.Gerentes;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +21,10 @@ public class ClientesViewData {
     private  HashMap<String, String> errors;
     private  Cliente cliente;
     private  List<Cliente> clientes;
-
+    private  int page;
+    private  int count;
+    private  int total;
+    private  int pageSize;
 
     public ClientesViewData(
             List<Cliente> clientes,
@@ -48,12 +53,22 @@ public class ClientesViewData {
         this.cliente = cliente;
         this.clientes = null;
     }
+    public ClientesViewData(List<Cliente> clientes, int page, int pageSize, int count) {
+        this.clientes = clientes;
+        this.page = page;
+        this.pageSize = pageSize;
+        this.count = count;
+    }
 
     public ClientesViewData(){}
 
     public HashMap<String, String> getErrors() {
         return errors;
     }
+    public int getPage() {
+        return page + 1;
+    }
+
 
     public List<Cliente> getClientes() {
         return clientes;

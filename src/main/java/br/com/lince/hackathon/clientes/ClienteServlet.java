@@ -43,15 +43,19 @@ public class ClienteServlet  extends HttpServlet {
 
         switch (requestPath) {
             case "":
-            case "/":
-                loadFullPage(request, response);
+            case "/cliente":
+                formClient(request, response);
+                break;
+
+            case "/lista-clientes":
+                loadListaClientes(request, response);
                 break;
 
             case "/edit":
                 loadFormEditCliente(request, response);
                 break;
 
-            case "/delete":
+            case "/deleteCliente":
                 deleteCliente(request, response);
                 break;
 
@@ -67,7 +71,9 @@ public class ClienteServlet  extends HttpServlet {
         if (requestPath.isBlank()) {
             loadFullPage(request, response);
         } else if (requestPath.equals("/upsert")) {
-               insertOrUpdateCliente(request, response);
+            insertOrUpdateCliente(request, response);
+        }else if (requestPath.equals("/lista-clientes")){
+            loadFullPage(request, response);
         } else {
             response.getWriter().write("Not found : " + requestPath);
         }
@@ -77,6 +83,37 @@ public class ClienteServlet  extends HttpServlet {
      * Trata a requisição para retorna a página de clientes carregada com todos os dados
      */
     private void loadFullPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<ClientesViewData>("clientes/formCliente", response);
+        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
+
+        JDBIConnection.instance().withExtension(ClienteRepository.class, dao -> {
+            final var now = LocalDateTime.now();
+            final var count = dao.count();
+            List<Cliente> clientes = dao.getAll();
+            renderer.render(new ClientesViewData(clientes, new Cliente(),new HashMap<String, String>()));
+
+            return null;
+        });
+    }
+    /*
+     * Trata a requisição para retorna a página de clientes carregada com todos os dados
+     */
+    private void loadListaClientes(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<ClientesViewData>("clientes/listClientes", response);
+        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
+
+        JDBIConnection.instance().withExtension(ClienteRepository.class, dao -> {
+            final var count = dao.count();
+            final var clientes = dao.selectPage(page, PAGE_SIZE);
+
+            renderer.render(new ClientesViewData(clientes, page, PAGE_SIZE, count));
+            return null;
+        });
+    }
+    /*
+     * Trata a requisição para retorna a página de clientes carregada com todos os dados
+     */
+    private void formClient(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<ClientesViewData>("clientes/formCliente", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
 
@@ -176,23 +213,23 @@ public class ClienteServlet  extends HttpServlet {
         // Verificar se ocorreram erros no formulário
         if (errors.isEmpty()) {
 
-            if (dao.exists(id)) {
+            if (dao.exists(id) && dao.findByCPF(cpf)) {
                 Cliente clienteVerificacao =  dao.findById(cliente.getId());
-                if(clienteVerificacao.getCpf().equals(cpf)){
-                    errors.put("cpfErro","CPF não pode ser diferente");
+                if(!clienteVerificacao.getCpf().equals(cpf)){
+                    errors.put("cpfErro","CPF não pode ser diferente do cadastro original");
                     renderer.render(new ClientesViewData(errors, cliente));
                 }
                 if (errors.isEmpty()) {
+                    success.put("message", "Cliente atualizado com sucesso");
                     dao.update(cliente);
+                    renderer.render(new ClientesViewData(success, cliente));
+
                 }
             }else{
-                if(cpf){
-                    dao.insert(cliente);
-                    success.put("message", "Cliente criado com sucesso");
-                }else {
-                    errors.put("cpfErro","CPF não pode ser igual");
-                    renderer.render(new ClientesViewData(errors, cliente));
-                }
+               dao.insert(cliente);
+
+               success.put("message", "Cliente criado com sucesso");
+               renderer.render(new ClientesViewData(success, cliente));
             }
         }else {
             renderer.render(new ClientesViewData(errors, cliente));
@@ -216,7 +253,7 @@ public class ClienteServlet  extends HttpServlet {
      * Trata a requisição para alimentar o formulário de cadastro ou edição de foos
      */
     private void loadFormEditCliente(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<Cliente>("cliente/form", response);
+        final var renderer = new TemplateRenderer<Cliente>("clientes/formCliente", response);
         final var id = NumberUtils.toInt(request.getParameter("id"), 0);
 
         JDBIConnection.instance().withExtension(ClienteRepository.class, dao -> {
@@ -233,7 +270,7 @@ public class ClienteServlet  extends HttpServlet {
 
         JDBIConnection.instance().withExtension(ClienteRepository.class, dao -> {
             dao.delete(id);
-            loadFullPage(request, response);
+            loadListaClientes(request, response);
             return null;
         });
     }

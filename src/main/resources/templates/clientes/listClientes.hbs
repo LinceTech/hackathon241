@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>Clientes</title>
+    {{>head}}
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<div class="container">
+    <h2>Clientes</h2>
+    <table class="table table-striped table-bordered" id="tableClientes">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Data de nascimento</th>
+            <th scope="col">Telefone</th>
+            <th scope="col">Email</th>
+            <th scope="col">CEP</th>
+            <th scope="col">Cidade</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Bairro</th>
+            <th scope="col">Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#clientes}}
+            <tr>
+                <td>{{nome}}</td>
+                <td>{{dataNascimento}}</td>
+                <td>{{telefone}}</td>
+                <td>{{email}}</td>
+                <td>{{cep}}</td>
+                <td>{{cidade}}</td>
+                <td>{{estado}}</td>
+                <td>{{bairro}}</td>
+                <td>
+                    <img src="https://img.icons8.com/?size=18&id=71201&format=png&color=000000"
+                                 alt="Editar item"
+                                 style="cursor: pointer"
+                                 hx-target="#gerentesLista"
+                                 hx-replace="outerHTML"
+                                 hx-get="clientes/edit?id={{id}}" />
+                    <img src="https://img.icons8.com/?size=18&id=67884&format=png&color=000000"
+                         alt="Apagar item"
+                         style="cursor: pointer"
+                         hx-target="#tableClientes"
+                         hx-select="#tableClientes"
+                         hx-replace="outerHTML"
+                         hx-get="deleteCliente?id={{id}}" />
+                <td>
+            </tr>
+        {{/clientes}}
+        </tbody>
+    </table>
+</div>
