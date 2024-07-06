@@ -26,7 +26,7 @@ public class GerenteServlet extends HttpServlet {
     /*
      * O número de itens na paginação desta tela
      */
-    private static final int PAGE_SIZE = 5;
+    private static final int PAGE_SIZE = 15;
     private static final int now = NumberUtils.toInt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
 
     /*
@@ -77,10 +77,30 @@ public class GerenteServlet extends HttpServlet {
         final var renderer = new TemplateRenderer<GerenteViewData>("gerente/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
 
+        String tnome       = "";
+          try {tnome   = request.getParameter("tNome")  .trim(); } catch (Exception e) {}
+        String tcpf        = "";
+          try {tcpf    = request.getParameter("tCpf")   .trim(); } catch (Exception e) {}
+        String tcidade     = "";
+          try {tcidade = request.getParameter("tCidade").trim(); } catch (Exception e) {}
+        String testado     = "";
+          try {testado = request.getParameter("tEstado").trim(); } catch (Exception e) {}
+
+        System.out.println(" zzzzzzzz " + request.getParameter("tNome")  );
+        System.out.println(" zzzzzzzz " + request.getParameter("tCpf")   );
+        System.out.println(" zzzzzzzz " + request.getParameter("tCidade"));
+        System.out.println(" zzzzzzzz " + request.getParameter("tEstado"));
+
+        String finalTnome   = tnome  ;
+        String finalTcpf    = tcpf   ;
+        String finalTcidade = tcidade;
+        String finalTestado = testado;
+
         JDBIConnection.instance().withExtension(Time7Repository.class, dao -> {
             final var now = LocalDateTime.now();
-            final var count = dao.count("Gerente");
-            final var gerentes = dao.selectPageGerente(page, PAGE_SIZE);
+            final var count = dao.countGerente("Gerente", finalTnome, finalTcpf, finalTcidade, finalTestado);
+
+            var gerentes = dao.selectPageGerenteFiltro(page, PAGE_SIZE, finalTnome, finalTcpf, finalTcidade, finalTestado);
 
             renderer.render(new GerenteViewData(gerentes, now, page, PAGE_SIZE, count));
 
@@ -94,6 +114,7 @@ public class GerenteServlet extends HttpServlet {
     private void insertOrUpdate(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<GerenteViewData>("gerente/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
+        System.out.println("page: " + page);
 
         //--request dos valores no formulario
         System.out.println(" ------- request dos valores na tela -------");

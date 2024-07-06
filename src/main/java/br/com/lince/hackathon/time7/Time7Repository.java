@@ -25,11 +25,40 @@ public interface Time7Repository {
 
 
     // GERENTE
+    @UseFreemarkerEngine
+    @SqlQuery("SELECT COUNT(*) FROM ${tabela}                   " +
+              "    WHERE nome LIKE '${nome}%'                   " +
+              "      AND CAST(cpf as varchar) LIKE '${cpf}%'    " +
+              "      AND cidade LIKE '${cidade}%'               " +
+              "      AND estado LIKE '${estado}%'               " )
+    int countGerente(@Define("tabela") String tabela,
+                     @Define("nome") String nome,
+                     @Define("cpf") String cpf,
+                     @Define("cidade") String cidade,
+                     @Define("estado") String estado);
+
+
     @RegisterBeanMapper(Gerente.class)
     @UseFreemarkerEngine
     @SqlQuery("SELECT * " +
               "FROM Gerente ORDER BY Id OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
     List<Gerente> selectPageGerente(@Define("page") int page, @Define("count") int count);
+
+    @RegisterBeanMapper(Gerente.class)
+    @UseFreemarkerEngine
+    @SqlQuery("   SELECT *                                      " +
+              "     FROM Gerente                                " +
+              "    WHERE nome LIKE '${nome}%'                   " +
+              "      AND CAST(cpf as varchar) LIKE '${cpf}%'    " +
+              "      AND cidade LIKE '${cidade}%'               " +
+              "      AND estado LIKE '${estado}%'               " +
+              " ORDER BY Id OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
+    List<Gerente> selectPageGerenteFiltro(@Define("page") int page,
+                                          @Define("count") int count,
+                                          @Define("nome") String nome,
+                                          @Define("cpf") String cpf,
+                                          @Define("cidade") String cidade,
+                                          @Define("estado") String estado);
 
 
     @RegisterBeanMapper(Gerente.class)
