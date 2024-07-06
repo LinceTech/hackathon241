@@ -1,6 +1,5 @@
 package br.com.lince.hackathon.client;
 
-import br.com.lince.hackathon.foo.Foo;
 import br.com.lince.hackathon.util.State;
 
 import java.time.LocalDateTime;
@@ -17,6 +16,7 @@ public class ClientViewData {
     private final int pageSize;
     private final int count;
     private final HashMap<String, String> errors;
+    private final ClientFilter filter;
 
     public ClientViewData(
             List<Client> clients,
@@ -24,7 +24,8 @@ public class ClientViewData {
             List<State> states,
             int page,
             int pageSize,
-            int count
+            int count,
+            ClientFilter filter
     ) {
         this.clients = clients;
         this.dateTime = dateTime;
@@ -34,6 +35,7 @@ public class ClientViewData {
         this.count = count;
         this.errors = null;
         this.client = null;
+        this.filter = filter;
     }
 
     public ClientViewData(
@@ -43,7 +45,8 @@ public class ClientViewData {
             List<State> states,
             int page,
             int pageSize,
-            int count
+            int count,
+            ClientFilter filter
     ) {
         this.clients = clients;
         this.dateTime = dateTime;
@@ -53,6 +56,7 @@ public class ClientViewData {
         this.count = count;
         this.errors = errors;
         this.client = client;
+        this.filter = filter;
     }
 
     public List<State> getStates() {
@@ -71,8 +75,12 @@ public class ClientViewData {
         return dateTime;
     }
 
-    public int getPage() {
+    public int getIndex() {
         return page;
+    }
+
+    public int getPage() {
+        return page + 1;
     }
 
     public int getPageSize() {
@@ -85,5 +93,25 @@ public class ClientViewData {
 
     public HashMap<String, String> getErrors() {
         return errors;
+    }
+
+    public int getTotalPages() {
+        return Double.valueOf(Math.ceil(((Integer.valueOf(count).doubleValue()) / pageSize))).intValue();
+    }
+
+    public boolean getHasPrevious() {
+        return page > 0;
+    }
+
+    public int getPrevious() {
+        return page - 1;
+    }
+
+    public int getNext() {
+        return getPage() < getTotalPages() ? page + 1 : 0;
+    }
+
+    public ClientFilter getFilter() {
+        return filter;
     }
 }

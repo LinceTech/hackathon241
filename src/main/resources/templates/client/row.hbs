@@ -1,7 +1,7 @@
 <tr id="clientItem">
     <td>{{name}}</td>
     <td>{{cpf}}</td>
-    <td>{{birthDate}}</td>
+    <td>{{birth_date}}</td>
     <td>{{phone}}</td>
     <td>{{email}}</td>
     <td>{{cep}}</td>
@@ -10,4 +10,25 @@
     <td>{{neighborhood}}</td>
     <td>{{street}}</td>
     <td>{{number}}</td>
+    <td style="width: 50px">
+        <img src="https://img.icons8.com/?size=18&id=71201&format=png&color=000000"
+             alt="Editar item"
+             style="cursor: pointer"
+             hx-target="#clientForm"
+             hx-replace="innerHTML"
+             hx-get="client/edit"
+             hx-include="[name='id']"
+        >
+
+        <img src="https://img.icons8.com/?size=18&id=67884&format=png&color=000000"
+             alt="Apagar item"
+             style="cursor: pointer"
+             hx-target="#formAndTable"
+             hx-select="#formAndTable"
+             hx-swap="outerHTML"
+             hx-get="client/delete"
+             hx-include="[name='id']">
+    </td>
+
+    <input type="hidden" name="id" value="{{id}}">
 </tr>

@@ -1,8 +1,8 @@
-´<form id="clientForm">
+<form id="clientForm">
     <div class="clientMain">
         <div class="clientName">
             <label for="name">Nome</label>
-            <input type="text" name="name" maxlength="100" size="100" value="{{name}}">
+            <input type="text" name="name" maxlength="100" size="100" value="{{client.name}}">
             {{#with errors}}
                 {{#if nameError}}
                     <span class="error">
@@ -14,7 +14,7 @@
 
         <div class="clientCpf">
             <label for="cpf">CPF</label>
-            <input type="text" name="cpf" maxlength="11" size="11" value="{{cpf}}">
+            <input type="text" name="cpf" maxlength="11" size="11" value="{{client.cpf}}">
             {{#with errors}}
                 {{#if cpfError}}
                     <span class="error">
@@ -26,7 +26,7 @@
 
         <div class="clientBirthDate">
             <label for="birthDate">Data de nascimento</label>
-            <input type="date" name="birthDate" maxlength="10" size="10" value="{{birth_date}}">
+            <input type="date" name="birthDate" maxlength="10" size="10" value="{{client.birth_date}}">
             {{#with errors}}
                 {{#if birth_dateError}}
                     <span class="error">
@@ -38,7 +38,7 @@
 
         <div class="clientPhone">
             <label for="phone">Telefone</label>
-            <input type="text" name="phone" maxlength="14" size="14" value="{{phone}}">
+            <input type="text" name="phone" maxlength="14" size="14" value="{{client.phone}}">
             {{#with errors}}
                 {{#if phoneError}}
                     <span class="error">
@@ -50,7 +50,7 @@
 
         <div class="clienEmail">
             <label for="email">E-mail</label>
-            <input type="text" name="email" maxlength="100" size="100" value="{{email}}">
+            <input type="text" name="email" maxlength="100" size="30" value="{{client.email}}">
             {{#with errors}}
                 {{#if emailError}}
                     <span class="error">
@@ -63,7 +63,7 @@
         <div class="clientCep">
             <label for="cep">CEP</label>
             <input type="text" name="cep" id="cep" maxlength="9" size="9"
-                   value="{{cep}}"
+                   value="{{client.cep}}"
             >
             <div id="erroCep"></div>
             {{#with errors}}
@@ -78,7 +78,7 @@
         <div class="clientState">
             <label for="state">Estado</label>
             <select name="state" id="state">{{#states}}
-                <option value="{{uf}}">{{name}}</option>
+                <option value="{{uf}}" {{#selected}}selected{{/selected}}>{{name}}</option>
             {{/states}}</select>
             {{#with errors}}
                 {{#if stateError}}
@@ -91,7 +91,7 @@
 
         <div class="clientCity">
             <label for="city">Cidade</label>
-            <input type="text" name="city" id="city" maxlength="100" size="100" value="{{city}}">
+            <input type="text" name="city" id="city" maxlength="100" size="60" value="{{client.city}}">
             {{#with errors}}
                 {{#if cityError}}
                     <span class="error">
@@ -103,7 +103,7 @@
 
         <div class="clientNeighborhood">
             <label for="neighborhood">Bairro</label>
-            <input type="text" name="neighborhood" id="neighborhood" maxlength="100" size="100" value="{{neighborhood}}">
+            <input type="text" name="neighborhood"  id="neighborhood" maxlength="100" size="60" value="{{client.neighborhood}}">
             {{#with errors}}
                 {{#if neighborhoodError}}
                     <span class="error">
@@ -115,7 +115,7 @@
 
         <div class="clientStreet">
             <label for="street">Rua</label>
-            <input type="text" name="street" id="street" maxlength="100" size="100" value="{{street}}">
+            <input type="text" name="street" id="street" maxlength="100" size="60" value="{{client.street}}">
             {{#with errors}}
                 {{#if streetError}}
                     <span class="error">
@@ -127,7 +127,7 @@
 
         <div class="clientNumber">
             <label for="number">Número</label>
-            <input type="text" name="number" maxlength="100" size="100" value="{{number}}">
+            <input type="text" name="number" maxlength="100" size="6" value="{{client.number}}">
             {{#with errors}}
                 {{#if numberError}}
                     <span class="error">
@@ -137,12 +137,29 @@
             {{/with}}
         </div>
 
-        <button hx-target="#formAndTable"
-                hx-select="#formAndTable"
-                hx-swap="outerHTML"
-                hx-post="client/upsert">
-            Cadastrar
-        </button>
+        <div>
+            <button hx-target="#formAndTable"
+                    hx-select="#formAndTable"
+                    hx-swap="outerHTML"
+                    hx-post="client/upsert"
+            >
+                {{#if client.id}}
+                    Atualizar
+                {{^}}
+                    Cadastrar
+                {{/if}}
+            </button>
+                {{#if client.id}}
+                    <button hx-target="#clientForm"
+                        hx-select="#clientForm"
+                        hx-swap="outerHTML"
+                        hx-get="client/"
+                        style="display: inline-flex"
+                >
+                    Cancelar
+                </button>
+            {{/if}}
+        </div>
     </div>
 
     <script>
@@ -176,10 +193,9 @@
         var cep = document.getElementById('cep');
         cep.addEventListener("focusout", () => buscaEndereco(cep.value) )
 
-        document.getElementById('cep').addEventListener('htmx:afterSwap', function(event) {
-            var data = event.detail.elt;
-            console.log(document.getElementById("cidade"));
-        });
+        // document.getElementById('cep').addEventListener('htmx:afterSwap', function(event) {
+        // var data = event.detail.elt;
+        // console.log(document.getElementById("cidade"));
     </script>
 
 </form>

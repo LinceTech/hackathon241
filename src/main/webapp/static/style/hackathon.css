@@ -23,12 +23,42 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: self-start;
     flex-direction: column;
 }
 
-.clientMain > input {
+.clientMain > div > input {
     border: solid 1px gray;
     border-radius: 5px;
+}
+
+
+#formAndTable {
+    overflow: auto;
+    width: 100%;
+}
+
+#formAndTable table {
+    border: 1px solid #dededf;
+    height: 100%;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 1px;
+    text-align: left;
+}
+
+#formAndTable th {
+    border: 1px solid #dededf;
+    background-color: #eceff1;
+    color: #000000;
+    padding: 5px;
+}
+
+#formAndTable td {
+    border: 1px solid #dededf;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 5px;
 }
 

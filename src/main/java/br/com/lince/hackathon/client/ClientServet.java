@@ -1,5 +1,6 @@
 package br.com.lince.hackathon.client;
 
+import br.com.lince.hackathon.foo.Foo;
 import br.com.lince.hackathon.foo.FooRepository;
 import br.com.lince.hackathon.foo.FooViewData;
 import br.com.lince.hackathon.standard.JDBIConnection;
@@ -25,7 +26,7 @@ public class ClientServet extends HttpServlet {
     /*
      * O número de itens na paginação desta tela
      */
-    private static final int PAGE_SIZE = 20;
+    private static final int PAGE_SIZE = 5;
 
     /*
      * Logger padrão do servlet
@@ -41,6 +42,12 @@ public class ClientServet extends HttpServlet {
             case "/":
                 loadFullPage(request, response);
                 break;
+            case "/edit":
+                loadFormEditFoo(request, response);
+                break;
+            case "/delete":
+                deleteClient(request, response);
+                break;
             default:
                 response.getWriter().write("Not found : " + requestPath);
         }
@@ -51,7 +58,7 @@ public class ClientServet extends HttpServlet {
         final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
 
         if (requestPath.isBlank()) {
-            //GET
+            loadFullPage(request, response);
         } else if (requestPath.equals("/upsert")) {
             insertOrUpdateClient(request, response);
         } else {
@@ -63,20 +70,83 @@ public class ClientServet extends HttpServlet {
         final var renderer = new TemplateRenderer<ClientViewData>("client/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
 
+        final var stateFilter = request.getParameter("stateFilter");
+        final var cityFilter = request.getParameter("cityFilter");
+        final var documentFilter = request.getParameter("documentFilter");
+        final var nameFilter = request.getParameter("nameFilter");
+        ClientFilter filter = new ClientFilter();
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        if (stateFilter != null) {
+            if (!stateFilter.isEmpty()){
+                params.put("state", stateFilter);
+                filter.setState(stateFilter);
+            }
+        }
+        if (cityFilter != null) {
+            if (!cityFilter.isBlank()){
+                params.put("city", cityFilter);
+                filter.setCity(cityFilter);
+            }
+        }
+        if (documentFilter != null){
+            if (!documentFilter.isBlank()){
+                params.put("cpf", documentFilter);
+                filter.setDocument(documentFilter);
+            }
+        }
+        if (nameFilter != null){
+            if (!nameFilter.isBlank()){
+                params.put("name", nameFilter);
+                filter.setName(nameFilter);
+            }
+        }
+        StringBuilder whereBuilder = new StringBuilder();
+        for (String key : params.keySet()) {
+            if (whereBuilder.length() == 0){
+                whereBuilder.append(" WHERE ");
+            }else{
+                whereBuilder.append(" AND ");
+            }
+            whereBuilder.append(key).append(" like CONCAT('%', :").append(key).append(", '%')");
+        }
+        final var where = whereBuilder.toString();
+
         JDBIConnection.instance().withExtension(ClientRepository.class, dao -> {
             final var now = LocalDateTime.now();
             final var count = dao.count();
-            final var clients = dao.selectPage(page, PAGE_SIZE);
+            final var clients = dao.selectPage(page, PAGE_SIZE, where, params);
             final var states = Service.findStates("");
 
-            renderer.render(new ClientViewData(clients, now, states, page, PAGE_SIZE, count));
+            renderer.render(new ClientViewData(clients, now, states, page, PAGE_SIZE, count, filter));
 
             return null;
         });
     }
 
-    private void insertOrUpdateClient(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void loadFormEditFoo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<ClientEdit>("client/form", response);
+        final var id = NumberUtils.toInt(request.getParameter("id"), 0);
 
+        JDBIConnection.instance().withExtension(ClientRepository.class, dao -> {
+            final var client = dao.findById(id);
+            final var states = Service.findStates(client.getState());
+            renderer.render(new ClientEdit(client, states));
+            return null;
+        });
+    }
+
+    private void deleteClient(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var id = Integer.parseInt(request.getParameter("id"));
+
+        JDBIConnection.instance().withExtension(ClientRepository.class, dao -> {
+            dao.delete(id);
+            loadFullPage(request, response);
+            return null;
+        });
+    }
+
+    private void insertOrUpdateClient(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var renderer = new TemplateRenderer<ClientViewData>("client/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
         final var name = request.getParameter("name");
         final var cpf = request.getParameter("cpf");
@@ -91,6 +161,47 @@ public class ClientServet extends HttpServlet {
         final var number = NumberUtils.toInt(request.getParameter("number"), 0);
         final var client = new Client(name, cpf, birth_date, phone, email, cep, city, state, neighborhood, street, number);
         final var errors = new HashMap<String, String>();
+
+        ClientFilter filter = new ClientFilter();
+        final var stateFilter = request.getParameter("stateFilter");
+        final var cityFilter = request.getParameter("cityFilter");
+        final var documentFilter = request.getParameter("documentFilter");
+        final var nameFilter = request.getParameter("nameFilter");
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        if (stateFilter != null) {
+            if (!stateFilter.isEmpty()){
+                params.put("state", stateFilter);
+                filter.setState(stateFilter);
+            }
+        }
+        if (cityFilter != null) {
+            if (!cityFilter.isBlank()){
+                params.put("city", cityFilter);
+                filter.setCity(cityFilter);
+            }
+        }
+        if (documentFilter != null){
+            if (!documentFilter.isBlank()){
+                params.put("cpf", documentFilter);
+                filter.setDocument(documentFilter);
+            }
+        }
+        if (nameFilter != null){
+            if (!nameFilter.isBlank()){
+                params.put("name", nameFilter);
+                filter.setName(nameFilter);
+            }
+        }
+        StringBuilder whereBuilder = new StringBuilder();
+        for (String key : params.keySet()) {
+            if (whereBuilder.length() == 0){
+                whereBuilder.append(" WHERE ");
+            }else{
+                whereBuilder.append(" AND ");
+            }
+            whereBuilder.append(key).append(" like CONCAT('%', :").append(key).append(", '%')");
+        }
+        final var where = whereBuilder.toString();
 
         if (name.isBlank()) {
             errors.put("nameError", "Nome não pode ser vazio");
@@ -151,6 +262,17 @@ public class ClientServet extends HttpServlet {
                 } else {
                     dao.insert(client);
                 }
+            }
+
+            final var now = LocalDateTime.now();
+            final var count = dao.count();
+            final var clients = dao.selectPage(page, PAGE_SIZE, where, params);
+            final var states = Service.findStates("");
+
+            if (errors.isEmpty()) {
+                renderer.render(new ClientViewData(clients, now, states, page, PAGE_SIZE, count, filter));
+            } else {
+                renderer.render(new ClientViewData(errors, client, clients, now, states, page, PAGE_SIZE, count, filter));
             }
 
             return null;

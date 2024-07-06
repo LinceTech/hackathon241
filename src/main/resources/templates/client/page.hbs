@@ -21,28 +21,70 @@
 
     <div id="clientItemsTable">
         <input type="hidden" name="page" value="{{index}}">
+        <div style="display: inline-flex; padding-bottom: 12px;">
+            {{#if hasPrevious}}
+                <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
+                     alt="Página anterior"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
+                     hx-target="#formAndTable"
+                     hx-select="#formAndTable"
+                     hx-swap="outerHTML"
+                     hx-get="client?page={{previous}}">
+            {{/if}}
+
+            <span style="height: 18px; vertical-align: center;">
+                Pagina <b>{{page}}</b> de <b>{{totalPages}}</b>
+            </span>
+
+            {{#if next}}
+                <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
+                     alt="Próxima página"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
+                     hx-target="#formAndTable"
+                     hx-select="#formAndTable"
+                     hx-swap="outerHTML"
+                     hx-get="client?page={{next}}">
+            {{/if}}
+            <div class="inputs" id="inputs">
+                <input type="text" name="nameFilter" id="nameFilter" placeholder="Nome" value="{{filter.name}}">
+                <input type="text" name="documentFilter" id="documentFilter" placeholder="CPF" value="{{filter.document}}">
+                <input type="text" name="cityFilter" id="cityFilter" placeholder="Cidade" value="{{filter.city}}">
+                <input type="text" name="stateFilter" id="stateFilter" placeholder="Estado" value="{{filter.state}}">
+                <img src="https://img.icons8.com/?size=100&id=7695&format=png&color=000000"
+                     alt="Pesqusiar"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
+                     hx-target="#formAndTable"
+                     hx-select="#formAndTable"
+                     hx-swap="outerHTML"
+                     hx-get="client"
+                     hx-include="[name='documentFilter'],[name='nameFilter'],[name='cityFilter'],[name='stateFilter']"
+                >
+            </div>
+        </div>
+
     </div>
 
-    <table>
+    <table style="width: 1500px">
         <thead>
         <tr>
-            <th >Nome</th>
-            <th >CPF</th>
-            <th >Data de nascimento</th>
-            <th >Telefone</th>
-            <th >E-mail</th>
-            <th >CEP</th>
-            <th >Estado</th>
-            <th >Cidade</th>
-            <th >Bairro</th>
-            <th >Rua</th>
-            <th >Número</th>
+            <th style="width: 200px">Nome</th>
+            <th style="width: 140px">CPF</th>
+            <th style="width: 190px">Data de nascimento</th>
+            <th style="width: 120px">Telefone</th>
+            <th style="width: 300px">E-mail</th>
+            <th style="width: 100px">CEP</th>
+            <th style="width: 160px">Estado</th>
+            <th style="width: 150px">Cidade</th>
+            <th style="width: 200px">Bairro</th>
+            <th style="width: 200px">Rua</th>
+            <th style="width: 80px">Número</th>
+            <th style="width: 50px"></th>
         </tr>
         </thead>
         <tbody>
-<!--        {{#foos}}-->
-<!--            {{>foo/row}}-->
-<!--        {{/foos}}-->
+        {{#clients}}
+            {{>client/row}}
+        {{/clients}}
         </tbody>
     </table>
 </div>
