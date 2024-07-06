@@ -1,8 +1,10 @@
 package br.com.lince.hackathon.gerentes;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class GerentesViewData {
+    private final HashMap<String, String> erros;
     private final List<Gerentes> gerentes;
     private final String nome;
     private final String cpf;
@@ -10,7 +12,16 @@ public class GerentesViewData {
     private final String estado;
     private final int numeroPagina;
 
-    public GerentesViewData(List<Gerentes> gerentes, String nome, String cpf, String cidade, String estado, int numeroPagina) {
+    public GerentesViewData(
+            HashMap<String, String> erros,
+            List<Gerentes> gerentes,
+            String nome,
+            String cpf,
+            String cidade,
+            String estado,
+            int numeroPagina
+    ) {
+        this.erros = erros;
         this.gerentes = gerentes;
         this.nome = nome;
         this.cpf = cpf;
@@ -41,5 +52,9 @@ public class GerentesViewData {
 
     public int getNumeroPagina() {
         return numeroPagina;
+    }
+
+    public HashMap<String, String> getErros() {
+        return erros;
     }
 }

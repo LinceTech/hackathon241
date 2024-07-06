@@ -1,6 +1,7 @@
 package br.com.lince.hackathon.gerentes;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 
 public class Gerentes {
     private Long id;
@@ -13,6 +14,8 @@ public class Gerentes {
     private String estado;
     private double percentualComissao;
     private LocalDate dataContratacao;
+    private HashMap<String, String> erros;
+    private boolean salvou;
 
     public Gerentes() {
     }
@@ -27,7 +30,8 @@ public class Gerentes {
             String cidade,
             String estado,
             double percentualComissao,
-            LocalDate dataContratacao
+            LocalDate dataContratacao,
+            boolean salvou
     ) {
         this.id = id;
         this.nome = nome;
@@ -39,6 +43,7 @@ public class Gerentes {
         this.estado = estado;
         this.percentualComissao = percentualComissao;
         this.dataContratacao = dataContratacao;
+        this.salvou = salvou;
     }
 
     public Long getId() {
@@ -119,5 +124,21 @@ public class Gerentes {
 
     public void setDataContratacao(LocalDate dataContratacao) {
         this.dataContratacao = dataContratacao;
+    }
+
+    public HashMap<String, String> getErros() {
+        return erros;
+    }
+
+    public void setErros(HashMap<String, String> erros) {
+        this.erros = erros;
+    }
+
+    public boolean getSalvou() {
+        return salvou;
+    }
+
+    public void setSalvou(boolean salvou) {
+        this.salvou = salvou;
     }
 }

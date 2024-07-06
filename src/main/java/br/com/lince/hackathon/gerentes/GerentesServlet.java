@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 @WebServlet("/gerentes/*")
@@ -37,6 +39,19 @@ public class GerentesServlet extends HttpServlet {
                 break;
             case "/listar":
                 listarGerentes(request, response);
+                break;
+            default:
+                response.getWriter().write("Not found : " + requestPath);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
+
+        switch (requestPath) {
+            case "/save":
+                criarOuAtualizaGerente(request, response);
                 break;
             default:
                 response.getWriter().write("Not found : " + requestPath);
@@ -69,65 +84,127 @@ public class GerentesServlet extends HttpServlet {
 
             List<Gerentes> list = dao.consultaPaginacao(numeroPagina, 15, filtros);
 
-            renderer.render(new GerentesViewData(list, nome, documento, cidade, estado, numeroPagina));
+            renderer.render(new GerentesViewData(null, list, nome, documento, cidade, estado, numeroPagina));
 
             return null;
         });
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var requestPath = request.getPathInfo() != null ? request.getPathInfo() : "";
-
-        switch (requestPath) {
-            case "/save":
-                criarOuAtualizaGerente(request, response);
-                break;
-            default:
-                response.getWriter().write("Not found : " + requestPath);
-        }
-    }
-
     private void criarOuAtualizaGerente(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<GerentesViewData>("gerentes/GerenteLista", response);
+        final var erros = new HashMap<String, String>();
 
-        final var id = NumberUtils.toLong(request.getParameter("id"), 0);
-        final var nome = request.getParameter("nome").trim();
-        final var cpf = request.getParameter("cpf").trim().replace("\\D", "");
-        final var ddd = NumberUtils.toInt(request.getParameter("ddd"), 0);
-        final var telefone = NumberUtils.toInt(request.getParameter("telefone"), 0);
-        final var email = request.getParameter("email").trim();
-        final var cidade = request.getParameter("cidade").trim();
-        final var estado = request.getParameter("estado").trim();
-        final var percentualComissao = NumberUtils.toDouble(request.getParameter("percentualComissao").replace(",", "."), 0);
-        final var dataContratacaoReq = request.getParameter("dataContratacao").trim();
+        Long id = 0l;
+        String nome = "";
+        String cpf = "";
+        int ddd = 0;
+        int telefone = 0;
+        String email = "";
+        String cidade = "";
+        String estado = "";
+        double percentualComissao = 0;
+        String dataContratacaoReq = "";
 
-        final var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        final var dataContratacao = LocalDate.parse(dataContratacaoReq, formatter);
+        if (request.getParameter("id") != null) {
+            id = NumberUtils.toLong(request.getParameter("id"), 0);
+        }
+        if (request.getParameter("nome") != null) {
+            nome = request.getParameter("nome");
+        }
+        if (request.getParameter("cpf") != null) {
+            cpf = request.getParameter("cpf").replace(".", "").replace("-", "");
+        }
+        if (request.getParameter("ddd") != null) {
+            ddd = NumberUtils.toInt(request.getParameter("ddd"), 0);
+        }
+        if (request.getParameter("telefone") != null) {
+            telefone = NumberUtils.toInt(request.getParameter("telefone"), 0);
+        }
+        if (request.getParameter("email") != null) {
+            email = request.getParameter("email");
+        }
+        if (request.getParameter("cidade") != null) {
+            cidade = request.getParameter("cidade");
+        }
+        if (request.getParameter("estado") != null) {
+            estado = request.getParameter("estado");
+        }
+        if (request.getParameter("percentualComissao") != null) {
+            percentualComissao = NumberUtils.toDouble(request.getParameter("percentualComissao").replace(",", "."));
+        }
+        if (request.getParameter("dataContratacao") != null) {
+            dataContratacaoReq = request.getParameter("dataContratacao");
+        }
 
-        Gerentes gerente = new Gerentes();
+        Gerentes gerente = new Gerentes(
+                id,
+                nome,
+                cpf,
+                ddd,
+                telefone,
+                email,
+                cidade,
+                estado,
+                percentualComissao,
+                null,
+                false
+        );
 
-        gerente.setId(id);
-        gerente.setNome(nome);
-        gerente.setCpf(cpf);
-        gerente.setDdd(ddd);
-        gerente.setTelefone(telefone);
-        gerente.setEmail(email);
-        gerente.setCidade(cidade);
-        gerente.setEstado(estado);
-        gerente.setPercentualComissao(percentualComissao);
-        gerente.setDataContratacao(dataContratacao);
+        if (gerente.getNome().isBlank()) {
+            erros.put("nomeErro", "Informe o nome");
+        }
+        if (gerente.getCpf().isBlank()) {
+            erros.put("cpfErro", "Informe o CPF");
+        }
+        if (gerente.getDdd() == 0) {
+            erros.put("dddErro", "Informe o numero");
+        }
+        if (gerente.getTelefone() == 0) {
+            erros.put("telefoneErro", "Informe o telefone");
+        }
+        if (gerente.getEmail().isBlank()) {
+            erros.put("emailErro", "Informe o email");
+        }
+        if (gerente.getCidade().isBlank()) {
+            erros.put("cidadeErro", "Informe o cidade");
+        }
+        if (gerente.getCidade().isBlank()) {
+            erros.put("cidadeErro", "Informe o cidade");
+        }
+        if (gerente.getEstado().isBlank()) {
+            erros.put("estadoErro", "Informe o estado");
+        }
+        if (gerente.getPercentualComissao() == 0) {
+            erros.put("percentualComissaoErro", "Informe o percentual de comissão");
+        }
+        if (dataContratacaoReq.isBlank()) {
+            erros.put("dataContratacaoErro", "Informe data de contratacao");
+        }else{
+            final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            final LocalDate dataContratacao = LocalDate.parse(dataContratacaoReq, formatter);
+
+            gerente.setDataContratacao(dataContratacao);
+        }
+
+        final Long idConsulta = id;
 
         JDBIConnection.instance().withExtension(GerentesRepository.class, dao -> {
-            if (dao.existeGerente(id)) {
-                dao.atualizaGerente(gerente);
-            } else {
-                dao.insereGerente(gerente);
+            var renderer = new TemplateRenderer<Gerentes>("gerentes/GerenteModal", response);
+
+            if (erros.isEmpty()) {
+                gerente.setSalvou(true);
+                if (dao.existeGerente(idConsulta)) {
+                    dao.atualizaGerente(gerente);
+                } else {
+                    dao.insereGerente(gerente);
+                }
             }
 
-            final var listaGerentes = dao.consultaPaginacao(0, 15, new GerenteFiltros("", "", "", ""));
-
-            renderer.render(new GerentesViewData(listaGerentes, "", "", "", "", 0));
+            if(erros.isEmpty()){
+                renderer.render(gerente);
+            }else{
+                gerente.setErros(erros);
+                renderer.render(gerente);
+            }
 
             return null;
         });
@@ -143,7 +220,7 @@ public class GerentesServlet extends HttpServlet {
 
             List<Gerentes> list = dao.consultaPaginacao(0, 15, new GerenteFiltros("", "", "", ""));
 
-            renderer.render(new GerentesViewData(list, "", "", "", "", 0));
+            renderer.render(new GerentesViewData(null, list, "", "", "", "", 0));
 
             return null;
         });
@@ -174,7 +251,7 @@ public class GerentesServlet extends HttpServlet {
 
             List<Gerentes> list = dao.consultaPaginacao(0, 15, new GerenteFiltros("", "", "", ""));
 
-            renderer.render(new GerentesViewData(list, "", "", "", "", 0));
+            renderer.render(new GerentesViewData(null, list, "", "", "", "", 0));
 
             return null;
         });

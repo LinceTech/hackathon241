@@ -1,5 +1,9 @@
-<div class="modal-content">
-    <form hx-post="/hackathon/gerentes/save" hx-target="#cliente_lista" id="clienteForm">
+<div class="modal-content" id="clienteForm">
+    <form
+            hx-post="/hackathon/gerentes/save"
+            hx-target="#clienteForm"
+            hx-swap="outerHTML"
+    >
         <div class="modal-header">
             {{#if id}}
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Alterar Gerente</h1>
@@ -11,7 +15,14 @@
         <div class="modal-body">
             <input type="hidden" id="id" name="id" value="{{id}}">
             <div class="mb-3">
-                <label for="title" class="form-label">Nome</label>
+                <label for="title" class="form-label">
+                    Nome
+                    {{#with erros}}
+                        {{#if nomeErro}}
+                            <span class="error">&nbsp;{{nomeErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
                         type="text"
                         class="form-control"
@@ -23,29 +34,54 @@
             </div>
 
             <div class="mb-3">
-                <label for="cpf" class="form-label">CPF</label>
+                <label for="cpf" class="form-label">
+                    CPF
+                    {{#with erros}}
+                        {{#if cpfErro}}
+                            <span class="error">&nbsp;{{cpfErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
                         placeholder="Informe o CPF"
                         type="text"
                         class="form-control"
                         id="cpf"
                         name="cpf"
+                        maxlength="14"
+                        onkeyup="mascaraCNPJ(this)"
                         value="{{cpf}}"
                 >
             </div>
             <div class="mb-3">
-                <label for="ddd" class="form-label">DDD</label>
+                <label for="ddd" class="form-label">
+                    DDD
+                    {{#with erros}}
+                        {{#if dddErro}}
+                            <span class="error">&nbsp;{{dddErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
-                        type="number"
+                        type="text"
                         class="form-control"
                         placeholder="Informe o DDD"
                         id="ddd"
                         name="ddd"
+                        maxlength="3"
+                        onkeyup="validaNumerico(this)"
                         value="{{ddd}}"
                 >
             </div>
             <div class="mb-3">
-                <label for="telefone" class="form-label">Telefone</label>
+                <label for="telefone" class="form-label">
+                    Telefone
+                    {{#with erros}}
+                        {{#if telefoneErro}}
+                            <span class="error">&nbsp;{{telefoneErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
                         type=tel
                         class="form-control"
@@ -53,10 +89,19 @@
                         id="telefone"
                         name="telefone"
                         value="{{telefone}}"
+                        onkeyup="validaNumerico(this)"
+                        maxlength="9"
                 >
             </div>
             <div class="mb-3">
-                <label for="email" class="form-label">E-mail</label>
+                <label for="email" class="form-label">
+                    E-mail
+                    {{#with erros}}
+                        {{#if emailErro}}
+                            <span class="error">&nbsp;{{emailErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
                         type="email"
                         class="form-control"
@@ -67,7 +112,14 @@
                 >
             </div>
             <div class="mb-3">
-                <label for="cidade" class="form-label">Cidade</label>
+                <label for="cidade" class="form-label">
+                    Cidade
+                    {{#with erros}}
+                        {{#if cidadeErro}}
+                            <span class="error">&nbsp;{{cidadeErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
                         type="text"
                         class="form-control"
@@ -78,8 +130,15 @@
                 >
             </div>
             <div class="mb-3">
-                <label for="estado" class="form-label">Estado</label>
-                <select name="estado">
+                <label for="estado" class="form-label">
+                    Estado
+                    {{#with erros}}
+                        {{#if estadoErro}}
+                            <span class="error">&nbsp;{{estadoErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
+                <select name="estado" class="form-select">
                     <option value="Vazio"></option>
                     <option {{#eq estado "SC"}} selected {{/eq}} value="SC">SC</option>
                     <option {{#eq estado "RS"}} selected {{/eq}} value="RS">RS</option>
@@ -87,7 +146,14 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label for="rua" class="form-label">Percentual de comissão (%)</label>
+                <label for="rua" class="form-label">
+                    Percentual de comissão (%)
+                    {{#with erros}}
+                        {{#if percentualComissaoErro}}
+                            <span class="error">&nbsp;{{percentualComissaoErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
                         placeholder="Informe o percentual de comissão"
                         type="text"
@@ -98,7 +164,14 @@
                 >
             </div>
             <div class="mb-3">
-                <label for="rua" class="form-label">Data contratação</label>
+                <label for="rua" class="form-label">
+                    Data contratação
+                    {{#with erros}}
+                        {{#if dataContratacaoErro}}
+                            <span class="error">&nbsp;{{dataContratacaoErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
                 <input
                         type="date"
                         class="form-control"
@@ -107,10 +180,15 @@
                         value="{{dataContratacao}}"
                 >
             </div>
+            {{#if salvou}}
+                <div class="mb-3 text-success">
+                    Salvo com sucesso
+                </div>
+            {{/if}}
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Salvar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
     </form>
 </div>
