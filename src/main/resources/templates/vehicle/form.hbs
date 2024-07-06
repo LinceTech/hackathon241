@@ -1,0 +1,145 @@
+<form id="vehicleForm">
+    <div class="vehicleMain">
+        <div class="vehicleType_vehicle">
+            <label for="type_vehicle">Tipo de veículo</label>
+            <select name="type_vehicle" id="type_vehicle" onchange="findByBrand($('#type_vehicle').val())">
+                {{#vehiclesType}}
+                    <option value="{{type}}" {{#selected}}selected{{/selected}}>{{name}}</option>
+                {{/vehiclesType}}
+            </select>
+            {{#with errors}}
+                {{#if vehicleError}}
+                    <span class="error">
+                            Veículo: {{vehicleError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="vehicleBrand">
+            <label for="brand">Marca</label>
+            <select name="brand" id="brand">
+                <option value="{{brand}}"></option>
+            </select>
+            {{#with errors}}
+                {{#if brandError}}
+                    <span class="error">
+                        Marca: {{brandError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="vehicleModel">
+            <label for="model">Modelo</label>
+            <select name="model" id="model">
+                <option value=""></option>
+            </select>
+            {{#with errors}}
+                {{#if modelError}}
+                    <span class="error">
+                        Modelo: {{modelError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="vehiclePlate">
+            <label for="plate">Placa</label>
+            <input type="text" name="plate" maxlength="10" size="10" value="{{vehicle.plate}}">
+            {{#with errors}}
+                {{#if plateError}}
+                    <span class="error">
+                            Placa: {{plateError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="vehicleColor">
+            <label for="color">Cor</label>
+            <input type="text" name="color" maxlength="14" size="14" value="{{vehicle.color}}">
+            {{#with errors}}
+                {{#if colorError}}
+                    <span class="error">
+                            Color: {{colorError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="vehicle_year_of_manufacture">
+            <label for="year_of_manufacture">Ano de fabricação</label>
+            <input type="number" name="year_of_manufacture" maxlength="4" value="{{vehicle.year_of_manufacture}}">
+            {{#with errors}}
+                {{#if year_of_manufactureError}}
+                    <span class="error">
+                            Fabricação: {{year_of_manufactureError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="vehicleDaily_cost">
+            <label for="daily_cost">Valor da diária</label>
+            <input type="number" name="daily_cost" maxlength="100" size="100" value="{{vehicle.daily_cost}}">
+            {{#with errors}}
+                {{#if daily_costError}}
+                    <span class="error">
+                            Valor: {{daily_costError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="vehiclePromotion_description">
+            <label for="promotion_description">Descrição promocional</label>
+            <input type="text" name="promotion_description" maxlength="100" size="100"
+                   value="{{vehicle.promotion_description}}">
+            {{#with errors}}
+                {{#if promotion_descriptionError}}
+                    <span class="error">
+                            Descrição: {{promotion_descriptionError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="vehicleType_fuel">
+            <label for="type_fuel">Tipo de combustível</label>
+            <input type="text" name="type_fuel" maxlength="14" size="14" value="{{vehicle.type_fuel}}">
+            {{#with errors}}
+                {{#if type_fuelError}}
+                    <span class="error">
+                            Nome: {{type_fuelError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <button hx-target="#vehicleItemsTable"
+                hx-select="#vehicleItemsTable"
+                hx-swap="outerHTML"
+                hx-post="vehicle/upsert"
+                hx-include="[name='page']"
+                style="display: inline-flex">
+            <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
+            &nbsp;
+            {{#if vehicle.id}}
+                Atualizar
+            {{^}}
+                Cadastrar
+            {{/if}}
+        </button>
+        {{#if vehicle.id}}
+            <button hx-target="#vehicleForm"
+                    hx-select="#vehicleForm"
+                    hx-swap="outerHTML"
+                    hx-get="vehicle">
+                Cancelar
+            </button>
+        {{/if}}
+    </div>
+    <input type="text" hidden style="display: none" id="savedBrand" maxlength="14" size="14" value="{{brand}}">
+    <input type="text" hidden style="display: none" id="savedModel" maxlength="14" size="14" value="{{model}}">
+</form>

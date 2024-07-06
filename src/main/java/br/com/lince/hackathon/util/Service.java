@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -133,4 +131,14 @@ public class Service {
         return states;
     }
 
+    public static List<VehicleType> findTypeVehicle(String type) {
+        List<VehicleType> vehicle = new ArrayList<>();
+
+        vehicle.add(new VehicleType("", "", false));
+        vehicle.add(new VehicleType("cars", "Carro", (type.equals("cars"))));
+        vehicle.add(new VehicleType("motorcycles", "Moto", (type.equals("motorcycles"))));
+        vehicle.add(new VehicleType("trucks", "Caminhão", (type.equals("trucks"))));
+
+        return vehicle;
+    }
 }
