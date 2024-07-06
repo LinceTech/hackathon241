@@ -30,7 +30,7 @@ public class GerenteServlet extends HttpServlet {
     /*
      * O número de itens na paginação desta tela
      */
-    private static final int PAGE_SIZE = 5;
+    private static final int PAGE_SIZE = 15;
 
     /*
      * Logger padrão do servlet
@@ -75,14 +75,15 @@ public class GerenteServlet extends HttpServlet {
      */
     private void loadFullPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<GerenteViewData>("gerente/page", response);
-        final var page = NumberUtils.toInt(request.getParameter("page"), 0);
+        final var page     = NumberUtils.toInt(request.getParameter("page"), 0);
+        final var pageSize = NumberUtils.toInt(request.getParameter("pageSize"), 15);
 
         JDBIConnection.instance().withExtension(GerenteRepository.class, dao -> {
             final var now = LocalDateTime.now();
             final var count = dao.count();
-            final var gerentes = dao.selectPage(page, PAGE_SIZE);
+            final var gerentes = dao.selectPage(page, pageSize);
 
-            renderer.render(new GerenteViewData(gerentes, now, page, PAGE_SIZE, count));
+            renderer.render(new GerenteViewData(gerentes, now, page, pageSize, count));
 
             return null;
         });
@@ -103,6 +104,7 @@ public class GerenteServlet extends HttpServlet {
         final var pc_comissao = NumberUtils.toDouble(request.getParameter("pc_comissao"), 0.0);
         final var renderer = new TemplateRenderer<GerenteViewData>("gerente/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
+        final var pageSize = NumberUtils.toInt(request.getParameter("pageSize"), 15);
         final var errors = new HashMap<String, String>();
 
         if (!Validacao.isCpf(nr_cpf)) {
@@ -138,12 +140,12 @@ public class GerenteServlet extends HttpServlet {
 
             final var now = LocalDateTime.now();
             final var count = dao.count();
-            final var gerentes = dao.selectPage(page, PAGE_SIZE);
+            final var gerentes = dao.selectPage(page, pageSize);
 
             if (errors.isEmpty()) {
-                renderer.render(new GerenteViewData(gerentes, now, page, PAGE_SIZE, count));
+                renderer.render(new GerenteViewData(gerentes, now, page, pageSize, count));
             } else {
-                renderer.render(new GerenteViewData(errors, gerente, gerentes, now, page, PAGE_SIZE, count));
+                renderer.render(new GerenteViewData(errors, gerente, gerentes, now, page, pageSize, count));
             }
 
             return null;

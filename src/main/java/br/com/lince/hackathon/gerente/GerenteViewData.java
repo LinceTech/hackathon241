@@ -100,6 +100,10 @@ public class GerenteViewData {
         return count;
     }
 
+    public int getPageSize() {
+        return pageSize;
+    }
+
     public int getTotalPages() {
         return Double.valueOf(Math.ceil(((Integer.valueOf(count).doubleValue()) / pageSize))).intValue();
     }
