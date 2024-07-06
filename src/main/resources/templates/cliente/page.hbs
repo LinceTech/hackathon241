@@ -6,12 +6,14 @@
 </head>
 <body>
 
+<h1>Cadastro e consulta - Clientes</h1>
+
 <div id="formAndTable">
     {{>cliente/form cliente}}
 
     <hr>
 
-    <div id="clientesTable">
+    <div id="clientesItensTable">
         <input type="hidden" name="page" value="{{index}}">
 
         <div style="display: inline-flex; padding-bottom: 12px;">
@@ -22,7 +24,7 @@
                      hx-target="#clientesItensTable"
                      hx-select="#clientesItensTable"
                      hx-swap="innerHTML"
-                     hx-get="foo?page={{previous}}">
+                     hx-get="cliente?page={{previous}}&pageSize={{pageSize}}">
             {{/if}}
 
             <span style="height: 18px; vertical-align: center;">
@@ -36,25 +38,25 @@
                      hx-target="#clientesItensTable"
                      hx-select="#clientesItensTable"
                      hx-swap="innerHTML"
-                     hx-get="foo?page={{next}}">
+                     hx-get="cliente?page={{next}}&pageSize={{pageSize}}">
             {{/if}}
         </div>
 
-        <table>
+        <table id="tabelaClientes" class="tablesorter">
             <thead>
             <tr>
-                <th style="width: 150px; text-align: right;">Nome</th>
-                <th style="width: 115px; text-align: left;">C.P.F</th>
-                <th style="width: 144px; text-align: left;">Data nascimento</th>
-                <th style="width: 50px">Telefone</th>
-                <th style="width: 50px">E-mail</th>
-                <th style="width: 50px">CEP</th>
-                <th style="width: 100px">Cidade</th>
-                <th style="width: 50px">Estado</th>
-                <th style="width: 50px">Bairro</th>
-                <th style="width: 50px">Rua</th>
-                <th style="width: 50px">Número</th>
-                <th style="width: 50px">Ação</th>
+                <th style="text-align: left;cursor: pointer;">Nome</th>
+                <th style="text-align: left;cursor: pointer;">C.P.F</th>
+                <th style="text-align: left;cursor: pointer;">Data nascimento</th>
+                <th style="text-align: left;cursor: pointer;">Telefone</th>
+                <th style="text-align: left;cursor: pointer;">E-mail</th>
+                <th style="text-align: left;cursor: pointer;">CEP</th>
+                <th style="text-align: left;cursor: pointer;">Cidade</th>
+                <th style="text-align: left;cursor: pointer;">Estado</th>
+                <th style="text-align: left;cursor: pointer;">Bairro</th>
+                <th style="text-align: left;cursor: pointer;">Rua</th>
+                <th style="text-align: left;cursor: pointer;">Número</th>
+                <th style="text-align: left;cursor: pointer;">Ação</th>
             </tr>
             </thead>
             <tbody>

@@ -27,7 +27,7 @@ public class ClienteServlet extends HttpServlet {
 
     private static final Logger logger = Logger.getLogger(ClienteServlet.class.getName());
 
-    private static final int PAGE_SIZE = 5;
+    private static final int PAGE_SIZE = 15;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -70,15 +70,16 @@ public class ClienteServlet extends HttpServlet {
     private void loadFullPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final var renderer = new TemplateRenderer<ClienteViewData>("cliente/page", response);
         final var page = NumberUtils.toInt(request.getParameter("page"), 0);
+        final var pageSize = NumberUtils.toInt(request.getParameter("pageSize"), 15);
 
         JDBIConnection.instance().withExtension(ClienteRepository.class, cliente -> {
             final var now = LocalDateTime.now();
             final var count = cliente.count();
-            final var clientes = cliente.selectPage(page, PAGE_SIZE);
+            final var clientes = cliente.selectPage(page, pageSize);
 
             logger.severe(clientes+" <-- clientes");
 
-            renderer.render(new ClienteViewData(clientes, now, page, PAGE_SIZE, count));
+            renderer.render(new ClienteViewData(clientes, now, page, pageSize, count));
 
             return null;
         });

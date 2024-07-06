@@ -1,4 +1,37 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial;
+}
+
 .error {
     color: red;
     font-weight: bold;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding-right: 10px;
+}
+
+ul{
+    display: flex;
+    gap: 5px;
+}
+li {
+    list-style: none;
+    padding: 8px;
+    background: #383838;
+    border-radius: 5px;
+    transition: .3s;
+    cursor: pointer;
+}
+li:hover{
+    background: #151515;
+}
+li a {
+    text-decoration: none;
+    color: white;
 }
