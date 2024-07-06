@@ -27,7 +27,7 @@ public class ClienteServlet extends HttpServlet {
     /*
      * O número de itens na paginação desta tela
      */
-    private static final int PAGE_SIZE = 5;
+    private static final int PAGE_SIZE = 15;
     private static final int now = NumberUtils.toInt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
 
     /*
