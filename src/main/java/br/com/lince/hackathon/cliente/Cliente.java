@@ -2,8 +2,7 @@ package br.com.lince.hackathon.cliente;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 public class Cliente {
     private int    id           ;
@@ -109,6 +108,12 @@ public class Cliente {
 
     public int getCep() {
         return cep;
+    }
+
+    public String getCepFormat() {
+        String cepStr = cep + "";
+        String cepFormat = cepStr.replaceFirst("(\\d{5})(\\d{3})", "$1-$2");
+        return cepFormat;
     }
 
     public void setCep(int cep) {

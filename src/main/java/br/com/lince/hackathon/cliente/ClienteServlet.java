@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -101,7 +102,7 @@ public class ClienteServlet extends HttpServlet {
         final var dtNascimento = NumberUtils.toInt(request.getParameter("dtNascimento").replaceAll("-", ""), 0);
         final long telefone    = NumberUtils.toLong(request.getParameter("telefone"), 0);
         final var email        = request.getParameter("email");
-        final var cep          = NumberUtils.toInt(request.getParameter("cep"), 0);
+        final var cep          = NumberUtils.toInt(request.getParameter("cep").replaceAll("[^0-9.]", ""), 0);
         final var cidade       = request.getParameter("cidade");
         final var estado       = request.getParameter("estado");
         final var bairro       = request.getParameter("bairro");
@@ -195,11 +196,11 @@ public class ClienteServlet extends HttpServlet {
      * Trata a requisição para alimentar o formulário de cadastro ou edição de clientes
      */
     private void loadFormEdit(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<Cliente>("cliente/form", response);
+        final var renderer = new TemplateRenderer<ClienteViewData>("cliente/form", response);
         final var id = NumberUtils.toInt(request.getParameter("id"), 0);
 
         JDBIConnection.instance().withExtension(Time7Repository.class, dao -> {
-            renderer.render(dao.findByIdCliente(id));
+            renderer.render(new ClienteViewData(dao.findByIdCliente(id)));
             return null;
         });
     }

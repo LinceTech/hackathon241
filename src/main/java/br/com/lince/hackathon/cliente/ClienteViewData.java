@@ -1,6 +1,7 @@
 package br.com.lince.hackathon.cliente;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,6 +9,16 @@ import java.util.List;
  * Classe utilizada para agregar todos os dados necessários para alimentar o template cliente/page
  */
 public class ClienteViewData {
+
+    public ClienteViewData(Cliente cliente) {
+        this.clientes = null;
+        this.dateTime = null;
+        this.page = 0;
+        this.pageSize = 0;
+        this.count = 0;
+        this.errors = null;
+        this.cliente = cliente;
+    }
 
     /**
      * Construtor utilizado para renderizar a página com a lista de foos.
@@ -84,6 +95,11 @@ public class ClienteViewData {
 
     public LocalDateTime getDateTime() {
         return dateTime;
+    }
+
+    public List<String> getEstados() {
+        return Arrays.asList(new String[]{"AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG",
+                "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE"});
     }
 
     public int getIndex() {

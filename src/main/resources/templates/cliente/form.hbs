@@ -1,11 +1,11 @@
 <form id="clienteForm">
-    <input type="hidden" name="id" value="{{id}}">
+    <input type="hidden" name="id" value="{{cliente.id}}">
 
     <div>
         <label>
             <span style="width: 120px; display: inline-block;">Nome:</span>
             <span>
-                <input type="text" name="nome" maxlength="60" size="60" value="{{nome}}">
+                <input type="text" name="nome" maxlength="60" size="60" value="{{cliente.nome}}">
                 {{#with errors}}
                     {{#if nomeError}}
                         <span class="error">
@@ -22,7 +22,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">CPF:</span>
             <span>
-                <input type="text" name="cpf" size="14" maxlength="14" value="{{cpfFormat}}">
+                <input type="text" name="cpf" size="14" maxlength="14" value="{{cliente.cpfFormat}}">
                 {{#with errors}}
                     {{#if cpfError}}
                         <span class="error">
@@ -39,7 +39,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Data Nascimento:</span>
             <span>
-                <input type="date" name="dtNascimento" value="{{dtNascimentoFormat}}">
+                <input type="date" name="dtNascimento" value="{{cliente.dtNascimentoFormat}}">
                 {{#with errors}}
                     {{#if dtNascimentoError}}
                         <span class="error">
@@ -56,7 +56,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Telefone:</span>
             <span>
-                <input type="text" name="telefone" value="{{telefone}}">
+                <input type="text" name="telefone" value="{{cliente.telefone}}">
                 {{#with errors}}
                     {{#if telefoneError}}
                         <span class="error">
@@ -73,7 +73,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Email:</span>
             <span>
-                <input type="text" name="email" size="60" maxlength="60" value="{{email}}">
+                <input type="text" name="email" size="60" maxlength="60" value="{{cliente.email}}">
                 {{#with errors}}
                     {{#if emailError}}
                         <span class="error">
@@ -90,7 +90,8 @@
         <label>
             <span style="width: 120px; display: inline-block;">CEP: </span>
             <span>
-                <input type="text" name="cep" size="9" maxlength="9" value="{{cep}}">
+                <input type="text" id="cep" name="cep" size="9" maxlength="9" onblur="pesquisacep(this.value);"
+                       value="{{cliente.cepFormat}}">
                 {{#with errors}}
                     {{#if cepError}}
                         <span class="error">
@@ -107,33 +108,11 @@
         <label>
             <span style="width: 120px; display: inline-block;">Estado:</span>
             <span>
-                <select name="estado">
-                  <option value="AC">AC</option>
-                  <option value="AL">AL</option>
-                  <option value="AP">AP</option>
-                  <option value="AM">AM</option>
-                  <option value="BA">BA</option>
-                  <option value="CE">CE</option>
-                  <option value="DF">DF</option>
-                  <option value="ES">ES</option>
-                  <option value="GO">GO</option>
-                  <option value="MA">MA</option>
-                  <option value="MT">MT</option>
-                  <option value="MS">MS</option>
-                  <option value="MG">MG</option>
-                  <option value="PA">PA</option>
-                  <option value="PB">PB</option>
-                  <option value="PR">PR</option>
-                  <option value="PE">PE</option>
-                  <option value="PI">PI</option>
-                  <option value="RJ">RJ</option>
-                  <option value="RN">RN</option>
-                  <option value="RS">RS</option>
-                  <option value="RO">RO</option>
-                  <option value="RR">RR</option>
-                  <option value="SC">SC</option>
-                  <option value="SP">SP</option>
-                  <option value="SE">SE</option>
+                <select id="estado" name="estado">
+                    <option value=""></option>
+                    {{#estados}}
+                        <option value="{{this}}" {{#if (eq cliente.estado this)}}selected{{/if}}>{{this}}</option>
+                    {{/estados}}
                 </select>
                 {{#with errors}}
                     {{#if estadoError}}
@@ -151,7 +130,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Cidade:</span>
             <span>
-                <input type="text" name="cidade" size="60" maxlength="60" value="{{cidade}}">
+                <input type="text" id="cidade" name="cidade" size="60" maxlength="60" value="{{cliente.cidade}}">
                 {{#with errors}}
                     {{#if cidadeError}}
                         <span class="error">
@@ -168,7 +147,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Bairro:</span>
             <span>
-                <input type="text" name="bairro" size="60" maxlength="60" value="{{bairro}}">
+                <input type="text" id="bairro" name="bairro" size="60" maxlength="60" value="{{cliente.bairro}}">
                 {{#with errors}}
                     {{#if bairroError}}
                         <span class="error">
@@ -185,7 +164,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Rua:</span>
             <span>
-                <input type="text" name="rua" size="60" maxlength="60" value="{{rua}}">
+                <input type="text" id="rua" name="rua" size="60" maxlength="60" value="{{cliente.rua}}">
                 {{#with errors}}
                     {{#if ruaError}}
                         <span class="error">
@@ -202,7 +181,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Número:</span>
             <span>
-                <input type="number" name="numero" maxlength="6" size="6" value="{{numero}}">
+                <input type="number" name="numero" maxlength="6" size="6" value="{{cliente.numero}}">
                 {{#with errors}}
                     {{#if numeroError}}
                         <span class="error">
@@ -224,13 +203,13 @@
             style="display: inline-flex">
         <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
         &nbsp;
-        {{#if id}}
+        {{#if cliente.id}}
             Atualizar
         {{^}}
             Cadastrar
         {{/if}}
     </button>
-    {{#if id}}
+    {{#if cliente.id}}
         <button hx-target="#clienteForm"
                 hx-select="#clienteForm"
                 hx-swap="outerHTML"

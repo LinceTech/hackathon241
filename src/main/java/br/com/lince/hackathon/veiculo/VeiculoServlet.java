@@ -2,7 +2,10 @@ package br.com.lince.hackathon.veiculo;
 
 import br.com.lince.hackathon.standard.JDBIConnection;
 import br.com.lince.hackathon.standard.TemplateRenderer;
+import br.com.lince.hackathon.time7.Marcas;
+import br.com.lince.hackathon.time7.Modelos;
 import br.com.lince.hackathon.time7.Time7Repository;
+import br.com.lince.hackathon.time7.ValidaPlacaCarro;
 import com.github.jknack.handlebars.internal.lang3.math.NumberUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -92,7 +95,9 @@ public class VeiculoServlet extends HttpServlet {
 
         final var id              = NumberUtils.toInt(request.getParameter("id"), 0);
         final var marca           = request.getParameter("marca");
+        final var marca_nome      = Marcas.buscaMarcaCode(marca);
         final var modelo          = request.getParameter("modelo");
+        final var modelo_nome     = Modelos.buscaModeloCode(marca, modelo);
         final var placa           = request.getParameter("placa");
         final var cor             = request.getParameter("cor");
         final var anoFabrica      = NumberUtils.toInt(request.getParameter("anoFabrica"), 0);
@@ -100,25 +105,23 @@ public class VeiculoServlet extends HttpServlet {
         final var descricao       = request.getParameter("descricao");
         final var tipoCombustivel = NumberUtils.toInt(request.getParameter("tipoCombustivel"), 0);
 
-        final var veiculo = new Veiculo(id, marca, modelo, placa, cor, anoFabrica, custoDiaria, descricao, tipoCombustivel);
+        final var veiculo = new Veiculo(id, marca_nome, modelo_nome, placa, cor, anoFabrica, custoDiaria, descricao, tipoCombustivel);
         final var errors = new HashMap<String, String>();
 
-        if (marca.isBlank()) {
+        if (marca_nome.isBlank()) {
             errors.put("marcaError", "Não pode ser vazio");
-        } else if (marca.length() > 30) {
-            errors.put("marcaError", "Não pode ser maior que 30 caracteres");
         }
 
-        if (modelo.isBlank()) {
+        if (modelo_nome.isBlank()) {
             errors.put("modeloError", "Não pode ser vazio");
-        } else if (modelo.length() > 60) {
+        } else if (modelo_nome.length() > 60) {
             errors.put("modeloError", "Não pode ser maior que 60 caracteres");
         }
 
         if (placa.isBlank()) {
             errors.put("placaError", "Não pode ser vazio");
-        } else if (placa.length() < 7) {
-            errors.put("placa", "Não pode ser menor que 7 caracteres");
+        } else if (!ValidaPlacaCarro.isPlacaValid(placa)) {
+            errors.put("placaError", "Placa invalida");
         }
 
         if (anoFabrica < 1886 || anoFabrica > now / 10000) {
@@ -165,11 +168,11 @@ public class VeiculoServlet extends HttpServlet {
      * Trata a requisição para alimentar o formulário de cadastro ou edição de veiculos
      */
     private void loadFormEdit(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final var renderer = new TemplateRenderer<Veiculo>("veiculo/form", response);
+        final var renderer = new TemplateRenderer<VeiculoViewData>("veiculo/form", response);
         final var id = NumberUtils.toInt(request.getParameter("id"), 0);
 
         JDBIConnection.instance().withExtension(Time7Repository.class, dao -> {
-            renderer.render(dao.findByIdVeiculo(id));
+            renderer.render(new VeiculoViewData(dao.findByIdVeiculo(id)));
             return null;
         });
     }

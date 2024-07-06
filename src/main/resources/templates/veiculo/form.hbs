@@ -1,28 +1,45 @@
 <form id="veiculoForm">
-    <input type="hidden" name="id" value="{{id}}">
+    <input type="hidden" name="id" value="{{veiculo.id}}">
 
     <div>
         <label>
             <span style="width: 120px; display: inline-block;">Marca:</span>
             <span>
-                <input type="text" name="marca" maxlength="30" size="30" value="{{marca}}">
+            <select id="marca" name="marca" onchange="buscaModelos();">
+                <option value="">&nbsp;</option>
+                {{#marcas}}
+                    <option value="{{this.code}}" {{#if (eq veiculo.marca this.name)}} selected {{/if}}>
+                        {{this.name}}
+                    </option>
+                {{/marcas}}
+            </select>
                 {{#with errors}}
                     {{#if marcaError}}
                         <span class="error">
-                            Marca: {{marcaError}}
-                        </span>
+                        Marca: {{marcaError}}
+                    </span>
                     {{/if}}
                 {{/with}}
-            </span>
+        </span>
             <br>
         </label>
     </div>
+
 
     <div>
         <label>
             <span style="width: 120px; display: inline-block;">Modelo:</span>
             <span>
-                <input type="text" name="modelo" maxlength="60" size="60" value="{{modelo}}">
+                <select id="modelo" name="modelo">
+                    <option value="">&nbsp;</option>
+                    {{#if veiculo.marca}}
+                        {{#veiculo.modelos}}
+                            <option value="{{this.code}}" {{#if (eq veiculo.modelo this.name)}} selected {{/if}}>
+                                {{this.name}}
+                            </option>
+                        {{/veiculo.modelos}}
+                    {{/if}}
+                </select>
                 {{#with errors}}
                     {{#if modeloError}}
                         <span class="error">
@@ -39,7 +56,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Placa:</span>
             <span>
-                <input type="text" name="placa" maxlength="7" size="7" value="{{placa}}">
+                <input type="text" name="placa" maxlength="7" size="7" value="{{veiculo.placa}}">
                 {{#with errors}}
                     {{#if placaError}}
                         <span class="error">
@@ -56,7 +73,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Cor:</span>
             <span>
-                <input type="text" name="cor" maxlength="30" size="30" value="{{cor}}">
+                <input type="text" name="cor" maxlength="30" size="30" value="{{veiculo.cor}}">
                 {{#with errors}}
                     {{#if corError}}
                         <span class="error">
@@ -73,7 +90,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Ano de Fabricação:</span>
             <span>
-                <input type="number" name="anoFabrica" maxlength="4" size="4" value="{{anoFabrica}}">
+                <input type="number" name="anoFabrica" maxlength="4" size="4" value="{{veiculo.anoFabrica}}">
                 {{#with errors}}
                     {{#if anoFabricaError}}
                         <span class="error">
@@ -90,7 +107,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Custo Diária:</span>
             <span>
-                <input type="number" step="0.01" name="custoDiaria" maxlength="7" size="7" value="{{custoDiaria}}">
+                <input type="number" step="0.01" name="custoDiaria" maxlength="7" size="7" value="{{veiculo.custoDiaria}}">
                 {{#with errors}}
                     {{#if custoDiariaError}}
                         <span class="error">
@@ -107,7 +124,7 @@
         <label>
             <span style="width: 120px; display: inline-block;">Descrição:</span>
             <span>
-                <textarea name="descricao" maxlength="8000" rows="4" cols="50">{{descricao}}</textarea>
+                <textarea name="descricao" maxlength="8000" rows="4" cols="50">{{veiculo.descricao}}</textarea>
                 {{#with errors}}
                     {{#if descricaoError}}
                         <span class="error">
@@ -125,10 +142,10 @@
             <span style="width: 120px; display: inline-block;">Tipo de Combustível:</span>
             <span>
                 <select name="tipoCombustivel">
-                    <option value="1" {{#if (eq tipoCombustivel 1)}}selected{{/if}}>Gasolina</option>
-                    <option value="2" {{#if (eq tipoCombustivel 2)}}selected{{/if}}>Diesel</option>
-                    <option value="3" {{#if (eq tipoCombustivel 3)}}selected{{/if}}>Gás</option>
-                    <option value="4" {{#if (eq tipoCombustivel 4)}}selected{{/if}}>Elétrico</option>
+                    <option value="1" {{#if (eq veiculo.tipoCombustivel 1)}}selected{{/if}}>Gasolina</option>
+                    <option value="2" {{#if (eq veiculo.tipoCombustivel 2)}}selected{{/if}}>Diesel</option>
+                    <option value="3" {{#if (eq veiculo.tipoCombustivel 3)}}selected{{/if}}>Gás</option>
+                    <option value="4" {{#if (eq veiculo.tipoCombustivel 4)}}selected{{/if}}>Elétrico</option>
                 </select>
                 {{#with errors}}
                     {{#if tipoCombustivelError}}
@@ -151,13 +168,13 @@
             style="display: inline-flex">
         <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
         &nbsp;
-        {{#if id}}
+        {{#if veiculo.id}}
             Atualizar
         {{^}}
             Cadastrar
         {{/if}}
     </button>
-    {{#if id}}
+    {{#if veiculo.id}}
         <button hx-target="#veiculoForm"
                 hx-select="#veiculoForm"
                 hx-swap="outerHTML"

@@ -1,5 +1,11 @@
 package br.com.lince.hackathon.veiculo;
 
+import br.com.lince.hackathon.time7.Marcas;
+import br.com.lince.hackathon.time7.Modelos;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 public class Veiculo {
@@ -17,14 +23,14 @@ public class Veiculo {
     }
 
     public Veiculo(int    id              ,
-                   String marca           ,
-                   String modelo          ,
-                   String placa           ,
-                   String cor             ,
-                   int    anoFabrica      ,
-                   float  custoDiaria     ,
-                   String descricao       ,
-                   int    tipoCombustivel  ) {
+             String marca           ,
+             String modelo          ,
+             String placa           ,
+             String cor             ,
+             int    anoFabrica      ,
+             float  custoDiaria     ,
+             String descricao       ,
+             int    tipoCombustivel  ) {
 
         this.id              = id              ;
         this.marca           = marca           ;
@@ -55,6 +61,10 @@ public class Veiculo {
 
     public String getModelo() {
         return modelo;
+    }
+
+    public List<HashMap<String, String>> getModelos() throws IOException {
+        return Modelos.buscaModelos(Marcas.buscaMarcaNome(marca));
     }
 
     public void setModelo(String modelo) {
