@@ -1,0 +1,77 @@
+<form hx-post="veiculosLista/filtro" hx-trigger="submit, reset:afterSettle" hx-target="#listaVeiculo">
+    <div>
+        <label>Marca
+            <input type="text" name="marca" value="{{veiculoFiltro.marca}}">
+        </label>
+        <label>Modelo
+            <input type="text" name="modelo" value="{{veiculoFiltro.modelo}}">
+        </label>
+        <label>Ano de Fabricação
+            <input type="text" name="anoDeFabricacao" value="{{veiculoFiltro.anoDeFabricacao}}">
+        </label>
+        <label>Placa
+            <input type="text" name="placa" value="{{veiculoFiltro.placa}}">
+        </label>
+        <label>Cor
+            <input type="text" name="cor" value="{{veiculoFiltro.cor}}">
+        </label>
+        <label>Tipo de combustivel
+            <select name="tipoDeCombustivel">
+                <option {{#if veiculoFiltro.semCombustivel}}selected{{/if}} value="0"></option>
+                <option {{#if veiculoFiltro.fgAlcool}}selected{{/if}} value="1">Alcool</option>
+                <option {{#if veiculoFiltro.fgGasolina}}selected{{/if}} value="2">Gasolina</option>
+                <option {{#if veiculoFiltro.fgGNV}}selected{{/if}} value="3">GNV</option>
+                <option {{#if veiculoFiltro.fgEletrico}}selected{{/if}} value="4">Eletrico</option>
+            </select>
+        </label>
+    </div>
+    <button>Filtrar</button>
+    <br>
+    <div id="veiculosTable">
+        <div id="veiculosPagina">
+            <input type="hidden" name="page" value="{{index}}">
+
+            <div style="display: inline-flex; padding-bottom: 12px;">
+                {{#if hasPrevious}}
+                    <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
+                         alt="Página anterior"
+                         style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
+                         hx-target="#listaGerente"
+                         hx-post="veiculosLista/page?page={{previous}}">
+                {{/if}}
+
+                <span style="height: 18px; vertical-align: center;">
+                        Pagina <b>{{page}}</b> de <b>{{totalPages}}</b>
+                    </span>
+
+                {{#if next}}
+                    <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
+                         alt="Próxima página"
+                         style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
+                         hx-target="#listaGerente"
+                         hx-post="veiculosLista/page?page={{next}}">
+                {{/if}}
+            </div>
+
+            <table>
+                <thead>
+                <tr>
+                    <th style="text-align: left; cursor:pointer;" hx-get="veiculosLista/ordenar?page={{page}}&sentido={{sentido}}&campo=Marca" hx-trigger="click">Marca</th>
+                    <th style="text-align: left; cursor:pointer;" hx-get="veiculosLista/ordenar?page={{page}}&sentido={{sentido}}&campo=Modelo" hx-trigger="click">Modelo</th>
+                    <th style="text-align: left;">Placa</th>
+                    <th style="text-align: left; cursor:pointer;" hx-get="veiculosLista/ordenar?page={{page}}&sentido={{sentido}}&campo=Cor" hx-trigger="click">Cor</th>
+                    <th style="text-align: left; cursor:pointer;" hx-get="veiculosLista/ordenar?page={{page}}&sentido={{sentido}}&campo=AnoDeFabricacao" hx-trigger="click">Ano de Fabricação</th>
+                    <th style="text-align: left; cursor:pointer;" hx-get="veiculosLista/ordenar?page={{page}}&sentido={{sentido}}&campo=CustoDeDiaria" hx-trigger="click">Custo de diaria</th>
+                    <th style="text-align: left;">Descrição promocional</th>
+                    <th style="text-align: left; cursor:pointer;" hx-get="veiculosLista/ordenar?page={{page}}&sentido={{sentido}}&campo=TipoDeCombustivel" hx-trigger="click">Tipo de combustivel</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#veiculos}}
+                    {{>veiculos/veiculosLinha}}
+                {{/veiculos}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>

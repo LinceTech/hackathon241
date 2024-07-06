@@ -33,8 +33,8 @@ public interface GerenteRepository {
 
     @RegisterBeanMapper(Gerentes.class)
     @UseFreemarkerEngine
-    @SqlQuery("SELECT id, Nome, CPF, Telefone, Email, Cidade, Estado, PercentualDeComissao, DataDeContratacao FROM gerente where gerente.Nome like '%${gerenteFiltro.nome}%' and gerente.CPF like '%${gerenteFiltro.cpf}%' and gerente.Cidade like '%${gerenteFiltro.cidade}%' and gerente.Estado like '%${gerenteFiltro.estado}%' ORDER BY nome, cidade, DataDeContratacao OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
-    List<Gerentes> selectFilterPage(@Define("page") int page, @Define("count") int count, @Define("gerenteFiltro") GerenteFiltro gerenteFiltro);
+    @SqlQuery("SELECT id, Nome, CPF, Telefone, Email, Cidade, Estado, PercentualDeComissao, DataDeContratacao FROM gerente where gerente.Nome like '%${gerenteFiltro.nome}%' and gerente.CPF like '%${gerenteFiltro.cpf}%' and gerente.Cidade like '%${gerenteFiltro.cidade}%' and gerente.Estado like '%${gerenteFiltro.estado}%' ORDER BY ${campo}  ${sentido} OFFSET (${page} * ${count}) ROWS FETCH NEXT ${count} ROWS ONLY")
+    List<Gerentes> selectFilterPage(@Define("page") int page, @Define("count") int count, @Define("gerenteFiltro") GerenteFiltro gerenteFiltro, @Define ("campo") String campo, @Define("sentido") String sentido);
 
     @UseFreemarkerEngine
     @SqlQuery("SELECT COUNT(*) FROM gerente where gerente.Nome like '%${gerenteFiltro.nome}%' and gerente.CPF like '%${gerenteFiltro.cpf}%' and gerente.Cidade like '%${gerenteFiltro.cidade}%' and gerente.Estado like '%${gerenteFiltro.estado}%'")

@@ -1,51 +1,50 @@
-package br.com.lince.hackathon.gerentes;
+package br.com.lince.hackathon.veiculos;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-public class GerentesViewData {
-    List <Gerentes> gerentes;
+public class VeiculosViewData {
+    List<Veiculos> veiculos;
     int page;
     int pageSize;
     int count;
-    String campo = "nome";
+    String campo = "id";
     String sentido = "ASC";
-    GerenteFiltro gerenteFiltro;
+    VeiculoFiltro veiculoFiltro;
 
-    public GerentesViewData(List<Gerentes> gerentes, int page, int pageSize, int count) {
-        this.gerentes = gerentes;
+    public VeiculosViewData(List<Veiculos> veiculos, int page, int pageSize, int count) {
+        this.veiculos = veiculos;
         this.page = page;
         this.pageSize = pageSize;
         this.count = count;
     }
 
-    public GerentesViewData(List<Gerentes> gerentes, int page, int pageSize, int count, GerenteFiltro gerenteFiltro) {
-        this.gerentes = gerentes;
+    public VeiculosViewData(List<Veiculos> veiculos, int page, int pageSize, int count, VeiculoFiltro veiculoFiltro) {
+        this.veiculos = veiculos;
         this.page = page;
         this.pageSize = pageSize;
         this.count = count;
-        this.gerenteFiltro = gerenteFiltro;
+        this.veiculoFiltro = veiculoFiltro;
     }
 
-    public GerentesViewData(List<Gerentes> gerentes, int page, int pageSize, int count, GerenteFiltro gerenteFiltro, String campo, String sentido) {
-        this.gerentes = gerentes;
+    public VeiculosViewData(List<Veiculos> veiculos, int page, int pageSize, int count, VeiculoFiltro veiculoFiltro, String campo, String sentido) {
+        this.veiculos = veiculos;
         this.page = page;
         this.pageSize = pageSize;
         this.count = count;
-        this.gerenteFiltro = gerenteFiltro;
+        this.veiculoFiltro = veiculoFiltro;
         this.campo = campo;
         this.sentido = sentido;
     }
 
-    public List<Gerentes> getGerentes() {
-        return gerentes;
+    public List<Veiculos> getVeiculos() {
+        return veiculos;
     }
 
     public int getPageSize() {
         return pageSize;
     }
 
-    public GerentesViewData() {
+    public VeiculosViewData() {
     }
 
     public int getPage() {
@@ -72,12 +71,12 @@ public class GerentesViewData {
         return getPage() < getTotalPages() ? page + 1 : 0;
     }
 
-    public GerenteFiltro getGerenteFiltro() {
-        return gerenteFiltro;
+    public VeiculoFiltro getVeiculoFiltro() {
+        return veiculoFiltro;
     }
 
-    public void setGerenteFiltro(GerenteFiltro gerenteFiltro) {
-        this.gerenteFiltro = gerenteFiltro;
+    public void setVeiculoFiltro(VeiculoFiltro veiculoFiltro) {
+        this.veiculoFiltro = veiculoFiltro;
     }
 
     public String getCampo() {
