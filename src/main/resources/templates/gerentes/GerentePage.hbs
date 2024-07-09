@@ -1,0 +1,54 @@
+{{>head}}
+<div class="d-flex flex-column justify-content-center">
+    <div class="m-5 border rounded d-flex flex-column justify-content-center">
+        <div class="d-flex justify-content-start position-relative">
+            <div class="p-2">
+                <div class="h4 text-center">Gerentes</div>
+            </div>
+        </div>
+        <div class="p-2">
+            <button
+                    class="btn btn-primary"
+                    hx-get="/hackathon/gerentes/new"
+                    hx-target="#mustache_modal"
+                    hx-trigger="click"
+                    data-bs-toggle="modal"
+                    data-bs-target="#gerenteModal"
+            >
+                Cadastrar Gerente
+            </button>
+        </div>
+    </div>
+    {{>gerentes/GerenteLista}}
+    <div
+            class="modal fade"
+            id="gerenteModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+    >
+        <div class="modal-dialog modal-dialog-centered" id="mustache_modal">
+        </div>
+    </div>
+    <script>
+        const mascaraCNPJ = (input) => {
+            let cnpj = input.value;
+
+            cnpj = cnpj.replace(/\D/g, "")
+            cnpj = cnpj.replace(/(\d{3})(\d)/, "$1.$2")
+            cnpj = cnpj.replace(/(\d{3})(\d)/, "$1.$2")
+            cnpj = cnpj.replace(/(\d{3})(\d{1,2})$/, "$1-$2")
+
+            input.value = cnpj;
+        }
+
+        const validaNumerico = (input) => {
+            let numero = input.value;
+
+            numero = numero.replaceAll(/\D/g, "");
+
+            input.value = numero
+        }
+    </script>
+</div>
+{{>footer}}

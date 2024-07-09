@@ -1,0 +1,100 @@
+<div class="container" id="locacao_lista">
+    <form
+            hx-get="/hackathon/locacoes/listar"
+            hx-target="#locacao_lista"
+    >
+        <div class="container d-flex gap-2">
+            <div class="mb-3 ">
+                <label for="nome" class="form-label">Placa do veiculo</label>
+                <input
+                        placeholder="Informe a placa do veiculo:"
+                        type="text"
+                        class="form-control"
+                        id="placaVeiculo"
+                        name="placaVeiculo"
+                        value="{{placaVeiculo}}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="cpf" class="form-label">Cliente</label>
+                <input
+                        placeholder="Informe o documento:"
+                        type="text"
+                        class="form-control"
+                        id="nomeCliente"
+                        name="nomeCliente"
+                        value="{{nomeCliente}}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="cidade" class="form-label">Gerente</label>
+                <input
+                        placeholder="Informe a cidade:"
+                        type="text"
+                        class="form-control"
+                        id="nomeGerente"
+                        name="nomeGerente"
+                        value="{{nomeGerente}}"
+                >
+            </div>
+            <div class="mb-3 d-flex flex-column justify-content-end">
+                <div class="d-flex align-items-center gap-2">
+                    <button
+                            class="btn btn-primary"
+                            type="submit"
+                    >
+                        Consultar
+                    </button>
+                    <button
+                            class="btn btn-primary"
+                            type="reset"
+                            hx-get="/hackathon/locacoes/listar?placaVeiculo=&nomeCliente=&nomeGerente=&proximaPagina=false&numeroPagina=0"
+                            hx-target="#locacao_lista"
+                            hx-trigger="click"
+                    >
+                        Limpar filtros
+                    </button>
+                    <button
+                            class="btn btn-primary"
+                            type="reset"
+                            hx-get="/hackathon/locacoes/listar?placaVeiculo=&nomeCliente=&nomeGerente=&proximaPagina=false&numeroPagina={{numeroPagina}}
+                    "
+                    hx-target="#locacao_lista"
+                    hx-trigger="click"
+                    >
+                    <
+                    </button>
+                    <input type="hidden" name="numeroPagina" value="{{numeroPagina}}">
+                    <input type="hidden" name="proximaPagina" value="{{proximaPagina}}">
+                    <div class="h5">{{numeroPagina}}</div>
+                    <button
+                            class="btn btn-primary"
+                            type="reset"
+                            hx-get="/hackathon/locacoes/listar?placaVeiculo=&nomeCliente=&nomeGerente=&proximaPagina=true&numeroPagina={{numeroPagina}}
+                    "
+                    hx-target="#locacao_lista"
+                    hx-trigger="click"
+                    >
+                    >
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>Veiculo</th>
+            <th>Cliente</th>
+            <th>Gerente</th>
+            <th>Email</th>
+            <th>Data inicio</th>
+            <th>Data termino</th>
+            <th>Valor diária</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,142 @@
+<div class="modal-content" id="gerente_formulario">
+    <form
+            hx-post="/hackathon/locacoes/save"
+            hx-target="#locacoes_lista"
+            hx-target-500="#gerente_formulario"
+            hx-swap="outerHTML"
+            id="form_locacoes_formulario"
+    >
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastrar Locações</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label for="cliente" class="form-label">
+                    Cliente
+                    {{#with erros}}
+                        {{#if clienteErro}}
+                            <span class="error">&nbsp;{{clienteErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
+                <select id="cliente" name="cliente" class="form-select">
+                    <option value="">Selecione um cliente</option>
+                    {{#each clientes}}
+                        <option value="{{id}}">{{nome}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="gerente" class="form-label">
+                    Gerente
+                    {{#with erros}}
+                        {{#if gerenteErro}}
+                            <span class="error">&nbsp;{{gerenteErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
+                <select id="gerente" name="gerente" class="form-select">
+                    <option value="">Selecione um gerente</option>
+                    {{#each gerentes}}
+                        <option value="{{id}}">{{nome}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="gerente" class="form-label">
+                    Veiculo
+                    {{#with erros}}
+                        {{#if gerenteErro}}
+                            <span class="error">&nbsp;{{gerenteErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
+                <select id="veiculo" name="veiculo" class="form-select">
+                    <option value="">Selecione um veiculo</option>
+                    {{#each veiculos}}
+                        <option value="{{id}}">{{marca}} = {{modelo}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="mb-3 d-flex gap-2">
+                <div>
+                    <label for="cpf" class="form-label">
+                        Data inicio
+                        {{#with erros}}
+                            {{#if dataInicioErro}}
+                                <span class="error">&nbsp;{{dataInicioErro}}</span>
+                            {{/if}}
+                        {{/with}}
+                    </label>
+                    <input
+                            placeholder="Informe a data de inicio"
+                            type="date"
+                            class="form-control"
+                            id="dataInicio"
+                            name="dataInicio"
+                            value="{{dataInicio}}"
+                    >
+                </div>
+                <div>
+                    <label for="cpf" class="form-label">
+                        Data entrega
+                        {{#with erros}}
+                            {{#if dataEntrega}}
+                                <span class="error">&nbsp;{{dataEntrega}}</span>
+                            {{/if}}
+                        {{/with}}
+                    </label>
+                    <input
+                            placeholder="Informe a data de entrega"
+                            type="date"
+                            class="form-control"
+                            id="dataEntrega"
+                            name="dataEntrega"
+                            value="{{dataEntrega}}"
+                    >
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="valorDiaria" class="form-label">
+                    Valor diário
+                    {{#with erros}}
+                        {{#if valorDiariaErro}}
+                            <span class="error">&nbsp;{{valorDiariaErro}}</span>
+                        {{/if}}
+                    {{/with}}
+                </label>
+                <input
+                        type=tel
+                        class="form-control"
+                        placeholder="Informe o valorDiaria"
+                        id="valorDiaria"
+                        name="valorDiaria"
+                        value="{{valorDiaria}}"
+                        maxlength="9"
+                >
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', e => {
+            $('#cliente').autocomplete()
+        }, false);
+
+        var url = "/api/clientes"; // Substitua pela URL correta da sua API
+        htmx.onLoad('#cliente', function(event) {
+            htmx.xhr({
+                url: url,
+                success: function(response) {
+                    document.querySelector('#cliente').innerHTML = response;
+                }
+            });
+        });
+
+
+    </script>
+</div>

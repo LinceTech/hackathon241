@@ -76,7 +76,7 @@ public class FooServlet extends HttpServlet {
             final var count = dao.count();
             final var foos = dao.selectPage(page, PAGE_SIZE);
 
-            renderer.render(new FooViewData(foos, now, page, PAGE_SIZE, count));
+//            renderer.render(new FooViewData(foos, now, page, PAGE_SIZE, count));
 
             return null;
         });
@@ -136,7 +136,7 @@ public class FooServlet extends HttpServlet {
         final var bar = NumberUtils.toInt(request.getParameter("bar"), 0);
 
         JDBIConnection.instance().withExtension(FooRepository.class, dao -> {
-            renderer.render(dao.findByBar(bar));
+//            renderer.render(dao.findByBar(bar));
             return null;
         });
     }
