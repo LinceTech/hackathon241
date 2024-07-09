@@ -1,0 +1,189 @@
+<form id="clienteForm">
+
+
+    <div style="width: auto">
+        <label>
+            <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">Nome:</span>
+            <span>
+                <input type="text" name="nm_cliente" maxlength="100" size="80" value="{{nm_cliente}}">
+                {{#with errors}}
+                    {{#if nomeError}}
+                        <span class="error">
+                            Atenção: {{nomeError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+        <label>
+            <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">C.P.F:</span>
+            <span>
+                <input type="text" name="nr_cpf" id="nr_cpf" maxlength="14" size="10" value="{{nr_cpf}}">
+                {{#with errors}}
+                    {{#if cpfError}}
+                        <span class="error">
+                            Atenção: {{cpfError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+        <label>
+            <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">Data de nascimento:</span>
+            <span>
+                <input type="date" name="dt_nascimento" id="dt_nascimento" maxlength="10" size="10" value="{{dt_nascimento}}">
+                {{#with errors}}
+                    {{#if dt_nascimentoError}}
+                        <span class="error">
+                            Atenção: {{dt_nascimentoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+        <label>
+            <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">Telefone:</span>
+            <span>
+                <input type="text" name="nr_telefone" id="nr_telefone" maxlength="11" size="11" value="{{nr_telefone}}">
+                {{#with errors}}
+                    {{#if telefError}}
+                        <span class="error">
+                            Atenção: {{telefError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+        <label>
+            <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">E-mail:</span>
+            <span>
+                <input type="email" name="ds_email" maxlength="100" size="100" value="{{ds_email}}">
+                {{#with errors}}
+                    {{#if emailError}}
+                        <span class="error">
+                            Atenção: {{emailError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+        <label>
+            <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;" >CEP:</span>
+            <span>
+                <input type="text" name="nr_cep" id="nr_cep" maxlength="9" size="7" value="{{nr_cep}}" onblur="buscarCEP()">
+                {{#with errors}}
+                    {{#if cepError}}
+                        <span class="error">
+                            Atenção: {{cepError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+        <label>
+            <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">Cidade:</span>
+            <span>
+                <input type="text" name="nm_cidade" id="nm_cidade" maxlength="100" size="100" value="{{nm_cidade}}">
+                {{#with errors}}
+                    {{#if basError}}
+                        <span class="error">
+                            Atenção: {{cidadeError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+        <label>
+            <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">Estado:</span>
+            <span>
+                <select name="nm_estado" id="nm_estado">
+                    {{>estados}}
+                </select>
+
+                {{#with errors}}
+                    {{#if basError}}
+                        <span class="error">
+                            Atenção: {{estadoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+        <label>
+            <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">Bairro:</span>
+            <span>
+                <input type="text" name="nm_bairro" id="nm_bairro" maxlength="100" size="50" value="{{nm_bairro}}">
+                {{#with errors}}
+                    {{#if basError}}
+                        <span class="error">
+                            Atenção: {{bairoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+        <label>
+            <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">Rua:</span>
+            <span>
+                <input type="text" name="nm_rua" id="nm_rua" maxlength="80" size="80" value="{{nm_rua}}">
+                {{#with errors}}
+                    {{#if basError}}
+                        <span class="error">
+                            Atenção: {{ruaError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+        <label>
+            <span style="width: 180px; display: inline-block;margin-top:10px;text-align:end;">N°:</span>
+            <span>
+                <input type="text" name="nr_residencia" id="nr_residencia" maxlength="6" size="6" value="{{nr_residencia}}">
+                {{#with errors}}
+                    {{#if basError}}
+                        <span class="error">
+                            Atenção: {{residenciaError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+    <br>
+    <button hx-target="#formAndTable"
+            hx-select="#formAndTable"
+            hx-swap="outerHTML"
+            hx-post="cliente/upsert"
+            hx-include="[name='page']"
+            style="display: inline-flex">
+        <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar cliente">
+        &nbsp;
+        {{#if nr_cpf}}
+            Atualizar
+        {{^}}
+            Cadastrar
+        {{/if}}
+    </button>
+    {{#if nr_cpf}}
+        <button hx-target="#clienteForm"
+                hx-select="#clienteForm"
+                hx-swap="outerHTML"
+                hx-get="cliente/edit"
+                style="display: inline-flex">
+            <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar Cliente">
+            &nbsp;
+            Cancelar
+        </button>
+    {{/if}}
+</form>

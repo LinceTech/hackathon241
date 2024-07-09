@@ -1,0 +1,32 @@
+
+{{>head}}
+<tr id="clienteItem{{bar}}">
+    <td style="text-align: left;">{{nm_cliente}}</td>
+    <td style="text-align: left;" class="cliente_cpf">{{nr_cpf}}</td>
+    <td style="text-align: left;" class="cliente_nasc">{{dt_nascimento}}</td>
+    <td style="text-align: left;" class="cliente_telef">{{nr_telefone}}</td>
+    <td style="text-align: left;">{{ds_email}}</td>
+    <td style="text-align: left;" class="cliente_cep">{{nr_cep}}</td>
+    <td style="text-align: left;">{{nm_cidade}}</td>
+    <td style="text-align: left;">{{nm_estado}}</td>
+    <td style="text-align: left;">{{nm_bairro}}</td>
+    <td style="text-align: left;">{{nm_rua}}</td>
+    <td style="text-align: left;">{{nr_residencia}}</td>
+    <td style="display: flex">
+        <img src="https://img.icons8.com/?size=18&id=71201&format=png&color=000000"
+             alt="Editar item"
+             style="cursor: pointer"
+             hx-target="#clienteForm"
+             hx-replace="innerHTML"
+             hx-get="cliente/edit?nr_cpf={{nr_cpf}}">
+
+        <img src="https://img.icons8.com/?size=18&id=67884&format=png&color=000000"
+             alt="Apagar item"
+             style="cursor: pointer"
+             hx-target="#formAndTable"
+             hx-select="#formAndTable"
+             hx-replace="innerHTML"
+             hx-get="cliente/delete?nr_cpf={{nr_cpf}}"
+            hx-include="[name='page']">
+    </td>
+</tr>

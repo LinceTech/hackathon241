@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>Cadastro de cliente</title>
+    {{>head}}
+</head>
+<body>
+
+<h1>Cadastro e consulta - Clientes</h1>
+
+<div id="formAndTable">
+    {{>cliente/form cliente}}
+
+    <hr>
+
+    <div id="clientesItensTable">
+        <input type="hidden" name="page" value="{{index}}">
+
+        <div style="display: inline-flex; padding-bottom: 12px;">
+            {{#if hasPrevious}}
+                <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
+                     alt="Página anterior"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
+                     hx-target="#clientesItensTable"
+                     hx-select="#clientesItensTable"
+                     hx-swap="innerHTML"
+                     hx-get="cliente?page={{previous}}&pageSize={{pageSize}}">
+            {{/if}}
+
+            <span style="height: 18px; vertical-align: center;">
+                Pagina <b>{{page}}</b> de <b>{{totalPages}}</b>
+            </span>
+
+            {{#if next}}
+                <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
+                     alt="Próxima página"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
+                     hx-target="#clientesItensTable"
+                     hx-select="#clientesItensTable"
+                     hx-swap="innerHTML"
+                     hx-get="cliente?page={{next}}&pageSize={{pageSize}}">
+            {{/if}}
+        </div>
+
+
+        <div style="display: inline-flex;padding: 0px 500px;">
+            <span style="height: 18px; vertical-align: center;">
+                Odernar por &nbsp;
+            </span>
+            <select style="" name="ordenar" id="ordenar">
+                <option value="">Crescente</option>
+                <option value="">Decrescente</option>
+            </select>
+        </div>
+
+        <table id="" class="">
+            <thead>
+            <tr>
+                <th style="text-align: left;cursor: pointer;"> Nome<button>V</button></th>
+                <th style="text-align: left;cursor: pointer;">C.P.F</th>
+                <th style="text-align: left;cursor: pointer;">Data nascimento</th>
+                <th style="text-align: left;cursor: pointer;">Telefone</th>
+                <th style="text-align: left;cursor: pointer;">E-mail</th>
+                <th style="text-align: left;cursor: pointer;">CEP</th>
+                <th style="text-align: left;cursor: pointer;">Cidade</th>
+                <th style="text-align: left;cursor: pointer;">Estado</th>
+                <th style="text-align: left;cursor: pointer;">Bairro</th>
+                <th style="text-align: left;cursor: pointer;">Rua</th>
+                <th style="text-align: left;cursor: pointer;">Número</th>
+                <th style="text-align: left;cursor: pointer;">Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#clientes}}
+                {{>cliente/row}}
+            {{/clientes}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

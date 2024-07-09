@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>Gerente View</title>
+    {{>head}}
+</head>
+<body>
+
+<h1>Cadastro e consulta - Gerente</h1>
+<hr>
+
+<div id="formAndTable">
+    {{>veiculo/form veiculo}}
+
+    <hr>
+
+    <div id="gerenteItemsTable">
+        <input type="hidden" name="page" value="{{index}}">
+
+        <div style="display: inline-flex; padding-bottom: 12px;">
+            {{#if hasPrevious}}
+                <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
+                     alt="Página anterior"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
+                     hx-target="#gerenteItemsTable"
+                     hx-select="#gerenteItemsTable"
+                     hx-swap="innerHTML"
+                     hx-get="veiculo?page={{previous}}&pageSize={{pageSize}}">
+            {{/if}}
+
+            <span style="height: 18px; vertical-align: center;">
+                Pagina <b>{{page}}</b> de <b>{{totalPages}}</b>
+            </span>
+
+
+            {{#if next}}
+                <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
+                     alt="Próxima página"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
+                     hx-target="#gerenteItemsTable"
+                     hx-select="#gerenteItemsTable"
+                     hx-swap="innerHTML"
+                     hx-get="veiculo?page={{next}}&pageSize={{pageSize}}">
+            {{/if}}
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th style="text-align: left;">CPF</th>
+                <th style="text-align: left;">Nome</th>
+                <th style="text-align: left;">E-mail</th>
+                <th style="text-align: left;">Data contratação</th>
+                <th style="text-align: left;">Data nascimento</th>
+                <th style="text-align: left;">Telefone</th>
+                <th style="text-align: left;">Cidade</th>
+                <th style="text-align: left;">Estado</th>
+                <th style="text-align: left;">% Comissão</th>
+                <th>Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#veiculos}}
+                {{>veiculo/row}}
+            {{/veiculos}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
