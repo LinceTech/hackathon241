@@ -127,7 +127,7 @@ public class JDBIConnection {
 
             // INCLUIR
             final var connection = DriverManager.getConnection(
-                    "jdbc:postgresql://" + server + "localhost:5432" + "/database_name" + database, 
+                    "jdbc:postgresql://" + server + ":5432" + "/database_name" + database, 
                     user,
                     password
             );
