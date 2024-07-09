@@ -1,0 +1,24 @@
+<h2>Listagem de Veiculos</h2>
+
+<table class="table table-hover" style="width: 160vh;">
+    <thead>
+    <tr scope="col">
+        <th width="35">ID</th>
+        <th width="255">Marca</th>
+        <th width="105">Modelo</th>
+        <th width="205">placa</th>
+        <th width="55">cor</th>
+        <th width="255">Fabricação</th>
+        <th width="105">Diária</th>
+        <th width="255">Descrição promocional</th>
+        <th width="255">Tipo combustivel</th>
+        <th width="35">Ação</th>
+        <th width="35">&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#veiculos}}
+        {{>veiculos/rowVeiculos}}
+    {{/veiculos}}
+    </tbody>
+</table>

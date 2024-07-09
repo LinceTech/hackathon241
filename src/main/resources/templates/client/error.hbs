@@ -1,0 +1,50 @@
+<dialog id="errorDiv" style="display:flex;flex-direction: column; top: 100px;">
+    <h2>Error</h2>
+
+    {{#each errors}}
+        <p style="text-align: left;">{{@key}}: {{this}}</p>
+    {{/each}}
+
+<!--    <p style="text-align: center;">Conteúdo do dialog vai aqui.</p>-->
+    <button id="remove-errors" >Fechar</button>
+</dialog>
+
+<script>
+
+    $('#remove-errors').on('click', function() {
+        // Aplicar efeito de fadeOut e remover os elementos após a animação
+        $('#errorDiv').fadeOut(200, function() {
+            $(this).remove();
+        });
+
+        $('#content').css('opacity', '1').css('pointer-events', 'all');
+    });
+    $('#content').css('opacity', '0.3').css('pointer-events', 'none');
+</script>
+
+<style>
+    dialog {
+        border: none;
+        margin-top: 100px;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: #fefefe;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Botão de fechar */
+    #closeDialog {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    #closeDialog:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+

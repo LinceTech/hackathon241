@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title style="width: 100%;">Cadastro de clientes</title>
+    {{>head}}
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            width: 30vh;
+            padding-right: 0;
+            padding-left: 0;
+            margin-right: 0;
+            margin-left: 0;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar ul li a img {
+            margin-right: 8px;
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .form-row .form-group.full-width {
+            flex: 1 1 100%;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        button img {
+            margin-right: 8px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+                /* CSS para o modo escuro */
+        body.dark-mode {
+            background-color: #333;
+            color: #f4f4f9;
+        }
+
+        .sidebar.dark-mode {
+            background-color: #444;
+        }
+
+        .sidebar ul li a.dark-mode {
+            color: #f4f4f9;
+        }
+
+        .form-control.dark-mode {
+            background-color: #555;
+            color: #f4f4f9;
+            border-color: #666;
+        }
+
+        button.dark-mode {
+            background-color: #0056b3;
+        }
+
+        button.dark-mode:hover {
+            background-color: #003a75;
+        }
+
+        td.dark-mode, th.dark-mode, p.dark-mode, a.dark-mode{
+            color:white !important;
+        }
+    </style>
+</head>
+<body style="display:flex;"
+      hx-ext="response-targets">
+<div class="container" id="divGeral">
+    <div class="sidebar">
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="" onclick="toggleTheme()"><img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Home">Home</a></li>
+            <li><a href="clientes"><img src="https://img.icons8.com/?size=14&id=15566&format=png&color=000000" alt="Relatórios">Clientes</a></li>
+            <li><a href="gerentes"><img src="https://img.icons8.com/?size=14&id=15566&format=png&color=000000" alt="Relatórios">Gerentes</a></li>
+            <li><a href="veiculos"><img src="https://img.icons8.com/?size=14&id=15566&format=png&color=000000" alt="Relatórios">Veiculos</a></li>
+            <li><a href="locacao"><img src="https://img.icons8.com/?size=14&id=15566&format=png&color=000000" alt="Relatórios">locacao</a></li>
+            <li><a onclick="toggleTheme()"><img src="https://img.icons8.com/?size=14&id=778&format=png&color=000000" alt="Configurações">Modo Escuro</a></li>
+        </ul>
+    </div>
+</div>
+
+<input type="hidden" id="tema" name="tema" required value="0">
+
+<!--<button onclick="toggleTheme()">Mudar Tema</button>-->
+<script>
+    function toggleTheme() {
+        const body = document.body;
+        body.classList.toggle('dark-mode');
+
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('dark-mode');
+
+        const formControls = document.querySelectorAll('.form-control');
+        formControls.forEach(control => control.classList.toggle('dark-mode'));
+
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(button => button.classList.toggle('dark-mode'));
+
+        const td = document.querySelectorAll('td');
+        td.forEach(td => td.classList.toggle('dark-mode'));
+
+        const th = document.querySelectorAll('th');
+        th.forEach(td => td.classList.toggle('dark-mode'));
+
+        const p = document.querySelectorAll('p');
+        p.forEach(p => p.classList.toggle('dark-mode'));
+
+        const a = document.querySelectorAll('a');
+        a.forEach(a => a.classList.toggle('dark-mode'));
+    }
+$('#hidden').val(1);
+
+</script>
+<!--</body>-->
+<!--</html>-->

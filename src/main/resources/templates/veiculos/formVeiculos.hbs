@@ -1,0 +1,92 @@
+<div class="content" id="content">
+    <div id="divFormularioVeiculo" class="container"
+         style="flex-direction: row;flex-wrap: wrap;width:150vh;align-content: flex-start;">
+        <h2 style="width: 100%;">Cadastro de veículos</h2>
+        <form id="formVeiculos" method="post" style="width: 80%;">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id" class="form-label">ID</label>
+                    <input disabled type="text" class="form-control" id="id" name="id" required value="{{id}}">
+                </div>
+                <div class="form-group">
+                    <label for="marca" class="form-label">Marca</label>
+                    <input type="text" class="form-control" id="marca" name="marca" required value="{{marca}}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="modelo" class="form-label">Modelo</label>
+                    <input type="text" class="form-control" id="modelo" name="modelo" required value="{{modelo}}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="placa" class="form-label">Placa</label>
+                    <input type="text" class="form-control" id="placa" name="placa" required
+                           value="{{placa}}">
+                </div>
+                <div class="form-group">
+                    <label for="cor" class="form-label">Cor</label>
+                    <input type="text" class="form-control" id="cor" name="cor" required
+                           value="{{cor}}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="anoFabricacao" class="form-label">Ano fabricação</label>
+                    <input type="email" class="form-control" id="anoFabricacao" name="anoFabricacao" required value="{{anoFabricacao}}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="custoDiaria" class="form-label">Custo diária</label>
+                    <input type="text" class="form-control" id="custoDiaria" name="custoDiaria" required value="{{custoDiaria}}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="descricaoPromocional" class="form-label">Descrição promocional</label>
+                    <input type="text" class="form-control" id="descricaoPromocional" name="descricaoPromocional" required value="{{descricaoPromocional}}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="tipoCombustivel" class="form-label">Tipo combustível</label>
+                    <input type="text" class="form-control" id="tipoCombustivel" name="tipoCombustivel" required value="{{tipoCombustivel}}">
+                </div>
+            </div>
+            <input type="hidden" class="form-control" id="comMenu" name="comMenu" required value="1">
+            <div class="form-row">
+                <div class="form-group">
+                    <button
+                            hx-target-error="#errors"
+                            hx-target="#content"
+                            hx-swap="outerHTML"
+                            hx-post="veiculos/upsert?id={{id}}">
+                    <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000"
+                         alt="Cadastrar item">
+                    {{#if id}}
+                        Atualizar
+                    {{^}}
+                        Cadastrar
+                    {{/if}}
+                    </button>
+                </div>
+                <div class="form-group">
+                    <button
+                            hx-target="#content"
+                            hx-swap="outerHTML"
+                            hx-get="veiculos?comMenu=1">
+                        <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000"
+                             alt="Atualizar item">
+                        &nbsp;
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="errors">
+</div>

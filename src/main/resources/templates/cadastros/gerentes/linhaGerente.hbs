@@ -1,0 +1,29 @@
+<tr id="listaGerente{{id}}">
+    <td style="width: 40px; text-align: right;">{{nome}}</td>
+    <td style="width: 200px; text-align: left;">{{cpf}}</td>
+    <td style="width: 300px; text-align: left;">{{telefone}}</td>
+    <td style="width: 300px; text-align: left;">{{email}}</td>
+    <td style="width: 300px; text-align: left;">{{cidade}}</td>
+    <td style="width: 300px; text-align: left;">{{estado}}</td>
+    <td style="width: 300px; text-align: left;">{{percentualComissao}}</td>
+    <td style="width: 300px; text-align: left;">{{dataContratacao}}</td>
+    <td style="width: 50px">
+        <img src="https://img.icons8.com/?size=18&id=71201&format=png&color=000000"
+             alt="Editar item"
+             style="cursor: pointer"
+             hx-target="#ListaGer"
+             hx-replace="innerHTML"
+             hx-get="gerentes/edit?id={{id}}"
+        >
+    </td>
+    <td style="width: 50px">
+        <img src="https://img.icons8.com/?size=18&id=67884&format=png&color=000000"
+             alt="Apagar item"
+             style="cursor: pointer"
+             hx-target="#ListaGer"
+             hx-select="#ListaGer"
+             hx-replace="innerHTML"
+             hx-get="gerentes/delete?id={{id}}"
+        >
+    </td>
+</tr>

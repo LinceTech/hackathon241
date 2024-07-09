@@ -1,0 +1,33 @@
+<button
+    hx-target="#ListaGer"
+    hx-swap="outerHTML"
+    hx-get="gerentes/cadastrar"
+    style="display: inline-flex">
+    Cadastrar Gerentes
+</button>
+
+<form id="formListaGerentes">
+    <div class="listaGerentes mt-4">
+        <h2>Lista de Gerentes Cadastrados</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">Telefone</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Cidade</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Percentual de Comissão</th>
+                    <th scope="col">Data de contratação</th>
+                    <th scope="col">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#gerentes}}
+                {{>cadastros/gerentes/linhaGerente gerentes}}
+            {{/gerentes}}
+            </tbody>
+        </table>
+    </div>
+</form>
