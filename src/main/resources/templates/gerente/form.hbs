@@ -1,0 +1,284 @@
+<form id="gerenteForm">
+    <input type="hidden" name="id" value="{{gerente.id}}">
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Nome:</span>
+            <span>
+                <input type="text" name="nome" maxlength="60" size="60" value="{{gerente.nome}}">
+                {{#with errors}}
+                    {{#if nomeError}}
+                        <span class="error">
+                            Nome: {{nomeError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">CPF:</span>
+            <span>
+                <input type="text" name="cpf" size="14" maxlength="14" value="{{gerente.cpf}}">
+                {{#with errors}}
+                    {{#if cpfError}}
+                        <span class="error">
+                            CPF: {{cpfError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Data Nascimento: </span>
+            <span>
+                <input type="date" id="dtNascimento" name="dtNascimento" value="{{gerente.dtNascimentoFormat}}">
+                {{#with errors}}
+                    {{#if dtNascimentoError}}
+                        <span class="error">
+                            Data: {{dtNascimentoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Telefone:</span>
+            <span>
+                <input type="text" name="telefone" size="11" maxlength="11" value="{{gerente.telefone}}">
+                {{#with errors}}
+                    {{#if telefoneError}}
+                        <span class="error">
+                            Tel: {{telefoneError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Email:</span>
+            <span>
+                <input type="text" name="email" size="60" maxlength="60" value="{{gerente.email}}">
+                {{#with errors}}
+                    {{#if emailError}}
+                        <span class="error">
+                            Email: {{emailError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">CEP: </span>
+            <span>
+                <input type="text" id="cep" name="cep" size="9" maxlength="9" onblur="pesquisacep(this.value);"
+                       value="{{gerente.cepFormat}}">
+                {{#with errors}}
+                    {{#if cepError}}
+                        <span class="error">
+                            CEP: {{cepError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Estado:</span>
+            <span>
+                <select id="estado" name="estado">
+                    <option value=""></option>
+                    {{#estados}}
+                        <option value="{{this}}" {{#if (eq gerente.estado this)}}selected{{/if}}>{{this}}</option>
+                    {{/estados}}
+                </select>
+                {{#with errors}}
+                    {{#if estadoError}}
+                        <span class="error">
+                            Estado: {{estadoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Cidade:</span>
+            <span>
+                <input type="text" id="cidade" name="cidade" size="60" maxlength="60" value="{{gerente.cidade}}">
+                {{#with errors}}
+                    {{#if cidadeError}}
+                        <span class="error">
+                            Cidade: {{cidadeError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Comissão:</span>
+            <span>
+                <input type="text" name="comissao" size="6" maxlength="6" value="{{gerente.comissao}}">
+                {{#with errors}}
+                    {{#if comissaoError}}
+                        <span class="error">
+                            Comissao: {{comissaoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Data Contratação:</span>
+            <span>
+                <input type="date" name="dtContrata" size="10" maxlength="10" value="{{gerente.dtContrataFormat}}">
+                {{#with errors}}
+                    {{#if dtcontratacaoError}}
+                        <span class="error">
+                            Data: {{dtcontratacaoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+<br>
+    <button hx-target="#formAndTable"
+            hx-select="#formAndTable"
+            hx-swap="outerHTML"
+            hx-post="gerente/upsert"
+            hx-include="[name='page']"
+            style="display: inline-flex">
+        <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
+        &nbsp;
+        {{#if id}}
+            Atualizar
+        {{^}}
+            Cadastrar
+        {{/if}}
+    </button>
+    {{#if id}}
+        <button hx-target="#gerenteForm"
+                hx-select="#gerenteForm"
+                hx-swap="outerHTML"
+                hx-get="gerente/edit"
+                style="display: inline-flex">
+            <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar item">
+            &nbsp;
+            Cancelar
+        </button>
+    {{/if}}
+
+    <hr>
+
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Nome:</span>
+            <span>
+                <input type="text" id="tNome" name="tNome" maxlength="60" size="60" value="">
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">CPF:</span>
+            <span>
+                <input type="text" id="tCpf" name="tCpf" size="14" maxlength="14" value="">
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Cidade:</span>
+            <span>
+                <input type="text" id="tCidade" name="tCidade" size="60" maxlength="60" value="">
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 120px; display: inline-block;">Estado:</span>
+            <span>
+                <select id="tEstado" name="tEstado">
+                  <option value="">&nbsp</option>
+                  <option value="AC">AC</option>
+                  <option value="AL">AL</option>
+                  <option value="AP">AP</option>
+                  <option value="AM">AM</option>
+                  <option value="BA">BA</option>
+                  <option value="CE">CE</option>
+                  <option value="DF">DF</option>
+                  <option value="ES">ES</option>
+                  <option value="GO">GO</option>
+                  <option value="MA">MA</option>
+                  <option value="MT">MT</option>
+                  <option value="MS">MS</option>
+                  <option value="MG">MG</option>
+                  <option value="PA">PA</option>
+                  <option value="PB">PB</option>
+                  <option value="PR">PR</option>
+                  <option value="PE">PE</option>
+                  <option value="PI">PI</option>
+                  <option value="RJ">RJ</option>
+                  <option value="RN">RN</option>
+                  <option value="RS">RS</option>
+                  <option value="RO">RO</option>
+                  <option value="RR">RR</option>
+                  <option value="SC">SC</option>
+                  <option value="SP">SP</option>
+                  <option value="SE">SE</option>
+                </select>
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <button hx-target="#formAndTable"
+            hx-select="#formAndTable"
+            hx-swap="outerHTML"
+            hx-post="gerente"
+            hx-include="[name='page']"
+            style="display: inline-flex">
+        <img src="https://img.icons8.com/?size=14&id=18761&format=png&color=000000" alt="Buscar">
+        &nbsp;
+            Buscar
+    </button>
+</form>

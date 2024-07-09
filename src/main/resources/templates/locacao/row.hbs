@@ -1,0 +1,29 @@
+<tr id="locacaoItem{{id}}">
+    <td style="width: 40px; text-align: right;">{{id}}</td>
+    <td style="width: 200px; text-align: left;">{{cleinte}}</td>
+    <td style="width: 200px; text-align: left;">{{gerente}}</td>
+    <th style="width: 200px; text-align: left;">{{veiculo}}</th>
+    <th style="width: 200px; text-align: left;">{{dtInicio}}</th>
+    <th style="width: 200px; text-align: left;">{{dtFinal}}</th>
+    <th style="width: 200px; text-align: left;">{{custoDiaria}}</th>
+    <th style="width: 200px; text-align: left;">{{comissaoGerente}}</th>
+    <th style="width: 200px; text-align: left;">{{valorTotal}}</th>
+    <th style="width: 200px; text-align: left;">{{dtPagamento}}</th>
+    <td style="width: 50px">
+        <img src="https://img.icons8.com/?size=18&id=71201&format=png&color=000000"
+             alt="Editar item"
+             style="cursor: pointer"
+             hx-target="#locacaoForm"
+             hx-replace="innerHTML"
+             hx-get="locacao/edit?bar={{id}}">
+
+        <img src="https://img.icons8.com/?size=18&id=67884&format=png&color=000000"
+             alt="Apagar item"
+             style="cursor: pointer"
+             hx-target="#formAndTable"
+             hx-select="#formAndTable"
+             hx-replace="innerHTML"
+             hx-get="locacao/delete?bar={{id}}"
+             hx-include="[name='page']">
+    </td>
+</tr>
