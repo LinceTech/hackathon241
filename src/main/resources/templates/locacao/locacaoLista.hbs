@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>HBS - Index</title>
+    {{>head}}
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    {{>navbar}}
+    <div id="listaGerente">
+        {{>locacao/locacaoListaCorpo}}
+    </div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>HBS - Index</title>
+    {{>head}}
+    <style>
+        .erro {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+{{>script}}
+
+{{>navbar}}
+<form  hx-post="clientesCadastro/cadastrar" hx-trigger="submit, reset:afterSettle" hx-swap="innerHTML">
+    {{>clientes/clienteCadastroForm}}
+</form>
+</body>
+</html>
+<!-- Fim do formulário com classes do Bootstrap -->

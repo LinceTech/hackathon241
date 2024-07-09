@@ -1,0 +1,97 @@
+<div>
+    <label>Nome
+       <input type="text" name="nome" value="{{gerentes.nome}}">
+    </label>
+    {{#with errors}}
+        {{#if nome}}
+            <span style="color: red; font-weight: bold;">
+                    Nome: {{nome}}
+                </span>
+        {{/if}}
+    {{/with}}
+</div>
+<div>
+    <label>CPF
+        <input type="text" name="cpf" value="{{gerentes.cpf}}">
+    </label>
+    {{#with errors}}
+        {{#if cpf}}
+            <span style="color: red; font-weight: bold;">
+                    CPF: {{cpf}}
+                </span>
+        {{/if}}
+    {{/with}}
+</div>
+<div>
+    <label>Telefone
+        <input type="text" name="telefone" value="{{gerentes.telefone}}">
+    </label>
+    {{#with errors}}
+        {{#if telefone}}
+            <span style="color: red; font-weight: bold;">
+                    Telefone: {{telefone}}
+                </span>
+        {{/if}}
+    {{/with}}
+</div>
+<div>
+    <label>E-mail
+        <input type="text" name="email" value="{{gerentes.email}}">
+    </label>
+    {{#with errors}}
+        {{#if email}}
+            <span style="color: red; font-weight: bold;">
+                    E-mail: {{email}}
+                </span>
+        {{/if}}
+    {{/with}}
+</div>
+<div>
+    <label>Cidade
+        <input type="text" name="cidade" value="{{gerentes.cidade}}">
+    </label>
+    {{#with errors}}
+        {{#if cidade}}
+            <span style="color: red; font-weight: bold;">
+                    Cidade: {{cidade}}
+                </span>
+        {{/if}}
+    {{/with}}
+</div>
+<div>
+    <label>Estado
+        <input type="text" name="estado" value="{{gerentes.estado}}">
+    </label>
+    {{#with errors}}
+        {{#if estado}}
+            <span style="color: red; font-weight: bold;">
+                    Estado: {{estado}}
+                </span>
+        {{/if}}
+    {{/with}}
+</div>
+<div>
+    <label>Percentual de comissão
+        <input type="number" step=".01" name="percentual" value="{{gerentes.percentual}}">
+    </label>
+    {{#with errors}}
+        {{#if percentual}}
+            <span style="color: red; font-weight: bold;">
+                    Percentual: {{percentual}}
+                </span>
+        {{/if}}
+    {{/with}}
+</div>
+<div>
+    <label>Data de contratação
+        <input type="date" name="dataContratacao" value="{{gerentes.dataContratacao}}">
+    </label>
+    {{#with errors}}
+        {{#if dataContratacao}}
+            <span style="color: red; font-weight: bold;">
+                    Data da contratação: {{dataContratacao}}
+                </span>
+        {{/if}}
+    {{/with}}
+</div>
+<button>Cadastrar</button>
