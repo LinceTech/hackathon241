@@ -1,0 +1,201 @@
+<form id="clientForm">
+    <div class="clientMain">
+        <div class="clientName">
+            <label for="name">Nome</label>
+            <input type="text" name="name" maxlength="100" size="100" value="{{client.name}}">
+            {{#with errors}}
+                {{#if nameError}}
+                    <span class="error">
+                            Nome: {{nameError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="clientCpf">
+            <label for="cpf">CPF</label>
+            <input type="text" name="cpf" maxlength="11" size="11" value="{{client.cpf}}">
+            {{#with errors}}
+                {{#if cpfError}}
+                    <span class="error">
+                            CPF: {{cpfError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="clientBirthDate">
+            <label for="birthDate">Data de nascimento</label>
+            <input type="date" name="birthDate" maxlength="10" size="10" value="{{client.birth_date}}">
+            {{#with errors}}
+                {{#if birth_dateError}}
+                    <span class="error">
+                            Data de nascimento: {{birth_dateError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="clientPhone">
+            <label for="phone">Telefone</label>
+            <input type="text" name="phone" maxlength="14" size="14" value="{{client.phone}}">
+            {{#with errors}}
+                {{#if phoneError}}
+                    <span class="error">
+                            Nome: {{phoneError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="clienEmail">
+            <label for="email">E-mail</label>
+            <input type="text" name="email" maxlength="100" size="30" value="{{client.email}}">
+            {{#with errors}}
+                {{#if emailError}}
+                    <span class="error">
+                            E-mail: {{emailError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="clientCep">
+            <label for="cep">CEP</label>
+            <input type="text" name="cep" id="cep" maxlength="9" size="9"
+                   value="{{client.cep}}"
+            >
+            <div id="erroCep"></div>
+            {{#with errors}}
+                {{#if cepError}}
+                    <span class="error">
+                            CEP: {{cepError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="clientState">
+            <label for="state">Estado</label>
+            <select name="state" id="state">{{#states}}
+                <option value="{{uf}}" {{#selected}}selected{{/selected}}>{{name}}</option>
+            {{/states}}</select>
+            {{#with errors}}
+                {{#if stateError}}
+                    <span class="error">
+                            Estado: {{stateError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="clientCity">
+            <label for="city">Cidade</label>
+            <input type="text" name="city" id="city" maxlength="100" size="60" value="{{client.city}}">
+            {{#with errors}}
+                {{#if cityError}}
+                    <span class="error">
+                            Cidade: {{cityError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="clientNeighborhood">
+            <label for="neighborhood">Bairro</label>
+            <input type="text" name="neighborhood"  id="neighborhood" maxlength="100" size="60" value="{{client.neighborhood}}">
+            {{#with errors}}
+                {{#if neighborhoodError}}
+                    <span class="error">
+                            Bairro: {{neighborhoodError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="clientStreet">
+            <label for="street">Rua</label>
+            <input type="text" name="street" id="street" maxlength="100" size="60" value="{{client.street}}">
+            {{#with errors}}
+                {{#if streetError}}
+                    <span class="error">
+                            Rua: {{streetError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div class="clientNumber">
+            <label for="number">Número</label>
+            <input type="text" name="number" maxlength="100" size="6" value="{{client.number}}">
+            {{#with errors}}
+                {{#if numberError}}
+                    <span class="error">
+                            Número: {{numberError}}
+                    </span>
+                {{/if}}
+            {{/with}}
+        </div>
+
+        <div>
+            <button hx-target="#formAndTable"
+                    hx-select="#formAndTable"
+                    hx-swap="outerHTML"
+                    hx-post="client/upsert"
+            >
+                {{#if client.id}}
+                    Atualizar
+                {{^}}
+                    Cadastrar
+                {{/if}}
+            </button>
+                {{#if client.id}}
+                    <button hx-target="#clientForm"
+                        hx-select="#clientForm"
+                        hx-swap="outerHTML"
+                        hx-get="client/"
+                        style="display: inline-flex"
+                >
+                    Cancelar
+                </button>
+            {{/if}}
+        </div>
+    </div>
+
+    <script>
+        async function buscaEndereco(cep){
+            var mensagemErro = document.getElementById('erroCep');
+            mensagemErro.innerHTML = "";
+            try {
+                var consultaCEp = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                var consultaCEPConvetida = await consultaCEp.json();
+                if(consultaCEPConvetida.erro){
+                    throw Error('CEP não existe!');
+                }
+                var cidade = document.getElementById('city');
+                var logradouro = document.getElementById('street');
+                var estado = document.getElementById('state');
+                var bairro = document.getElementById('neighborhood');
+
+                cidade.value = consultaCEPConvetida.localidade;
+                logradouro.value = consultaCEPConvetida.logradouro;
+                estado.value = consultaCEPConvetida.uf;
+                bairro.value = consultaCEPConvetida.bairro;
+
+                console.log(consultaCEPConvetida);
+                return consultaCEPConvetida;
+            }catch(erro){
+                mensagemErro.innerHTML = `<p style="color: red">CEP inválido. Tente Novamente!</p>`;
+                console.log(erro)
+            }
+        }
+
+        var cep = document.getElementById('cep');
+        cep.addEventListener("focusout", () => buscaEndereco(cep.value) )
+
+        // document.getElementById('cep').addEventListener('htmx:afterSwap', function(event) {
+        // var data = event.detail.elt;
+        // console.log(document.getElementById("cidade"));
+    </script>
+
+</form>

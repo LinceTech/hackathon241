@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/src/main/resources/database/client.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/database/foo.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/database/location.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/database/manager.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/database/vehicles.sql" dialect="TSQL" />
     <file url="PROJECT" dialect="TSQL" />
   </component>
 </project>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>Cadastro</title>
+    {{>head}}
+</head>
+<body style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+">
+
+<h1>Cadastro de veículos</h1>
+<hr>
+
+<div id="formAndTable">
+    {{>vehicle/form vehicle}}
+
+    <hr>
+
+    <div id="vehicleItemsTable">
+        <input type="hidden" name="page" value="{{index}}">
+
+        <div style="display: inline-flex; padding-bottom: 12px;">
+            {{#if hasPrevious}}
+                <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
+                     alt="Página anterior"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
+                     hx-target="#vehicleItemsTable"
+                     hx-select="#vehicleItemsTable"
+                     hx-swap="innerHTML"
+                     hx-get="vehicle?page={{previous}}">
+            {{/if}}
+
+            <span style="height: 18px; vertical-align: center;">
+                Pagina <b>{{page}}</b> de <b>{{totalPages}}</b>
+            </span>
+
+            {{#if next}}
+                <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
+                     alt="Próxima página"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
+                     hx-target="#vehicleItemsTable"
+                     hx-select="#vehicleItemsTable"
+                     hx-swap="innerHTML"
+                     hx-get="vehicle?page={{next}}">
+            {{/if}}
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th style="width: 100px; text-align: left;">Modelo</th>
+                <th style="width: 200px; text-align: left;">Marca</th>
+                <th style="width: 300px; text-align: left;">Placa</th>
+                <th style="width: 400px; text-align: left;">Cor</th>
+                <th style="width: 500px; text-align: left;">Valor da diária</th>
+                <th style="width: 50px">Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#vehicles}}
+                {{>vehicle/row}}
+            {{/vehicles}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

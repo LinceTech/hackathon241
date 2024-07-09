@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>Cadastro</title>
+    {{>head}}
+</head>
+<body style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+">
+
+<h1>Cadastro de gerente</h1>
+<hr>
+
+<div id="formAndTable">
+    {{>manager/form manager}}
+
+    <hr>
+
+    <div id="managerItemsTable">
+        <input type="hidden" name="page" value="{{index}}">
+
+        <div style="display: inline-flex; padding-bottom: 12px;">
+            {{#if hasPrevious}}
+                <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
+                     alt="Página anterior"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
+                     hx-target="#managerItemsTable"
+                     hx-select="#managerItemsTable"
+                     hx-swap="innerHTML"
+                     hx-get="manager?page={{previous}}">
+            {{/if}}
+
+            <span style="height: 18px; vertical-align: center;">
+                Pagina <b>{{page}}</b> de <b>{{totalPages}}</b>
+            </span>
+
+            {{#if next}}
+                <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
+                     alt="Próxima página"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
+                     hx-target="#managerItemsTable"
+                     hx-select="#managerItemsTable"
+                     hx-swap="innerHTML"
+                     hx-get="manager?page={{next}}">
+            {{/if}}
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th style="width: 100px; text-align: left;">Nome</th>
+                <th style="width: 200px; text-align: left;">CPF</th>
+                <th style="width: 300px; text-align: left;">Telefone</th>
+                <th style="width: 300px; text-align: left;">E-mail</th>
+                <th style="width: 50px">Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#managers}}
+                {{>manager/row}}
+            {{/managers}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
