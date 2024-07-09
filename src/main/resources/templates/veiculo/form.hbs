@@ -1,0 +1,166 @@
+<form id="veiculoForm">
+    <div>
+        <label>
+            <span style="width: 170px; display: inline-block;text-align: right;">Marca:</span>
+            <span>
+                <input type="text" id="marca" name="marca" maxlength="14" size="14" value="{{marca}}">
+                {{#with errors}}
+                    {{#if marcaError}}
+                        <span class="error">
+                            Marca: {{marcaError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 170px; display: inline-block;text-align: right;">Modelo:</span>
+            <span>
+                <input type="text" name="modelo" maxlength="60" size="60" value="{{modelo}}">
+                {{#with errors}}
+                    {{#if modeloError}}
+                        <span class="error">
+                            Modelo: {{modeloError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 170px; display: inline-block;text-align: right;">Placa:</span>
+            <span>
+                <input type="text" name="placa" maxlength="60" size="60" value="{{placa}}">
+                {{#with errors}}
+                    {{#if placaError}}
+                        <span class="error">
+                            Placa: {{placaError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 170px; display: inline-block;text-align: right;">Cor:</span>
+            <span>
+                <input type="text" name="cor" maxlength="60" size="60" value="{{cor}}">
+                {{#with errors}}
+                    {{#if corError}}
+                        <span class="error">
+                            Cor: {{corError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 170px; display: inline-block;text-align: right;">Ano de Fabricação:</span>
+            <span>
+                <input type="text" name="anoDeFabricacao" maxlength="60" size="60" value="{{anoDeFabricacao}}">
+                {{#with errors}}
+                    {{#if anoDeFabricacaoError}}
+                        <span class="error">
+                            Ano de Fabricação: {{anoDeFabricacaoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 170px; display: inline-block;text-align: right;">Custo de Diaria:</span>
+            <span>
+                <input type="text" name="custoDeDiaria" maxlength="60" size="60" value="{{custoDeDiaria}}">
+                {{#with errors}}
+                    {{#if custoDeDiariaError}}
+                        <span class="error">
+                            Custo de Diaria: {{custoDeDiariaError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 170px; display: inline-block;text-align: right;">Descrição Promocional:</span>
+            <span>
+                <input type="text" name="descricaoPromocional" maxlength="60" size="60" value="{{descricaoPromocional}}">
+                {{#with errors}}
+                    {{#if descricaoPromocionalError}}
+                        <span class="error">
+                            Descrição Promocional: {{descricaoPromocionalError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 170px; display: inline-block;text-align: right;">Tipo de Combustível:</span>
+            <span>
+                <input type="text" name="tipoDeCombustivel" maxlength="60" size="60" value="{{tipoDeCombustivel}}">
+                {{#with errors}}
+                    {{#if tipoDeCombustivelError}}
+                        <span class="error">
+                            Tipo de Combustível: {{tipoDeCombustivelError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+
+
+    <br>
+    <button hx-target="#formAndTable"
+            hx-select="#formAndTable"
+            hx-swap="outerHTML"
+            hx-post="veiculo/upsert"
+            hx-include="[name='page']"
+            style="display: inline-flex">
+        <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
+        &nbsp;
+        {{#if placa}}
+            Atualizar
+        {{^}}
+            Cadastrar
+        {{/if}}
+    </button>
+    {{#if placa}}
+        <button hx-target="#veiculoForm"
+                hx-select="#veiculoForm"
+                hx-swap="outerHTML"
+                hx-get="veiculo/edit"
+                style="display: inline-flex">
+            <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar item">
+            &nbsp;
+            Cancelar
+        </button>
+    {{/if}}
+</form>

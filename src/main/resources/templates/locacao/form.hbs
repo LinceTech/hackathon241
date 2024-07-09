@@ -1,0 +1,174 @@
+<form id="locacaoForm">
+    <input type="hidden" name="id" value="{{id}}">
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;text-align: right;">Data Inicio:</span>
+            <span>
+                <input type="text" name="dataInicio" maxlength="14" size="14" value="{{dataInicio}}">
+                {{#with errors}}
+                    {{#if dataInicioError}}
+                        <span class="error">
+                            Marca: {{dataInicioError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;text-align: right;">Data Entrega:</span>
+            <span>
+                <input type="text" name="dataEntrega" maxlength="14" size="14" value="{{dataEntrega}}">
+                {{#with errors}}
+                    {{#if dataEntregaError}}
+                        <span class="error">
+                            Marca: {{dataEntregaError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;text-align: right;">Valor Diaria:</span>
+            <span>
+                <input type="text" name="valorDiaria" maxlength="14" size="14" value="{{valorDiaria}}">
+                {{#with errors}}
+                    {{#if valorDiariaError}}
+                        <span class="error">
+                            Marca: {{valorDiariaError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;text-align: right;">Percentual Comissão:</span>
+            <span>
+                <input type="text" name="percentualComissao" maxlength="14" size="14" value="{{percentualComissao}}">
+                {{#with errors}}
+                    {{#if percentualComissaoError}}
+                        <span class="error">
+                            Marca: {{percentualComissaoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;text-align: right;">Valor Total Pago:</span>
+            <span>
+                <input type="text" name="valorTotalPago" maxlength="14" size="14" value="{{valorTotalPago}}">
+                {{#with errors}}
+                    {{#if valorTotalPagoError}}
+                        <span class="error">
+                            Marca: {{valorTotalPagoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;text-align: right;">Data Pagamento:</span>
+            <span>
+                <input type="text" name="dataPagamento" maxlength="14" size="14" value="{{dataPagamento}}">
+                {{#with errors}}
+                    {{#if dataPagamentoError}}
+                        <span class="error">
+                            Marca: {{dataPagamentoError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;text-align: right;">Gerente CPF:</span>
+            <span>
+                <input type="text" name="gerenteCpf" maxlength="14" size="14" value="{{gerenteCpf}}">
+                {{#with errors}}
+                    {{#if gerenteCpfError}}
+                        <span class="error">
+                            Gerente: {{gerenteCpfError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;text-align: right;">Cliente CPF:</span>
+            <span>
+                <input type="text" name="clienteCpf" maxlength="14" size="14" value="{{clienteCpf}}">
+                {{#with errors}}
+                    {{#if clienteCpfError}}
+                        <span class="error">
+                            Marca: {{clienteCpfError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;text-align: right;">Placa Veiculo:</span>
+            <span>
+                <input type="text" name="placaVeiculo" maxlength="14" size="14" value="{{placaVeiculo}}">
+                {{#with errors}}
+                    {{#if veiculoPlacaError}}
+                        <span class="error">
+                            Marca: {{veiculoPlacaError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <br>
+    <button hx-target="#formAndTable"
+            hx-select="#formAndTable"
+            hx-swap="outerHTML"
+            hx-post="locacao/upsert"
+            hx-include="[name='page']"
+            style="display: inline-flex">
+        <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
+        &nbsp;
+        {{#if id}}
+            Atualizar
+        {{^}}
+            Cadastrar
+        {{/if}}
+    </button>
+    {{#if id}}
+        <button hx-target="#locacaoForm"
+                hx-select="#locacaoForm"
+                hx-swap="outerHTML"
+                hx-get="locacao/edit"
+                style="display: inline-flex">
+            <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar item">
+            &nbsp;
+            Cancelar
+        </button>
+    {{/if}}
+</form>

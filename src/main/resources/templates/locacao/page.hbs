@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>Locacao View</title>
+    {{>head}}
+</head>
+<body>
+
+<h1>Cadastro e consulta - Locação</h1>
+<hr>
+
+<div id="formAndTable">
+    {{>locacao/form locacao}}
+
+    <hr>
+
+    <div id="locacaoItemsTable">
+        <input type="hidden" name="page" value="{{index}}">
+
+        <div style="display: inline-flex; padding-bottom: 12px;">
+            {{#if hasPrevious}}
+                <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
+                     alt="Página anterior"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
+                     hx-target="#locacaoItemsTable"
+                     hx-select="#locacaoItemsTable"
+                     hx-swap="innerHTML"
+                     hx-get="locacao?page={{previous}}">
+            {{/if}}
+
+            <span style="height: 18px; vertical-align: center;">
+                Pagina <b>{{page}}</b> de <b>{{totalPages}}</b>
+            </span>
+
+            {{#if next}}
+                <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
+                     alt="Próxima página"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
+                     hx-target="#locacaoItemsTable"
+                     hx-select="#locacaoItemsTable"
+                     hx-swap="innerHTML"
+                     hx-get="locacao?page={{next}}">
+            {{/if}}
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th style="width: 200px; text-align: left;">Data Inicio</th>
+                <th style="width: 200px; text-align: left;">Gerente</th>
+                <th style="width: 200px; text-align: left;">Cliente</th>
+                <th style="width: 300px; text-align: left;">Placa</th>
+                <th style="width: 50px">Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#locacoes}}
+                {{>locacao/row}}
+            {{/locacoes}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
