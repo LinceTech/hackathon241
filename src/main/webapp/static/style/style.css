@@ -1,0 +1,32 @@
+nav {
+    display: flex;
+    justify-content: space-around;
+    height: 5vh;
+    align-items: center;
+    background-color: #BF2D72;
+    color:white;
+    font-size:1.2rem;
+}
+
+body {
+    background-color: #0B0F26;
+    color:white;
+}
+
+*{
+    text-decoration:none;
+    text-decoration-color: white;
+    margin:0;
+    padding: 0;
+    color:white;
+    font-family: sans-serif;
+}
+
+
+input {
+    background-color: transparent;
+    border-radius: 8px;
+    height: 25px;
+    border: 1px solid #ffffff;
+    width:max-content;
+}

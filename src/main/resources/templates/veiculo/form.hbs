@@ -1,0 +1,230 @@
+<form id="veiculoForm">
+<!--    <input type="hidden" name="CDG_ERENTE" value="{{cdgerente}}">-->
+<!--    <input type="hidden" name="N_OME" value="{{nome}}">-->
+<!--    <input type="hidden" name="C_PF" value="{{cpf}}">-->
+<!--    <input type="hidden" name="TELE_FONE" value="{{telefone}}">-->
+<!--    <input type="hidden" name="EM_AIL" value="{{email}}">-->
+<!--    <input type="hidden" name="CI_DADE" value="{{cidade}}">-->
+<!--    <input type="hidden" name="ES_TADO" value="{{estado}}">-->
+<!--    <input type="hidden" name="PC_COMISSAO" value="{{pccomissao}}">-->
+<!--    <input type="hidden" name="DT_CONTRATACAO" value="{{dtcontratacao}}">-->
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">CDVEICULO:</span>
+            <span>
+                <input type="text" name="CDVEICULO" maxlength="60" size="60" value="{{cdveiculo}}">
+                {{#with errors}}
+                    {{#if gerenteError}}
+                        <span class="error">
+                            CDVEICULO: {{Error}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">Placa:</span>
+            <span>
+                <input type="text" name="PLACA" maxlength="60" size="60" value="{{placa}}">
+                {{#with errors}}
+                    {{#if Error}}
+                        <span class="error">
+                            PLACA: {{placaError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">Cor:</span>
+            <span>
+                <input type="text" name="CDCOR" maxlength="60" size="60" value="{{cdcor}}">
+                {{#with errors}}
+                    {{#if gerenteError}}
+                        <span class="error">
+                            CDCOR: {{Error}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">Ano de Fabricação:</span>
+            <span>
+                <input type="text" name="ANOFABRICACAO" maxlength="60" size="60" value="{{anofabricacao}}">
+                {{#with errors}}
+                    {{#if gerenteError}}
+                        <span class="error">
+                            ANOFABRICACAO: {{Error}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">Valor diário:</span>
+            <span>
+                <input type="text" name="VALDIARIO" maxlength="60" size="60" value="{{valdiario}}">
+                {{#with errors}}
+                    {{#if gerenteError}}
+                        <span class="error">
+                            VALDIARIO: {{Error}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">Promoção ativa:</span>
+            <span>
+                <input type="text" name="INDPROMOCAO" maxlength="60" size="60" value="{{indpromocao}}">
+                {{#with errors}}
+                    {{#if gerenteError}}
+                        <span class="error">
+                            INDPROMOCAO: {{Error}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">Descrição da promoção:</span>
+            <span>
+                <input type="text" name="DESPROMOCAO" maxlength="60" size="60" value="{{despromocao}}">
+                {{#with errors}}
+                    {{#if gerenteError}}
+                        <span class="error">
+                            DESPROMOCAO: {{gerenteError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">Combustivel:</span>
+            <span>
+                <input type="text" name="CDCOMBUSTIVEL" maxlength="60" size="60" value="{{cdcombustivel}}">
+                {{#with errors}}
+                    {{#if gerenteError}}
+                        <span class="error">
+                            CDCOMBUSTIVEL: {{gerenteError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">Valor da promoção:</span>
+            <span>
+                <input type="text" name="VALPROMOCAO" maxlength="60" size="60" value="{{valpromocao}}">
+                {{#with errors}}
+                    {{#if gerenteError}}
+                        <span class="error">
+                            VALPROMOCAO: {{gerenteError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">Marca:</span>
+            <span>
+                <input type="text" name="CDMARCA" maxlength="60" size="60" value="{{cdmarca}}">
+                {{#with errors}}
+                    {{#if gerenteError}}
+                        <span class="error">
+                            CDMARCA: {{gerenteError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">Modelo:</span>
+            <span>
+                <input type="text" name="CDMODELO" maxlength="60" size="60" value="{{cdmodelo}}">
+                {{#with errors}}
+                    {{#if gerenteError}}
+                        <span class="error">
+                            CDMODELO: {{gerenteError}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <br>
+    <button hx-target="#formAndTable"
+            hx-select="#formAndTable"
+            hx-swap="outerHTML"
+            hx-post="locacao/upsert"
+            hx-include="[name='page']"
+            style="display: inline-flex">
+        <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
+        &nbsp;
+        {{#if cdveiculo}}
+            Atualizar
+        {{^}}
+            Cadastrar
+        {{/if}}
+    </button>
+    {{#if cdveiculo}}
+        <button hx-target="#veiculoForm"
+                hx-select="#veiculoForm"
+                hx-swap="outerHTML"
+                hx-get="locacao/edit"
+                style="display: inline-flex">
+            <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar item">
+            &nbsp;
+            Cancelar
+        </button>
+    {{/if}}
+    {{#marcas}}
+            <span class="teste">
+                {{code}} - {{name}}
+            </span>
+    {{/marcas}}
+</form>

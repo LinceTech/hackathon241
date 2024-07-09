@@ -1,0 +1,31 @@
+<tr id="cdveiculoItem{{cdveiculo}}">
+    <td style="width: 40px; text-align: right;">{{cdveiculo}}</td>
+    <td style="width: 200px; text-align: left;">{{placa}}</td>
+    <td style="width: 300px; text-align: left;">{{cdcor}}</td>
+    <td style="width: 300px; text-align: left;">{{anofabricacao}}</td>
+    <td style="width: 300px; text-align: left;">{{valdiario}}</td>
+    <td style="width: 300px; text-align: left;">{{indpromocao}}</td>
+    <td style="width: 300px; text-align: left;">{{despromocao}}</td>
+    <td style="width: 300px; text-align: left;">{{cdcombustivel}}</td>
+    <td style="width: 300px; text-align: left;">{{valpromocao}}</td>
+    <td style="width: 300px; text-align: left;">{{cdmarca}}</td>
+    <td style="width: 300px; text-align: left;">{{cdmodelo}}</td>
+
+    <td style="width: 50px">
+        <img src="https://img.icons8.com/?size=18&id=71201&format=png&color=000000"
+             alt="Editar item"
+             style="cursor: pointer"
+             hx-target="#veiculoForm"
+             hx-replace="innerHTML"
+             hx-get="locacao/edit?CDVEICULO={{cdveiculo}}">
+
+        <img src="https://img.icons8.com/?size=18&id=67884&format=png&color=000000"
+             alt="Apagar item"
+             style="cursor: pointer"
+             hx-target="#formAndTable"
+             hx-select="#formAndTable"
+             hx-replace="innerHTML"
+             hx-get="locacao/delete?CDVEICULO={{cdveiculo}}"
+             hx-include="[name='page']">
+    </td>
+</tr>

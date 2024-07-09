@@ -1,0 +1,210 @@
+<form id="gerenteForm">
+    <input type="hidden" name="CDG_ERENTE" value="{{cdgerente}}">
+    <input type="hidden" name="N_OME" value="{{nome}}">
+    <input type="hidden" name="C_PF" value="{{cpf}}">
+    <input type="hidden" name="TELE_FONE" value="{{telefone}}">
+    <input type="hidden" name="EM_AIL" value="{{email}}">
+    <input type="hidden" name="CI_DADE" value="{{cidade}}">
+    <input type="hidden" name="ES_TADO" value="{{estado}}">
+    <input type="hidden" name="PC_COMISSAO" value="{{pccomissao}}">
+    <input type="hidden" name="DT_CONTRATACAO" value="{{dtcontratacao}}">
+<div class="inputs1">
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">Código:</span>
+            <span>
+                <input type="text" name="CDGERENTE" maxlength="20" size="20" value="{{cdgerente}}">
+                {{#with errors}}
+                    {{#if erroCDGERENTE}}
+                        <span class="error">
+                            {{erroCDGERENTE}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">Nome:</span>
+            <span>
+                <input type="text" name="NOME" maxlength="200" size="200" value="{{nome}}">
+                {{#with errors}}
+                    {{#if erroNOME}}
+                        <span class="error">
+                            {{erroNOME}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">CPF:</span>
+            <span>
+                <input type="text" name="CPF" maxlength="20" size="20" value="{{cpf}}">
+                {{#with errors}}
+                    {{#if erroCPF}}
+                        <span class="error">
+                            {{erroCPF}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">DDD:</span>
+            <span>
+                <input type="text" name="DDD" maxlength="60" size="60" value="{{ddd}}">
+                {{#with errors}}
+                    {{#if erroDDD}}
+                        <span class="error">
+                            {{erroDDD}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">TELEFONE:</span>
+            <span>
+                <input type="text" name="TELEFONE" maxlength="60" size="60" value="{{telefone}}">
+                {{#with errors}}
+                    {{#if erroTELEFONE}}
+                        <span class="error">
+                            {{erroTELEFONE}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">EMAIL:</span>
+            <span>
+                <input type="text" name="EMAIL" maxlength="60" size="60" value="{{email}}">
+                {{#with errors}}
+                    {{#if erroEMAIL}}
+                        <span class="error">
+                            {{erroEMAIL}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+</div>
+    <div class="inputs2">
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">CIDADE:</span>
+            <span>
+                <input type="text" name="CIDADE" maxlength="60" size="60" value="{{cidade}}">
+                {{#with errors}}
+                    {{#if erroCIDADE}}
+                        <span class="error">
+                            {{erroCIDADE}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">ESTADO:</span>
+            <span>
+                <input type="text" name="ESTADO" maxlength="60" size="60" value="{{estado}}">
+                {{#with errors}}
+                    {{#if erroESTADO}}
+                        <span class="error">
+                            {{erroESTADO}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 50px; display: inline-block;">Comissão:</span>
+            <span>
+                <input type="text" name="PCCOMISSAO" maxlength="60" size="60" value="{{pccomissao}}">
+                {{#with errors}}
+                    {{#if erroPCCOMISSAO}}
+                        <span class="error">
+                            {{erroPCCOMISSAO}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span style="width: 150px; display: inline-block;">Data contratação:</span>
+            <span>
+                <input type="text" name="DTCONTRATACAO" maxlength="60" size="60" value="{{dtcontratacao}}">
+                {{#with errors}}
+                    {{#if erroDTCONTRATACAO}}
+                        <span class="error">
+                            {{erroDTCONTRATACAO}}
+                        </span>
+                    {{/if}}
+                {{/with}}
+            </span>
+            <br>
+        </label>
+    </div>
+</div>
+
+    <br>
+    <button hx-target="#formAndTable"
+            hx-select="#formAndTable"
+            hx-swap="outerHTML"
+            hx-post="gerente/upsert"
+            hx-include="[name='page']"
+            style="display: inline-flex">
+        <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=000000" alt="Cadastrar item">
+        &nbsp;
+        {{#if cdgerente}}
+            Atualizar
+        {{^}}
+            Cadastrar
+        {{/if}}
+    </button>
+    {{#if cdgerente}}
+        <button hx-target="#gerenteForm"
+                hx-select="#gerenteForm"
+                hx-swap="outerHTML"
+                hx-get="gerente/edit"
+                style="display: inline-flex">
+            <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=000000" alt="Cadastrar item">
+            &nbsp;
+            Cancelar
+        </button>
+    {{/if}}
+</form>

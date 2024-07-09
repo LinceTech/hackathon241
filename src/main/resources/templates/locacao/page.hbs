@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>Locações View</title>
+    {{>head}}
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-16k10YY9nsuUe4OkBap8jgtw5KIL6rq+xY2kC+X+dmbzU2y/TXGxPYjtdJFxzASX" crossorigin="anonymous">
+</head>
+<body>
+{{>menu}}
+<h1>Cadastro de Locações</h1>
+<hr>
+
+<div id="formAndTable">
+    {{>locacao/form locacao}}
+
+    <hr>
+
+    <div id="locacaoItemsTable">
+        <input type="hidden" name="page" value="{{index}}">
+
+        <div style="display: inline-flex; padding-bottom: 12px;">
+            {{#if hasPrevious}}
+                <img src="https://img.icons8.com/?size=18&id=100033&format=png&color=000000"
+                     alt="Página anterior"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-right: 4px"
+                     hx-target="#locacaoItemsTable"
+                     hx-select="#locacaoItemsTable"
+                     hx-swap="innerHTML"
+                     hx-get="locacao?page={{previous}}">
+            {{/if}}
+
+            <span style="height: 18px; vertical-align: center;">
+                Pagina <b>{{page}}</b> de <b>{{totalPages}}</b>
+            </span>
+
+            {{#if next}}
+                <img src="https://img.icons8.com/?size=18&id=98967&format=png&color=000000"
+                     alt="Próxima página"
+                     style="cursor: pointer; width: 18px; height: 18px; padding-left: 4px"
+                     hx-target="#locacaoItemsTable"
+                     hx-select="#locacaoItemsTable"
+                     hx-swap="innerHTML"
+                     hx-get="locacao?page={{next}}">
+            {{/if}}
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th style="width: 40px; text-align: right;">Código Locação</th>
+                <th style="width: 200px; text-align: left; cursor:pointer;">Código cliente <span style="cursor:pointer;" hx-target="#locacaoItemsTable" hx-select="#locacaoItemsTable"  hx-get="locacao?page={{index}}&orderBy=CDCLIENTE:ASC">^</span> <span style="cursor:pointer;" hx-target="#locacaoItemsTable" hx-select="#locacaoItemsTable"  hx-get="locacao?page={{index}}&orderBy=CDCLIENTE:DESC">v</span></th>
+                <th style="width: 300px; text-align: left;">Código gerente</th>
+                <th style="width: 300px; text-align: left;">Código veículo</th>
+                <th style="width: 300px; text-align: left;">Data de início</th>
+                <th style="width: 300px; text-align: left;  cursor:pointer;">Data de entrega<span style="cursor:pointer;" hx-target="#locacaoItemsTable" hx-select="#locacaoItemsTable"  hx-get="locacao?page={{index}}&orderBy=DTENTREGA:ASC">^</span> <span style="cursor:pointer;" hx-target="#locacaoItemsTable" hx-select="#locacaoItemsTable"  hx-get="locacao?page={{index}}&orderBy=DTENTREGA:DESC">v</span></th>
+                <th style="width: 300px; text-align: left;">Valor diária</th>
+                <th style="width: 300px; text-align: left;">Percentual comissão</th>
+                <th style="width: 300px; text-align: left;">Valor pago</th>
+                <th style="width: 300px; text-align: left;">Data de pagamento</th>
+                <th style="width: 50px">Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#locacoes}}
+                {{>locacao/row}}
+            {{/locacoes}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybUtx2bopIWbAys2bEl77a3MAF36VvoTFyKZ9YY7noy8xFnf2" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js" integrity="sha384-s6ewCkJjTQTk5HXGcfKTlzJ5PudcyW6Rv/YHzUQdVZ6q56lHJh7ne3Z8m5Mlfhlo" crossorigin="anonymous"></script>
+</body>
+</html>

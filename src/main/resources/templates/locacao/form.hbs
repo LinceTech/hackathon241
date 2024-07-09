@@ -1,0 +1,150 @@
+<form id="locacaoForm" class="container mt-4">
+    <!--    <input type="hidden" name="CDG_ERENTE" value="{{cdgerente}}">-->
+    <!--    <input type="hidden" name="N_OME" value="{{nome}}">-->
+    <!--    <input type="hidden" name="C_PF" value="{{cpf}}">-->
+    <!--    <input type="hidden" name="TELE_FONE" value="{{telefone}}">-->
+    <!--    <input type="hidden" name="EM_AIL" value="{{email}}">-->
+    <!--    <input type="hidden" name="CI_DADE" value="{{cidade}}">-->
+    <!--    <input type="hidden" name="ES_TADO" value="{{estado}}">-->
+    <!--    <input type="hidden" name="PC_COMISSAO" value="{{pccomissao}}">-->
+    <!--    <input type="hidden" name="DT_CONTRATACAO" value="{{dtcontratacao}}">-->
+
+    <div class="mb-3">
+        <label class="form-label">Locação:</label>
+        <input type="text" class="form-control" name="CDLOCACAO" maxlength="60" value="{{cdlocacao}}">
+        {{#with errors}}
+            {{#if gerenteError}}
+                <div class="text-danger mt-1">
+                    Locação: {{Error}}
+                </div>
+            {{/if}}
+        {{/with}}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Cliente:</label>
+        <input type="text" class="form-control" name="CDCLIENTE" maxlength="60" value="{{cdcliente}}">
+        {{#with errors}}
+            {{#if gerenteError}}
+                <div class="text-danger mt-1">
+                    Cliente: {{Error}}
+                </div>
+            {{/if}}
+        {{/with}}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Gerente:</label>
+        <input type="text" class="form-control" name="CDGERENTE" maxlength="60" value="{{cdgerente}}">
+        {{#with errors}}
+            {{#if gerenteError}}
+                <div class="text-danger mt-1">
+                    Gerente: {{Error}}
+                </div>
+            {{/if}}
+        {{/with}}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Veículo:</label>
+        <input type="text" class="form-control" name="CDVEICULO" maxlength="60" value="{{cdveiculo}}">
+        {{#with errors}}
+            {{#if gerenteError}}
+                <div class="text-danger mt-1">
+                    Veículo: {{Error}}
+                </div>
+            {{/if}}
+        {{/with}}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Data de início:</label>
+        <input type="text" class="form-control" name="DTINICIO" maxlength="60" value="{{dtinicio}}">
+        {{#with errors}}
+            {{#if Error}}
+                <div class="text-danger mt-1">
+                    Data de início: {{placaError}}
+                </div>
+            {{/if}}
+        {{/with}}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Data de entrega:</label>
+        <input type="text" class="form-control" name="DTENTREGA" maxlength="60" value="{{dtentrega}}">
+        {{#with errors}}
+            {{#if gerenteError}}
+                <div class="text-danger mt-1">
+                    Data de entrega: {{Error}}
+                </div>
+            {{/if}}
+        {{/with}}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Valor da diária:</label>
+        <input type="text" class="form-control" name="VALDIARIA" maxlength="60" value="{{valdiaria}}">
+        {{#with errors}}
+            {{#if gerenteError}}
+                <div class="text-danger mt-1">
+                    Valor da diária: {{Error}}
+                </div>
+            {{/if}}
+        {{/with}}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Percentual da comissão:</label>
+        <input type="text" class="form-control" name="PCCOMISSAO" maxlength="60" value="{{pccomissao}}">
+        {{#with errors}}
+            {{#if gerenteError}}
+                <div class="text-danger mt-1">
+                    Percentual de comissão: {{Error}}
+                </div>
+            {{/if}}
+        {{/with}}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Valor pago:</label>
+        <input type="text" class="form-control" name="VALPAGO" maxlength="60" value="{{valpago}}">
+        {{#with errors}}
+            {{#if gerenteError}}
+                <div class="text-danger mt-1">
+                    Valor pago: {{Error}}
+                </div>
+            {{/if}}
+        {{/with}}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Data de pagamento:</label>
+        <input type="text" class="form-control" name="DATAPAGAMENTO" maxlength="60" value="{{datapagamento}}">
+        {{#with errors}}
+            {{#if gerenteError}}
+                <div class="text-danger mt-1">
+                    Data de pagamento: {{gerenteError}}
+                </div>
+            {{/if}}
+        {{/with}}
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary"
+                hx-target="#formAndTable"
+                hx-select="#formAndTable"
+                hx-swap="outerHTML"
+                hx-post="locacao/upsert"
+                hx-include="[name='page']">
+            <img src="https://img.icons8.com/?size=14&id=18764&format=png&color=ffffff" alt="Cadastrar item">
+            &nbsp;
+            {{#if cdlocacao}}
+                Atualizar
+            {{^}}
+                Cadastrar
+            {{/if}}
+        </button>
+        {{#if cdlocacao}}
+            <button type="button" class="btn btn-secondary"
+                    hx-target="#locacaoForm"
+                    hx-select="#locacaoForm"
+                    hx-swap="outerHTML"
+                    hx-get="locacao/edit">
+                <img src="https://img.icons8.com/?size=14&id=59754&format=png&color=ffffff" alt="Cancelar">
+                &nbsp;
+                Cancelar
+            </button>
+        {{/if}}
+    </div>
+</form>
